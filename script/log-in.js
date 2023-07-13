@@ -21,3 +21,13 @@ function loadTemplateResetPasswort() {
     </div>  
     `
 }
+
+function login() {
+    for (let i = 0; i < user.length; i++) {
+        const element = user[i];
+        if (email.value == element['name'] && passwort.value == element['passwort']) {
+
+        }
+    }
+
+}

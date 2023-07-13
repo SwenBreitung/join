@@ -16,7 +16,7 @@
     <script defer src="script/log-in.js"></script>
 </head>
 
-<body>
+<body onload="loadUsers()">
     <header>
         <img src="./img/join-logo.svg" alt="">
         <div>
@@ -31,12 +31,12 @@
             <h1>Log in</h1>
             <div class="input-fields">
                 <div class="input-field">
-                    <input type="text" placeholder="EMail">
+                    <input id="email" type="text" placeholder="EMail">
                     <img src="./img/letter.svg" alt="Bild hinten" class="input-suffix">
                 </div>
 
                 <div class="input-field">
-                    <input type="text" placeholder="Passwort">
+                    <input id="passwort" type="text" placeholder="Passwort">
                     <img src="./img/lock.svg" alt="Bild hinten" class="input-suffix">
                 </div>
 
