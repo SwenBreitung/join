@@ -1,0 +1,16 @@
+#contacts {
+    width: 300px;
+}
+
+.line {
+    display: flex;
+    padding: 14px 12px;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+#line {
+    padding: 1px;
+    background-color: rgba(209, 209, 209, 1);
+    width: 100%;
+}

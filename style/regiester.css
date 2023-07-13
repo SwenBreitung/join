@@ -1,0 +1,83 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    padding-top: 80px;
+    padding-right: 77px;
+    padding-left: 77px;
+}
+
+.button {
+    background-color: var(--main-color) !important;
+    color: var(--text-white) !important;
+}
+
+.button-guest-login {
+    background-color: var(--text-white)!important;
+    color: var(--main-color) !important;
+    margin: 35px;
+    height: 51px !important;
+    min-width: 161 !important;
+    padding-top: 4px !important;
+    padding-right: 16px !important;
+    padding-bottom: 4px !important;
+    padding-left: 16px !important;
+}
+
+.button-log-in {
+    width: 145px !important;
+    height: 51px !important;
+}
+
+.dialog {
+    background-color: var(--text-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    heigth: 650px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+span {
+    padding-right: 35px;
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+.input-fields {
+    margin: 35px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field {
+    display: flex;
+    background-color: var(--text-white);
+    border: 1px solid var(--border-grey);
+    border-radius: 10px;
+    margin-bottom: 29px !important;
+    padding-right: 10px;
+    padding-left: 6px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+.checkbox {
+    margin: 35px;
+}
+
+.checkbox a {
+    padding: 35px;
+}

@@ -1,0 +1,16 @@
+:root {
+    --main-color: #2A3647;
+    --text-white: #FFF;
+    --text-color: #A8A8A8;
+    --border-grey: #D1D1D1;
+    --design-background: #FF7A00;
+    --sale-background: #FC71FF;
+    --back-office-background: #1FD7C1;
+    --marketing-background: #0038FF;
+    --media-background: #FFC701;
+}
+
+body {
+    background-color: var(--text-color);
+    height: 100vh;
+}
