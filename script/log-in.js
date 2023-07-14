@@ -10,6 +10,19 @@ function resetPasswort() {
 }
 
 
+function login() {
+    let email = document.getElementById('email');
+    let passwort = document.getElementById('passwort');
+    let user = users.find(u => u.email === email.value && u.password === passwort.value);
+    console.log(user);
+    if (user) {
+        console.log('Registriere dich bitte');
+    } else {
+        console.log('Herzlich willkommen');
+    }
+}
+
+
 function loadTemplateResetPasswort() {
     return `
     <h1>I forgot my passwort</h1>
@@ -20,14 +33,4 @@ function loadTemplateResetPasswort() {
             <img src="./img/letter.svg" alt="Bild hinten" class="input-suffix">
     </div>  
     `
-}
-
-function login() {
-    for (let i = 0; i < user.length; i++) {
-        const element = user[i];
-        if (email.value == element['name'] && passwort.value == element['passwort']) {
-
-        }
-    }
-
 }

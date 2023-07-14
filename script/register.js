@@ -37,6 +37,7 @@ async function register() {
 
 }
 
+
 function resetForm() {
     email.value = '';
     password.value = '';
