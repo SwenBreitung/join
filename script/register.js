@@ -1,13 +1,9 @@
-let users = [];
-
 let registerBtn = document.getElementById('registerBtn');
 
 
 function signUp() {
     dialog.innerHTML = loadTemplateSignUp();
 }
-
-
 
 
 async function init() {
@@ -33,7 +29,7 @@ async function register() {
     });
     await setItem('users', JSON.stringify(users));
     resetForm();
-    window.location = 'log-in.html';
+    window.location = 'index.html';
 
 }
 
@@ -41,7 +37,6 @@ async function register() {
 function resetForm() {
     email.value = '';
     password.value = '';
-    userName.value = '';
     registerBtn.disabled = false;
 }
 

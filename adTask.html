@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdTask</title>
+
+    <script defer src="./script/script.js"></script>
+    <script defer src="./script/adTask.js"></script>
+    <script defer src="./script/storge.js"></script>
+
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/adTask.css">
+</head>
+
+<body>
+
+    <h1>Add Task</h1>
+    <div>
+        <section>
+            <span>Titel</span>
+            <input type="text">
+        </section>
+        <section>
+            <span>Description</span>
+            <textarea type="text"></textarea>
+        </section>
+        <section>
+            <span>Category</span>
+            <input type="text">
+        </section>
+        <section>
+            <span>Assigned to</span>
+            <input type="text">
+        </section>
+    </div>
+
+    <div id="line"></div>
+
+    <div>
+        <section>
+            <span>Due date</span>
+            <div>
+                <input type="text">
+                <img src="./img/calendar-event-fill.svg" alt="">
+            </div>
+        </section>
+        <dsectionv>
+            <span>Prio</span>
+            <button>Urgent<img src="./img/prioUrgent.svg" alt=""></button>
+            <button>Medium<img src="./img/prioMedium.svg" alt=""></button>
+            <button>Low<img src="./img/prioLow.svg" alt=""></button>
+            </section>
+            <section>
+                <span>Subtasks</span>
+                <input type="checkbox" name="myCheckbox" id="myCheckbox">
+                <label for="myCheckbox">Subtask 1</label>
+            </section>
+    </div>
+    <button>Clear x</button> <button>Create Task<img src="./img/check.svg" alt=""></button>
+</body>
+<section></section>
+
+</html>

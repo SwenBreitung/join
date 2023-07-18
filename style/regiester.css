@@ -1,10 +1,6 @@
 header {
     display: flex;
     justify-content: space-between;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
     z-index: 1;
     padding-top: 80px;
     padding-right: 77px;
@@ -31,20 +27,7 @@ header {
 .button-log-in {
     width: 145px !important;
     height: 51px !important;
-}
-
-.dialog {
-    background-color: var(--text-white);
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    heigth: 650px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
 }
 
 span {
@@ -80,4 +63,31 @@ input {
 
 .checkbox a {
     padding: 35px;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logo-container img {
+    width: 100.034px;
+    height: 121.966px;
+    flex-shrink: 0;
+}
+
+.button-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    z-index: 1;
+    padding-top: 80px;
+    padding-right: 77px;
+    padding-left: 77px;
 }

@@ -16,9 +16,9 @@ function login() {
     let user = users.find(u => u.email === email.value && u.password === passwort.value);
     console.log(user);
     if (user) {
-        console.log('Registriere dich bitte');
+        window.location.href = "./summery.html";
     } else {
-        console.log('Herzlich willkommen');
+        console.log('Registriere dich bitte');
     }
 }
 
