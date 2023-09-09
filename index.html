@@ -14,14 +14,15 @@
     <script defer src="script/storge.js"></script>
     <script defer src="script/register.js"></script>
     <script defer src="script/log-in.js"></script>
+
 </head>
 
 <!-- this is the log in -->
 
-<body onload="loadUsers()">
+<body onload="loadUsers(), init()">
     <header>
         <img src="./img/join-logo.svg" alt="">
-        <div>
+        <div id="sing-up" class="">
             <span>Not a Join user?</span>
             <button onclick="loadRegister()" type="button" class="btn btn-dark button">Sing up</button>
         </div>
@@ -29,32 +30,14 @@
 
     <div class="section">
         <div id="dialog" class="dialog">
-            <div>
-                <h1>Log in</h1>
-                <div class="input-fields">
-                    <div class="input-field">
-                        <input id="email" type="text" placeholder="EMail">
-                        <img src="./img/letter.svg" alt="Bild hinten" class="input-suffix">
-                    </div>
 
-                    <div class="input-field">
-                        <input id="passwort" type="text" placeholder="passwort">
-                        <img src="./img/lock.svg" alt="Bild hinten" class="input-suffix">
-                    </div>
-
-                </div>
-
-                <div class="checkbox">
-                    <input type="checkbox" name="myCheckbox" id="myCheckbox">
-                    <label for="myCheckbox">Remember me</label>
-                    <a onclick="resetPasswort()" href="">Forget my Password</a>
-                </div>
-                <div class="buttons">
-                    <button onclick="login()" type="button" class="btn btn-dark button button-log-in">Log in</button>
-                    <button type="button" class="btn btn-dark button-guest-login">Guest Log in</button>
-                </div>
-            </div>
         </div>
+    </div>
+    <div class="sing-up-mobile">
+        <!-- <div id="sing-up" class=""> -->
+        <span>Not a Join user?</span>
+        <button onclick="loadRegister()" type="button" class="btn btn-dark button button-sing-up-mobile">Sing up</button>
+        <!-- </div> -->
     </div>
 </body>
 

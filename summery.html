@@ -5,80 +5,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Summary</title>
-    <script defer src="./script/script.js"></script>
-    <script defer src="./script/summary.js"></script>
-    <script defer src="./script/storge.js"></script>
 
+    <link rel="stylesheet" href="include/header_footer.css">
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/summery.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
+
+    <script defer src="./script/script.js"></script>
+    <script defer src="./script/summary.js"></script>
+    <script defer src="./script/storge.js"></script>
 </head>
 
-<body>
-    <header></header>
-    <div class="width-100P">
-        <div id="header-summary">
-            <h1>Summary</h1>
-            <div class="summary-line"></div>
-            <div>Everything in a nutshell!</div>
-        </div>
+<body onload="includeHTML()">
+    <header>
+        <div class="header" w3-include-html="include/header.html"></div>
+    </header>
 
 
-        <div class="d-flex gap-32 width-100P">
-            <div>
-                <div class="" id="tasks">
-                    <div class="task-cards dialog" id="load-bord-task">
-                        <div class="fw-bold d-flex align-items-center justify-content-center">5</div>
-                        <div>task in bord</div>
-                    </div>
-                    <div class="task-cards dialog" id="load-progress-task">
-                        <div class="fw-bold d-flex align-items-center justify-content-center">5</div>
-                        <div>task in Progress</div>
-                    </div>
-                    <div class="task-cards dialog" id="load-feedback-task">
-                        <div class="fw-bold d-flex align-items-center justify-content-center">5</div>
-                        <div>Aqeiting Feedback</div>
-                    </div>
+    <div class="width-100P column">
+        <footer w3-include-html="include/footer.html"></footer>
+        <div class="width-100P main-containe">
+            <div class="justifyContent">
+                <div id="header-summary">
+                    <h1>Summary</h1>
+                    <div class="summary-line"></div>
+                    <div>Everything in a nutshell!</div>
                 </div>
-                <div class=" h100px ">
-                    <div class="d-flex">
-                        <img src="./img/prioUrgent.svg" alt="">
-                        <div> 1 urgant</div>
-                    </div>
-                    <div class="h-75 line-grey"></div>
-                    <div id="date"> Data</div>
-                </div>
-                <div class="d-flex gap-32">
-                    <div class="d-flex h100px w-50 ">
-                        <img src="./img/chop.svg" alt="">
+                <div></div>
 
-                        <div>
-                            <div class="fw-bold d-flex align-items-center justify-content-center ">1</div>
-                            <div>Todo</div>
+                <div class="d-flex gap-32 width-100P p-90px">
+                    <div>
+                        <div class="" id="tasks">
+                            <div class="task-cards dialog" id="load-bord-task">
+                                <div class="fw-bold d-flex align-items-center justify-content-center">5</div>
+                                <span>task in</span>
+                                <span> bord</span>
+                            </div>
+                            <div class="task-cards dialog" id="load-progress-task">
+                                <div class="fw-bold d-flex align-items-center justify-content-center">5</div>
+                                <span>task in</span>
+                                <span> Progress</span>
+                            </div>
+                            <div class="task-cards dialog" id="load-feedback-task">
+                                <div class="fw-bold d-flex align-items-center justify-content-center">5</div>
+                                <span>Aqeiting</span>
+                                <span> Feedback</span>
+                            </div>
                         </div>
-                    </div>
+                        <div class=" h100px ">
+                            <div class="d-flex">
+                                <img src="./img/prioUrgent.svg" alt="">
+                                <div> 1 urgant</div>
+                            </div>
+                            <div class="h-75 line-grey"></div>
+                            <div id="date"> Data</div>
+                        </div>
+                        <div class="d-flex gap-32">
+                            <div class="d-flex h100px w-50 ">
+                                <img src="./img/chop.svg" alt="">
 
-                    <div class="d-flex h100px w-50">
-                        <img src="./img/pen.svg" alt="">
-                        <div>
-                            <div class="fw-bold d-flex align-items-center justify-content-center ">1</div>
-                            <div>Done</div>
+                                <div>
+                                    <div class="fw-bold d-flex align-items-center justify-content-center ">1</div>
+                                    <div>Todo</div>
+                                </div>
+                            </div>
+                            <div class="d-flex h100px w-50">
+                                <img src="./img/pen.svg" alt="">
+                                <div>
+                                    <div class="fw-bold d-flex align-items-center justify-content-center ">1</div>
+                                    <div>Done</div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
                 </div>
             </div>
-            <div class="d-flex fw-bold d-flex align-items-center justify-content-center width-100P ">
-                <div class="d-flex fw-bold d-flex align-items-center justify-content-center width-100P flex-column">
+            <div class="fw-bold greeting-text ">
+                <div class="d-flex fw-bold d-flex align-items-center justify-content-center  flex-column">
                     <div> Good Morning,</div>
                     <h1 id="name">Name</h1>
                 </div>
             </div>
-        </div>
-    </div>
 
+        </div>
+        <div class="header-mobile" w3-include-html="include/header-mobile.html"></div>
+    </div>
 </body>
 
 </html>

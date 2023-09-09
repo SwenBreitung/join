@@ -1,16 +1,53 @@
-#contacts {
-    width: 300px;
-}
-
-.line {
+body {
+    background-color: var(--main-background-color) !important;
+    height: 100vh;
     display: flex;
-    padding: 14px 12px;
-    align-items: flex-start;
-    gap: 10px;
+    margin: 0;
+    width: 100vw;
 }
 
-#line {
-    padding: 1px;
-    background-color: rgba(209, 209, 209, 1);
-    width: 100%;
+header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100vh;
+    min-width: 200px;
+    background-color: var(--main-color) !important;
+}
+
+.header-text {
+    padding-bottom: 40px;
+}
+
+.header-text a {
+    color: var(--text-white);
+    text-decoration: none;
+}
+
+.header-bottom a {
+    color: var( --text-color);
+    text-decoration: none;
+}
+
+.summary-line {
+    height: 59px;
+    border-radius: 8px;
+    width: 4px;
+    background-color: var(--headline) !important;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+.contacts-container {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.button {
+    background-color: var(--main-color) !important;
+    color: var(--text-white) !important;
 }

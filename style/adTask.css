@@ -2,3 +2,8 @@ section {
     display: flex;
     flex-direction: column;
 }
+
+.h1 {
+    align-items: center !important;
+    justify-content: flex-start !important;
+}

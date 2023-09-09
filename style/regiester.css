@@ -1,15 +1,14 @@
-header {
-    display: flex;
-    justify-content: space-between;
-    z-index: 1;
-    padding-top: 80px;
-    padding-right: 77px;
-    padding-left: 77px;
+body {
+    height: 100vh;
 }
 
 .button {
     background-color: var(--main-color) !important;
     color: var(--text-white) !important;
+}
+
+.button:hover {
+    background-color: var(--hover-color) !important;
 }
 
 .button-guest-login {
@@ -46,6 +45,7 @@ input {
 }
 
 .input-field {
+    justify-content: space-between;
     display: flex;
     background-color: var(--text-white);
     border: 1px solid var(--border-grey);
@@ -62,7 +62,7 @@ input {
 }
 
 .checkbox a {
-    padding: 35px;
+    padding: 3px;
 }
 
 .logo-container {
@@ -83,11 +83,63 @@ input {
     justify-content: center;
 }
 
+.dialog-warning {
+    background-color: rgba(0, 0, 0, 0.761);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 997;
+}
+
+#dialog-window {
+    z-index: 999;
+    background-color: aliceblue;
+    padding: 10%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04)
+}
+
 header {
     display: flex;
     justify-content: space-between;
     z-index: 1;
-    padding-top: 80px;
     padding-right: 77px;
     padding-left: 77px;
+    padding-top: 40px;
+}
+
+.left-arrow::before {
+    content: "\2190";
+    /* Unicode-Zeichen für den linken Pfeil */
+    font-size: 30px;
+    /* Größe des Pfeils */
+    color: #12548d;
+    /* Farbe des Pfeils */
+    margin-right: 5px;
+    /* Abstand zwischen Pfeil und Text */
+}
+
+@media(max-width: 375px) {
+    body {
+        height: 100vh;
+    }
+    header {
+        padding-top: 12px;
+        padding-right: 12px;
+        padding-left: 15px;
+    }
+    header img {
+        height: 80px;
+    }
+    .logo-container {
+        margin-bottom: 0px;
+    }
+    .dialog {
+        margin-top: 25px;
+    }
 }

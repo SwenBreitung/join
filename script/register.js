@@ -1,14 +1,15 @@
 let registerBtn = document.getElementById('registerBtn');
+let checkbox = document.getElementById("myCheckbox");
+
+async function init() {
+    loadUsers();
+}
 
 
 function signUp() {
     dialog.innerHTML = loadTemplateSignUp();
 }
 
-
-async function init() {
-    loadUsers();
-}
 
 async function loadUsers() {
     try {
@@ -20,17 +21,20 @@ async function loadUsers() {
 
 
 async function register() {
-    registerBtn.disabled = true;
+    if (checkbox.checked) {
+        registerBtn.disabled = true;
 
-    users.push({
-        name: userName.value,
-        email: email.value,
-        password: password.value,
-    });
-    await setItem('users', JSON.stringify(users));
-    resetForm();
-    window.location = 'index.html';
-
+        users.push({
+            name: userName.value,
+            email: email.value,
+            password: password.value,
+        });
+        await setItem('users', JSON.stringify(users));
+        resetForm();
+        window.location = 'index.html';
+    } else {
+        document.getElementById('dialog-full').classList.remove('d-none');
+    }
 }
 
 

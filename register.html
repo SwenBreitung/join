@@ -17,38 +17,62 @@
 </head>
 
 <body onload="init()">
-    <header>
-        <div class="logo-container">
-            <img src="./img/join-logo.svg" alt="">
+    <div class="dialog-warning d-none" id="dialog-full" onclick="closeDialog(event)">
+        <div id="dialog-window">
+            Bitte Bestätigen sie die Police
         </div>
-    </header>
+    </div>
+    <div>
+        <header>
+            <div class="logo-container">
+                <img src="./img/join-logo.svg" alt="">
+            </div>
+        </header>
 
-    <div class="section">
-        <div id="dialog" class="dialog">
-            <div>
-                <h1>Sign up</h1>
-                <div class="input-fields">
-                    <form onsubmit="register(); return false;" action="">
+        <div class="section">
+            <div id="dialog" class="dialog">
 
-                        <div class="input-field">
-                            <input required type="text" placeholder="Name" id="userName">
-                            <img src="./img/user.svg" alt="Bild user" class="input-suffix">
+                <div>
+
+                    <div>
+                        <a href="index.html"><img src="img/arror-left.svg" alt=""></a>
+                        <div class="h1">
+                            <h1>Sign up</h1>
+                            <div class="underline"></div>
                         </div>
-                        <div class="input-field">
-                            <input required type="email" placeholder="EMail" id="email">
-                            <img src="./img/letter.svg" alt="Bild letter" class="input-suffix">
-                        </div>
-                        <div class="input-field">
-                            <input required type="passwort" placeholder="Passwort" id="password">
-                            <img src="./img/lock.svg" alt="Bild lock" class="input-suffix">
-                        </div>
-                        <div class="button-div">
-                            <button type="submit" type="button" id="registerBtn" class="btn btn-dark button">Sing up</button>
-                        </div>
-                    </form>
+                        <div></div>
+                    </div>
+
+                    <div class="input-fields">
+                        <form onsubmit="register(); return false;" action="">
+
+                            <div class="input-field">
+                                <input required type="text" placeholder="Name" id="userName">
+                                <img src="./img/user.svg" alt="Bild user" class="input-suffix">
+                            </div>
+                            <div class="input-field">
+                                <input required type="email" placeholder="EMail" id="email">
+                                <img src="./img/letter.svg" alt="Bild letter" class="input-suffix">
+                            </div>
+                            <div class="input-field">
+                                <input required type="passwort" placeholder="Passwort" id="password">
+                                <img src="./img/lock.svg" alt="Bild lock" class="input-suffix">
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" name="myCheckbox" id="myCheckbox" value="yes">
+                                <label for="myCheckbox">I accept the</label>
+                                <a onclick="" href="">Privacy policy</a>
+                            </div>
+                            <div class="button-div">
+                                <button type="submit" type="button" id="registerBtn" class="btn btn-dark button">Sing up</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+
             </div>
         </div>
+    </div>
 
 </body>
 
