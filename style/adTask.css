@@ -1,9 +1,213 @@
+body {
+    display: flex;
+    background-color: #F6F7F8 !important;
+    margin: 0;
+}
+
 section {
     display: flex;
     flex-direction: column;
 }
 
-.h1 {
-    align-items: center !important;
-    justify-content: flex-start !important;
+.wrap {
+    flex-wrap: wrap;
 }
+
+.gap16 {
+    gap: 16px;
+}
+
+.m-bottom40 {
+    margin-bottom: 40px;
+}
+
+.dFlex {
+    display: flex;
+}
+
+.spaceBtw {
+    justify-content: space-between
+}
+
+.justyCenter {
+    justify-content: center;
+}
+
+
+input {
+    border-radius: 5px;
+    border: 1px solid #D1D1D1;
+    background: #FFF;
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px !important;
+    margin-bottom: 16px !important;
+    outline: none;
+}
+
+.mySelect {
+    appearance: none;
+    background: url('../img/arrow_drop_downaa.svg') no-repeat right center;
+    background-position-x: calc(97%) !important;
+    border-radius: 5px;
+    border: 1px solid #D1D1D1;
+    background-color: #FFF;
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px !important;
+    margin-bottom: 16px !important;
+    outline: none;
+
+}
+
+#datepicker {
+    background-image: url('../img/kalenderJoin.svg');
+    /* Ersetzen Sie 'pfad-zum-bild/kalender-symbol.png' durch den Pfad zu Ihrem Bild */
+    background-repeat: no-repeat;
+    background-position-x: calc(96%) !important;
+    background-position: center;
+}
+
+.pika-single {
+    z-index: 1000;
+}
+
+
+textarea {
+    border-radius: 5px;
+    border: 1px solid #D1D1D1;
+    background: #FFF;
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px !important;
+    margin-bottom: 16px !important;
+    outline: none;
+}
+
+.prioBtn {
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 7px;
+    line-height: 120%;
+    padding: 10px 14px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    margin-top: 5px !important;
+    margin-bottom: 16px !important;
+}
+
+.prioBtnAktiv {
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
+    background-color: #FF3D00;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.contentPosition {
+    padding-left: 96px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: -50px;
+}
+
+.taskArea {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+
+}
+
+.boxLeft {
+    padding-right: 48.2px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    box-sizing: border-box;
+}
+
+.boxRight {
+    padding-left: 48px;
+    padding-right: 96px;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--border-grey);
+    flex: 1;
+    box-sizing: border-box;
+}
+
+/*-----------------*/
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+
+.selectBtnArea {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 96px;
+    width: 100%;
+}
+
+.createBtn {
+    color: white;
+    background-color: #2A3647;
+    display: flex;
+    font-size: 17px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
+    padding: 6px 13px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
+    border-radius: 10px;
+}
+
+.clearBtn {
+    background-color: #F6F7F8;
+    display: flex;
+    font-size: 17px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
+    padding: 6px 13px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
+    border-radius: 10px;
+}
+
+.createImg {
+    width: 15px;
+    margin-bottom: -1px;
+}
+
+.clearImg {
+    width: 19px;
+    margin-bottom: -3px;
+}
+
+.inputAbsolut {
+    position: absolute;
+    right: 6px;
+    top: 14px;
+    padding: 3px;
+}
+
+.inputAbsolut:hover {
+    cursor: pointer;
+}
+
+/*Modify Input-Type--Date*/

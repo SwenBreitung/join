@@ -10,70 +10,97 @@
     <script defer src="./script/adTask.js"></script>
     <script defer src="./script/storge.js"></script>
 
-    <link rel="stylesheet" href="include/header_footer.css">
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/adTask.css">
+    <link rel="stylesheet" href="include/header_footer.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 
 <body onload="includeHTML()">
-    <header></header>
-    <div class="width-100P ">
-        <footer></footer>
+    <header>
+        <div class="header" w3-include-html="include/header.html"></div>
+    </header>
+    <div class="content ">
+        <footer w3-include-html="include/footer.html"></footer>
 
+        <div class="contentPosition">
+            <h1 class="fw-bold m-bottom40">Add Task</h1>
 
-        <h1 class="h1 fw-bold padding-left-59px padding-right-59px">Add Task</h1>
-        <div class="d-flex width-100P ">
-            <div class=" d-flex flex-column padding-left-59px padding-right-59px">
-                <div>
+            <div class="taskArea">
+                <div class="boxLeft">
                     <div>
                         <span>Titel</span>
-                        <input type="text">
+                        <input placeholder="Enter a title" type="text">
                     </div>
-                    <div>
+                    <div class="column">
                         <span>Description</span>
-                        <textarea type="text"></textarea>
-                    </div>
-                    <div>
-                        <span>Category</span>
-                        <input type="text">
+                        <textarea placeholder="Enter a Description" type="text"></textarea>
                     </div>
                     <div>
                         <span>Assigned to</span>
-                        <input type="text">
+                        <select class="mySelect" id="myAssignedSelect">
+                            <option value="">Select contacts to assign</option>
+                            <option value="Option1">Option 1</option>
+                            <option value="Option2">Option 2</option>
+                            <option value="Option3">Option 3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="boxRight">
+                    <div>
+                        <div>
+                            <span>Due date</span>
+                            <div>
+                                <input placeholder="dd/mm/yyyy" value="" type="text" id="datepicker">
+                            </div>
+                        </div>
+                        <div class="column">
+                            <span>Prio</span>
+                            <div class="dFlex wrap justyCenter gap16">
+                                <div class="prioBtn">Urgent<img src="./img/prioUrgent.svg" alt=""></div>
+                                <div class="prioBtn">Medium<img src="./img/prioMedium.svg" alt=""></div>
+                                <div class="prioBtn">Low<img src="./img/prioLow.svg" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <span>Category</span>
+                            <select class="mySelect" id="myCategorySelect">
+                                <option value="">Select task category</option>
+                                <option value="Option1">Option 1</option>
+                                <option value="Option2">Option 2</option>
+                                <option value="Option3">Option 3</option>
+                            </select>
+                        </div>
+                        <div class="column">
+                            <span>Subtasks</span>
+                            <div class="custom-select">
+                                <input placeholder="Add new subtask" id="subTaskSelectBox">
+                                <img class="inputAbsolut" src="img/plusAddTask.svg" alt="">
+                            </div>
+                            <div id="selectedTask">
+                                <ul class="dFlex spaceBtw">
+                                    <li>task</li>
+                                    <div>
+                                        <img src="img/PenAddTask 1=edit.svg" alt="">
+                                        <img src="img/subTaskDelete.svg" alt="">
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="line-grey"></div>
-            <div class="width-100P d-flex flex-column padding-left-59px ">
-                <div>
-                    <div>
-                        <span>Due date</span>
-                        <div>
-                            <input type="text">
-                            <img src="./img/calendar-event-fill.svg" alt="">
-                        </div>
-                    </div>
-                    <div>
-                        <span>Prio</span>
-                        <button>Urgent<img src="./img/prioUrgent.svg" alt=""></button>
-                        <button>Medium<img src="./img/prioMedium.svg" alt=""></button>
-                        <button>Low<img src="./img/prioLow.svg" alt=""></button>
-                    </div>
-                    <div>
-                        <span>Subtasks</span>
-                        <input type="checkbox" name="myCheckbox" id="myCheckbox">
-                        <label for="myCheckbox">Subtask 1</label>
-                    </div>
-                </div>
-                <div>
-                    <button>Clear x</button> <button>Create Task<img src="./img/check.svg" alt=""></button>
-                </div>
+            <div class="selectBtnArea gap16">
+                <button class="clearBtn">Clear<img class="clearImg" src="./img/crossAddTask.svg" alt=""></button>
+                <button class="createBtn">Create Task<img class="createImg" src="./img/check.svg" alt=""></button>
             </div>
         </div>
     </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <script defer src="./script/pikadayDate.js"></script>
 </body>
 <section></section>
 
