@@ -1,19 +1,32 @@
 let todos = [{
     'id': 0,
-    'title': 'Putzen saufen',
-    'category': 'to-do'
+    'title': 'This is the task',
+    'status': 'to-do',
+    'description': 'This is the description',
+    'category': 'Technical Task',
+    'priority': 'Low'
 }, {
     'id': 1,
-    'title': 'Kochen putzen',
-    'category': 'in-progress'
+    'title': 'This is a task',
+    'status': 'in-progress',
+    'description': 'This is the description',
+    'category': 'User Story',
+    'priority': 'Medium'
+    
 }, {
     'id': 2,
-    'title': 'Einkaufen aaufen',
-    'category': 'awaiting-feedback'
+    'title': 'This is one task',
+    'status': 'awaiting-feedback',
+    'description': 'This is the description',
+    'category': 'Technical Task',
+    'priority': 'Urgent'
 }, {
     'id': 3,
-    'title': 'Einkaufen laufen',
-    'category': 'awaiting-feedback'
+    'title': 'This is the only task',
+    'status': 'awaiting-feedback',
+    'description': 'This is the description',
+    'category': 'User Story',
+    'priority': 'Low'
 }];
 
 
@@ -28,17 +41,18 @@ function ini() {
 
 
 function loadTemplateCardsToDo() {
-    let toDo = todos.filter(t => t['category'] == `to-do`)
+    let toDo = todos.filter(t => t['status'] == `to-do`)
     document.getElementById('to-do').innerHTML = '';
 
-    let inProgress = todos.filter(t => t['category'] == `in-progress`)
+    let inProgress = todos.filter(t => t['status'] == `in-progress`)
     document.getElementById('in-progress').innerHTML = '';
 
-    let awaitingFeedback = todos.filter(t => t['category'] == `awaiting-feedback`)
+    let awaitingFeedback = todos.filter(t => t['status'] == `awaiting-feedback`)
     document.getElementById('awaiting-feedback').innerHTML = '';
 
-    let done = todos.filter(t => t['category'] == `done`)
+    let done = todos.filter(t => t['status'] == `done`)
     document.getElementById('done').innerHTML = '';
+
     for (let i = 0; i < toDo.length; i++) {
         let element = toDo[i];
         document.getElementById('to-do').innerHTML += loadTemplateCardTodo(element);
@@ -67,10 +81,10 @@ function allowDrop(ev) {
     ev.preventDefault();
 }
 
-function moveTo(category) {
-    todos[currentDragElement]['category'] = category;
+function moveTo(status) {
+    todos[currentDragElement]['status'] = status;
     loadTemplateCardsToDo();
-    document.getElementById(category).classList.remove('drag-area-highlight');
+    document.getElementById(status).classList.remove('drag-area-highlight');
 }
 
 
@@ -83,19 +97,23 @@ function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag-area-highlight');
 }
 
+
+
+
 function loadTemplateCardTodo(element) {
     return /*html*/ ` <div draggable="true" ondragstart="startDragging(${element['id']})" class = "card" >
         <div class = "card-body" >
-            <h5 class = "card-title" > Design </h5> 
-            <h6 class = "card-subtitle mb-2 text-body-secondary" > headline </h6> 
-            <p id = "card-text" > Lorem ipsum dolor sit amet, consectetur </p> 
+            <h5 class = "card-title"> ${element['category']} </h5> 
+            <h6 class = "card-subtitle mb-2 text-body-secondary" > ${element['title']} </h6> 
+            <p id = "card-text" > ${element['description']}</p> 
             <div id = "card-footer" >
                 <div id = "card-user-imgs" >
                     <div id = "card-user-img1" class = "card-user-img" > SB </div> 
                     <div id = "card-user-img2" class = "card-user-img-two card-user-img" > HB </div> 
                     <div id = "card-user-img3" class = "card-user-img-three card-user-img" > + </div> 
                 </div> 
-            <img src = "img-Andre/prio-medium.svg" alt = "prio" ></div> 
+               
+            <img src = "img/prio${element['priority']}.svg" alt = "${element['priority']}" ></div> 
         </div> 
     </div>
     `;
