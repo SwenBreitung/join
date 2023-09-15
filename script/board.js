@@ -34,37 +34,36 @@ let currentDragElement;
 
 //drag and drop--------------------------------------------------------------
 
-function ini() {
+function init() {
+    includeHTML();
     loadTemplateCardsToDo();
-
 }
 
 
 function loadTemplateCardsToDo() {
     let toDo = todos.filter(t => t['status'] == `to-do`)
     document.getElementById('to-do').innerHTML = '';
-
-    let inProgress = todos.filter(t => t['status'] == `in-progress`)
-    document.getElementById('in-progress').innerHTML = '';
-
-    let awaitingFeedback = todos.filter(t => t['status'] == `awaiting-feedback`)
-    document.getElementById('awaiting-feedback').innerHTML = '';
-
-    let done = todos.filter(t => t['status'] == `done`)
-    document.getElementById('done').innerHTML = '';
-
     for (let i = 0; i < toDo.length; i++) {
         let element = toDo[i];
         document.getElementById('to-do').innerHTML += loadTemplateCardTodo(element);
     }
+
+    let inProgress = todos.filter(t => t['status'] == `in-progress`)
+    document.getElementById('in-progress').innerHTML = '';
     for (let i = 0; i < inProgress.length; i++) {
         let element = inProgress[i];
         document.getElementById('in-progress').innerHTML += loadTemplateCardTodo(element);
     }
+
+    let awaitingFeedback = todos.filter(t => t['status'] == `awaiting-feedback`)
+    document.getElementById('awaiting-feedback').innerHTML = '';
     for (let i = 0; i < awaitingFeedback.length; i++) {
         const element = awaitingFeedback[i];
         document.getElementById('awaiting-feedback').innerHTML += loadTemplateCardTodo(element);
     }
+
+    let done = todos.filter(t => t['status'] == `done`)
+    document.getElementById('done').innerHTML = '';
     for (let i = 0; i < done.length; i++) {
         let element = done[i];
         document.getElementById('done').innerHTML += loadTemplateCardTodo(element);
@@ -75,29 +74,6 @@ function loadTemplateCardsToDo() {
 function startDragging(id) {
     currentDragElement = id;
 }
-
-
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function moveTo(status) {
-    todos[currentDragElement]['status'] = status;
-    loadTemplateCardsToDo();
-    document.getElementById(status).classList.remove('drag-area-highlight');
-}
-
-
-function heiglight(id) {
-    document.getElementById(id).classList.add('drag-area-highlight');
-
-}
-
-function removeHighlight(id) {
-    document.getElementById(id).classList.remove('drag-area-highlight');
-}
-
-
 
 
 function loadTemplateCardTodo(element) {
@@ -117,6 +93,24 @@ function loadTemplateCardTodo(element) {
         </div> 
     </div>
     `;
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function moveTo(status) {
+    todos[currentDragElement]['status'] = status;
+    loadTemplateCardsToDo();
+    removeHighlight(status);
+}
+
+function highlight(id) {
+    document.getElementById(id).classList.add('drag-area-highlight');
+}
+
+function removeHighlight(id) {
+    document.getElementById(id).classList.remove('drag-area-highlight');
 }
 
 
