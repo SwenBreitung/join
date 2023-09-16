@@ -108,7 +108,6 @@ textarea {
 .content {
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: 100%;
     height: 100vh;
     overflow-y: auto;
@@ -121,7 +120,7 @@ textarea {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    margin-top: -65px;
+    /* margin-top: -65px; */
 }
 
 .taskArea {
@@ -230,7 +229,6 @@ textarea {
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
-        margin-top: -65px;
     }
 
 
@@ -271,7 +269,6 @@ textarea {
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
-        margin-top: -65px;
     }
 
 

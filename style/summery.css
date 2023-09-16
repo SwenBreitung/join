@@ -11,6 +11,12 @@ body {
     width: 100vw;
 }
 
+.main-containe {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .summary-line {
     height: 59px;
     border-radius: 8px;

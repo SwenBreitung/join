@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Summary</title>
 
-    <link rel="stylesheet" href="include/header_footer.css">
+    <link rel="stylesheet" href="templates/header_footer.css">
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/summery.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -20,12 +20,12 @@
 
 <body onload="includeHTML()">
     <header>
-        <div class="sidebar" w3-include-html="include/sidebar.html"></div>
+        <div w3-include-html="templates/sidebar.html"></div>
     </header>
 
 
     <div class="width-100P column">
-        <footer w3-include-html="include/footer.html"></footer>
+        <div w3-include-html="templates/header.html"></div>
         <div class="width-100P main-containe">
             <div class="justifyContent">
                 <div id="header-summary">
@@ -92,7 +92,7 @@
             </div>
 
         </div>
-        <div class="header-mobile" w3-include-html="include/header-mobile.html"></div>
+        <div class="header-mobile" w3-include-html="templates/header-mobile.html"></div>
     </div>
 </body>
 

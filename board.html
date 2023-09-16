@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="include/header_footer.css">
+    <link rel="stylesheet" href="templates/header_footer.css">
     <link rel="stylesheet" href="./style/style.css">
     <link rel="stylesheet" href="./style/board.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -18,84 +18,68 @@
 
 <body onload="init()">
 
-    <!-- <div id="top-navbar"></div> -->
-   
-    <div class="sidebar" w3-include-html="include/sidebar.html"></div>
-   
+    <div w3-include-html="templates/sidebar.html"></div>
 
+    <div class="content">
 
-
-    <div id="main-container">
-        <!-- <footer w3-include-html="include/footer.html"></footer> -->
-        <div class="top-header" w3-include-html="include/footer.html"></div>
-
-        <nav class="navbar bg-body-tertiary">
-            <h1>Board</h1>
-            <div class="container-fluid">
-                <form class="d-flex" role="search">
-                    <input id="searchInput" class="form-control me-2" onkeydown="boardSearch()" type="search" placeholder="Search" aria-label="Search">
-                    <button id="button-ad-task" type="button" class="btn btn-secondary">Add task +</button>
-                </form>
+        <div w3-include-html="templates/header.html"></div>
+        <div class="contentPosition">
+            <div class="search-board-container">
+                <h1>Board</h1>
+                <div class="container-fluid">
+                    <form class="d-flex" role="search">
+                        <input id="searchInput" class="form-control me-2" onkeydown="boardSearch()" type="search"
+                            placeholder="Search" aria-label="Search">
+                        <button id="button-ad-task" type="button" class="btn btn-secondary">Add task +</button>
+                    </form>
+                </div>
             </div>
-        </nav>
 
-        <div class="board-main-section">
+            <div class="board-main-section">
 
-            <section>
-                <div id="head-line">
-                    <h3>To do</h3>
-                    <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found">
-                </div>
-                <div id="to-do" class="container"  
-                    ondragover="allowDrop(event); highlight('to-do')"
-                    ondragleave="removeHighlight('to-do')" 
-                    ondrop="moveTo('to-do')" 
-                    >
-                </div>
-            </section>
+                <section>
+                    <div id="head-line">
+                        <h3>To do</h3>
+                        <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found">
+                    </div>
+                    <div id="to-do" class="container" ondragover="allowDrop(event); highlight('to-do')"
+                        ondragleave="removeHighlight('to-do')" ondrop="moveTo('to-do')">
+                    </div>
+                </section>
 
-            <section>
-                <div id="head-line">
-                    <h3>In progress</h3>
-                    <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found">
-                </div>
+                <section>
+                    <div id="head-line">
+                        <h3>In progress</h3>
+                        <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found">
+                    </div>
 
-                <div id="in-progress" class="container" 
-                    ondragover="allowDrop(event); highlight('in-progress')" 
-                    ondragleave="removeHighlight('in-progress')" 
-                    ondrop="moveTo('in-progress')" 
-                    >
-                </div>
-            </section>
+                    <div id="in-progress" class="container" ondragover="allowDrop(event); highlight('in-progress')"
+                        ondragleave="removeHighlight('in-progress')" ondrop="moveTo('in-progress')">
+                    </div>
+                </section>
 
-            <section>
-                <div id="head-line">
-                    <h3>Await Feedback</h3>
-                    <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found ">
-                </div>
-                <div id="awaiting-feedback" class="container" 
-                    ondragover="allowDrop(event); highlight('awaiting-feedback')" 
-                    ondragleave="removeHighlight('awaiting-feedback')" 
-                    ondrop="moveTo('awaiting-feedback')"
-                    >
-                </div>
-            </section>
+                <section>
+                    <div id="head-line">
+                        <h3>Await Feedback</h3>
+                        <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found ">
+                    </div>
+                    <div id="awaiting-feedback" class="container"
+                        ondragover="allowDrop(event); highlight('awaiting-feedback')"
+                        ondragleave="removeHighlight('awaiting-feedback')" ondrop="moveTo('awaiting-feedback')">
+                    </div>
+                </section>
 
-            <section>
-                <div id="head-line">
-                    <h3>Done</h3>
-                    <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found ">
-                </div>
-                <div id="done" class="container" 
-                    ondragover="allowDrop(event); highlight('done')"
-                    ondragleave="removeHighlight('done')" 
-                    ondrop="moveTo('done')" 
-                    >
-                </div>
-            </section>
-
+                <section>
+                    <div id="head-line">
+                        <h3>Done</h3>
+                        <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found ">
+                    </div>
+                    <div id="done" class="container" ondragover="allowDrop(event); highlight('done')"
+                        ondragleave="removeHighlight('done')" ondrop="moveTo('done')">
+                    </div>
+                </section>
+            </div>
         </div>
-        <div class="header-mobile" w3-include-html="include/header-mobile.html"></div>
     </div>
 
 </body>
