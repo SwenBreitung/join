@@ -6,29 +6,6 @@ body {
     width: 100vw;
 }
 
-header {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 100vh;
-    min-width: 200px;
-    background-color: var(--main-color) !important;
-}
-
-.header-text {
-    padding-bottom: 40px;
-}
-
-.header-text a {
-    color: var(--text-white);
-    text-decoration: none;
-}
-
-.header-bottom a {
-    color: var( --text-color);
-    text-decoration: none;
-}
 
 .summary-line {
     height: 59px;

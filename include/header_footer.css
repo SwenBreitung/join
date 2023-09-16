@@ -1,14 +1,4 @@
-header {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 100vh;
-    min-width: 200px;
-    background-color: var(--main-color) !important;
-}
-
-.header {
+.sidebar {
     display: flex;
     align-items: center;
     flex-direction: column;
