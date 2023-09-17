@@ -2,14 +2,14 @@ let todos = [{
     'id': 0,
     'title': 'This is the task',
     'status': 'to-do',
-    'description': 'This is the description',
+    'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita dolores quisquam rerum commodi deserunt nihil obcaecati minima excepturi minus mollitia at doloremque necessitatibus veniam rem doloribus aperiam laudantium, provident error.',
     'category': 'Technical Task',
     'priority': 'Low'
 }, {
     'id': 1,
-    'title': 'This is a task',
+    'title': 'HTML Base Template Creation',
     'status': 'in-progress',
-    'description': 'This is the description',
+    'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita dolores quisquam rerum commodi deserunt',
     'category': 'User Story',
     'priority': 'Medium'
 
@@ -83,12 +83,12 @@ function startDragging(id) {
 
 
 function loadTemplateCardTodo(element) {
-    return /*html*/ ` <div draggable="true" ondragstart="startDragging(${element['id']})" class = "card" >
-        <div class = "card-body" >
-            <h5 class = "card-title"> ${element['category']} </h5> 
-            <h6 class = "card-subtitle mb-2 text-body-secondary" > ${element['title']} </h6> 
-            <p id = "card-text" > ${element['description']}</p> 
-            <div id = "card-footer" >
+    return /*html*/ ` <div draggable="true" ondragstart="startDragging(${element['id']})" >
+        <div class = "task-body" >
+            <div class = "task-category"> ${element['category']} </div> 
+            <div class = "task-title"> ${element['title']} </div> 
+            <p id = "task-description" > ${element['description']}</p> 
+            <div id = "task-footer" >
                 <div id = "card-user-imgs" >
                     <div id = "card-user-img1" class = "card-user-img" > SB </div> 
                     <div id = "card-user-img2" class = "card-user-img-two card-user-img" > HB </div> 

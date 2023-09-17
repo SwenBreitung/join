@@ -13,6 +13,7 @@ body {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
+
 }
 
 
@@ -42,7 +43,7 @@ h3 {
     padding: 0px 96px;
 }
 
-#head-line {
+#headline {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -73,14 +74,35 @@ section {
 .card {
     border-radius: 24px !important;
 }
+.task-body{
+    padding: 14px;
+}
 
-#card-footer {
+.task-category {
+    background-color: var(--marketing-background);
+    border-radius: 8px;
+    padding: 4px 12px;
+    width: fit-content;
+    color: white;
+    font-size: 14px;
+    margin-bottom: 14px;
+}
+
+.task-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.task-description{}
+
+#task-footer {
     display: flex;
     justify-content: space-between;
 }
 
 #card-user-imgs {
     display: flex;
+    color: white;
 }
 
 .card-user-img {
@@ -89,31 +111,23 @@ section {
     border-radius: 58px;
     Padding: 10px, 10px, 10px, 10px;
     gap: 10px;
-    border: 2px solid #000000;
+    border: 2px solid white;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: -3px;
 }
 
-.card-user-img-one {
+.card-user-img{
     background-color: rgb(7, 198, 55);
     z-index: 2;
-}
-
-.card-user-img-two {
-    background-color: aqua;
-    z-index: 2;
-}
-
-.card-user-img-three {
-    background-color: blue;
-    z-index: 4;
 }
 
 #card-text {
     overflow-y: auto;
 }
+
+
 
 h6 {
     margin-top: 25px !important;
@@ -137,8 +151,9 @@ p {
     color: var(--text-color) !important;
 }
 
-#button-ad-task {
+#button-add-task {
     white-space: nowrap;
+    background-color: var(--main-color);
 }
 
 .drag-area-highlight {
@@ -158,8 +173,9 @@ p {
     border-color: lightgray;
     background-color: white;
 }
+
 .dialog-bg {
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
     z-index: 999;
     position: fixed;
     left: 0;
@@ -184,6 +200,8 @@ p {
     padding: 0 !important;
 }
 
+
+
 @media(max-width:600px) {
     #main-container {
         display: flex;
@@ -193,7 +211,7 @@ p {
 
     .board-main-section {
         grid-template-columns: repeat(1, 1fr);
-      
+
     }
 
     .responsive {
