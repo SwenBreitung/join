@@ -12,7 +12,7 @@ let todos = [{
     'description': 'This is the description',
     'category': 'User Story',
     'priority': 'Medium'
-    
+
 }, {
     'id': 2,
     'title': 'This is one task',

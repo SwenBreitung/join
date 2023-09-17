@@ -1,3 +1,52 @@
+const users = {
+    "user0": {
+        "name": "hello",
+        "email": "1234",
+        "password": "12345",
+        "cards": {
+            "ToDo0": {
+                "category": "Technical Task",
+                "title": "sad",
+                "text": "sadsad",
+                "time": "sadd",
+                "date": "23.13.23",
+                "priority": "medium",
+            },
+            "InProgress0": {
+                "category": "Technical Task",
+                "title": "sad",
+                "text": "sadsad",
+                "time": "sadd",
+                "date": "23.13.23",
+                "priority": "medium",
+            },
+            "AwaitFeedback0": {
+                "category": "Technical Task",
+                "title": "sad",
+                "text": "sadsad",
+                "time": "sadd",
+                "date": "23.13.23",
+                "priority": "medium",
+            },
+            "Done0": {
+                "category": "Technical Task",
+                "title": "sad",
+                "text": "sadsad",
+                "time": "sadd",
+                "date": "23.13.23",
+                "priority": "Urgent",
+            }
+        },
+        "contacts": {
+            "contact0": [{
+                "name": "sadsad",
+                "email": "adsj@asd"
+            }]
+        }
+    },
+}
+
+
 function init() {
     loadTimeOfDay();
     loadSvgPen();
@@ -44,4 +93,8 @@ function loadSvgPen() {
     const penSVGContainer = document.getElementById('penContainer'); // Ändern Sie den Namen des Elements, auf das Sie zugreifen möchten
     const penSVGContent = loadPenSvg();
     penSVGContainer.innerHTML = penSVGContent;
+}
+
+function searchFirstUrgantDate() {
+
 }
