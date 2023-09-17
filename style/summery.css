@@ -42,7 +42,20 @@ body {
     margin-left: 14px;
 }
 
-.h100px {
+#name {
+    color: var(--headline);
+}
+
+.greeting-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.data-panel {
     height: 100px;
     justify-content: space-around;
     display: flex;
@@ -55,17 +68,23 @@ body {
     align-items: center;
 }
 
-#name {
-    color: var(--headline);
+.data-panel:hover {
+    background-color: var(--main-color);
+    color: var(--main-background-color);
 }
 
-.greeting-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    text-align: center;
-    margin-top: 20px;
+.dialog:hover {
+    background-color: var(--main-color);
+    color: var(--main-background-color);
+}
+
+.dialog img:hover {
+    background-color: aliceblue;
+}
+
+#Ellipse4:hover {
+    fill: var(--text-color);
+    /* Ändert die Füllfarbe in Rot */
 }
 
 @media(max-width: 1000px) {
@@ -115,12 +134,16 @@ body {
     }
     .summary-line {
         height: 6px;
-        width: 209px;
+        width: 167px;
         background-color: var(--headline) !important;
         margin-right: 3px;
         margin-left: 2px;
     }
     h1 {
-        font-size: xxx-large;
+        font-size: 47px !important;
+    }
+    .headline {
+        display: flex;
+        flex-direction: column-reverse;
     }
 }
