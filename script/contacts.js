@@ -55,3 +55,7 @@ function getRandomColor() {
     }
     return color;
 }
+
+function addContact() {
+
+}

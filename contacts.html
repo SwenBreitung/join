@@ -27,7 +27,8 @@
         <div class="d-flex contactPage">
             <section class="contacts-container">
                 <div class="btnBackground horicontalAndVertical">
-                    <button type="button" class="btn btn-dark button horicontalAndVertical">Add new Contact</button>
+                    <button type="button" class="btn btn-dark button horicontalAndVertical" onclick="addContact()">Add
+                        new Contact</button>
                 </div>
                 <div class="scrollingContainer">
                     <div id="contactsId">
@@ -35,8 +36,15 @@
                         <div class="contact"></div>
                     </div>
                 </div>
-
             </section>
+
+            <section class="addContactBackground horicontalAndVertical">
+                <div class="addContactPopup">
+                    <div class="leftSideAddContactPopup"></div>
+                    <div class="rightSideAddContactPopup"></div>
+                </div>
+            </section>
+
             <section>
                 <div>
                     <h1>contacts</h1>
