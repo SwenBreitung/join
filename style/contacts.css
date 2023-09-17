@@ -27,6 +27,10 @@ h6 {
     margin: 0 !important;
 }
 
+.contactPage {
+    margin-top: 110px;
+}
+
 .summary-line {
     height: 59px;
     border-radius: 8px;
@@ -34,18 +38,6 @@ h6 {
     background-color: var(--headline) !important;
     margin-right: 30px;
     margin-left: 30px;
-}
-
-.contacts-container {
-    width: 400px;
-    height: 100vh;
-    padding: 32px 24px;
-    /* position: relative; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #FFF;
-    overflow-y: scroll;
 }
 
 #contactsId {
@@ -61,15 +53,20 @@ h6 {
     color: white;
 }
 
-.button {
+.btnBackground {
     position: fixed;
+    width: auto;
+    height: 101px;
+    background: white;
+}
+
+.button {
     position: relative;
     background-color: var(--main-color) !important;
     color: var(--text-white) !important;
     width: 352px;
-    height: 56px;
-    padding: 12px 0 !important;
-    margin: -12px 0 22.5px !important;
+    height: 56px !important;
+    padding: 0 !important;
     border: none !important;
 }
 
@@ -77,10 +74,21 @@ h6 {
     background: #29ABE2 !important;
 }
 
-.scrolling-container {
-    position: absolute;
-    top: 0;
-    left: 0;
+.contacts-container {
+    top: 300px;
+    width: 400px;
+    height: calc(100vh - 56px);
+    padding: 0 24px 32px;
+    margin-top: -110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #FFF;
+    overflow-y: scroll;
+}
+
+.scrollingContainer {
+    margin-top: 101px;
 }
 
 .contactsInfo {
@@ -107,4 +115,23 @@ h6 {
 
 .pointer {
     cursor: pointer;
+}
+
+@media (max-width: 700px) {
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        margin-top: 56px;
+        padding-left: 0px;
+        padding-bottom: 80px;
+        margin-bottom: 0;
+        width: 100%;
+        height: auto;
+        overflow-y: auto;
+    }
+
+    .contacts-container {
+        height: calc(100vh - 56px - 80px);
+    }
 }
