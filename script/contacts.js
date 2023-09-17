@@ -1,3 +1,9 @@
+let contactsArray = [{
+    "name": contactName,
+    "email": contacEmail,
+    "phone": contacPhone,
+}]
+
 async function initContacts() {
     await loadUsers();
     renderContacts();

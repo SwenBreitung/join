@@ -1,4 +1,6 @@
 .header {
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: 56px;
     background-color: var(--text-white);
@@ -102,9 +104,11 @@
     .sidebar {
         display: none;
     }
+
     .sidebar-mobile {
         display: flex;
     }
+
     .sidebar-text {
         padding-bottom: 0px;
         display: flex;
@@ -112,9 +116,11 @@
         align-items: center;
         border-radius: 6px;
     }
+
     .sidebar-text img {
         height: 20px;
     }
+
     .sidebar-text-area {
         /* display: flex;
         justify-content: space-between;
@@ -130,13 +136,16 @@
         width: 100%;
         flex-direction: row;
     }
+
     .sidebar-mobile {
         display: flex;
         width: 100%;
     }
+
     .police {
         display: none;
     }
+
     /* header {
         display: none;
     } */
@@ -150,6 +159,7 @@
         margin-left: 9px;
         margin-top: 0;
     }
+
     /* ? */
     /* ? */
     .header-mobile-containe {
@@ -159,6 +169,7 @@
         height: 0px;
         padding-top: 10px;
     }
+
     /* ? */
     .header-mobile {
         display: flex;

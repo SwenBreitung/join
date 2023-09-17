@@ -40,7 +40,7 @@ h6 {
     width: 400px;
     height: 100vh;
     padding: 32px 24px;
-    position: relative;
+    /* position: relative; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,11 +63,24 @@ h6 {
 
 .button {
     position: fixed;
+    position: relative;
     background-color: var(--main-color) !important;
     color: var(--text-white) !important;
     width: 352px;
     height: 56px;
-    /* margin: 22.5px 52px; */
+    padding: 12px 0 !important;
+    margin: -12px 0 22.5px !important;
+    border: none !important;
+}
+
+.button:hover {
+    background: #29ABE2 !important;
+}
+
+.scrolling-container {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .contactsInfo {
