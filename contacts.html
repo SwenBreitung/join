@@ -11,55 +11,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
-    <script defer src="./script/script.js"></script>
+    <script defer src="script/register.js"></script>
+    <script defer src="script/storge.js"></script>
+    <script defer src="script/script.js"></script>
+    <script defer src="script/log-in.js"></script>
+    <script defer src="script/contacts.js"></script>
 </head>
 
 
-<body onload="includeHTML()">
+<body onload="includeHTML(), initContacts()">
     <div w3-include-html="templates/sidebar.html"></div>
-    <!-- <header>
-        <div class="logo-container">
-            <img src="img/join.logo-white.svg" alt="">
-        </div>
-        <div>
-            <div class="header-text">
-                <img src="img/summary-icon.svg" alt="">
-                <a href="">Summery</a>
-            </div>
-
-            <div class="header-text">
-                <img src="img/add.task.icons.svg" alt="">
-                <a href="">Add Task</a>
-            </div>
-
-            <div class="header-text">
-                <img src="img/board-icon.svg" alt="">
-                <a href="">Board</a>
-            </div>
-
-            <div class="header-text">
-                <img src="img/contacts-icon.svg" alt="">
-                <a href="">Contacts</a>
-            </div>
-
-        </div>
-        <div>
-            <div class="header-bottom">
-                <a href="">Privanxe Police</a>
-            </div>
-            <div class="header-bottom">
-                <a href="">Legal notice</a>
-            </div>
-        </div>
-    </header> -->
 
     <div class="width-100P column">
         <div w3-include-html="templates/header.html"></div>
         <div class="d-flex">
-            <section class="contacts-container scrolling-container">
-                <div>
-                    <button type="button" class="btn btn-dark button">Add new Contact</button>
-                    <div id="contacts">
+            <section class="contacts-container">
+                <button type="button" class="btn btn-dark button horicontalAndVertical">Add new Contact</button>
+                <div scrolling-container>
+                    <div id="contactsId">
                         <div class="grey-line"></div>
                         <div class="contact"></div>
                     </div>

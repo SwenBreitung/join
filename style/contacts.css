@@ -6,6 +6,26 @@ body {
     width: 100vw;
 }
 
+h5 {
+    /* font settings only for testing*/
+    font-family: Inter !important;
+    font-size: 20px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 120% !important;
+    margin: 0 !important;
+}
+
+h6 {
+    /* font settings only for testing*/
+    color: #007CEE !important;
+    font-family: Inter !important;
+    font-size: 16px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 120% !important;
+    margin: 0 !important;
+}
 
 .summary-line {
     height: 59px;
@@ -17,14 +37,61 @@ body {
 }
 
 .contacts-container {
-    width: 500px;
+    width: 400px;
+    height: 100vh;
+    padding: 32px 24px;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: #FFF;
     overflow-y: scroll;
 }
 
+#contactsId {
+    /* calc(100vh - "height from header") */
+    height: calc(100vh - 166px);
+}
+
+.profilePicture {
+    height: 42px;
+    width: 42px;
+    border-radius: 100%;
+    margin-right: 35px;
+    color: white;
+}
+
 .button {
+    position: fixed;
     background-color: var(--main-color) !important;
     color: var(--text-white) !important;
+    width: 352px;
+    height: 56px;
+    /* margin: 22.5px 52px; */
+}
+
+.contactsInfo {
+    padding: 15px 24px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.contactsInfo:hover {
+    background: #F2F2F2;
+}
+
+/* Basics */
+.horicontal {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.horicontalAndVertical {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.pointer {
+    cursor: pointer;
 }
