@@ -15,6 +15,31 @@
     --sidebarSelectedPage: #091931;
 }
 
+.content {
+    display: flex;
+    flex-direction: column;
+    padding-left: 200px;
+    margin-top: 56px;
+    width: 100%;
+    height: auto;
+    overflow-y: auto;
+}
+
+@media (max-width: 700px) {
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        margin-top: 56px;
+        padding-left: 0px;
+        padding-bottom: 80px;
+        margin-bottom: 0;
+        width: 100%;
+        height: auto;
+        overflow-y: auto;
+    }
+}
+
 .dialog {
     background-color: var(--text-white);
     display: flex;
