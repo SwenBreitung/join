@@ -84,6 +84,15 @@ textarea {
     outline: none;
 }
 
+
+.prioButtonContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 19px;
+}
+
+
 .prioBtn {
     display: flex;
     font-size: 16px;
@@ -103,16 +112,6 @@ textarea {
 .prioBtnAktiv {
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
     background-color: #FF3D00;
-}
-
-.content {
-    display: flex;
-    flex-direction: column;
-    padding-left: 200px;
-    margin-top: 56px;
-    width: 100%;
-    height: auto;
-    overflow-y: auto;
 }
 
 .contentPosition {
@@ -316,15 +315,85 @@ textarea {
 
 @media (max-width: 700px) {
 
-    .content {
+    .contentPosition {
+        padding-left: 12px;
+        padding-right: 15px;
         display: flex;
         flex-direction: column;
-        margin-top: 56px;
-        padding-left: 0px;
-        padding-bottom: 80px;
-        margin-bottom: 0;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+
+    .taskArea {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: unset;
         width: 100%;
         height: auto;
-        overflow-y: auto;
+        max-height: none;
     }
+
+
+    .selectBtnArea {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+
+    .boxLeft {
+        padding-right: 0px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-width: 0px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .boxRight {
+        padding-left: 0px;
+        display: flex;
+        flex-direction: column;
+        border-left: none;
+        flex: 1;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+}
+
+@media (max-width: 400px) {
+
+    .prioButtonContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        width: 100%;
+        gap: 16px;
+
+    }
+
+
+    .prioBtn {
+        display: flex;
+        font-size: 16px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 7px;
+        line-height: 120%;
+        padding: 10px 14px;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
+        border-radius: 10px;
+        background-color: #FFFFFF;
+        margin-top: 5px !important;
+        width: 100%;
+    }
+
 }
