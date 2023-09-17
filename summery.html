@@ -21,81 +21,87 @@
 <body onload="includeHTML(), init()">
     <header>
         <div w3-include-html="templates/sidebar.html"></div>
-    </header>
-
-    <div class="width-100P column">
         <div w3-include-html="templates/header.html"></div>
-        <div class="width-100P main-containe">
-            <div class="justifyContent">
-                <div id="header-summary">
-                    <h1>Summary</h1>
-                    <div class="headline">
-                        <div class="summary-line"></div>
-                        <div>Everything in a nutshell!</div>
-                    </div>
-                </div>
-
-
-                <div class="d-flex gap-32 width-100P p-90px">
-                    <div>
-                        <div class="" id="tasks">
-                            <div class="task-cards dialog" id="load-bord-task">
-                                <div id="board" class="fw-bold d-flex align-items-center justify-content-center">5</div>
-                                <span>task in</span>
-                                <span> bord</span>
-                            </div>
-                            <div class="task-cards dialog" id="load-progress-task">
-                                <div id="in-progress" class="fw-bold d-flex align-items-center justify-content-center">5</div>
-                                <span>task in</span>
-                                <span> Progress</span>
-                            </div>
-                            <div class="task-cards dialog" id="load-feedback-task">
-                                <div id="await-feedback" class="fw-bold d-flex align-items-center justify-content-center">5</div>
-                                <span>Awaiting</span>
-                                <span> Feedback</span>
-                            </div>
-                        </div>
-                        <div class="data-panel">
-                            <div class="d-flex">
-                                <img src="./img/prioUrgent.svg" alt="">
-                                <div> 1 urgant</div>
-                            </div>
-                            <div class="h-75 line-grey"></div>
-                            <div id="date"> Data</div>
-                        </div>
-                        <div class="d-flex  gap-32">
-                            <div class="d-flex data-panel w-50 ">
-                                <img src="./img/chop.svg" alt="">
-
-                                <div>
-                                    <div id="to-dos" class="fw-bold d-flex align-items-center justify-content-center ">1</div>
-                                    <div>Todo</div>
-                                </div>
-                            </div>
-                            <div class="d-flex data-panel w-50">
-                                <img #id="pen" src="./img/pen.svg" alt="">
-                                <div>
-                                    <div id="done" class="fw-bold d-flex align-items-center justify-content-center ">1</div>
-                                    <div>Done</div>
-                                </div>
-                            </div>
-
+    </header>
+    <div class="content">
+        <div class="width-100P column">
+            <div class="width-100P main-containe">
+                <div class="justifyContent">
+                    <div id="header-summary">
+                        <h1>Summary</h1>
+                        <div class="headline">
+                            <div class="summary-line"></div>
+                            <div>Everything in a nutshell!</div>
                         </div>
                     </div>
 
-                </div>
-            </div>
-            <div class="fw-bold greeting-text ">
-                <div class="d-flex fw-bold d-flex align-items-center justify-content-center  flex-column">
-                    <span id="time-of-day"> Good Morning,</span>
-                    <h1 id="name">Name</h1>
-                </div>
-            </div>
 
+                    <div class="d-flex gap-32 width-100P p-90px">
+                        <div>
+                            <div class="" id="tasks">
+                                <div class="task-cards dialog" id="load-bord-task">
+                                    <div id="board" class="fw-bold d-flex align-items-center justify-content-center">5
+                                    </div>
+                                    <span>task in</span>
+                                    <span> bord</span>
+                                </div>
+                                <div class="task-cards dialog" id="load-progress-task">
+                                    <div id="in-progress"
+                                        class="fw-bold d-flex align-items-center justify-content-center">5</div>
+                                    <span>task in</span>
+                                    <span> Progress</span>
+                                </div>
+                                <div class="task-cards dialog" id="load-feedback-task">
+                                    <div id="await-feedback"
+                                        class="fw-bold d-flex align-items-center justify-content-center">5</div>
+                                    <span>Awaiting</span>
+                                    <span> Feedback</span>
+                                </div>
+                            </div>
+                            <div class="data-panel">
+                                <div class="d-flex">
+                                    <img src="./img/prioUrgent.svg" alt="">
+                                    <div> 1 urgant</div>
+                                </div>
+                                <div class="h-75 line-grey"></div>
+                                <div id="date"> Data</div>
+                            </div>
+                            <div class="d-flex  gap-32">
+                                <div class="d-flex data-panel w-50 ">
+                                    <img src="./img/chop.svg" alt="">
+
+                                    <div>
+                                        <div id="to-dos"
+                                            class="fw-bold d-flex align-items-center justify-content-center ">1</div>
+                                        <div>Todo</div>
+                                    </div>
+                                </div>
+                                <div class="d-flex data-panel w-50">
+                                    <img #id="pen" src="./img/pen.svg" alt="">
+                                    <div>
+                                        <div id="done"
+                                            class="fw-bold d-flex align-items-center justify-content-center ">1</div>
+                                        <div>Done</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="fw-bold greeting-text ">
+                    <div class="d-flex fw-bold d-flex align-items-center justify-content-center  flex-column">
+                        <span id="time-of-day"> Good Morning,</span>
+                        <h1 id="name">Name</h1>
+                    </div>
+                </div>
+
+            </div>
+            <div class="header-mobile" w3-include-html="templates/header-mobile.html"></div>
         </div>
-        <div class="header-mobile" w3-include-html="templates/header-mobile.html"></div>
+        <div id="penContainer"></div>
     </div>
-    <div id="penContainer"></div>
 </body>
 
 </html>
