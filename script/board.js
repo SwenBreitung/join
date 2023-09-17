@@ -70,6 +70,12 @@ function loadTemplateCardsToDo() {
     }
 }
 
+function openCard(){
+    document.getElementById('popup-container').classList.remove('d-none');
+    document.getElementById('popup-container').innerHTML = `
+    <div class="task-detail"></div>
+    `;
+}
 
 function startDragging(id) {
     currentDragElement = id;
