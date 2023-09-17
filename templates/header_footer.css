@@ -1,4 +1,8 @@
 .header {
+    position: fixed;
+    top: 0;
+    left: 200px;
+    z-index: 1;
     width: 100%;
     height: 56px;
     background-color: var(--text-white);
@@ -6,9 +10,11 @@
     display: flex;
     align-items: center;
     padding: 0 96px;
-    margin-bottom: 110px;
 }
 
+.headerHeadLineBox {
+    display: flex;
+}
 
 /* ? */
 
@@ -17,6 +23,9 @@
 }
 
 .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -24,17 +33,18 @@
     height: 100vh;
     width: 200px;
     background-color: var(--main-color) !important;
+    z-index: 1;
 }
 
 .sidebar-text {
     width: 100%;
-    padding-bottom: 20px;
+    padding-bottom: 15px;
     display: flex;
-    padding-top: 20px;
+    padding-top: 15px;
 }
 
 .sidebar-text:hover {
-    background-color: var(--hover-color) !important;
+    background-color: var(--sidebarHoverElements) !important;
 }
 
 .sidebar-text-sub {
@@ -60,6 +70,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 5px;
 }
 
 .police {
@@ -98,45 +109,86 @@
     }
 }
 
-@media(max-width: 600px) {
+@media(max-width: 700px) {
+
+
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0px;
+        z-index: 1;
+        width: 100%;
+        height: 56px;
+        background-color: var(--text-white);
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10);
+        display: flex;
+        align-items: center;
+        padding: 0 59px;
+        margin-bottom: 110px;
+    }
+
+
     .sidebar {
+        position: fixed;
+        left: 0;
+        top: unset;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        height: 80px;
+        width: 100vw;
+        background-color: var(--main-color) !important;
+    }
+
+    .logo-container {
         display: none;
     }
-    .sidebar-mobile {
-        display: flex;
+
+
+    .sidebar-bottom {
+        display: none;
     }
+
     .sidebar-text {
-        padding-bottom: 0px;
+        padding-bottom: 13px;
+        padding-top: 13px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        border-radius: 6px;
+        border-radius: 15px;
+        font-size: 15px;
+        width: 23%;
     }
-    .sidebar-text img {
-        height: 20px;
-    }
-    .sidebar-text-area {
-        /* display: flex;
-        justify-content: space-between;
-        margin-right: 8px;
-        margin-left: 10px;
-        width: 100%;
-        flex-direction: row;
+
+    .sidebar-text-sub {
+        display: flex;
+        flex-direction: column;
         align-items: center;
-        flex-direction: column; */
+        padding-left: 0px;
+    }
+
+    .sidebar-text img {
+        height: 26px;
+        width: 26px;
+    }
+
+    .sidebar-text-area {
         display: flex;
-        margin-right: 8px;
-        margin-left: 10px;
+        align-items: center;
+        flex-direction: column;
+        display: flex;
+        margin-right: 0px;
+        margin-left: 0px;
         width: 100%;
         flex-direction: row;
     }
-    .sidebar-mobile {
-        display: flex;
-        width: 100%;
-    }
+
     .police {
         display: none;
     }
+
     /* header {
         display: none;
     } */
@@ -150,6 +202,7 @@
         margin-left: 9px;
         margin-top: 0;
     }
+
     /* ? */
     /* ? */
     .header-mobile-containe {
@@ -159,10 +212,22 @@
         height: 0px;
         padding-top: 10px;
     }
+
     /* ? */
     .header-mobile {
         display: flex;
         background-color: var(--main-color);
         width: 100%;
     }
+
+    .sidebar-mobile {
+        display: flex;
+    }
+
+    .sidebar-mobile {
+        display: flex;
+        width: 100%;
+    }
+
+
 }

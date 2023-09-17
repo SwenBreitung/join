@@ -6,6 +6,30 @@ body {
     width: 100vw;
 }
 
+h5 {
+    /* font settings only for testing*/
+    font-family: Inter !important;
+    font-size: 20px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 120% !important;
+    margin: 0 !important;
+}
+
+h6 {
+    /* font settings only for testing*/
+    color: #007CEE !important;
+    font-family: Inter !important;
+    font-size: 16px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 120% !important;
+    margin: 0 !important;
+}
+
+.contactPage {
+    margin-top: 110px;
+}
 
 .summary-line {
     height: 59px;
@@ -16,15 +40,174 @@ body {
     margin-left: 30px;
 }
 
-.contacts-container {
-    width: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-y: scroll;
+#contactsId {
+    /* calc(100vh - "height from header") */
+    height: calc(100vh - 166px);
+}
+
+.profilePicture {
+    height: 42px;
+    width: 42px;
+    border-radius: 100%;
+    margin-right: 35px;
+    color: white;
+}
+
+.btnBackground {
+    position: fixed;
+    width: auto;
+    height: 101px;
+    background: white;
 }
 
 .button {
+    position: relative;
     background-color: var(--main-color) !important;
     color: var(--text-white) !important;
+    width: 352px;
+    height: 56px !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+.button:hover {
+    background: #29ABE2 !important;
+}
+
+.contacts-container {
+    top: 300px;
+    width: 400px;
+    height: calc(100vh - 56px);
+    padding: 0 24px 32px;
+    margin-top: -110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #FFF;
+    overflow-y: scroll;
+}
+
+.scrollingContainer {
+    margin-top: 101px;
+}
+
+.contactsInfo {
+    padding: 15px 24px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.contactsInfo:hover {
+    background: #F2F2F2;
+}
+
+/* add contact container */
+.addContactBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.addContactPopup {
+    width: 1212px;
+    height: 592px;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 35px;
+    border-top-left-radius: 35px;
+    background: #FFF;
+}
+
+.leftSideAddContactPopup {
+    position: relative;
+    height: 100%;
+    width: 476px;
+    background: #2A3647;
+    border-radius: 30px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 30px;
+    border-top-left-radius: 30px;
+    color: white;
+    padding: 66px 46px;
+}
+
+.leftSideAddContactPopup img {
+    position: absolute;
+    top: 154px;
+    left: 48px;
+    width: 55.6px;
+    height: 66.483px;
+    display: flex;
+}
+
+.addContactLeftText {
+    position: relative;
+    width: 371px;
+    height: 113px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-bottom: 17.5px;
+}
+
+.blueLine {
+    position: absolute;
+    /* Dieses bottom muss später noch angepasst werden */
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 90px;
+    background: #29ABE2;
+    border-radius: 1.5px;
+}
+
+/* Basics */
+.horicontal {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.horicontalAndVertical {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.contentContact {
+    display: flex;
+    flex-direction: column;
+    padding-left: 200px;
+    margin-top: 56px;
+    width: 100%;
+    height: auto;
+    overflow-y: auto;
+}
+
+
+@media (max-width: 700px) {
+
+    .contentContact {
+        display: flex;
+        flex-direction: column;
+        margin-top: 56px;
+        padding-left: 0px;
+        padding-bottom: 80px;
+        margin-bottom: 0;
+        width: 100%;
+        height: auto;
+        overflow-y: auto;
+    }
+
+    .contacts-container {
+        height: calc(100vh - 56px - 80px);
+    }
 }

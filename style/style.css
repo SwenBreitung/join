@@ -11,6 +11,40 @@
     --main-background-color: #F6F7F8;
     --headline: #29ABE2;
     --hover-color: #091931;
+    --sidebarHoverElements: #2A3D59;
+    --sidebarSelectedPage: #091931;
+}
+
+.content {
+    position: absolute;
+    top: 0px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    left: 200px;
+    max-width: calc(100vw - 200px);
+    margin-top: 56px;
+    width: 100%;
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+}
+
+@media (max-width: 700px) {
+
+    .content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 80px !important;
+        display: flex;
+        flex-direction: column;
+        padding-left: 0px;
+        margin-bottom: 0;
+        width: 100%;
+        max-width: 100vw !important;
+        max-height: calc(100vh - 136px);
+        overflow-y: auto;
+    }
 }
 
 .dialog {

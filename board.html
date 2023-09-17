@@ -19,10 +19,9 @@
 <body onload="init()">
 
     <div w3-include-html="templates/sidebar.html"></div>
-
+    <div w3-include-html="templates/header.html"></div>
+<div id="popup-container" class="dialog-bg d-none"></div>
     <div class="content">
-
-        <div w3-include-html="templates/header.html"></div>
         <div class="contentPosition">
             <div class="search-board-container">
                 <h1>Board</h1>
@@ -30,7 +29,7 @@
                     <form class="d-flex" role="search">
                         <input id="searchInput" class="form-control me-2" onkeydown="boardSearch()" type="search"
                             placeholder="Search" aria-label="Search">
-                        <button id="button-ad-task" type="button" class="btn btn-secondary">Add task +</button>
+                        <button onclick="openCard()" id="button-ad-task" type="button" class="btn btn-secondary">Add task +</button>
                     </form>
                 </div>
             </div>
