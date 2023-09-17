@@ -11,6 +11,11 @@ body {
     width: 100vw;
 }
 
+.headline {
+    display: flex;
+    align-items: center;
+}
+
 .main-containe {
     display: flex;
     justify-content: space-around;
@@ -82,6 +87,12 @@ body {
     background-color: aliceblue;
 }
 
+#name {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
 #Ellipse4:hover {
     fill: var(--text-color);
     /* Ändert die Füllfarbe in Rot */
@@ -112,6 +123,26 @@ body {
         width: 145px;
         height: 145px;
         display: none;
+    }
+}
+
+#time-of-day {
+    font-size: 30px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#time-of-day {
+    font-size: 30px;
+    display: unset;
+}
+
+@media(max-width:926px) {
+    #time-of-day {
+        font-size: 30px;
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
     }
 }
 
