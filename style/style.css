@@ -11,6 +11,8 @@
     --main-background-color: #F6F7F8;
     --headline: #29ABE2;
     --hover-color: #091931;
+    --sidebarHoverElements: #2A3D59;
+    --sidebarSelectedPage: #091931;
 }
 
 .dialog {

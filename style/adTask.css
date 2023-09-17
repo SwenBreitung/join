@@ -108,8 +108,10 @@ textarea {
 .content {
     display: flex;
     flex-direction: column;
+    padding-left: 200px;
+    margin-top: 56px;
     width: 100%;
-    height: 100vh;
+    height: auto;
     overflow-y: auto;
 }
 
@@ -120,14 +122,12 @@ textarea {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    /* margin-top: -65px; */
 }
 
 .taskArea {
     display: flex;
     justify-content: center;
     width: 100%;
-    overflow-y: auto;
     height: auto;
 }
 
@@ -278,7 +278,6 @@ textarea {
         align-items: center;
         justify-content: unset;
         width: 100%;
-        overflow-y: auto;
         height: auto;
         max-height: none;
     }
@@ -313,4 +312,19 @@ textarea {
         box-sizing: border-box;
     }
 
+}
+
+@media (max-width: 700px) {
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        margin-top: 56px;
+        padding-left: 0px;
+        padding-bottom: 80px;
+        margin-bottom: 0;
+        width: 100%;
+        height: auto;
+        overflow-y: auto;
+    }
 }
