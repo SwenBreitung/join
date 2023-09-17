@@ -117,9 +117,20 @@ h6 {
     cursor: pointer;
 }
 
+.contentContact {
+    display: flex;
+    flex-direction: column;
+    padding-left: 200px;
+    margin-top: 56px;
+    width: 100%;
+    height: auto;
+    overflow-y: auto;
+}
+
+
 @media (max-width: 700px) {
 
-    .content {
+    .contentContact {
         display: flex;
         flex-direction: column;
         margin-top: 56px;

@@ -179,8 +179,8 @@
         align-items: center;
         flex-direction: column;
         display: flex;
-        margin-right: 8px;
-        margin-left: 10px;
+        margin-right: 0px;
+        margin-left: 0px;
         width: 100%;
         flex-direction: row;
     }
