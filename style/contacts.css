@@ -195,7 +195,6 @@ h6 {
 
 @media (max-width: 700px) {
 
-<<<<<<< HEAD
     .contentContact {
         display: flex;
         flex-direction: column;
@@ -208,8 +207,6 @@ h6 {
         overflow-y: auto;
     }
 
-=======
->>>>>>> 1954f36409d5be3b02416ddd94dd23afb45f2820
     .contacts-container {
         height: calc(100vh - 56px - 80px);
     }
