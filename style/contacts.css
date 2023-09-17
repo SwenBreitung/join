@@ -123,6 +123,7 @@ h6 {
 }
 
 .leftSideAddContactPopup {
+    position: relative;
     height: 100%;
     width: 476px;
     background: #2A3647;
@@ -131,6 +132,38 @@ h6 {
     border-top-right-radius: 0;
     border-bottom-left-radius: 30px;
     border-top-left-radius: 30px;
+    color: white;
+    padding: 66px 46px;
+}
+
+.leftSideAddContactPopup img {
+    position: absolute;
+    top: 154px;
+    left: 48px;
+    width: 55.6px;
+    height: 66.483px;
+    display: flex;
+}
+
+.addContactLeftText {
+    position: relative;
+    width: 371px;
+    height: 113px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-bottom: 17.5px;
+}
+
+.blueLine {
+    position: absolute;
+    /* Dieses bottom muss später noch angepasst werden */
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 90px;
+    background: #29ABE2;
+    border-radius: 1.5px;
 }
 
 /* Basics */
