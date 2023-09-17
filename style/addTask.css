@@ -17,10 +17,6 @@ section {
     gap: 16px;
 }
 
-.m-bottom40 {
-    margin-bottom: 40px;
-}
-
 .dFlex {
     display: flex;
 }
@@ -45,6 +41,39 @@ input {
     outline: none;
 }
 
+
+.contentAddTask {
+    position: absolute;
+    top: 110px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    left: 200px;
+    max-width: calc(100vw - 200px);
+    margin-top: 56px;
+    width: 100%;
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+}
+
+
+.addTaskHeadlineContainer {
+    position: fixed;
+    height: 110px;
+    width: 100%;
+    background-color: #F6F7F8 !important;
+    display: flex;
+    align-items: end;
+    padding-bottom: 20px;
+    top: 0;
+    right: 5px;
+    display: flex;
+    left: 296px;
+    max-width: calc(100vw - 296px);
+    margin-top: 62px;
+    z-index: 2;
+}
+
 .mySelect {
     appearance: none;
     background: url('../img/arrow_drop_downaa.svg') no-repeat right center;
@@ -57,7 +86,6 @@ input {
     margin-top: 5px !important;
     margin-bottom: 16px !important;
     outline: none;
-
 }
 
 #datepicker {
@@ -115,6 +143,7 @@ textarea {
 }
 
 .contentPosition {
+    position: relative;
     padding-left: 96px;
     padding-right: 96px;
     display: flex;
@@ -221,6 +250,13 @@ textarea {
 
 @media (max-width: 1080px) {
 
+    .addTaskHeadlineContainer {
+        top: 0px;
+        left: 259px;
+        max-width: calc(100vw - 259px);
+    }
+
+
     .contentPosition {
         padding-left: 59px;
         padding-right: 59px;
@@ -314,6 +350,37 @@ textarea {
 }
 
 @media (max-width: 700px) {
+
+    .contentAddTask {
+        position: absolute;
+        top: 110px;
+        bottom: 80px;
+        display: flex;
+        flex-direction: column;
+        left: 0px;
+        max-width: unset;
+        margin-top: 56px;
+        width: 100%;
+        max-height: calc(100vh - 136px);
+        overflow-y: auto;
+        -ms-overflow-style: none !important;
+        scrollbar-width: none !important;
+    }
+
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+
+
+    .addTaskHeadlineContainer {
+        top: 0px;
+        left: 12px;
+        max-width: calc(100vw - 12px);
+    }
+
+
 
     .contentPosition {
         padding-left: 12px;
