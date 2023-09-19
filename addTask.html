@@ -10,6 +10,7 @@
     <script defer src="./script/addTask.js"></script>
     <script defer src="./script/storge.js"></script>
 
+    <link rel="shortcut icon" href="img/Logo for Favicon construction.svg" type="image/x-icon">
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/addTask.css">
     <link rel="stylesheet" href="templates/header_footer.css">
@@ -28,7 +29,7 @@
         <div class="contentPosition">
             <div class="taskArea">
                 <div class="boxLeft">
-                    <div>
+                    <div class="marginBottom16">
                         <span>Titel</span>
                         <input placeholder="Enter a title" type="text">
                     </div>
@@ -38,12 +39,68 @@
                     </div>
                     <div>
                         <span>Assigned to</span>
-                        <select class="mySelect" id="myAssignedSelect">
-                            <option value="">Select contacts to assign</option>
-                            <option value="Option1">Option 1</option>
-                            <option value="Option2">Option 2</option>
-                            <option value="Option3">Option 3</option>
-                        </select>
+                        <div>
+                            <div class="custom-select marginBottom16" id="assignedToInputContainer">
+                                <input class="click" id="assignedToInputCover"
+                                    onclick="toggleVisibility('assignedToInputContainer', 'assignedToContactsInputContainer')"
+                                    type="text" readonly value="Select contacts to assign">
+                                <img onclick="toggleVisibility('assignedToInputContainer', 'assignedToContactsInputContainer')"
+                                    class="inputAbsolut" src="img/arrow_drop_downaa.svg">
+                                <div id="selectedContactsContainer">
+                                    <div style="background-color: red;" class="assignedToContactImg">AS</div>
+                                    <div style="background-color: blue;" class="assignedToContactImg">KM</div>
+                                    <div style="background-color: yellow;" class="assignedToContactImg">SU</div>
+                                </div>
+                            </div>
+                            <div class="custom-select d-none" id="assignedToContactsInputContainer">
+                                <input class="click" id="assignedToInput" type="text" value="An:" readonly>
+                                <img class="inputAbsolut"
+                                    onclick="toggleVisibility('assignedToContactsInputContainer', 'assignedToInputContainer')"
+                                    src="img/arrow_drop_up.svg">
+                                <div class="selectContactsPositionContainer show-scrollbar">
+                                    <div class="assignedContactsBox" id="assignedContactsBox"
+                                        onclick="toggleClass('assignedContactsBox', true, 'assignedBox', 'assignedBoxChecked')">
+                                        <div class="contactBoxLeft">
+                                            <div style="background-color: red;" class="assignedToContactImg">AS</div>
+                                            <span>Name</span>
+                                        </div>
+                                        <img src="img/addTaskBox.svg" id="assignedBox" alt="">
+                                        <img src="img/addTaskCheckBox.svg" class="d-none" id="assignedBoxChecked">
+                                    </div>
+                                    <div class="assignedContactsBox" id="assignedContactsBox"
+                                        onclick="toggleClass('assignedContactsBox', true, 'assignedBox', 'assignedBoxChecked')">
+                                        <div class="contactBoxLeft">
+                                            <div style="background-color: blue;" class="assignedToContactImg">AS</div>
+                                            <span>Name</span>
+                                        </div>
+                                        <img src="img/addTaskBox.svg" id="assignedBox" alt="">
+                                        <img src="img/addTaskCheckBox.svg" class="d-none" id="assignedBoxChecked">
+                                    </div>
+                                    <div class="assignedContactsBox" id="assignedContactsBox"
+                                        onclick="toggleClass('assignedContactsBox', true, 'assignedBox', 'assignedBoxChecked')">
+                                        <div class="contactBoxLeft">
+                                            <div style="background-color: yellow;" class="assignedToContactImg">AS</div>
+                                            <span>Name</span>
+                                        </div>
+                                        <img src="img/addTaskBox.svg" id="assignedBox" alt="">
+                                        <img src="img/addTaskCheckBox.svg" class="d-none" id="assignedBoxChecked">
+                                    </div>
+                                    <div class="assignedContactsBox" id="assignedContactsBox"
+                                        onclick="toggleClass('assignedContactsBox', true, 'assignedBox', 'assignedBoxChecked')">
+                                        <div class="contactBoxLeft">
+                                            <div style="background-color: red;" class="assignedToContactImg">AS</div>
+                                            <span>Name</span>
+                                        </div>
+                                        <img src="img/addTaskBox.svg" id="assignedBox" alt="">
+                                        <img src="img/addTaskCheckBox.svg" class="d-none" id="assignedBoxChecked">
+                                    </div>
+                                    <div class="addNewContactBtn">
+                                        <span>Add new contact</span>
+                                        <img class="addNewContactBtnIcon" src="img/addTaskperson_add.svg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="boxRight">
@@ -51,15 +108,29 @@
                         <div>
                             <span>Due date</span>
                             <div>
-                                <input placeholder="dd/mm/yyyy" value="" type="text" id="datepicker">
+                                <input placeholder="dd/mm/yyyy" type="text" id="datepicker">
                             </div>
                         </div>
-                        <div class="column">
+                        <div class="column marginTop16">
                             <span>Prio</span>
                             <div class="prioButtonContainer">
-                                <div class="prioBtn">Urgent<img src="./img/prioUrgent.svg" alt=""></div>
-                                <div class="prioBtn">Medium<img src="./img/prioMedium.svg" alt=""></div>
-                                <div class="prioBtn">Low<img src="./img/prioLow.svg" alt=""></div>
+                                <div onclick="prioSelected('prioUrgentBtn', 'prioUrgentIcon', 'prioUrgentIconActiv', 'prioBtnActivUrgent', true)"
+                                    id="prioUrgentBtn" class="prioBtn">Urgent
+                                    <img id="prioUrgentIcon" class="prioBtnIcons" src="./img/prioUrgent.svg">
+                                    <img id="prioUrgentIconActiv" class="prioBtnIcons d-none"
+                                        src="./img/PrioUrgentWhite.svg">
+                                </div>
+                                <div onclick="prioSelected('prioMediumBtn', 'prioMediumIcon', 'prioMediumIconActiv', 'prioBtnActivMedium', true)"
+                                    id="prioMediumBtn" class="prioBtn">Medium
+                                    <img id="prioMediumIcon" class="prioBtnIcons" src="./img/prioMedium.svg">
+                                    <img id="prioMediumIconActiv" class="prioBtnIcons d-none"
+                                        src="./img/PrioMediumWhite.svg">
+                                </div>
+                                <div onclick="prioSelected('prioLowBtn', 'prioLowIcon', 'prioLowIconActiv', 'prioBtnActivLow', true)"
+                                    id="prioLowBtn" class="prioBtn">Low
+                                    <img id="prioLowIcon" class="prioBtnIcons" src="./img/prioLow.svg">
+                                    <img id="prioLowIconActiv" class="prioBtnIcons d-none" src="./img/PrioLowWhite.svg">
+                                </div>
                             </div>
                         </div>
                         <div class="column">
@@ -77,7 +148,7 @@
                                 <input placeholder="Add new subtask" id="subTaskSelectBox">
                                 <img class="inputAbsolut" src="img/plusAddTask.svg" alt="">
                             </div>
-                            <div class="selectedTask" id="selectedTask">
+                            <div class="selectedTask show-scrollbar" id="selectedTask">
                                 <ul class="dFlex spaceBtw">
                                     <li>task</li>
                                     <div>
