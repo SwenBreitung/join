@@ -27,7 +27,8 @@
         <div class="d-flex contactPage">
             <section class="contacts-container">
                 <div class="btnBackground horicontalAndVertical">
-                    <button type="button" class="btn btn-dark button horicontalAndVertical" onclick="addContact()">Add
+                    <button type="button" class="btn btn-dark addNewContactButton horicontalAndVertical"
+                        onclick="addContact()">Add
                         new Contact</button>
                 </div>
                 <div class="scrollingContainer">
@@ -39,7 +40,7 @@
             </section>
 
             <section class="addContactBackground horicontalAndVertical">
-                <div class="addContactPopup">
+                <div class="addContactPopup d-flex">
                     <div class="leftSideAddContactPopup horicontal">
                         <img src="./img/join.logo-white.svg">
                         <div class="addContactLeftText">
@@ -49,7 +50,35 @@
                             </div>
                         </div>
                     </div>
-                    <div class="rightSidePopup"></div>
+                    <div class="rightSidePopup d-flex">
+                        <div class="profilePictureArea vertical">
+                            <img class="circle" src="./img/Group 9.svg">
+                            <img class="personInCircle" src="./img/person.svg">
+                        </div>
+                        <form class="contactInfo column" onsubmit="createContact(); return false;">
+                            <div class="inputName">
+                                <input type="text" placeholder="Name" required>
+                                <img src="./img/user.svg">
+                            </div>
+                            <div class="inputEmail">
+                                <input type="email" placeholder="Email" required>
+                                <img src="./img/letter.svg">
+                            </div>
+                            <div class="inputPhone">
+                                <input type="tel" placeholder="Phone" required>
+                                <img src="./img/letter.svg">
+                            </div>
+                            <div class="d-flex textHorizontal addContactButtonContainer">
+                                <a href="#" class="cancelBtn d-flex">
+                                    Cancel
+                                    <img src="./img/close.svg">
+                                </a>
+                                <button class="btn btn-dark createContactButton horicontalAndVertical"><b>Create
+                                        contact</b>
+                                    <img src="./img/check.svg"></button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </section>
 

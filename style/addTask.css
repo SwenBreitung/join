@@ -9,6 +9,10 @@ section {
     flex-direction: column;
 }
 
+.click:hover {
+    cursor: pointer;
+}
+
 .wrap {
     flex-wrap: wrap;
 }
@@ -17,8 +21,12 @@ section {
     gap: 16px;
 }
 
-.m-bottom40 {
-    margin-bottom: 40px;
+.marginTop16 {
+    margin-top: 16px;
+}
+
+.marginBottom16 {
+    margin-bottom: 16px;
 }
 
 .dFlex {
@@ -33,6 +41,10 @@ section {
     justify-content: center;
 }
 
+.d-none {
+    display: none;
+}
+
 
 input {
     border-radius: 5px;
@@ -41,35 +53,33 @@ input {
     width: 100%;
     padding: 10px;
     margin-top: 5px !important;
-    margin-bottom: 16px !important;
     outline: none;
 }
 
-.mySelect {
-    appearance: none;
-    background: url('../img/arrow_drop_downaa.svg') no-repeat right center;
-    background-position-x: calc(97%) !important;
-    border-radius: 5px;
-    border: 1px solid #D1D1D1;
-    background-color: #FFF;
+
+.custom-select {
+    position: relative;
     width: 100%;
-    padding: 10px;
-    margin-top: 5px !important;
-    margin-bottom: 16px !important;
-    outline: none;
-
 }
 
-#datepicker {
-    background-image: url('../img/kalenderJoin.svg');
-    /* Ersetzen Sie 'pfad-zum-bild/kalender-symbol.png' durch den Pfad zu Ihrem Bild */
-    background-repeat: no-repeat;
-    background-position-x: calc(96%) !important;
-    background-position: center;
+
+.inputAbsolut {
+    position: absolute;
+    right: 15px;
+    top: 14px;
+    padding: 1px;
 }
 
-.pika-single {
-    z-index: 1000;
+
+.inputAbsolut:hover {
+    cursor: pointer;
+    background-color: #EEE;
+    border-radius: 50%;
+}
+
+
+input:focus {
+    border: 1px solid #29ABE2;
 }
 
 
@@ -85,6 +95,70 @@ textarea {
 }
 
 
+textarea:focus {
+    border: 1px solid #29ABE2;
+}
+
+
+.addTaskHeadlineContainer {
+    position: fixed;
+    height: 110px;
+    width: 100%;
+    background-color: #F6F7F8 !important;
+    display: flex;
+    align-items: end;
+    padding-bottom: 15px;
+    top: 0;
+    right: 5px;
+    display: flex;
+    left: 296px;
+    max-width: calc(100vw - 296px);
+    margin-top: 62px;
+    z-index: 2;
+}
+
+
+.contentAddTask {
+    position: absolute;
+    top: 115px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    left: 200px;
+    max-width: calc(100vw - 200px);
+    margin-top: 56px;
+    width: 100%;
+    max-height: calc(100vh - 115px);
+    overflow-y: auto;
+}
+
+
+.mySelect {
+    appearance: none;
+    background: url('../img/arrow_drop_downaa.svg') no-repeat right center;
+    background-position-x: calc(97%) !important;
+    border-radius: 5px;
+    border: 1px solid #D1D1D1;
+    background-color: #FFF;
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px !important;
+    margin-bottom: 16px !important;
+    outline: none;
+}
+
+#datepicker {
+    background-image: url('../img/kalenderJoin.svg');
+    background-repeat: no-repeat;
+    background-position-x: calc(96%) !important;
+    background-position: center;
+}
+
+.pika-single {
+    z-index: 1000;
+}
+
+
 .prioButtonContainer {
     display: flex;
     justify-content: space-between;
@@ -93,28 +167,9 @@ textarea {
 }
 
 
-.prioBtn {
-    display: flex;
-    font-size: 16px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 7px;
-    line-height: 120%;
-    padding: 10px 14px;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
-    border-radius: 10px;
-    background-color: #FFFFFF;
-    margin-top: 5px !important;
-    flex: 1;
-}
-
-.prioBtnAktiv {
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
-    background-color: #FF3D00;
-}
 
 .contentPosition {
+    position: relative;
     padding-left: 96px;
     padding-right: 96px;
     display: flex;
@@ -139,6 +194,157 @@ textarea {
     box-sizing: border-box;
 }
 
+
+#selectedContactsContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+
+.assignedToContactImg {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 13px;
+    border: 1.5px solid white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    line-height: 120%;
+}
+
+
+.selectContactsPositionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #FFF;
+    max-height: 180px;
+    margin-bottom: 16px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    overflow-y: auto;
+}
+
+/*--------------------SCROLLBAR----------------------------*/
+.show-scrollbar::-webkit-scrollbar {
+    display: block !important;
+    width: 12px !important;
+}
+
+.show-scrollbar::-webkit-scrollbar-track {
+    background-color: #F6F7F8 !important;
+}
+
+.show-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #2A3647 !important;
+}
+
+.show-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: #091931;
+}
+
+.show-scrollbar::-webkit-scrollbar-button:start:decrement,
+.show-scrollbar::-webkit-scrollbar-button:end:increment {
+    display: block;
+    height: 10px;
+    background-color: #fff;
+    background-repeat: no-repeat;
+}
+
+.show-scrollbar::-webkit-scrollbar-button:start:decrement {
+    background-position: center;
+    background-image: url('../img/arrow_drop_up.svg');
+}
+
+.show-scrollbar::-webkit-scrollbar-button:end:increment {
+    background-position: center;
+    background-image: url('../img/arrow_drop_downaa.svg');
+}
+
+.assignedContactsBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 98%;
+    padding-left: 10px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.contactBoxLeft {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+}
+
+.assignedContactsBox:hover {
+    cursor: pointer;
+    background: #EEE;
+    border-radius: 10px;
+}
+
+.assignedContactsBoxSelected {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 98%;
+    padding-left: 10px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: white;
+    background-color: #2A3647;
+    border-radius: 10px;
+}
+
+
+.assignedContactsBoxSelected:hover {
+    cursor: pointer;
+    background: #091931;
+    border-radius: 10px;
+}
+
+
+.addNewContactBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    text-align: center;
+    gap: 5px;
+    color: white;
+    background-color: #2A3647;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 90%;
+    border-radius: 10px;
+}
+
+
+.addNewContactBtnIcon {
+    width: 21px;
+}
+
 .boxRight {
     padding-left: 48px;
     display: flex;
@@ -148,6 +354,49 @@ textarea {
     box-sizing: border-box;
 }
 
+.prioBtn {
+    display: flex;
+    font-size: 17px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 7px;
+    line-height: 120%;
+    padding: 10px 14px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    margin-top: 5px !important;
+    flex: 1;
+}
+
+.prioBtn:hover {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+
+.prioBtnIcons {
+    width: 15px;
+}
+
+.prioBtnActivUrgent {
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
+    background-color: #FF3D00 !important;
+    color: white;
+}
+
+.prioBtnActivMedium {
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
+    background-color: #FFA800 !important;
+    color: white;
+}
+
+.prioBtnActivLow {
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
+    background-color: #7AE229 !important;
+    color: white;
+}
 
 .selectedTask {
     display: flex;
@@ -156,11 +405,11 @@ textarea {
     height: 90px;
 }
 
-/*-----------------*/
-.custom-select {
-    position: relative;
-    width: 100%;
+ul {
+    margin-top: 10px !important;
+    margin-bottom: 0px !important;
 }
+
 
 
 .selectBtnArea {
@@ -208,18 +457,15 @@ textarea {
     margin-bottom: -3px;
 }
 
-.inputAbsolut {
-    position: absolute;
-    right: 6px;
-    top: 14px;
-    padding: 3px;
-}
-
-.inputAbsolut:hover {
-    cursor: pointer;
-}
 
 @media (max-width: 1080px) {
+
+    .addTaskHeadlineContainer {
+        top: 0px;
+        left: 259px;
+        max-width: calc(100vw - 259px);
+    }
+
 
     .contentPosition {
         padding-left: 59px;
@@ -314,6 +560,40 @@ textarea {
 }
 
 @media (max-width: 700px) {
+
+    .contentAddTask {
+        position: absolute;
+        top: 100px;
+        bottom: 80px;
+        display: flex;
+        flex-direction: column;
+        left: 0px;
+        max-width: unset;
+        margin-top: 56px;
+        width: 100%;
+        max-height: calc(100vh - 136px);
+        overflow-y: auto;
+        -ms-overflow-style: none !important;
+        scrollbar-width: none !important;
+    }
+
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+
+
+    .addTaskHeadlineContainer {
+        top: 0px;
+        left: 12px;
+        height: 90px;
+        padding-bottom: 10px;
+        max-width: calc(100vw - 12px);
+    }
+
+
+
 
     .contentPosition {
         padding-left: 12px;

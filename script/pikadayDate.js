@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 (date.getMonth() + 1).toString().padStart(2, '0'),
                 date.getFullYear()
             ].join('/');
-            dateInput.value = formattedDate; // Verwenden Sie "dateInput" anstelle von "this._field"
+            dateInput.value = formattedDate;
         }
     });
 

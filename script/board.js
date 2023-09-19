@@ -81,6 +81,22 @@ function startDragging(id) {
     currentDragElement = id;
 }
 
+//listens for focus on textbox
+document.getElementById('searchInput').addEventListener("focus", changeDivColor);
+//this is fired when the textbox is focused
+function changeDivColor(){
+  document.getElementById('fake-searchbar').style.borderColor = "#29ABE2";
+}
+
+//listens for blur on textbox
+document.getElementById('searchInput').addEventListener("blur", revertDivColor);
+
+//this is fired when the textbox is no longer focused
+function revertDivColor(){
+  document.getElementById('fake-searchbar').style.borderColor = "#A8A8A8";
+}
+
+
 
 function loadTemplateCardTodo(element) {
     return /*html*/ ` <div draggable="true" ondragstart="startDragging(${element['id']})" >
