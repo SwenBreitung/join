@@ -70,7 +70,7 @@ function loadTemplateCardsToDo() {
     }
 }
 
-function openCard(){
+function openCard() {
     document.getElementById('popup-container').classList.remove('d-none');
     document.getElementById('popup-container').innerHTML = `
     <div class="task-detail"></div>
@@ -84,16 +84,16 @@ function startDragging(id) {
 //listens for focus on textbox
 document.getElementById('searchInput').addEventListener("focus", changeDivColor);
 //this is fired when the textbox is focused
-function changeDivColor(){
-  document.getElementById('fake-searchbar').style.borderColor = "#29ABE2";
+function changeDivColor() {
+    document.getElementById('fake-searchbar').style.borderColor = "#29ABE2";
 }
 
 //listens for blur on textbox
 document.getElementById('searchInput').addEventListener("blur", revertDivColor);
 
 //this is fired when the textbox is no longer focused
-function revertDivColor(){
-  document.getElementById('fake-searchbar').style.borderColor = "#A8A8A8";
+function revertDivColor() {
+    document.getElementById('fake-searchbar').style.borderColor = "#A8A8A8";
 }
 
 
@@ -101,17 +101,20 @@ function revertDivColor(){
 function loadTemplateCardTodo(element) {
     return /*html*/ ` <div class="task" draggable="true" ondragstart="startDragging(${element['id']})" >
         <div class = "task-body" >
-            <div class = "task-category"> ${element['category']} </div> 
-            <div class = "task-title"> ${element['title']} </div> 
-            <p id = "task-description" > ${element['description']}</p> 
+            <div class="task-detail">
+                <div class = "task-category"> ${element['category']} </div> 
+            
+                <div class = "task-title"> ${element['title']} </div> 
+                <p id = "task-description" > ${element['description']}</p> 
+            </div>
             <div id = "task-footer" >
                 <div id = "card-user-imgs" >
                     <div id = "card-user-img1" class = "card-user-img" > SB </div> 
                     <div id = "card-user-img2" class = "card-user-img-two card-user-img" > HB </div> 
                     <div id = "card-user-img3" class = "card-user-img-three card-user-img" > + </div> 
-                </div> 
-               
-            <img src = "img/prio${element['priority']}.svg" alt = "${element['priority']}" ></div> 
+                </div>  
+                <img src = "img/prio${element['priority']}.svg" alt = "${element['priority']}" >
+            </div> 
         </div> 
     </div>
     `;
