@@ -193,6 +193,7 @@ h6 {
 }
 
 .rightSidePopup {
+    position: relative;
     width: 745px;
     justify-content: flex-end;
 }
@@ -294,6 +295,17 @@ input {
 .cancelBtn:hover,
 .createContactButton:hover {
     box-shadow: 2px 0 6px 0 rgb(0, 0, 0, 0.5);
+}
+
+.closePopupCross {
+    position: absolute;
+    top: 48px;
+    right: 48px;
+}
+
+.closePopupCross:hover {
+    background: #EEEEEE;
+    border-radius: 100%;
 }
 
 /* Basics */

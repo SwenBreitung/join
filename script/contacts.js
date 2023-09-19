@@ -4,7 +4,13 @@ let contactsArray = [{
     "phone": contacPhone,
 }]
 
+
+/**
+ * This function is to load functions at start
+ * 
+ */
 async function initContacts() {
+    closePopup();
     await loadUsers();
     renderContacts();
 }
@@ -57,5 +63,37 @@ function getRandomColor() {
 }
 
 function addContact() {
+    toggleVisibility('addContactId', true);
+}
 
+function createContact() {
+
+}
+
+
+/**
+ * This function is used to close the popup window
+ * 
+ */
+function closePopup() {
+    toggleVisibility('addContactId', false);
+}
+
+
+/**
+ * This function is used to prevent the popup from closing when clicked.
+ * 
+ */
+function doNotClose(event) {
+    event.stopPropagation();
+}
+
+/**
+ * This function is used to make div-container unvisible or visible
+ *
+ *
+ */
+function toggleVisibility(id, show) {
+    const showHide = document.getElementById(id);
+    showHide.classList.toggle('d-none', !show);
 }

@@ -39,8 +39,8 @@
                 </div>
             </section>
 
-            <section class="addContactBackground horicontalAndVertical">
-                <div class="addContactPopup d-flex">
+            <section class="addContactBackground horicontalAndVertical" id="addContactId" onclick="closePopup()">
+                <div class="addContactPopup d-flex" onclick="doNotClose(event)">
                     <div class="leftSideAddContactPopup horicontal">
                         <img src="./img/join.logo-white.svg">
                         <div class="addContactLeftText">
@@ -57,25 +57,28 @@
                         </div>
                         <form class="contactInfo column" onsubmit="createContact(); return false;">
                             <div class="inputName">
-                                <input type="text" placeholder="Name" required>
+                                <input type="text" placeholder="Name">
                                 <img src="./img/user.svg">
                             </div>
                             <div class="inputEmail">
-                                <input type="email" placeholder="Email" required>
+                                <input type="email" placeholder="Email">
                                 <img src="./img/letter.svg">
                             </div>
                             <div class="inputPhone">
-                                <input type="tel" placeholder="Phone" required>
+                                <input type="tel" placeholder="Phone">
                                 <img src="./img/letter.svg">
                             </div>
                             <div class="d-flex textHorizontal addContactButtonContainer">
-                                <a href="#" class="cancelBtn d-flex">
+                                <a href="#" class="cancelBtn d-flex" onclick="closePopup()">
                                     Cancel
-                                    <img src="./img/close.svg">
+                                    <img src="./img/iconoir_cancel.svg">
                                 </a>
                                 <button class="btn btn-dark createContactButton horicontalAndVertical"><b>Create
                                         contact</b>
                                     <img src="./img/check.svg"></button>
+                            </div>
+                            <div class="closePopupCross pointer horicontalAndVertical" onclick="closePopup()">
+                                <img src="./img/close.svg">
                             </div>
                         </form>
                     </div>
