@@ -99,7 +99,7 @@ function revertDivColor(){
 
 
 function loadTemplateCardTodo(element) {
-    return /*html*/ ` <div draggable="true" ondragstart="startDragging(${element['id']})" >
+    return /*html*/ ` <div class="task" draggable="true" ondragstart="startDragging(${element['id']})" >
         <div class = "task-body" >
             <div class = "task-category"> ${element['category']} </div> 
             <div class = "task-title"> ${element['title']} </div> 
