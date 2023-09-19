@@ -17,70 +17,75 @@
 
 
 <body onload="init()">
-<!-- aria-label="Search" -->
+    <!-- aria-label="Search" -->
     <div w3-include-html="templates/sidebar.html"></div>
     <div w3-include-html="templates/header.html"></div>
     <div id="popup-container" class="dialog-bg d-none"></div>
-    <div class="content">
-        <div class="contentPosition">
-            <div class="search-board-container">
+    <div class="content bg-main-color">
 
-                    <h1>Board</h1>
-                    <form class="searchbox" role="search">
-                        <div id="fake-searchbar">
-                            <input id="searchInput" class="searchbar" onkeydown="boardSearch()" aria-label="Search" placeholder="Find Task" required>
-                            <img src="img/VectorSearchbar.svg">
-                            <img src="img/search.svg">
+
+        <div class="search-board-container">
+            <h1>Board</h1>
+            <form class="searchbox" role="search">
+                <div id="fake-searchbar">
+                    <input id="searchInput" class="searchbar" onkeydown="boardSearch()" aria-label="Search"
+                        placeholder="Find Task" required>
+                    <img src="img/VectorSearchbar.svg">
+                    <img src="img/search.svg">
+                </div>
+                <button id="button-ad-task" type="button" class="button">Add task<img src="img/plusAddTaskWhite.svg"
+                        alt="">
+                </button>
+            </form>
+        </div>
+
+        <div class="boardcontent">
+            <div class="contentposition">
+
+                <div class="board-main-section">
+
+                    <section>
+                        <div id="head-line">
+                            <h3>To do</h3>
+                            <img onclick="openCard()" src="img/Property 1=Default.png" alt="Not found">
                         </div>
-                        <button id="button-ad-task" type="button" class="button">Add task<img
-                                src="img/plusAddTaskWhite.svg" alt="">
-                        </button>
-                    </form>
-            </div>
+                        <div id="to-do" class="task-group" ondragover="allowDrop(event); highlight('to-do')"
+                            ondragleave="removeHighlight('to-do')" ondrop="moveTo('to-do')">
+                        </div>
+                    </section>
 
-            <div class="board-main-section">
+                    <section>
+                        <div id="head-line">
+                            <h3>In progress</h3>
+                            <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found">
+                        </div>
 
-                <section>
-                    <div id="head-line">
-                        <h3>To do</h3>
-                        <img onclick="openCard()" src="img/Property 1=Default.png" alt="Not found">
-                    </div>
-                    <div id="to-do" class="task-group" ondragover="allowDrop(event); highlight('to-do')"
-                        ondragleave="removeHighlight('to-do')" ondrop="moveTo('to-do')">
-                    </div>
-                </section>
+                        <div id="in-progress" class="task-group" ondragover="allowDrop(event); highlight('in-progress')"
+                            ondragleave="removeHighlight('in-progress')" ondrop="moveTo('in-progress')">
+                        </div>
+                    </section>
 
-                <section>
-                    <div id="head-line">
-                        <h3>In progress</h3>
-                        <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found">
-                    </div>
+                    <section>
+                        <div id="head-line">
+                            <h3>Await Feedback</h3>
+                            <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found ">
+                        </div>
+                        <div id="awaiting-feedback" class="task-group"
+                            ondragover="allowDrop(event); highlight('awaiting-feedback')"
+                            ondragleave="removeHighlight('awaiting-feedback')" ondrop="moveTo('awaiting-feedback')">
+                        </div>
+                    </section>
 
-                    <div id="in-progress" class="task-group" ondragover="allowDrop(event); highlight('in-progress')"
-                        ondragleave="removeHighlight('in-progress')" ondrop="moveTo('in-progress')">
-                    </div>
-                </section>
-
-                <section>
-                    <div id="head-line">
-                        <h3>Await Feedback</h3>
-                        <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found ">
-                    </div>
-                    <div id="awaiting-feedback" class="task-group"
-                        ondragover="allowDrop(event); highlight('awaiting-feedback')"
-                        ondragleave="removeHighlight('awaiting-feedback')" ondrop="moveTo('awaiting-feedback')">
-                    </div>
-                </section>
-
-                <section>
-                    <div id="head-line">
-                        <h3>Done</h3>
-                        <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found ">
-                    </div>
-                    <div id="done" class="task-group" ondragover="allowDrop(event); highlight('done')"
-                        ondragleave="removeHighlight('done')" ondrop="moveTo('done')">
-                    </div>
-                </section>
+                    <section>
+                        <div id="head-line">
+                            <h3>Done</h3>
+                            <img onclick="addTask()" src="img/Property 1=Default.png" alt="Not found ">
+                        </div>
+                        <div id="done" class="task-group" ondragover="allowDrop(event); highlight('done')"
+                            ondragleave="removeHighlight('done')" ondrop="moveTo('done')">
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
     </div>
