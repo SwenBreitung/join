@@ -107,7 +107,7 @@ textarea:focus {
     background-color: #F6F7F8 !important;
     display: flex;
     align-items: end;
-    padding-bottom: 20px;
+    padding-bottom: 15px;
     top: 0;
     right: 5px;
     display: flex;
@@ -120,7 +120,7 @@ textarea:focus {
 
 .contentAddTask {
     position: absolute;
-    top: 110px;
+    top: 115px;
     bottom: 0;
     display: flex;
     flex-direction: column;
@@ -128,7 +128,7 @@ textarea:focus {
     max-width: calc(100vw - 200px);
     margin-top: 56px;
     width: 100%;
-    max-height: calc(100vh - 110px);
+    max-height: calc(100vh - 115px);
     overflow-y: auto;
 }
 
@@ -227,33 +227,31 @@ textarea:focus {
     justify-content: flex-start;
     align-items: center;
     background-color: #FFF;
-    max-height: 250px;
+    max-height: 180px;
     margin-bottom: 16px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     overflow-y: auto;
 }
 
-
+/*--------------------SCROLLBAR----------------------------*/
 .show-scrollbar::-webkit-scrollbar {
-    display: block;
-    width: 12px;
-    /* Sie können die Breite an Ihre Bedürfnisse anpassen */
+    display: block !important;
+    width: 12px !important;
 }
 
 .show-scrollbar::-webkit-scrollbar-track {
-    background-color: #F6F7F8;
+    background-color: #F6F7F8 !important;
 }
 
 .show-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #2A3647;
+    background-color: #2A3647 !important;
 }
 
 .show-scrollbar:hover::-webkit-scrollbar-thumb {
     background-color: #091931;
 }
 
-/* Stile für die Scrollbalken-Pfeile */
 .show-scrollbar::-webkit-scrollbar-button:start:decrement,
 .show-scrollbar::-webkit-scrollbar-button:end:increment {
     display: block;
@@ -265,13 +263,11 @@ textarea:focus {
 .show-scrollbar::-webkit-scrollbar-button:start:decrement {
     background-position: center;
     background-image: url('../img/arrow_drop_up.svg');
-    /* Pfeilbild für nach oben */
 }
 
 .show-scrollbar::-webkit-scrollbar-button:end:increment {
     background-position: center;
     background-image: url('../img/arrow_drop_downaa.svg');
-    /* Pfeilbild für nach unten */
 }
 
 .assignedContactsBox {
@@ -414,7 +410,6 @@ ul {
     margin-bottom: 0px !important;
 }
 
-/*-----------------*/
 
 
 .selectBtnArea {
