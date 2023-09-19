@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="style/contacts.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style/adTask.css">
+    <link rel="stylesheet" href="style/addTask.css">
     <script defer src="script/register.js"></script>
     <script defer src="script/storge.js"></script>
     <script defer src="script/script.js"></script>
@@ -33,8 +33,8 @@
                 </div>
                 <div class="scrollingContainer">
                     <div id="contactsId">
-                        <div class="grey-line"></div>
-                        <div class="contact"></div>
+                        <!-- <div class="grey-line"></div> -->
+                        <!-- <div class="contact"></div> -->
                     </div>
                 </div>
             </section>
@@ -57,15 +57,15 @@
                         </div>
                         <form class="contactInfo column" onsubmit="createContact(); return false;">
                             <div class="inputName">
-                                <input type="text" placeholder="Name">
+                                <input type="text" placeholder="Name" id="inputNameId">
                                 <img src="./img/user.svg">
                             </div>
                             <div class="inputEmail">
-                                <input type="email" placeholder="Email">
+                                <input type="email" placeholder="Email" id="inputEmailId">
                                 <img src="./img/letter.svg">
                             </div>
                             <div class="inputPhone">
-                                <input type="tel" placeholder="Phone">
+                                <input type="tel" placeholder="Phone" id="inputPhoneId">
                                 <img src="./img/letter.svg">
                             </div>
                             <div class="d-flex textHorizontal addContactButtonContainer">
@@ -86,12 +86,45 @@
             </section>
 
             <section>
-                <div>
-                    <h1>contacts</h1>
-                    <div>line</div>
-                    <div>Better with a Team</div>
+                <div class="contactsTitle horicontal">
+                    <h1><b>Contacts</b></h1>
+                    <img src="./img/Vector 5.svg">
+                    <h3>Better with a Team</3>
+                </div>
+
+                <div class="contactInfoBig column" id="contactInfoBigId">
+                    <!-- Big Picture / Name / Edit and Delete -->
+                    <div>
+                        <img src="">
+                        <div>
+                            <div id="nameId">
+
+                            </div>
+                            <div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Middle Text -->
+                    <spline>
+                        Contact Information
+                    </spline>
+                    <!-- Rest -->
+                    <spline>
+                        <b>Email</b>
+                    </spline>
+                    <div id="emailId">
+
+                    </div>
+                    <spline>
+                        <b>Phone</b>
+                    </spline>
+                    <div id="phoneId">
+
+                    </div>
                 </div>
             </section>
+
         </div>
 
     </div>
