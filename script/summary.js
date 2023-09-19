@@ -115,8 +115,9 @@ let userss = {
 
 function init() {
     loadTimeOfDay();
-    loadSvgPen();
     loadText();
+    loadSvgPen();
+    loadSvgChop();
 }
 
 
@@ -218,6 +219,13 @@ function getTimeOfDay() {
 }
 
 //===================load Time of Day END============================
+
+
+function loadSvgChop() {
+    const penSVGContainer = document.getElementById('chop-container'); // Ändern Sie den Namen des Elements, auf das Sie zugreifen möchten
+    const penSVGContent = loadChopSvg();
+    penSVGContainer.innerHTML = penSVGContent;
+}
 
 function loadSvgPen() {
     const penSVGContainer = document.getElementById('penContainer'); // Ändern Sie den Namen des Elements, auf das Sie zugreifen möchten

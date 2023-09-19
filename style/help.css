@@ -16,3 +16,17 @@ td h3 {
     color: #3498db;
     font-weight: bold;
 }
+
+.main-container {
+    margin-left: 216px;
+    padding-right: 10px;
+    padding-left: 0;
+    padding-top: 40px;
+}
+
+@media(max-width:700px) {
+    .main-container {
+        margin-left: 0px;
+        padding-left: 10px;
+    }
+}

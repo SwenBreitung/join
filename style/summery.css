@@ -73,29 +73,47 @@ body {
     align-items: center;
 }
 
-.data-panel:hover {
-    background-color: var(--main-color);
-    color: var(--main-background-color);
-}
-
 .dialog:hover {
     background-color: var(--main-color);
     color: var(--main-background-color);
 }
 
-.dialog img:hover {
-    background-color: aliceblue;
+.data-panel:hover {
+    background-color: var(--main-color);
+    color: var(--main-background-color);
 }
+
+.data-panel:hover {
+    background-color: var(--main-color) !important;
+    color: var(--main-background-color) !important;
+}
+
+.data-panel:hover #Ellipse4 {
+    fill: var(--main-background-color);
+}
+
+.data-panel:hover #Vector6 {
+    fill: var(--main-color);
+}
+
+.data-panel:hover #Vector7 {
+    fill: var(--main-color);
+}
+
+.data-panel:hover #Vector {
+    stroke: var(--main-color);
+    /* Beim Hovern wird der Pfad mit blauer Farbe gefüllt */
+}
+
+
+/* #Ellipse4:hover {
+    fill: green;
+} */
 
 #name {
     width: 100%;
     display: flex;
     justify-content: flex-start;
-}
-
-#Ellipse4:hover {
-    fill: var(--text-color);
-    /* Ändert die Füllfarbe in Rot */
 }
 
 @media(max-width: 1000px) {
