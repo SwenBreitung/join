@@ -7,7 +7,7 @@ let todos = [{
     'priority': 'Low'
 }, {
     'id': 1,
-    'title': 'HTML Base Template Creation',
+    'title': 'HTML Base Template Creation System bla bla bla',
     'status': 'in-progress',
     'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita dolores quisquam rerum commodi deserunt',
     'category': 'User Story',
@@ -105,7 +105,7 @@ function loadTemplateCardTodo(element) {
                 <div class = "task-category"> ${element['category']} </div> 
             
                 <div class = "task-title"> ${element['title']} </div> 
-                <p id = "task-description" > ${element['description']}</p> 
+                <p id ="task-description" class="task-description"> ${element['description']}</p> 
             </div>
             <div id = "task-footer" >
                 <div id = "card-user-imgs" >
