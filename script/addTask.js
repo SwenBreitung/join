@@ -69,6 +69,9 @@ function renderAllContactsForSearch() {
  */
 function addSubTaskToCollection() {
     let input = document.getElementById('subTaskSelectInput');
+    if (input.value = '') {
+
+    }
     subTaskCollection.push(input.value);
     renderSubTaskCollection();
     input.value = '';

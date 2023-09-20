@@ -436,7 +436,7 @@ textarea:focus {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    height: 90px;
+    max-height: 90px;
 }
 
 ul {
@@ -490,11 +490,15 @@ ul {
 
 
 .selectBtnArea {
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+    padding-right: 96px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     width: 100%;
-    margin-top: 40px;
+    z-index: 2;
 }
 
 .createBtn {
@@ -555,10 +559,15 @@ ul {
 
 
     .selectBtnArea {
+        position: fixed;
+        bottom: 50px;
+        left: 0;
+        padding-right: 59px;
         display: flex;
         justify-content: flex-end;
         align-items: center;
         width: 100%;
+        z-index: 2;
     }
 
 
@@ -605,11 +614,15 @@ ul {
     }
 
 
+
     .selectBtnArea {
+        position: unset;
         display: flex;
         justify-content: flex-end;
         align-items: center;
         width: 100%;
+        padding-right: 0px;
+        margin-top: 40px;
         margin-bottom: 30px;
     }
 
@@ -640,15 +653,15 @@ ul {
 
     .contentAddTask {
         position: absolute;
-        top: 100px;
-        bottom: 80px;
+        top: 90px;
+        bottom: 145px;
         display: flex;
         flex-direction: column;
         left: 0px;
         max-width: unset;
         margin-top: 56px;
         width: 100%;
-        max-height: calc(100vh - 136px);
+        max-height: calc(100vh - 201px);
         overflow-y: auto;
         -ms-overflow-style: none !important;
         scrollbar-width: none !important;
@@ -694,11 +707,20 @@ ul {
 
 
     .selectBtnArea {
+        position: fixed;
+        bottom: 90px;
+        background-color: #F6F7F8;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        left: 0;
+        padding-right: 18px;
         display: flex;
         justify-content: flex-end;
         align-items: center;
         width: 100%;
-        margin-bottom: 30px;
+        z-index: 2;
     }
 
 
