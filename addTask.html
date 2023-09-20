@@ -29,86 +29,54 @@
         <div class="contentPosition">
             <div class="taskArea">
                 <div class="boxLeft">
-                    <div class="marginBottom16">
-                        <span>Titel</span>
-                        <input placeholder="Enter a title" type="text">
-                    </div>
-                    <div class="column">
-                        <span>Description</span>
-                        <textarea placeholder="Enter a Description" type="text"></textarea>
-                    </div>
-                    <div>
-                        <span>Assigned to</span>
+                    <form id="myForm">
+                        <div class="marginBottom16">
+                            <span>Titel</span>
+                            <input id="addTitel" required placeholder="Enter a title" type="text">
+                        </div>
+                        <div class="column">
+                            <span>Description</span>
+                            <textarea id="addDescription" required placeholder="Enter a Description"
+                                type="text"></textarea>
+                        </div>
                         <div>
-                            <div class="custom-select marginBottom16" id="assignedToInputContainer">
-                                <input class="click" id="assignedToInputCover"
-                                    onclick="toggleVisibility('assignedToInputContainer', 'assignedToContactsInputContainer')"
-                                    type="text" readonly value="Select contacts to assign">
-                                <img onclick="toggleVisibility('assignedToInputContainer', 'assignedToContactsInputContainer')"
-                                    class="inputAbsolut" src="img/arrow_drop_downaa.svg">
-                                <div id="selectedContactsContainer">
-                                    <div style="background-color: red;" class="assignedToContactImg">AS</div>
-                                    <div style="background-color: blue;" class="assignedToContactImg">KM</div>
-                                    <div style="background-color: yellow;" class="assignedToContactImg">SU</div>
+                            <span>Assigned to</span>
+                            <div>
+                                <div class="custom-select marginBottom16" id="assignedToInputContainer">
+                                    <input class="click" id="assignedToInputCover"
+                                        onclick="toggleVisibility('assignedToInputContainer', 'assignedToContactsInputContainer')"
+                                        type="text" readonly value="Select contacts to assign">
+                                    <img onclick="toggleVisibility('assignedToInputContainer', 'assignedToContactsInputContainer')"
+                                        class="inputAbsolut" src="img/arrow_drop_downaa.svg">
+                                    <div id="selectedContactsContainer">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="custom-select d-none" id="assignedToContactsInputContainer">
-                                <input class="click" id="assignedToInput" type="text" value="An:" readonly>
-                                <img class="inputAbsolut"
-                                    onclick="toggleVisibility('assignedToContactsInputContainer', 'assignedToInputContainer')"
-                                    src="img/arrow_drop_up.svg">
-                                <div class="selectContactsPositionContainer show-scrollbar">
-                                    <div class="assignedContactsBox" id="assignedContactsBox"
-                                        onclick="toggleClass('assignedContactsBox', true, 'assignedBox', 'assignedBoxChecked')">
-                                        <div class="contactBoxLeft">
-                                            <div style="background-color: red;" class="assignedToContactImg">AS</div>
-                                            <span>Name</span>
+                                <div class="custom-select d-none" id="assignedToContactsInputContainer">
+                                    <input class="click" id="assignedToInput" type="text" value="An:">
+                                    <img class="inputAbsolut"
+                                        onclick="toggleVisibility('assignedToContactsInputContainer', 'assignedToInputContainer')"
+                                        src="img/arrow_drop_up.svg">
+
+                                    <div class="selectContactsPositionContainer">
+                                        <div class="ContactsRenderContainer show-scrollbar"
+                                            id="contactsRenderContainer">
+
                                         </div>
-                                        <img src="img/addTaskBox.svg" id="assignedBox" alt="">
-                                        <img src="img/addTaskCheckBox.svg" class="d-none" id="assignedBoxChecked">
-                                    </div>
-                                    <div class="assignedContactsBox" id="assignedContactsBox"
-                                        onclick="toggleClass('assignedContactsBox', true, 'assignedBox', 'assignedBoxChecked')">
-                                        <div class="contactBoxLeft">
-                                            <div style="background-color: blue;" class="assignedToContactImg">AS</div>
-                                            <span>Name</span>
+                                        <div class="addNewContactBtn">
+                                            <span>Add new contact</span>
+                                            <img class="addNewContactBtnIcon" src="img/addTaskperson_add.svg">
                                         </div>
-                                        <img src="img/addTaskBox.svg" id="assignedBox" alt="">
-                                        <img src="img/addTaskCheckBox.svg" class="d-none" id="assignedBoxChecked">
-                                    </div>
-                                    <div class="assignedContactsBox" id="assignedContactsBox"
-                                        onclick="toggleClass('assignedContactsBox', true, 'assignedBox', 'assignedBoxChecked')">
-                                        <div class="contactBoxLeft">
-                                            <div style="background-color: yellow;" class="assignedToContactImg">AS</div>
-                                            <span>Name</span>
-                                        </div>
-                                        <img src="img/addTaskBox.svg" id="assignedBox" alt="">
-                                        <img src="img/addTaskCheckBox.svg" class="d-none" id="assignedBoxChecked">
-                                    </div>
-                                    <div class="assignedContactsBox" id="assignedContactsBox"
-                                        onclick="toggleClass('assignedContactsBox', true, 'assignedBox', 'assignedBoxChecked')">
-                                        <div class="contactBoxLeft">
-                                            <div style="background-color: red;" class="assignedToContactImg">AS</div>
-                                            <span>Name</span>
-                                        </div>
-                                        <img src="img/addTaskBox.svg" id="assignedBox" alt="">
-                                        <img src="img/addTaskCheckBox.svg" class="d-none" id="assignedBoxChecked">
-                                    </div>
-                                    <div class="addNewContactBtn">
-                                        <span>Add new contact</span>
-                                        <img class="addNewContactBtnIcon" src="img/addTaskperson_add.svg">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
                 <div class="boxRight">
                     <div>
                         <div>
                             <span>Due date</span>
                             <div>
-                                <input placeholder="dd/mm/yyyy" type="text" id="datepicker">
+                                <input required placeholder="dd/mm/yyyy" type="text" id="datepicker">
                             </div>
                         </div>
                         <div class="column marginTop16">
@@ -145,39 +113,23 @@
                         <div class="column">
                             <span>Subtasks</span>
                             <div class="custom-select">
-                                <input placeholder="Add new subtask" id="subTaskSelectBox">
-                                <img class="inputAbsolut" src="img/plusAddTask.svg" alt="">
+                                <input placeholder="Add new subtask" id="subTaskSelectInput">
+                                <img onclick="addSubTaskToCollection()" class="inputAbsolut" src="img/plusAddTask.svg">
                             </div>
-                            <div class="selectedTask show-scrollbar" id="selectedTask">
-                                <ul class="dFlex spaceBtw">
-                                    <li>task</li>
-                                    <div>
-                                        <img src="img/PenAddTask 1=edit.svg" alt="">
-                                        <img src="img/subTaskDelete.svg" alt="">
-                                    </div>
-                                </ul>
-                                <ul class="dFlex spaceBtw">
-                                    <li>task</li>
-                                    <div>
-                                        <img src="img/PenAddTask 1=edit.svg" alt="">
-                                        <img src="img/subTaskDelete.svg" alt="">
-                                    </div>
-                                </ul>
-                                <ul class="dFlex spaceBtw">
-                                    <li>task</li>
-                                    <div>
-                                        <img src="img/PenAddTask 1=edit.svg" alt="">
-                                        <img src="img/subTaskDelete.svg" alt="">
-                                    </div>
-                                </ul>
+                            <div class="selectedSubTask show-scrollbar" id="selectedSubTaskContainer">
+                            </div>
+                            <div id="editContainer" class="d-none custom-select">
                             </div>
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
             <div class="selectBtnArea gap16">
-                <button class="clearBtn">Clear<img class="clearImg" src="./img/crossAddTask.svg" alt=""></button>
-                <button class="createBtn">Create Task<img class="createImg" src="./img/check.svg" alt=""></button>
+                <button onclick="resetTask()" class="clearBtn">Clear<img class="clearImg" src="./img/crossAddTask.svg"
+                        alt=""></button>
+                <button onclick="createTask()" class="createBtn">Create Task<img class="createImg" src="./img/check.svg"
+                        alt=""></button>
             </div>
         </div>
     </div>
