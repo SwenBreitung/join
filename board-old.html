@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .drag-area {
+            height: 200px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border: 1px dashed black;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .drag-area-highlight {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .task {
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.25);
+            border: 1px solid #D1D1D1;
+        }
+
+        .task-category {
+            background-color: #0038FF;
+            border-radius: 8px;
+            padding: 4px 12px;
+            width: fit-content;
+            color: white;
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        .task-title {
+            font-weight: bold;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .task-users-prio {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-picture {
+            height: 42px;
+            width: 42px;
+            border-radius: 100%;
+            color: white;
+            background-color: #0038FF;
+        }
+
+        .horicontal-and-vertical {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+    </style>
+    <script>
+        let todos = [{
+            'id': 0,
+            'title': 'This is the task',
+            'status': 'to-do',
+            'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita dolores quisquam rerum commodi deserunt nihil obcaecati minima excepturi minus mollitia at doloremque necessitatibus veniam rem doloribus aperiam laudantium, provident error.',
+            'category': 'Technical Task',
+            'priority': 'Low'
+        },{
+            'id': 1,
+            'title': 'This is the task',
+            'status': 'to-do',
+            'description': '',
+            'category': 'Technical Task',
+            'priority': 'Low'
+        }
+    ];
+
+        let currentDraggedElement;
+
+        function updateHTML() {
+            let todo = todos.filter(t => t['status'] == 'to-do');
+            document.getElementById('to-do').innerHTML = '';
+            for (let index = 0; index < todo.length; index++) {
+                const element = todo[index];
+                document.getElementById('to-do').innerHTML += generateTaskHTML(element);
+            }
+
+            let inProgress = todos.filter(t => t['status'] == 'in-progress');
+            document.getElementById('in-progress').innerHTML = '';
+            for (let index = 0; index < inProgress.length; index++) {
+                const element = inProgress[index];
+                document.getElementById('in-progress').innerHTML += generateTaskHTML(element);
+            }
+
+            let awaitingFeedback = todos.filter(t => t['status'] == 'awaiting-feedback');
+            document.getElementById('awaiting-feedback').innerHTML = '';
+            for (let index = 0; index < awaitingFeedback.length; index++) {
+                const element = awaitingFeedback[index];
+                document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element);
+            }
+
+            let done = todos.filter(t => t['status'] == 'done');
+            document.getElementById('done').innerHTML = '';
+            for (let index = 0; index < done.length; index++) {
+                const element = done[index];
+                document.getElementById('done').innerHTML += generateTaskHTML(element);
+            }
+        }
+
+        function startDragging(id) {
+            currentDraggedElement = id;
+        }
+
+        function generateTaskHTML(element) {
+            return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" class="task">
+                    <div>
+                        <div class="task-category"> ${element['category']}</div>
+                        <div class="task-title">${element['title']}</div>
+                        <div> ${element['description']}</div>
+                    </div>
+                    <div class="task-users-prio">
+                        <div class="task-users">
+                            <div class="profile-picture horicontal-and-vertical">A</div>
+                        </div>
+                        <img src = "img/prio${element['priority']}.svg" alt = "${element['priority']}" >
+                    </div>
+                </div>
+            `;
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        // want to move the todo with the id which is saved in currentDragElement 
+        // and change the status
+        function moveTo(status) {
+            todos[currentDraggedElement]['status'] = status;
+            updateHTML();
+            // removeHighlight(status);
+        }
+
+        function highlight(id) {
+            document.getElementById(id).classList.add('drag-area-highlight');
+        }
+
+        function removeHighlight(id) {
+            document.getElementById(id).classList.remove('drag-area-highlight');
+        }
+    </script>
+
+</head>
+
+<body onload="updateHTML()">
+
+    <div class="container">
+
+        <div id="to-do" class="drag-area" ondrop="moveTo('to-do')" ondragleave="removeHighlight('to-do')"
+            ondragover="allowDrop(event); highlight('to-do')">
+        </div>
+
+
+        <div id="in-progress" class="drag-area" ondrop="moveTo('in-progress')"
+            ondragleave="removeHighlight('in-progress')" ondragover="allowDrop(event); highlight('in-progress')">
+        </div>
+
+
+        <div id="awaiting-feedback" class="drag-area" ondrop="moveTo('awaiting-feedback')"
+            ondragleave="removeHighlight('awaiting-feedback')"
+            ondragover="allowDrop(event); highlight('awaiting-feedback')">
+        </div>
+
+
+        <div id="done" class="drag-area" ondrop="moveTo('done')" ondragleave="removeHighlight('done')"
+            ondragover="allowDrop(event); highlight('done')">
+        </div>
+
+    </div>
+</body>
+
+.task {
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.25);
+    border: 1px solid #D1D1D1;
+}
+
+.task:hover {
+    cursor: pointer;
+}
+
+.task-body {
+    /* min-width: 100% !important; */
+    /* width: 95%; */
+    padding: 14px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.task-category {
+    background-color: var(--marketing-background);
+    border-radius: 8px;
+    padding: 4px 12px;
+    width: fit-content;
+    color: white;
+    font-size: 14px;
+    margin-bottom: 14px;
+}
+
+.task-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.task-detail {}
+
+.drag-area {
+    width: 100%;
+    min-height: 60vh;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.drag-area-highlight {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.task-description {
+    min-height: 100px;
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+#task-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+#card-user-imgs {
+    display: flex;
+    color: white;
+}
+
+.card-user-img {
+    Width: 35px;
+    Height: 35px;
+    border-radius: 58px;
+    Padding: 10px, 10px, 10px, 10px;
+    gap: 10px;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -3px;
+    background-color: rgb(7, 198, 55);
+}
+
+#card-text {
+    overflow-y: auto;
+}
+
+
+</html>
