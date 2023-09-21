@@ -69,6 +69,9 @@ function renderAllContactsForSearch() {
  */
 function addSubTaskToCollection() {
     let input = document.getElementById('subTaskSelectInput');
+    if (input.value = '') {
+
+    }
     subTaskCollection.push(input.value);
     renderSubTaskCollection();
     input.value = '';
@@ -159,6 +162,10 @@ function hideEditContainer() {
 
 
 //AddTask//
+
+/**
+ * Validates the form and adds a task if the form is valid.
+ */
 function createTask() {
     var form = document.getElementById('myForm');
     if (form.checkValidity()) {
@@ -167,6 +174,9 @@ function createTask() {
 }
 
 
+/**
+ * Retrieves data from form elements and adds a new task.
+ */
 function addTask() {
     // Werte aus den Formularelementen abrufen
     const titel = document.getElementById('addTitel').value;
@@ -195,6 +205,14 @@ function addTask() {
 
 
 //Hide and Show functions//
+
+
+
+/**
+ * Toggles the visibility of two DOM elements.
+ * @param {string} id - ID of the first DOM element.
+ * @param {string} id2 - ID of the second DOM element.
+ */
 function toggleVisibility(id, id2) {
     const elementOne = document.getElementById(id);
     const elementTwo = document.getElementById(id2);
@@ -206,6 +224,11 @@ function toggleVisibility(id, id2) {
 }
 
 
+/**
+ * Selects or deselects a contact based on its current state.
+ * @param {number} i - Index of the contact.
+ * @param {string} key - Key of the contact in the `allContacts` collection.
+ */
 function toggleContactSelection(i, key) {
     const contact = allContacts[key];
     const mainElement = document.getElementById(`assignedContactsBox${i}`);
@@ -226,10 +249,23 @@ function toggleContactSelection(i, key) {
     }
 }
 
+
+/**
+ * Checks if a contact is in the `contactCollection`.
+ * @param {Object} contact - The contact object to check.
+ * @returns {boolean} - True if contact is in the collection, false otherwise.
+ */
 function isContactInCollection(contact) {
     return contactCollection.includes(contact);
 }
 
+
+/**
+ * Sets styles to visually select a contact.
+ * @param {HTMLElement} mainElement - Main contact DOM element.
+ * @param {HTMLElement} firstSecondary - First secondary DOM element.
+ * @param {HTMLElement} secondSecondary - Second secondary DOM element.
+ */
 function selectContact(mainElement, firstSecondary, secondSecondary) {
     mainElement.classList.remove('assignedContactsBox');
     mainElement.classList.add('assignedContactsBoxSelected');
@@ -238,6 +274,13 @@ function selectContact(mainElement, firstSecondary, secondSecondary) {
     return;
 }
 
+
+/**
+ * Sets styles to visually deselect a contact.
+ * @param {HTMLElement} mainElement - Main contact DOM element.
+ * @param {HTMLElement} firstSecondary - First secondary DOM element.
+ * @param {HTMLElement} secondSecondary - Second secondary DOM element.
+ */
 function deselectContact(mainElement, firstSecondary, secondSecondary) {
     mainElement.classList.remove('assignedContactsBoxSelected');
     mainElement.classList.add('assignedContactsBox');
@@ -249,6 +292,15 @@ function deselectContact(mainElement, firstSecondary, secondSecondary) {
 
 
 //Prio Buttons class-change//
+
+/**
+ * Updates visual representation of priority buttons.
+ * @param {string} btnId - ID of the priority button.
+ * @param {string} iconId - ID of the inactive icon.
+ * @param {string} activeIconId - ID of the active icon.
+ * @param {string} activeClass - CSS class to apply when active.
+ * @param {boolean} resetOther - Determines if other buttons should be reset.
+ */
 function prioSelected(btnId, iconId, activeIconId, activeClass, resetOther) {
     if (resetOther) {
         resetAll();
@@ -259,6 +311,9 @@ function prioSelected(btnId, iconId, activeIconId, activeClass, resetOther) {
 }
 
 
+/**
+ * Resets all priority buttons to their default states.
+ */
 function resetAll() {
     const buttons = ['prioUrgentBtn', 'prioMediumBtn', 'prioLowBtn'];
     const icons = ['prioUrgentIcon', 'prioMediumIcon', 'prioLowIcon'];
@@ -275,6 +330,12 @@ function resetAll() {
 
 
 //return render Contacts(all and selected)//
+
+/**
+ * Returns an HTML string representing a selected contact.
+ * @param {Object} contacts - The contact object to render.
+ * @returns {string} - HTML string for the rendered contact.
+ */
 function returnRenderAllSelectedContacts(contacts) {
     return /*html*/`
     <div style="${contacts.styleColor}" class="assignedToContactImg">${contacts.twoLetter}</div>
@@ -282,14 +343,18 @@ function returnRenderAllSelectedContacts(contacts) {
 }
 
 
+/**
+ * Returns an HTML string for the contact search functionality.
+ * @param {Object} contacts - The contact object to render.
+ * @param {number} i - Index of the contact.
+ * @param {string} key - Key of the contact in the `allContacts` collection.
+ * @returns {string} - HTML string for the rendered contact.
+ */
 function returnRenderAllContactsForSearch(contacts, i, key) {
     const isSelected = isContactInCollection(contacts);
-
-    // Klassen- und Style-Anpassungen basierend auf der isSelected-Logik
     let mainClass = isSelected ? 'assignedContactsBoxSelected' : 'assignedContactsBox';
     let firstSecondaryClass = isSelected ? 'd-none' : '';
     let secondSecondaryClass = isSelected ? '' : 'd-none';
-
     return /*html*/`
         <div class="${mainClass}" id="assignedContactsBox${i}" onclick="toggleContactSelection(${i}, '${key}')">
             <div class="contactBoxLeft">
@@ -306,6 +371,11 @@ function returnRenderAllContactsForSearch(contacts, i, key) {
 
 
 //return Hide and Show//
+
+/**
+ * Toggles classes for the main settings element.
+ * @param {HTMLElement} mainElement - Main settings DOM element.
+ */
 function returnSettingsMain(mainElement) {
     if (mainElement.classList.contains('assignedContactsBox')) {
         mainElement.classList.remove('assignedContactsBox');
@@ -318,6 +388,10 @@ function returnSettingsMain(mainElement) {
 }
 
 
+/**
+ * Toggles visibility for the first settings element.
+ * @param {HTMLElement} firstSecondary - First settings DOM element.
+ */
 function returnSettingsFirst(firstSecondary) {
     if (firstSecondary.classList.contains('d-none')) {
         firstSecondary.classList.remove('d-none');
@@ -328,6 +402,10 @@ function returnSettingsFirst(firstSecondary) {
 }
 
 
+/**
+ * Toggles visibility for the second settings element.
+ * @param {HTMLElement} secondSecondary - Second settings DOM element.
+ */
 function returnSettingsSecond(secondSecondary) {
     if (secondSecondary.classList.contains('d-none')) {
         secondSecondary.classList.remove('d-none');
@@ -340,6 +418,12 @@ function returnSettingsSecond(secondSecondary) {
 
 
 //return Subtask//
+
+/**
+ * Returns an HTML string representing the subtask editing container.
+ * @param {number} i - Index of the subtask.
+ * @returns {string} - HTML string for the subtask edit container.
+ */
 function returnEditContainer(i) {
     return /*html*/`<input id="editInput" type="text">
         <img onclick="stopSubEdit()" class="editAbsolutCross" src="img/close.svg">
@@ -348,6 +432,12 @@ function returnEditContainer(i) {
 }
 
 
+/**
+ * Returns an HTML string representing a collection of subtasks.
+ * @param {Object} subCollection - The subtask collection to render.
+ * @param {number} i - Index of the subtask in the collection.
+ * @returns {string} - HTML string for the rendered subtask collection.
+ */
 function returnSubTaskCollection(subCollection, i) {
     return /*html*/`
         <ul class="dFlex spaceBtw">

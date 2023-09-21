@@ -1,6 +1,6 @@
 let userss = {
     "user0": {
-        "name": "hello",
+        "name": "Swen Breitung",
         "email": "1234",
         "password": "1234",
         "color": null,
@@ -36,7 +36,7 @@ let userss = {
                     "text": "sadsad",
                     "time": "sadd",
                     "date": "23.13.23",
-                    "priority": "Urgent",
+                    "priority": "urgent",
                 }
             },
             "inProgress": {
@@ -62,7 +62,7 @@ let userss = {
                     "text": "sadsad",
                     "time": "sadd",
                     "date": "23.13.23",
-                    "priority": "medium",
+                    "priority": "urgent",
                 },
             },
             "awaitFeedback": {
@@ -90,7 +90,7 @@ let userss = {
                     "text": "sadsad",
                     "time": "sadd",
                     "date": "23.13.23",
-                    "priority": "medium",
+                    "priority": "urgent",
                 },
                 "done1": {
                     "category": "Technical Task",
@@ -98,7 +98,7 @@ let userss = {
                     "text": "sadsad",
                     "time": "sadd",
                     "date": "23.13.23",
-                    "priority": "medium",
+                    "priority": "urgent",
                 },
             },
         },
@@ -191,7 +191,7 @@ function searchNumbers(collection) {
 
 
 function searchFirstUrgantDate() {
-    extractData(userss['user0']['cards'], ['toDo']);
+    extractData(userss['user0']['cards']);
 }
 //======================== search function cards END==============================
 
@@ -220,27 +220,30 @@ function getTimeOfDay() {
 
 //===================load Time of Day END============================
 
-function extractData(obj, category1) {
+function extractData(obj) {
     let urgentCount = 0;
     let latestDate = '00.00.00';
     let latestDateItem = null;
 
     for (let category in obj) {
-        for (let task in obj[category1]) {
+        for (let task in obj[category]) {
             // Zähle die "urgent" Prioritäten
             if (obj[category][task].priority === "urgent") {
                 urgentCount++;
-            }
+                console.log(urgentCount)
+                console.log(latestDateItem)
 
-            // Vergleiche das Datum
-            let currentDate = obj[category][task].date;
-            if (compareDates(currentDate, latestDate) > 0) {
-                latestDate = currentDate;
-                latestDateItem = obj[category][task];
+                // Vergleiche das Datum
+                let currentDate = obj[category][task].date;
+                if (compareDates(currentDate, latestDate) > 0) {
+                    latestDate = currentDate;
+                    latestDateItem = obj[category][task]['date'];
+                }
             }
         }
     }
-
+    console.log(urgentCount)
+    console.log(latestDateItem)
     return {
         urgentCount: urgentCount,
         latestDateItem: latestDateItem
@@ -257,10 +260,7 @@ function compareDates(date1, date2) {
     return day1 - day2;
 }
 
-// Beispiel-Objekt
-const tasks = {
-    // ... (Ihr Objekt)
-};
+
 
 
 function compareDates(date1, date2) {

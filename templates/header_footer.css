@@ -1,27 +1,65 @@
+/*header*/
+
 .header {
     position: fixed;
     top: 0;
     left: 200px;
     z-index: 3;
+    max-width: calc(100vw - 200px);
     width: 100%;
     height: 56px;
     background-color: var(--text-white);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10);
     display: flex;
     align-items: center;
-    padding: 0 96px;
+    justify-content: space-between;
+    padding-left: 96px;
+    padding-right: 96px;
 }
 
-.headerHeadLineBox {
+
+.headerHeadlineBox {
     display: flex;
 }
 
+<<<<<<< HEAD
 
 /* ? */
+=======
+>>>>>>> 66161b4bace2f24ee12fee46c05a725c1361027c
 
-.sidebar-mobile {
+.headImgLeft {
     display: none;
 }
+
+
+.headBoxRight {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
+}
+
+
+.headBoxRightImg {
+    width: 28px;
+}
+
+
+.headBoxRightUserCircle {
+    border-radius: 50%;
+    font-size: 15px;
+    width: 38px;
+    height: 38px;
+    padding: 5.5px;
+    border: 2px solid black;
+}
+
+/*------------------------------------------------*/
+
+
+/*Sidebar*/
 
 .sidebar {
     position: fixed;
@@ -37,6 +75,7 @@
     z-index: 1;
 }
 
+
 .sidebar-text {
     width: 100%;
     padding-bottom: 15px;
@@ -44,27 +83,33 @@
     padding-top: 15px;
 }
 
+
 .sidebar-text:hover {
     background-color: var(--sidebarHoverElements) !important;
 }
 
+
 .sidebar-text-sub {
     padding-left: 49px;
 }
+
 
 .sidebar-text a {
     color: var(--text-color);
     text-decoration: none;
 }
 
+
 .sidebar-bottom a {
     color: var(--text-color);
     text-decoration: none;
 }
 
+
 .sidebar-bottom:hover {
     background-color: var(--hover-color) !important;
 }
+
 
 .sidebar-text-area {
     width: 100%;
@@ -74,25 +119,27 @@
     gap: 5px;
 }
 
+/*------------------------------------------------*/
+
+
+/*???*/
 .police {
     display: flex;
     justify-content: center;
 }
 
+/*???*/
 
-/* ? */
 
+/*???*/
 .header-title {
     display: flex;
     display: flex;
     align-items: center;
 }
 
+/*???*/
 
-/* ? */
-
-
-/* ? */
 
 #header-summary {
     margin-top: 57px;
@@ -103,29 +150,70 @@
 }
 
 
-/* ? */
-
 @media (max-width: 1080px) {
+
+
     .header {
-        padding: 0 59px;
+        padding-left: 59px;
+        padding-right: 59px;
     }
 }
 
+
 @media(max-width: 700px) {
+<<<<<<< HEAD
+=======
+
+
+    /*header*/
+
+>>>>>>> 66161b4bace2f24ee12fee46c05a725c1361027c
     .header {
         position: fixed;
         top: 0;
         left: 0px;
         z-index: 1;
         width: 100%;
+        max-width: unset;
         height: 56px;
         background-color: var(--text-white);
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10);
         display: flex;
         align-items: center;
-        padding: 0 59px;
+        padding-left: 15px;
+        padding-right: 15px;
         margin-bottom: 110px;
     }
+<<<<<<< HEAD
+=======
+
+
+    .headerHeadlineBox {
+        display: none !important;
+    }
+
+
+    .headImgLeft {
+        display: unset;
+    }
+
+    /*------------------------------------------------*/
+
+
+    #header-summary {
+        margin-bottom: 0px;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-content: space-between;
+        align-items: flex-start;
+        margin-left: 9px;
+        margin-top: 0;
+    }
+
+
+    /*Sidebar*/
+
+>>>>>>> 66161b4bace2f24ee12fee46c05a725c1361027c
     .sidebar {
         position: fixed;
         left: 0;
@@ -139,12 +227,22 @@
         width: 100vw;
         background-color: var(--main-color) !important;
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 66161b4bace2f24ee12fee46c05a725c1361027c
     .logo-container {
         display: none;
     }
     .sidebar-bottom {
         display: none;
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 66161b4bace2f24ee12fee46c05a725c1361027c
     .sidebar-text {
         padding-bottom: 13px;
         padding-top: 13px;
@@ -155,16 +253,31 @@
         font-size: 15px;
         width: 23%;
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 66161b4bace2f24ee12fee46c05a725c1361027c
     .sidebar-text-sub {
         display: flex;
         flex-direction: column;
         align-items: center;
         padding-left: 0px;
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 66161b4bace2f24ee12fee46c05a725c1361027c
     .sidebar-text img {
         height: 26px;
         width: 26px;
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 66161b4bace2f24ee12fee46c05a725c1361027c
     .sidebar-text-area {
         display: flex;
         align-items: center;
@@ -175,6 +288,7 @@
         width: 100%;
         flex-direction: row;
     }
+<<<<<<< HEAD
     .police {
         display: none;
     }
@@ -213,4 +327,16 @@
         display: flex;
         width: 100%;
     }
+=======
+
+    /*------------------------------------------------*/
+
+
+    /*???*/
+    .police {
+        display: none;
+    }
+
+    /*???*/
+>>>>>>> 66161b4bace2f24ee12fee46c05a725c1361027c
 }
