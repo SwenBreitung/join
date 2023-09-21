@@ -12,6 +12,7 @@ async function initContacts() {
     closePopup();
     await loadContacts();
     renderContacts();
+    // openContactBigInfo(contactsArray[0]);
 }
 
 async function loadContacts() {
@@ -60,7 +61,7 @@ function renderContacts() {
  */
 function loadContactInfos(contact, firstLetter, i) {
     return /* html */ `
-    <div class="horicontal contactsInfo pointer" onclick="openContactBigInfo(contactsArray[${i}])">
+    <div class="horicontal contactsInfo pointer" onclick="openContactBigInfo(contactsArray[${i}], ${i})">
         <div class="profilePicture horicontalAndVertical" style="background-color: ${getRandomColor()}">
             ${firstLetter}
         </div>
@@ -115,15 +116,17 @@ async function createContact() {
  * ... display the contact info in a big container
  * ... create a animation
  */
-function openContactBigInfo(contact) {
+function openContactBigInfo(contact, i) {
     toggleVisibility('contactInfoBigId', true);
     document.getElementById('contactInfoBigId').classList.remove('slide-in');
     setTimeout(function () {
         document.getElementById('contactInfoBigId').classList.add('slide-in');
-        document.getElementById('nameId').innerHTML = /* html */ `${contact['name']}`;
+        document.getElementById('nameId').innerHTML = /* html */ `<b>${contact['name']}</b>`;
         document.getElementById('emailId').innerHTML = /* html */ `${contact['email']}`;
         document.getElementById('phoneId').innerHTML = /* html */ `${contact['phone']}`;
     }, 1);
+
+    deleteEditContactAtIndex(i);
 }
 
 
@@ -155,6 +158,34 @@ function toggleVisibility(id, show) {
     showHide.classList.toggle('d-none', !show);
 }
 
-function filter(letter) {
-    insertConent(letter);
+
+/**
+ * This function is used to pull the index from the contact and give it to the onclicked person
+ * 
+ * 
+ */
+function deleteEditContactAtIndex(i) {
+    let deleteContact = document.getElementById('deleteEditId');
+    deleteContact.innerHTML = /* html */ `
+    <div class="editDeleteContact pointer">
+        <img src="./img/PenAddTask 1=edit.svg">
+        Edit
+    </div>
+    <div class="editDeleteContact pointer" onclick="deleteContact(${i})">
+        <img src="./img/subTaskDelete.svg">
+        Delete
+    </div>
+    `
+}
+
+/**
+ * This function is used to delete a contact
+ * 
+ * 
+ */
+async function deleteContact(position) {
+    contactsArray.splice(position, 1);
+    await setItem('contactsArray', JSON.stringify(contactsArray));
+    toggleVisibility('contactInfoBigId', false);
+    renderContacts();
 }
