@@ -11,7 +11,7 @@ let userss = {
                     "title": "sad",
                     "text": "sadsad",
                     "time": "sadd",
-                    "date": "23.13.23",
+                    "date": "October.13.23",
                     "priority": "medium",
                 },
                 "ToDo1": {
@@ -19,7 +19,7 @@ let userss = {
                     "title": "sad",
                     "text": "sadsad",
                     "time": "sadd",
-                    "date": "23.13.23",
+                    "date": "October.11.23",
                     "priority": "medium",
                 },
                 "ToDo2": {
@@ -27,7 +27,7 @@ let userss = {
                     "title": "sad",
                     "text": "sadsad",
                     "time": "sadd",
-                    "date": "23.13.23",
+                    "date": "October.13.23",
                     "priority": "medium",
                 },
                 "ToDo3": {
@@ -35,7 +35,7 @@ let userss = {
                     "title": "sad",
                     "text": "sadsad",
                     "time": "sadd",
-                    "date": "23.13.23",
+                    "date": "October.13.23",
                     "priority": "urgent",
                 }
             },
@@ -45,7 +45,7 @@ let userss = {
                     "title": "sad",
                     "text": "sadsad",
                     "time": "sadd",
-                    "date": "23.13.23",
+                    "date": "October.13.23",
                     "priority": "medium",
                 },
                 "inProgress1": {
@@ -53,7 +53,7 @@ let userss = {
                     "title": "sad",
                     "text": "sadsad",
                     "time": "sadd",
-                    "date": "23.13.23",
+                    "date": "October.13.23",
                     "priority": "medium",
                 },
                 "inProgress2": {
@@ -61,7 +61,7 @@ let userss = {
                     "title": "sad",
                     "text": "sadsad",
                     "time": "sadd",
-                    "date": "23.13.23",
+                    "date": "October.13.23",
                     "priority": "urgent",
                 },
             },
@@ -71,7 +71,7 @@ let userss = {
                     "title": "sad",
                     "text": "sadsad",
                     "time": "sadd",
-                    "date": "23.13.23",
+                    "date": "October.13.23",
                     "priority": "medium",
                 },
                 "awaitFeedback1": {
@@ -79,7 +79,7 @@ let userss = {
                     "title": "sad",
                     "text": "sadsad",
                     "time": "sadd",
-                    "date": "23.13.23",
+                    "date": "October.13.23",
                     "priority": "medium",
                 },
             },
@@ -89,7 +89,7 @@ let userss = {
                     "title": "sad",
                     "text": "sadsad",
                     "time": "sadd",
-                    "date": "23.13.23",
+                    "date": "October.13.23",
                     "priority": "urgent",
                 },
                 "done1": {
@@ -97,7 +97,7 @@ let userss = {
                     "title": "sad",
                     "text": "sadsad",
                     "time": "sadd",
-                    "date": "23.13.23",
+                    "date": "October.13.23",
                     "priority": "urgent",
                 },
             },
@@ -118,6 +118,7 @@ function init() {
     loadText();
     loadSvgPen();
     loadSvgChop();
+    searchFirstUrgantDate();
 }
 
 
@@ -191,8 +192,13 @@ function searchNumbers(collection) {
 
 
 function searchFirstUrgantDate() {
-    extractData(userss['user0']['cards']);
+    let urgentNumber = document.getElementById('urgent')
+    let urgentDate = document.getElementById('date')
+    let urgentData = extractData(userss['user0']['cards']);
+    urgentNumber.innerHTML = urgentData['urgentCount']
+    urgentDate.innerHTML = urgentData['latestDateItem'];
 }
+
 //======================== search function cards END==============================
 
 
@@ -266,7 +272,6 @@ function compareDates(date1, date2) {
 function compareDates(date1, date2) {
     const [day1, month1, year1] = date1.split('.').map(Number);
     const [day2, month2, year2] = date2.split('.').map(Number);
-
 
     if (year1 !== year2) return year1 - year2;
     if (month1 !== month2) return month1 - month2;
