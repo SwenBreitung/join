@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdTask</title>
+    <title>AddTask</title>
 
     <script defer src="./script/script.js"></script>
     <script defer src="./script/addTask.js"></script>
@@ -22,23 +22,28 @@
 <body onload="includeHTML()">
     <div w3-include-html="templates/sidebar.html"></div>
     <div w3-include-html="templates/header.html"></div>
+
     <div class="addTaskHeadlineContainer">
         <h1 class="fw-bold">Add Task</h1>
     </div>
-    <div class="contentAddTask show-scrollbar">
+
+    <div class="contentAddTask show-scrollbarTaskWindow">
         <div class="contentPosition">
-            <div class="taskArea">
-                <div class="boxLeft">
-                    <form id="myForm">
+            <form id="myForm">
+                <div class="taskArea">
+
+                    <div class="boxLeft">
                         <div class="marginBottom16">
                             <span>Titel</span>
                             <input id="addTitel" required placeholder="Enter a title" type="text">
                         </div>
+
                         <div class="column">
                             <span>Description</span>
                             <textarea id="addDescription" required placeholder="Enter a Description"
                                 type="text"></textarea>
                         </div>
+
                         <div>
                             <span>Assigned to</span>
                             <div>
@@ -52,17 +57,15 @@
                                     </div>
                                 </div>
                                 <div class="custom-select d-none" id="assignedToContactsInputContainer">
-                                    <input class="click" id="assignedToInput" type="text" value="An:">
+                                    <input class="click" id="assignedToInput" type="text" placeholder="An:">
                                     <img class="inputAbsolut"
                                         onclick="toggleVisibility('assignedToContactsInputContainer', 'assignedToInputContainer')"
                                         src="img/arrow_drop_up.svg">
-
                                     <div class="selectContactsPositionContainer">
                                         <div class="ContactsRenderContainer show-scrollbar"
                                             id="contactsRenderContainer">
-
                                         </div>
-                                        <div class="addNewContactBtn">
+                                        <div class="addNewContactBtn blueBtn">
                                             <span>Add new contact</span>
                                             <img class="addNewContactBtnIcon" src="img/addTaskperson_add.svg">
                                         </div>
@@ -70,69 +73,94 @@
                                 </div>
                             </div>
                         </div>
-                </div>
-                <div class="boxRight">
-                    <div>
+                    </div>
+
+                    <div class="boxRight">
                         <div>
-                            <span>Due date</span>
                             <div>
-                                <input required placeholder="dd/mm/yyyy" type="text" id="datepicker">
-                            </div>
-                        </div>
-                        <div class="column marginTop16">
-                            <span>Prio</span>
-                            <div class="prioButtonContainer">
-                                <div onclick="prioSelected('prioUrgentBtn', 'prioUrgentIcon', 'prioUrgentIconActiv', 'prioBtnActivUrgent', true)"
-                                    id="prioUrgentBtn" class="prioBtn">Urgent
-                                    <img id="prioUrgentIcon" class="prioBtnIcons" src="./img/prioUrgent.svg">
-                                    <img id="prioUrgentIconActiv" class="prioBtnIcons d-none"
-                                        src="./img/PrioUrgentWhite.svg">
-                                </div>
-                                <div onclick="prioSelected('prioMediumBtn', 'prioMediumIcon', 'prioMediumIconActiv', 'prioBtnActivMedium', true)"
-                                    id="prioMediumBtn" class="prioBtn">Medium
-                                    <img id="prioMediumIcon" class="prioBtnIcons" src="./img/prioMedium.svg">
-                                    <img id="prioMediumIconActiv" class="prioBtnIcons d-none"
-                                        src="./img/PrioMediumWhite.svg">
-                                </div>
-                                <div onclick="prioSelected('prioLowBtn', 'prioLowIcon', 'prioLowIconActiv', 'prioBtnActivLow', true)"
-                                    id="prioLowBtn" class="prioBtn">Low
-                                    <img id="prioLowIcon" class="prioBtnIcons" src="./img/prioLow.svg">
-                                    <img id="prioLowIconActiv" class="prioBtnIcons d-none" src="./img/PrioLowWhite.svg">
+                                <span>Due date</span>
+                                <div>
+                                    <input required placeholder="dd/mm/yyyy" type="text" id="datepicker">
                                 </div>
                             </div>
-                        </div>
-                        <div class="column">
-                            <span>Category</span>
-                            <select class="mySelect" id="myCategorySelect">
-                                <option value="">Select task category</option>
-                                <option value="Option1">Option 1</option>
-                                <option value="Option2">Option 2</option>
-                                <option value="Option3">Option 3</option>
-                            </select>
-                        </div>
-                        <div class="column">
-                            <span>Subtasks</span>
-                            <div class="custom-select">
-                                <input placeholder="Add new subtask" id="subTaskSelectInput">
-                                <img onclick="addSubTaskToCollection()" class="inputAbsolut" src="img/plusAddTask.svg">
+
+                            <div class="column marginTop16">
+                                <span>Prio</span>
+                                <div class="prioButtonContainer">
+                                    <div onclick="prioSelectedToggle('prioUrgentBtn', 'prioUrgentIcon', 'prioUrgentIconActiv', 'prioBtnActivUrgent', './img/prioUrgent.svg', true)"
+                                        id="prioUrgentBtn" class="prioBtn">Urgent
+                                        <img id="prioUrgentIcon" class="prioBtnIcons" src="./img/prioUrgent.svg">
+                                        <img id="prioUrgentIconActiv" class="prioBtnIcons d-none"
+                                            src="./img/PrioUrgentWhite.svg">
+                                    </div>
+                                    <div onclick="prioSelectedToggle('prioMediumBtn', 'prioMediumIcon', 'prioMediumIconActiv', 'prioBtnActivMedium', './img/prioMedium.svg', true)"
+                                        id="prioMediumBtn" class="prioBtn">Medium
+                                        <img id="prioMediumIcon" class="prioBtnIcons" src="./img/prioMedium.svg">
+                                        <img id="prioMediumIconActiv" class="prioBtnIcons d-none"
+                                            src="./img/PrioMediumWhite.svg">
+                                    </div>
+                                    <div onclick="prioSelectedToggle('prioLowBtn', 'prioLowIcon', 'prioLowIconActiv', 'prioBtnActivLow', './img/prioLow.svg', true)"
+                                        id="prioLowBtn" class="prioBtn">Low
+                                        <img id="prioLowIcon" class="prioBtnIcons" src="./img/prioLow.svg">
+                                        <img id="prioLowIconActiv" class="prioBtnIcons d-none"
+                                            src="./img/PrioLowWhite.svg">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="selectedSubTask show-scrollbar" id="selectedSubTaskContainer">
+
+                            <div class="column">
+                                <span>Category</span>
+                                <div class="custom-select marginBottom16" id="categoryAreaV1">
+                                    <input onclick="toggleVisibility('categoryAreaV1', 'categoryAreaV2')" class="click"
+                                        id="categoryInputV1" type="text" readonly value="Select task category">
+                                    <img onclick="toggleVisibility('categoryAreaV1', 'categoryAreaV2')"
+                                        class="inputAbsolut" src="img/arrow_drop_downaa.svg">
+                                </div>
+
+                                <div class="custom-select marginBottom16 d-none" id="categoryAreaV2">
+                                    <input onclick="toggleVisibility('categoryAreaV2', 'categoryAreaV1')" class="click"
+                                        id="categoryInputV2" type="text" readonly value="Select task category">
+                                    <img onclick="toggleVisibility('categoryAreaV2', 'categoryAreaV1')"
+                                        class="inputAbsolut" src="img/arrow_drop_up.svg">
+                                    <div class="selectContactsPositionContainer" id="categoryContainer">
+                                        <div class="categoryRenderContainer show-scrollbar"
+                                            id="categoryRenderContainer">
+                                        </div>
+                                        <div id="createCategoryContainer" class="d-none custom-select">
+                                        </div>
+                                        <div onclick="toggleVisibility('', 'createCategoryContainer')"
+                                            class="addNewContactBtn blueBtn">
+                                            <span>Add new category</span>
+                                            <img class="addNewContactBtnIcon" src="img/addTaskCategory.svg">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div id="editContainer" class="d-none custom-select">
+
+                            <div class="column">
+                                <span>Subtasks</span>
+                                <div class="custom-select">
+                                    <input placeholder="Add new subtask" id="subTaskSelectInput">
+                                    <img onclick="addSubTaskToCollection()" class="inputAbsolut"
+                                        src="img/plusAddTask.svg">
+                                </div>
+                                <div class="selectedSubTask show-scrollbar" id="selectedSubTaskContainer">
+                                </div>
+                                <div id="editContainer" class="d-none custom-select">
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
-                </form>
-            </div>
-            <div class="selectBtnArea gap16">
-                <button onclick="resetTask()" class="clearBtn">Clear<img class="clearImg" src="./img/crossAddTask.svg"
-                        alt=""></button>
-                <button onclick="createTask()" class="createBtn">Create Task<img class="createImg" src="./img/check.svg"
-                        alt=""></button>
-            </div>
+                <div class="selectBtnArea gap16">
+                    <button onclick="resetTask()" class="clearBtn">Clear<img class="clearImg"
+                            src="./img/crossAddTask.svg" alt=""></button>
+                    <button onclick="createTask()" class="createBtn blueBtn">Create Task<img class="createImg"
+                            src="./img/check.svg" alt=""></button>
+                </div>
+            </form>
         </div>
-    </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     <script defer src="./script/pikadayDate.js"></script>

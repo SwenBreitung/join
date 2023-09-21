@@ -25,62 +25,74 @@ const allContacts = {
         'twoLetter': 'KH',
     }
 };
+let selectedIndex = null;
+let selectedColorIndex = null;
+let colorCollection = [
+    'background: #FF7A00',
+    'background: #FC71FF',
+    'background: #1FD7C1',
+    'background: #0038FF',
+    'background: #FFC701',
+    'background: #29ABE2',
+    'background: #091931',];
+
+let mainCategorys = [
+    {
+        'name': ['Technical Task', 'User Story',],
+        'color': ['background: #1FD7C1', 'background: #0038FF',],
+    }
+];
+
+let allCategorys = [
+    {
+        'name': [],
+        'color': [],
+    }
+];
+
 let allTasks = [];
 let subTaskCollection = [];
 let contactCollection = [];
-
-
-/**
- * Renders all selected contacts to the DOM.
- */
-function renderAllSelectedContacts() {
-    let contactZone = document.getElementById('selectedContactsContainer');
-    contactZone.innerHTML = '';
-    let i = 0;
-    for (let key in contactCollection) {
-        const contacts = contactCollection[key];
-        contactZone.innerHTML += returnRenderAllSelectedContacts(contacts);
-        i++;
+let currentCategorySelected = [
+    {
+        'name': '',
+        'color': '',
     }
-}
+]
+let currentPrioSelected = "";
 
 
-/**
- * Renders all contacts for search and select.
- */
-function renderAllContactsForSearch() {
-    let contactZone = document.getElementById('contactsRenderContainer');
-    contactZone.innerHTML = '';
-    let i = 0;
-    for (let key in allContacts) {
-        const contacts = allContacts[key];
-        contactZone.innerHTML += returnRenderAllContactsForSearch(contacts, i, key);
-        i++;
-    }
-}
+const titel = document.getElementById('addTitel').value;
+const description = document.getElementById('addDescription').value;
+const assignedToContact = contactCollection;
+const dueDate = document.getElementById('datepicker').value;
+const prio = currentPrioSelected;
+const category = currentCategorySelected;
+const subtask = subTaskCollection;
+
 
 
 
 //SubTaskFunctions//
-
 
 /**
  * Adds a sub-task to the collection.
  */
 function addSubTaskToCollection() {
     let input = document.getElementById('subTaskSelectInput');
-    if (input.value = '') {
-
+    if (input.value === '') {
+        return;
+    } else {
+        subTaskCollection.push(input.value);
+        renderSubTaskCollection();
+        input.value = '';
     }
-    subTaskCollection.push(input.value);
-    renderSubTaskCollection();
-    input.value = '';
 }
 
 
 /**
  * Renders the sub-task collection to the DOM.
- */
+*/
 function renderSubTaskCollection() {
     let collection = document.getElementById('selectedSubTaskContainer');
     collection.innerHTML = '';
@@ -120,7 +132,7 @@ function editSubtask(i) {
 /**
  * Confirms the editing of a sub-task.
  * @param {number} i - Index of the sub-task.
- */
+*/
 function confirmSubEdit(i) {
     let editedInput = document.getElementById('editInput');
     if (editedInput.value === '') {
@@ -144,7 +156,7 @@ function stopSubEdit() {
 
 /**
  * show edit window.
- */
+*/
 function showEditContainer() {
     let inputContainer = document.getElementById('editContainer');
     inputContainer.classList.remove('d-none');
@@ -176,17 +188,8 @@ function createTask() {
 
 /**
  * Retrieves data from form elements and adds a new task.
- */
+*/
 function addTask() {
-    // Werte aus den Formularelementen abrufen
-    const titel = document.getElementById('addTitel').value;
-    const description = document.getElementById('addDescription').value;
-    const assignedToContact = contactCollection;//---------------------------//
-    const dueDate = document.getElementById('datepicker').value;
-    const prio = document.getElementById('prio').value;
-    const category = document.getElementById('category').value;
-    const subtask = subTaskCollection;
-
     let task = {
         'task': {
             'titel': titel,
@@ -199,29 +202,78 @@ function addTask() {
         }
     };
     allTasks.push(task);
-    console.log(allTasks);
 }
 //---------------------------------------------------------------------------------//
 
 
 //Hide and Show functions//
 
-
-
 /**
  * Toggles the visibility of two DOM elements.
  * @param {string} id - ID of the first DOM element.
  * @param {string} id2 - ID of the second DOM element.
- */
+*/
 function toggleVisibility(id, id2) {
     const elementOne = document.getElementById(id);
     const elementTwo = document.getElementById(id2);
-
-    elementOne.classList.add('d-none');
-    elementTwo.classList.remove('d-none');
-    renderAllContactsForSearch();
-    renderAllSelectedContacts();
+    if (id === '') {
+        elementTwo.classList.remove('d-none');
+    } else {
+        if (id2 === '') {
+            elementOne.classList.add('d-none');
+        } else {
+            elementOne.classList.add('d-none');
+            elementTwo.classList.remove('d-none');
+            renderAllContactsForSearch();
+            renderAllSelectedContacts();
+        }
+    }
+    renderCategorys();
+    createCategoryWindow();
 }
+//---------------------------------------------------------------------------------//
+
+
+//Contact functions//
+
+/**
+ * Renders all selected contacts to the DOM.
+ */
+function renderAllSelectedContacts() {
+    let contactZone = document.getElementById('selectedContactsContainer');
+    contactZone.innerHTML = '';
+    let i = 0;
+    for (let key in contactCollection) {
+        const contacts = contactCollection[key];
+        contactZone.innerHTML += returnRenderAllSelectedContacts(contacts);
+        i++;
+    }
+}
+
+
+
+function renderAllContactsForSearch(filterText = '') {
+    let contactZone = document.getElementById('contactsRenderContainer');
+    contactZone.innerHTML = '';
+    let i = 0;
+    for (let key in allContacts) {
+        const contacts = allContacts[key];
+
+        // Wenn ein Filtertext vorhanden ist und der Kontaktname ihn nicht enthält, überspringen Sie diesen Kontakt
+        if (filterText && !contacts.name.toLowerCase().includes(filterText)) {
+            continue;
+        }
+
+        contactZone.innerHTML += returnRenderAllContactsForSearch(contacts, i, key);
+        i++;
+    }
+}
+
+
+document.getElementById('assignedToInput').addEventListener('input', function (event) {
+    const searchText = event.target.value.toLowerCase();
+    renderAllContactsForSearch(searchText);
+});
 
 
 /**
@@ -231,21 +283,16 @@ function toggleVisibility(id, id2) {
  */
 function toggleContactSelection(i, key) {
     const contact = allContacts[key];
-    const mainElement = document.getElementById(`assignedContactsBox${i}`);
-    const firstSecondary = document.getElementById(`assignedBox${i}`);
-    const secondSecondary = document.getElementById(`assignedBoxChecked${i}`);
+    const el = (suffix) => document.getElementById(`${suffix}${i}`);
+    const mainElement = el('assignedContactsBox'), firstSecondary = el('assignedBox'), secondSecondary = el('assignedBoxChecked');
 
     if (mainElement.classList.contains('assignedContactsBox')) {
         selectContact(mainElement, firstSecondary, secondSecondary);
-        if (!contactCollection.includes(contact)) {
-            contactCollection.push(contact);
-        }
+        if (!contactCollection.includes(contact)) contactCollection.push(contact);
     } else {
         deselectContact(mainElement, firstSecondary, secondSecondary);
         const index = contactCollection.indexOf(contact);
-        if (index > -1) {
-            contactCollection.splice(index, 1);
-        }
+        if (index > -1) contactCollection.splice(index, 1);
     }
 }
 
@@ -254,7 +301,7 @@ function toggleContactSelection(i, key) {
  * Checks if a contact is in the `contactCollection`.
  * @param {Object} contact - The contact object to check.
  * @returns {boolean} - True if contact is in the collection, false otherwise.
- */
+*/
 function isContactInCollection(contact) {
     return contactCollection.includes(contact);
 }
@@ -265,7 +312,7 @@ function isContactInCollection(contact) {
  * @param {HTMLElement} mainElement - Main contact DOM element.
  * @param {HTMLElement} firstSecondary - First secondary DOM element.
  * @param {HTMLElement} secondSecondary - Second secondary DOM element.
- */
+*/
 function selectContact(mainElement, firstSecondary, secondSecondary) {
     mainElement.classList.remove('assignedContactsBox');
     mainElement.classList.add('assignedContactsBoxSelected');
@@ -280,7 +327,7 @@ function selectContact(mainElement, firstSecondary, secondSecondary) {
  * @param {HTMLElement} mainElement - Main contact DOM element.
  * @param {HTMLElement} firstSecondary - First secondary DOM element.
  * @param {HTMLElement} secondSecondary - Second secondary DOM element.
- */
+*/
 function deselectContact(mainElement, firstSecondary, secondSecondary) {
     mainElement.classList.remove('assignedContactsBoxSelected');
     mainElement.classList.add('assignedContactsBox');
@@ -289,7 +336,189 @@ function deselectContact(mainElement, firstSecondary, secondSecondary) {
     return;
 }
 //---------------------------------------------------------------------------------//
+//Category functions//
 
+function renderCategorys() {
+    let container = document.getElementById('categoryRenderContainer');
+    container.innerHTML = ''; // Leert den Container bevor er neu gerendert wird
+    let all = allCategorys[0];
+    let main = mainCategorys[0];
+    for (let m = 0; m < main.name.length; m++) {
+        const mName = main.name[m];
+        const mColor = main.color[m];
+        container.innerHTML += returnRenderMainCategorys(mName, mColor, m);
+        for (let a = 0; a < all.name.length; a++) {
+            const aName = all.name[a];
+            const aColor = all.color[a];
+            container.innerHTML += returnRenderAllCategorys(aName, aColor, a);
+        }
+    }
+}
+
+function createCategoryWindow() {
+    let container = document.getElementById('createCategoryContainer');
+    container.innerHTML = '';
+    container.innerHTML = returnCreateCategoryWindow();
+    let colorContainer = document.getElementById('colorSettingBox');
+    colorContainer.innerHTML = '';
+    for (let index = 0; index < colorCollection.length; index++) {
+        const color = colorCollection[index];
+        colorContainer.innerHTML += returnCreateCategoryColors(color, index);
+    }
+}
+
+
+
+
+
+
+function selectColor(index) {
+    updateSelectedColorIndex(index);
+    refreshColorSelection();
+}
+
+function updateSelectedColorIndex(index) {
+    selectedColorIndex = selectedColorIndex === index ? null : index;
+}
+
+function refreshColorSelection() {
+    // TODO: Logik, um die ausgewählte Farbe im UI hervorzuheben.
+}
+
+function confirmCreateCategory() {
+    if (isValidCategoryInput()) {
+        addCategory();
+        renderCategorys();
+    } else {
+        alertInvalidInput();
+    }
+}
+
+function isValidCategoryInput() {
+    let inputElem = document.getElementById('createCategoryInput');
+    return inputElem.value.length >= 2 && selectedColorIndex !== null;
+}
+
+function addCategory() {
+    let inputElem = document.getElementById('createCategoryInput');
+    allCategorys[0].name.push(inputElem.value);
+    allCategorys[0].color.push(colorCollection[selectedColorIndex]);
+}
+
+function alertInvalidInput() {
+    alert("Bitte geben Sie einen Kategorienamen mit mindestens 2 Buchstaben ein und wählen Sie eine Farbe aus.");
+}
+function selectCategory(type, index) {
+    updateCurrentCategorySelected(type, index);
+    updateInputs();
+    selectedIndex = index; // Aktualisieren von selectedIndex beim Auswählen einer Kategorie
+    highlightSelectedCategory();
+}
+function updateCurrentCategorySelected(type, index) {
+    let categoryData = type === 'main' ? mainCategorys[0] : allCategorys[0];
+    currentCategorySelected[0].name = categoryData.name[index];
+    currentCategorySelected[0].color = categoryData.color[index];
+}
+
+function updateInputs() {
+    let inputV1 = document.getElementById('categoryInputV1');
+    let inputV2 = document.getElementById('categoryInputV2');
+    setInputValueAndColor(inputV1);
+    setInputValueAndColor(inputV2);
+}
+
+function setInputValueAndColor(inputElem) {
+    inputElem.value = currentCategorySelected[0].name;
+    inputElem.style.borderColor = getBorderColor();
+}
+
+function getBorderColor() {
+    return currentCategorySelected[0].color.replace('background:', '').trim();
+}
+
+function highlightSelectedCategory() {
+    if (selectedIndex !== null) {
+        let categoryElement = document.getElementById(`categoryMainList${selectedIndex}`);
+        if (categoryElement) categoryElement.classList.add('selected');
+    }
+}
+function deselectCategory() {
+    unhighlightSelectedCategory();
+    resetCurrentCategorySelected();
+    resetInputs();
+    selectedIndex = null; // Setzt selectedIndex zurück
+}
+function resetCurrentCategorySelected() {
+    currentCategorySelected[0].name = '';
+    currentCategorySelected[0].color = '';
+}
+
+function resetInputs() {
+    let inputV1 = document.getElementById('categoryInputV1');
+    let inputV2 = document.getElementById('categoryInputV2');
+    resetInputValueAndColor(inputV1);
+    resetInputValueAndColor(inputV2);
+}
+
+function resetInputValueAndColor(inputElem) {
+    inputElem.value = 'Select task category';
+    inputElem.style.borderColor = 'initial';
+}
+
+function unhighlightSelectedCategory() {
+    if (selectedIndex !== null) {
+        let categoryElement = document.getElementById(`categoryMainList${selectedIndex}`);
+        if (categoryElement) categoryElement.classList.remove('selected'); // Entfernt die Klasse
+    }
+}
+
+
+
+
+
+
+function returnCreateCategoryWindow() {
+    return /*html*/`
+    <input id="createCategoryInput" placeholder="Category name..." type="text">
+    <img onclick="stopCreateCategory()" class="editAbsolutCross"
+    src="img/close.svg">
+    <img onclick="confirmCreateCategory()" class="editAbsolutCheck"
+    src="img/SubtasksCheck.svg">
+    <div class="colorSettingBox" id="colorSettingBox">
+    </div>
+    `;
+}
+function returnCreateCategoryColors(color, index) {
+    return /*html*/`
+        <div onclick='selectColor(${index})' style="${color}" class="colorCircle"></div>
+    `;
+}
+
+function returnRenderMainCategorys(name, color, i) {
+    return /*html*/`
+    <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow">
+    <span>${name}</span>
+        <div class="colorCircle" style="${color}"></div>
+    </div>
+    `;
+}
+function returnRenderAllCategorys(name, color, i) {
+    return /*html*/`
+    <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow">
+    <span>${name}</span>
+    <div class='categoryRowLeft'>
+        <div class="colorCircle" style="${color}"></div>
+        <img src="img/subTaskDelete.svg">
+    </div>
+    </div>
+    `;
+}
+function stopCreateCategory() {
+    input = document.getElementById('createCategoryInput');
+    input.value = '';
+    toggleVisibility('createCategoryContainer', '');
+}
+//---------------------------------------------------------------------------------//
 
 //Prio Buttons class-change//
 
@@ -301,17 +530,28 @@ function deselectContact(mainElement, firstSecondary, secondSecondary) {
  * @param {string} activeClass - CSS class to apply when active.
  * @param {boolean} resetOther - Determines if other buttons should be reset.
  */
-function prioSelected(btnId, iconId, activeIconId, activeClass, resetOther) {
-    if (resetOther) {
-        resetAll();
-    }
+function activateButton(btnId, iconId, activeIconId, activeClass, iconSrc) {
     document.getElementById(btnId).classList.add(activeClass);
     document.getElementById(iconId).classList.add('d-none');
     document.getElementById(activeIconId).classList.remove('d-none');
+    currentPrioSelected = iconSrc;
 }
 
+function deactivateButton(btnId, iconId, activeIconId, activeClass) {
+    document.getElementById(btnId).classList.remove(activeClass);
+    document.getElementById(iconId).classList.remove('d-none');
+    document.getElementById(activeIconId).classList.add('d-none');
+    currentPrioSelected = "";
+}
 
-/**
+function prioSelectedToggle(btnId, iconId, activeIconId, activeClass, iconSrc, resetOther) {
+    if (currentPrioSelected === iconSrc) {
+        deactivateButton(btnId, iconId, activeIconId, activeClass);
+    } else {
+        if (resetOther) resetAll();
+        activateButton(btnId, iconId, activeIconId, activeClass, iconSrc);
+    }
+}/**
  * Resets all priority buttons to their default states.
  */
 function resetAll() {
@@ -325,6 +565,7 @@ function resetAll() {
         document.getElementById(icons[i]).classList.remove('d-none');
         document.getElementById(activeIcons[i]).classList.add('d-none');
     }
+    currentPrioSelected = "";
 }
 //---------------------------------------------------------------------------------//
 
