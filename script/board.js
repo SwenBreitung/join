@@ -72,7 +72,7 @@ function startDragging(id) {
 }
 
 function generateTaskHTML(element) {
-    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" class="task">
+    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask()" class="task">
             <div>
                 <div class="task-category"> ${element['category']}</div>
                 <div class="task-title">${element['title']}</div>
