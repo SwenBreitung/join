@@ -45,6 +45,14 @@ section {
     display: none;
 }
 
+.blueBtn:hover {
+    background-color: #091931;
+    cursor: pointer;
+}
+
+#myForm {
+    width: 100%;
+}
 
 input {
     border-radius: 5px;
@@ -121,33 +129,32 @@ textarea:focus {
 
 .addTaskHeadlineContainer {
     position: fixed;
-    height: 110px;
+    height: 100px;
     width: 100%;
     background-color: #F6F7F8 !important;
     display: flex;
     align-items: end;
-    padding-bottom: 15px;
+    padding-bottom: 5px;
     top: 0;
     right: 5px;
     display: flex;
     left: 296px;
     max-width: calc(100vw - 296px);
-    margin-top: 62px;
+    margin-top: 60px;
     z-index: 2;
 }
 
 
 .contentAddTask {
     position: absolute;
-    top: 115px;
-    bottom: 0;
+    top: 160px;
+    bottom: 0px;
     display: flex;
     flex-direction: column;
     left: 200px;
     max-width: calc(100vw - 200px);
-    margin-top: 56px;
     width: 100%;
-    max-height: calc(100vh - 115px);
+    max-height: calc(100vh - 160px);
     overflow-y: auto;
 }
 
@@ -167,10 +174,10 @@ textarea:focus {
 }
 
 #datepicker {
-    background-image: url('../img/kalenderJoin.svg');
-    background-repeat: no-repeat;
+    background-image: url('../img/kalenderJoin.svg') !important;
+    background-repeat: no-repeat !important;
     background-position-x: calc(96%) !important;
-    background-position: center;
+    background-position-y: center !important;
 }
 
 .pika-single {
@@ -226,8 +233,8 @@ textarea:focus {
 
 
 .assignedToContactImg {
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     font-size: 13px;
     border: 1.5px solid white;
@@ -262,7 +269,7 @@ textarea:focus {
     overflow-y: auto;
 }
 
-/*--------------------SCROLLBAR----------------------------*/
+/*--------------------SCROLLBAR-Inside----------------------------*/
 .show-scrollbar::-webkit-scrollbar {
     display: block !important;
     width: 12px !important;
@@ -304,6 +311,50 @@ textarea:focus {
 
 }
 
+/*--------------------SCROLLBAR-Outside----------------------------*/
+
+
+.show-scrollbarTaskWindow::-webkit-scrollbar {
+    display: block !important;
+    width: 12px !important;
+}
+
+.show-scrollbarTaskWindow::-webkit-scrollbar-track {
+    background-color: #F6F7F8 !important;
+}
+
+.show-scrollbarTaskWindow::-webkit-scrollbar-thumb {
+    background-color: #2A3647 !important;
+    border-radius: 10px;
+}
+
+.show-scrollbarTaskWindow:hover::-webkit-scrollbar-thumb {
+    background-color: #091931;
+}
+
+.show-scrollbarTaskWindow::-webkit-scrollbar-button:start:decrement,
+.show-scrollbarTaskWindow::-webkit-scrollbar-button:end:increment {
+    display: block;
+    height: 10px;
+    background-color: #fff;
+    background-repeat: no-repeat;
+}
+
+.show-scrollbarTaskWindow::-webkit-scrollbar-button:start:decrement {
+    background-position: center;
+    background-image: url('../img/arrow_drop_up.svg');
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.show-scrollbarTaskWindow::-webkit-scrollbar-button:end:increment {
+    background-position: center;
+    background-image: url('../img/arrow_drop_downaa.svg');
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+
+}
+
 .assignedContactsBox {
     display: flex;
     flex-direction: row;
@@ -316,6 +367,7 @@ textarea:focus {
     padding-bottom: 5px;
     margin-top: 2px;
     margin-bottom: 2px;
+    border-bottom: 1px solid #D1D1D1;
 }
 
 .contactBoxLeft {
@@ -330,6 +382,7 @@ textarea:focus {
     cursor: pointer;
     background: #EEE;
     border-radius: 10px;
+    border-bottom: 1px solid transparent;
 }
 
 .assignedContactsBoxSelected {
@@ -366,10 +419,10 @@ textarea:focus {
     gap: 5px;
     color: white;
     background-color: #2A3647;
-    margin-top: 5px;
+    margin-top: 8px;
     margin-bottom: 8px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 7px;
+    padding-bottom: 7px;
     width: 90%;
     border-radius: 10px;
 }
@@ -432,6 +485,88 @@ textarea:focus {
     color: white;
 }
 
+
+.categoryRenderContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    max-height: 180px;
+    width: 100%;
+    gap: 10px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+    overflow-y: auto;
+}
+
+
+.categoryRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 98%;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #D1D1D1;
+}
+
+
+.categoryRow:hover {
+    cursor: pointer;
+    background: #EEE;
+    border-radius: 10px;
+    border-bottom: 1px solid transparent;
+
+}
+
+.colorCircle {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(0, 0, 0);
+    border-radius: 50%;
+}
+
+#createCategoryInput {
+    border-radius: 0;
+    padding: 0px;
+    padding-left: 10px;
+    height: 35px;
+    border: none;
+    border-left: 5px solid #2A3647;
+    border-right: 5px solid #2A3647;
+    border-bottom: 1px dotted #D1D1D1;
+    border-top: 5px solid #2A3647 !important;
+}
+
+.categoryRowLeft {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.colorSettingBox {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 3px;
+    padding: 5px 5px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-left: 5px solid #2A3647;
+    border-right: 5px solid #2A3647;
+    border-bottom: 5px solid #2A3647;
+}
+
+.selected {
+    background-color: #2A3647;
+    color: white;
+    /* Schwarz */
+}
+
 .selectedSubTask {
     display: flex;
     flex-direction: column;
@@ -490,13 +625,12 @@ ul {
 
 
 .selectBtnArea {
-    position: fixed;
-    bottom: 50px;
-    left: 0;
-    padding-right: 96px;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-top: 55px;
+    margin-bottom: 30px;
     width: 100%;
     z-index: 2;
 }
@@ -526,6 +660,13 @@ ul {
     padding: 6px 13px;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
     border-radius: 10px;
+}
+
+
+.clearBtn:hover {
+    color: black;
+    background-color: #eee;
+    cursor: pointer;
 }
 
 .createImg {
@@ -559,10 +700,6 @@ ul {
 
 
     .selectBtnArea {
-        position: fixed;
-        bottom: 50px;
-        left: 0;
-        padding-right: 59px;
         display: flex;
         justify-content: flex-end;
         align-items: center;
@@ -653,22 +790,48 @@ ul {
 
     .contentAddTask {
         position: absolute;
-        top: 90px;
-        bottom: 145px;
+        top: 145px;
+        bottom: 150px;
         display: flex;
         flex-direction: column;
         left: 0px;
         max-width: unset;
-        margin-top: 56px;
         width: 100%;
-        max-height: calc(100vh - 201px);
+        max-height: calc(100vh - 195px);
         overflow-y: auto;
-        -ms-overflow-style: none !important;
-        scrollbar-width: none !important;
     }
 
 
     ::-webkit-scrollbar {
+        display: none;
+    }
+
+    .show-scrollbarTaskWindow::-webkit-scrollbar {
+        display: none;
+    }
+
+    .show-scrollbarTaskWindow::-webkit-scrollbar-track {
+        display: none;
+    }
+
+    .show-scrollbarTaskWindow::-webkit-scrollbar-thumb {
+        display: none;
+    }
+
+    .show-scrollbarTaskWindow:hover::-webkit-scrollbar-thumb {
+        display: none;
+    }
+
+    .show-scrollbarTaskWindow::-webkit-scrollbar-button:start:decrement,
+    .show-scrollbarTaskWindow::-webkit-scrollbar-button:end:increment {
+        display: none;
+    }
+
+    .show-scrollbarTaskWindow::-webkit-scrollbar-button:start:decrement {
+        display: none;
+    }
+
+    .show-scrollbarTaskWindow::-webkit-scrollbar-button:end:increment {
         display: none;
     }
 
@@ -677,7 +840,7 @@ ul {
     .addTaskHeadlineContainer {
         top: 0px;
         left: 12px;
-        height: 90px;
+        height: 87px;
         padding-bottom: 10px;
         max-width: calc(100vw - 12px);
     }
@@ -687,7 +850,7 @@ ul {
 
     .contentPosition {
         padding-left: 12px;
-        padding-right: 15px;
+        padding-right: 12px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -721,6 +884,14 @@ ul {
         align-items: center;
         width: 100%;
         z-index: 2;
+    }
+
+
+    .selectedSubTask {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        max-height: 90px;
     }
 
 
