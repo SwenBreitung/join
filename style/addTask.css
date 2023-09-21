@@ -511,6 +511,8 @@ textarea:focus {
     padding-top: 5px;
     padding-bottom: 5px;
     border-bottom: 1px solid #D1D1D1;
+    border-radius: 10px !important;
+
 }
 
 
@@ -564,7 +566,14 @@ textarea:focus {
 .selected {
     background-color: #2A3647;
     color: white;
-    /* Schwarz */
+    border-radius: 10px !important;
+
+}
+
+.selected:hover {
+    cursor: pointer;
+    background: #091931 !important;
+    border-radius: 10px !important;
 }
 
 .selectedSubTask {
