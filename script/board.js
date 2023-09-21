@@ -2,16 +2,22 @@ let todos = [{
     'id': 0,
     'title': 'This is the task',
     'status': 'to-do',
-    'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita dolores quisquam rerum commodi deserunt nihil obcaecati minima excepturi minus mollitia at doloremque necessitatibus veniam rem doloribus aperiam laudantium, provident error.',
+    'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita dolores quisquam rerum commodi deserunt nihil obcaecati minima excepturi minus mollitia Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita dolores quisquam rerum commodi deserunt nihil obcaecati minima excepturi minus mollit at doloremque necessitatibus veniam rem doloribus aperiam laudantium, provident error.',
     'category': 'Technical Task',
-    'priority': 'Low'
+    'priority': 'Low',
+    'dueDate': '02/09/2023',
+    'assignedTo': 'Peter Lustig',
+    'subtask': 'documentation'
 }, {
     'id': 1,
     'title': 'HTML Base Template Creation System bla bla bla',
     'status': 'in-progress',
     'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita dolores quisquam rerum commodi deserunt',
     'category': 'User Story',
-    'priority': 'Medium'
+    'priority': 'Medium',
+    'dueDate': '02/09/2023',
+    'assignedTo': 'Peter Lustig',
+    'subtask': 'documentation'
 
 }, {
     'id': 2,
@@ -19,14 +25,21 @@ let todos = [{
     'status': 'awaiting-feedback',
     'description': 'This is the description',
     'category': 'Technical Task',
-    'priority': 'Urgent'
+    'priority': 'Urgent',
+    'dueDate': '02/09/2023',
+    'assignedTo': 'Peter Lustig',
+    'subtask': 'documentation'
+    
 }, {
     'id': 3,
     'title': 'This is the only task',
     'status': 'awaiting-feedback',
     'description': 'This is the description',
     'category': 'User Story',
-    'priority': 'Low'
+    'priority': 'Low',
+    'dueDate': '02/09/2023',
+    'assignedTo': 'Peter Lustig',
+    'subtask': 'documentation'
 }];
 
 
@@ -114,25 +127,51 @@ function removeHighlight(id) {
 function openTask(i) {
     console.log(todos[i]['title'])
     document.getElementById('popup-container').classList.remove('d-none');
-    document.getElementById('popup-container').innerHTML = `
+    document.getElementById('popup-container').innerHTML =  /*html*/ `
     <div class="task-detail">
 
 
-    <div>
-    <div class="task-category"> ${todos[i]['category']}</div>
-    <div class="task-title">${todos[i]['title']}</div>
-    <div class="task-description"> ${todos[i]['description']}</div>
-    </div>
-    <div class="task-users-prio">
-    <div class="task-users">
-        <div class="profile-picture horicontal-and-vertical">A</div>
-    </div>
-    <img src = "img/prio${todos[i]['priority']}.svg" alt = "${todos[i]['priority']}" >
-    </div>
+        <div class="task-detail-content">
+            <div class="task-detail-top">
+                <div class="task-detail-category"> ${todos[i]['category']}</div>
+                <img onclick="closeTask()" src="img/close.svg" alt="close">
+            </div>
+               
 
+            <div class="task-detail-title"><h1>${todos[i]['title']}</h1></div>
+            <div class="task-description"> ${todos[i]['description']}</div>
+            <div class="task-detail-font-color">Due date:</div>${todos[i]['dueDate']}
+            <div class="task-detail-font-color">Priority:</div>  
+                ${todos[i]['priority']}
+                <img src = "img/prio${todos[i]['priority']}.svg" alt = "${todos[i]['priority']}">
+           
+            <div class="task-detail-font-color">Assigned To:</div>${todos[i]['assignedTo']}
+
+            <div> 
+                <div class="task-detail-font-color">Subtasks</div>
+                
+                <img src="img/done.svg" alt="">
+                <img src="img/addTaskBox.svg" alt="">
+                ${todos[i]['subtask']}
+       
+               
+            </div>
+
+        </div>
+
+        <div class="task-detail-bottom">
+            <img src="img/subTaskDelete.svg" alt="">
+            <img src="img/PenAddTask 1=edit.svg" alt="">
+        </div>
+       
 
     </div>
     `;
+}
+
+
+function closeTask() {
+    document.getElementById('popup-container').classList.add('d-none');
 }
 
 //listens for focus on textbox
