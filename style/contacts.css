@@ -105,6 +105,20 @@ h6 {
     background: #F2F2F2;
 }
 
+.firstLetterOverContact {
+    font-size: 20px;
+    padding: 17px 36px;
+    height: 58px;
+}
+
+.partingLine {
+    height: 1px;
+    background: #DDDDDD;
+    width: 336px;
+    margin: 8px 0 8px;
+    font-weight: 400;
+}
+
 /* add contact container */
 .profilePictureArea {
     position: relative;
@@ -374,7 +388,7 @@ input {
 
 @keyframes slideIn {
     0% {
-        transform: translateX(200%);
+        transform: translateX(400%);
     }
 
     100% {

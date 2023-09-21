@@ -26,14 +26,29 @@ async function loadContacts() {
  * This function us used to ...
  * ... pull the users JSON Array (names/emails)
  * ... pull the first letter from every user
+ * ... sort alphabetically
  */
 function renderContacts() {
     let userContent = document.getElementById('contactsId');
     userContent.innerHTML = '';
-    users.sort((a, b) => a.name.localeCompare(b.name));
+    let previousFirstLetter = '';
+    contactsArray.sort((a, b) => a.name.localeCompare(b.name, 'de', { sensitivity: 'base' }));
+
     for (let i = 0; i < contactsArray.length; i++) {
         const contact = contactsArray[i];
         const firstLetter = contact.name.charAt(0).toUpperCase();
+
+        if (firstLetter !== previousFirstLetter) {
+            userContent.innerHTML += /* html */
+                `<div class="firstLetterOverContact horicontal">
+                ${firstLetter}
+            </div>
+            <div class="partingLine">
+            </div>
+            `;
+            previousFirstLetter = firstLetter;
+        }
+
         userContent.innerHTML += loadContactInfos(contact, firstLetter, i);
     }
 }
@@ -138,4 +153,8 @@ function doNotClose(event) {
 function toggleVisibility(id, show) {
     const showHide = document.getElementById(id);
     showHide.classList.toggle('d-none', !show);
+}
+
+function filter(letter) {
+    insertConent(letter);
 }
