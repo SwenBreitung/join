@@ -72,7 +72,8 @@ function startDragging(id) {
 }
 
 function generateTaskHTML(element) {
-    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" class="task">
+    let i = element['id']
+    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask(${i})" class="task">
             <div>
                 <div class="task-category"> ${element['category']}</div>
                 <div class="task-title">${element['title']}</div>
@@ -110,10 +111,27 @@ function removeHighlight(id) {
 }
 
 /* --------------------------------------- */
-function openTask() {
+function openTask(i) {
+    console.log(todos[i]['title'])
     document.getElementById('popup-container').classList.remove('d-none');
     document.getElementById('popup-container').innerHTML = `
-    <div class="task-detail"></div>
+    <div class="task-detail">
+
+
+    <div>
+    <div class="task-category"> ${todos[i]['category']}</div>
+    <div class="task-title">${todos[i]['title']}</div>
+    <div class="task-description"> ${todos[i]['description']}</div>
+    </div>
+    <div class="task-users-prio">
+    <div class="task-users">
+        <div class="profile-picture horicontal-and-vertical">A</div>
+    </div>
+    <img src = "img/prio${todos[i]['priority']}.svg" alt = "${todos[i]['priority']}" >
+    </div>
+
+
+    </div>
     `;
 }
 
@@ -164,13 +182,13 @@ function revertDivColor() {
 // function generateInitials() {
 //     let jsonString = '{"text": " hallo Welt"}';
 
-    // JSON-String in ein JavaScript-Objekt umwandeln
-    // let data = JSON.parse(jsonString);
+// JSON-String in ein JavaScript-Objekt umwandeln
+// let data = JSON.parse(jsonString);
 
-    // Textfeld aus dem JSON-Objekt extrahieren
-    // let text = data.text.trim();
+// Textfeld aus dem JSON-Objekt extrahieren
+// let text = data.text.trim();
 
-    // Leerzeichen finden und den ersten Buchstaben sowie den Buchstaben danach extrahieren
+// Leerzeichen finden und den ersten Buchstaben sowie den Buchstaben danach extrahieren
 //     let index = text.indexOf(' ');
 //     if (index !== -1 && index < text.length - 1) {
 //         let firstLetter = text.charAt(0).toUpperCase();

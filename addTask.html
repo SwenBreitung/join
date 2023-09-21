@@ -35,12 +35,12 @@
                     <div class="boxLeft">
                         <div class="marginBottom16">
                             <span>Titel</span>
-                            <input id="addTitel" required placeholder="Enter a title" type="text">
+                            <input class="click" id="addTitel" required placeholder="Enter a title" type="text">
                         </div>
 
                         <div class="column">
                             <span>Description</span>
-                            <textarea id="addDescription" required placeholder="Enter a Description"
+                            <textarea class="click" id="addDescription" required placeholder="Enter a Description"
                                 type="text"></textarea>
                         </div>
 
@@ -80,7 +80,7 @@
                             <div>
                                 <span>Due date</span>
                                 <div>
-                                    <input required placeholder="dd/mm/yyyy" type="text" id="datepicker">
+                                    <input class="click" required placeholder="dd/mm/yyyy" type="text" id="datepicker">
                                 </div>
                             </div>
 
@@ -140,7 +140,7 @@
                             <div class="column">
                                 <span>Subtasks</span>
                                 <div class="custom-select">
-                                    <input placeholder="Add new subtask" id="subTaskSelectInput">
+                                    <input class="click" placeholder="Add new subtask" id="subTaskSelectInput">
                                     <img onclick="addSubTaskToCollection()" class="inputAbsolut"
                                         src="img/plusAddTask.svg">
                                 </div>
@@ -157,7 +157,7 @@
                     <button onclick="resetTask()" class="clearBtn">Clear<img class="clearImg"
                             src="./img/crossAddTask.svg" alt=""></button>
                     <button onclick="createTask()" class="createBtn blueBtn">Create Task<img class="createImg"
-                            src="./img/check.svg" alt=""></button>
+                            src="./img/check.svg"></button>
                 </div>
             </form>
         </div>
