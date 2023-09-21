@@ -227,7 +227,12 @@ h3 {
     justify-content: space-between;
     align-items: center;
 }
-
+.task-detail {
+    height: 50vh;
+    width: 20vw;
+    background-color: white;
+    border-radius: 10px;
+}
 .profile-picture {
     height: 42px;
     width: 42px;

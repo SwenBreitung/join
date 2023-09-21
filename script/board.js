@@ -72,7 +72,8 @@ function startDragging(id) {
 }
 
 function generateTaskHTML(element) {
-    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask()" class="task">
+    let i = element['id']
+    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask(${i})" class="task">
             <div>
                 <div class="task-category"> ${element['category']}</div>
                 <div class="task-title">${element['title']}</div>
@@ -110,10 +111,28 @@ function removeHighlight(id) {
 }
 
 /* --------------------------------------- */
-function openTask() {
+function openTask(element) {
+    console.log(element)
     document.getElementById('popup-container').classList.remove('d-none');
     document.getElementById('popup-container').innerHTML = `
-    <div class="task-detail"></div>
+    <div class="task-detail">
+
+    <div>
+    <div class="task-category"></div>
+    <div class="task-title">${element['title']}</div>
+    <div class="task-description"> ${element['description']}</div>
+</div>
+<div class="task-users-prio">
+    <div class="task-users">
+        <div class="profile-picture horicontal-and-vertical">A</div>
+    </div>
+    <img src = "img/prio${element['priority']}.svg" alt = "${element['priority']}" >
+</div>
+
+
+
+
+    </div>
     `;
 }
 
