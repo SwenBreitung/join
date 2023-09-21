@@ -116,6 +116,16 @@ body {
     justify-content: flex-start;
 }
 
+.data-panel img {
+    background-color: var(--color-red);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 10px solid var(--color-red);
+    /* background-color: crimson; */
+    object-fit: cover;
+}
+
 @media(max-width: 1000px) {
     .task-cards {
         width: 131px;
@@ -159,8 +169,36 @@ body {
 #to-dos,
 #board,
 #in-progress,
-#await-feedback {
+#await-feedback,
+#urgent {
     font-size: 34px;
+    font-weight: 700!important;
+}
+
+#date {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.urgant {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.urgant-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.deadline-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 @media(max-width:926px) {
