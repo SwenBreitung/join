@@ -357,7 +357,6 @@ function renderCategorys() {
 
 function createCategoryWindow() {
     let container = document.getElementById('createCategoryContainer');
-    container.innerHTML = '';
     container.innerHTML = returnCreateCategoryWindow();
     let colorContainer = document.getElementById('colorSettingBox');
     colorContainer.innerHTML = '';

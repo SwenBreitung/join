@@ -1,4 +1,42 @@
+userDummy = [
+    {
+        'user0':
+        {
+            'name': '',
+            'nameAbbreviation': '',
+            'color': '',
+        }
+    }
+]
+
+
+taskDummy = [
+    {
+        'task#1':
+        {
+            'category': '',
+            'titel': '',
+            'description': '',
+            'Contacts':
+            {
+                'name': [],
+                'color': [],
+                'nameAbbreviation': [],
+            },
+            'subTask': [],
+            'prio': '',
+            'dueDate': '',
+        },
+    }
+];
+
+
 let users = [];
+let taskToDo = [];
+let taskInProgress = [];
+let taskAwaitFeedback = [];
+let taskDone = [];
+
 
 async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');
@@ -13,6 +51,7 @@ async function includeHTML() {
         }
     }
 }
+
 
 function closeDialog() {
     document.getElementById('dialog-full').classList.add('d-none');
