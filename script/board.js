@@ -1,52 +1,49 @@
-let todos = [{
+let tasks = [{
     'id': 0,
-    'title': 'This is the task',
-    'status': 'to-do',
-    'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita dolores quisquam rerum commodi deserunt nihil obcaecati minima excepturi minus mollitia Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita dolores quisquam rerum commodi deserunt nihil obcaecati minima excepturi minus mollit at doloremque necessitatibus veniam rem doloribus aperiam laudantium, provident error.',
-    'category': 'Technical Task',
-    'priority': 'Low',
-    'dueDate': '02/09/2023',
-    'assignedTo': 'Peter Lustig',
-    'subtask': 'documentation'
+    'status': '',
+    'category': '',
+    'categoryColor': '',
+    'title': '',
+    'description': '',
+    'dueDate': '',
+    'priority': '',
+    'contactName': [],
+    'contactColor': [],
+    'contactAbbreviation': [],
+    'subtasksInProgress': [],
+    'subtasksFinish': [],
 }, {
     'id': 1,
-    'title': 'HTML Base Template Creation System bla bla bla',
-    'status': 'in-progress',
-    'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita dolores quisquam rerum commodi deserunt',
-    'category': 'User Story',
-    'priority': 'Medium',
-    'dueDate': '02/09/2023',
-    'assignedTo': 'Peter Lustig',
-    'subtask': 'documentation'
-
-}, {
-    'id': 2,
-    'title': 'This is one task',
-    'status': 'awaiting-feedback',
-    'description': 'This is the description',
-    'category': 'Technical Task',
-    'priority': 'Urgent',
-    'dueDate': '02/09/2023',
-    'assignedTo': 'Peter Lustig',
-    'subtask': 'documentation'
-    
-}, {
-    'id': 3,
-    'title': 'This is the only task',
-    'status': 'awaiting-feedback',
-    'description': 'This is the description',
-    'category': 'User Story',
-    'priority': 'Low',
-    'dueDate': '02/09/2023',
-    'assignedTo': 'Peter Lustig',
-    'subtask': 'documentation'
+    'status': '',
+    'category': '',
+    'categoryColor': '',
+    'title': '',
+    'description': '',
+    'dueDate': '',
+    'priority': '',
+    'contactName': [],
+    'contactColor': [],
+    'contactAbbreviation': [],
+    'subtasksInProgress': [],
+    'subtasksFinish': [],
 }];
+
 
 
 function init() {
     includeHTML();
     updateHTML();
 }
+
+
+// wenn subtaskfinish = abgehakt img
+// wenn subtaskprogress = offen img
+
+
+
+// let progressPercent = subtasksFinish.length / subtasksInProgress.length;
+// percent = Math.round(percent * 100);
+
 
 let currentDraggedElement;
 
@@ -96,7 +93,7 @@ function generateTaskHTML(element) {
                 <div class="task-users">
                     <div class="profile-picture horicontal-and-vertical">A</div>
                 </div>
-                <img src = "img/prio${element['priority']}.svg" alt = "${element['priority']}" >
+                <img src="img/prio${element['priority']}.svg" alt ="${element['priority']}" >
             </div>
         </div>
     `;
@@ -127,7 +124,7 @@ function removeHighlight(id) {
 function openTask(i) {
     console.log(todos[i]['title'])
     document.getElementById('popup-container').classList.remove('d-none');
-    document.getElementById('popup-container').innerHTML =  /*html*/ `
+    document.getElementById('popup-container').innerHTML = /*html*/ `
     <div class="task-detail">
 
 
