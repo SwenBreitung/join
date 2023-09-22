@@ -4,6 +4,13 @@
  */
 let contactsArray = [];
 
+const colorArray = [
+    "#00008B", "#006400", "#8B0000", "#800080", "#808080",
+    "#0000CD", "#008000", "#FF0000", "#8A2BE2", "#FFA500",
+    "#2E8B57", "#9932CC", "#DC143C", "#228B22", "#20B2AA"
+];
+
+let colorIndex = 0;
 /**
  * This function is to load functions at start
  * 
@@ -59,8 +66,8 @@ function renderContacts() {
  */
 function loadContactInfos(contact, firstLetter, i) {
     return /* html */ `
-    <div class="horicontal contactsInfo pointer" onclick="openContactBigInfo(contactsArray[${i}], ${i})">
-        <div class="profilePicture horicontalAndVertical" style="background-color: ${getRandomColor()}">
+    <div class="horicontal contactsInfo pointer" onclick="openContactBigInfo(contactsArray[${i}], ${i}, '${firstLetter}')">
+        <div class="profilePicture horicontalAndVertical" style="background-color: ${contact.color}">
             ${firstLetter}
         </div>
         <div>
@@ -75,17 +82,31 @@ function loadContactInfos(contact, firstLetter, i) {
  * This function is used to create some random colors for the profile image background
  * 
  */
-function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
+function getColor() {
+    const color = colorArray[colorIndex];
+    colorIndex = (colorIndex + 1) % colorArray.length; // Zirkulieren Sie durch die vordefinierten Farben
     return color;
 }
 
 function addContact() {
+    unloadScrollBars();
     toggleVisibility('addContactId', true);
+    slide('swipeContactPopupId');
+    setTimeout(function () {
+        reloadScrollBars();
+    }, 500);
+}
+
+
+
+function reloadScrollBars() {
+    document.documentElement.style.overflow = 'auto';
+    document.body.scroll = "yes";
+}
+
+function unloadScrollBars() {
+    document.documentElement.style.overflow = 'hidden';
+    document.body.scroll = "no";
 }
 
 /**
@@ -93,15 +114,12 @@ function addContact() {
  * 
  */
 async function createContact() {
-    const contactName = document.getElementById('inputNameId').value;
-    const contactEmail = document.getElementById('inputEmailId').value;
-    const contactPhone = document.getElementById('inputPhoneId').value;
-
     const newContact = {
-        "name": contactName,
-        "email": contactEmail,
-        "phone": contactPhone
-    };
+        "name": document.getElementById('inputNameId').value,
+        "email": document.getElementById('inputEmailId').value,
+        "phone": document.getElementById('inputPhoneId').value,
+        "color": getColor()
+    }
 
     contactsArray.push(newContact);
     await setItem('contactsArray', JSON.stringify(contactsArray));
@@ -114,8 +132,20 @@ async function createContact() {
  * ... display the contact info in a big container
  * ... create a animation
  */
-function openContactBigInfo(contact, i) {
-    slide();
+//
+function openContactBigInfo(contact, i, firstLetter) {
+
+    slide('contactInfoBigId');
+
+    // setTimeout(function () {
+    //     reloadScrollBars();
+    // }, 500)
+
+    document.getElementById('profilePictureBigId').innerHTML = /* html */ `
+    <div class="profilePictureBig horicontalAndVertical" style="background-color: ${contact.color}">
+    ${firstLetter}
+    </div>
+    `;
     document.getElementById('nameId').innerHTML = /* html */ `<b>${contact['name']}</b>`;
     document.getElementById('emailId').innerHTML = /* html */ `${contact['email']}`;
     document.getElementById('phoneId').innerHTML = /* html */ `${contact['phone']}`;
@@ -125,14 +155,14 @@ function openContactBigInfo(contact, i) {
 
 
 /**
- * This function is used to create a slide animation for the contact info overview
+ * This function is used to create a slide animation
  * 
  */
-function slide() {
-    toggleVisibility('contactInfoBigId', true);
-    document.getElementById('contactInfoBigId').classList.remove('slide-in');
-    document.getElementById('contactInfoBigId').offsetHeight;
-    document.getElementById('contactInfoBigId').classList.add('slide-in');
+function slide(id) {
+    toggleVisibility(id, true);
+    document.getElementById(id).classList.remove('slide-in');
+    document.getElementById(id).offsetHeight;
+    document.getElementById(id).classList.add('slide-in');
 }
 
 

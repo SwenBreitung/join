@@ -40,7 +40,7 @@
             </section>
 
             <section class="addContactBackground horicontalAndVertical d-none" id="addContactId" onclick="closePopup()">
-                <div class="addContactPopup d-flex" onclick="doNotClose(event)">
+                <div class="addContactPopup d-flex" onclick="doNotClose(event)" id="swipeContactPopupId">
                     <div class="leftSideAddContactPopup horicontal">
                         <img src="./img/join.logo-white.svg">
                         <div class="addContactLeftText">
@@ -94,8 +94,10 @@
 
                 <div class="contactInfoBig column d-none" id="contactInfoBigId">
                     <!-- Big Picture / Name / Edit and Delete -->
-                    <div>
-                        <img src="">
+                    <div class="profilePicAndNameBig horicontal">
+                        <div id="profilePictureBigId">
+
+                        </div>
                         <div>
                             <div id="nameId">
 

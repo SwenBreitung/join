@@ -78,6 +78,13 @@ h6 {
     background: #29ABE2 !important;
 }
 
+.form-control:focus {
+    border-color: inherit !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+
 .contacts-container {
     top: 300px;
     width: 400px;
@@ -131,6 +138,9 @@ h6 {
     margin-top: 204px;
     width: 120px;
     height: 120px;
+    border: #FFFFFF solid 2px;
+    border-radius: 100%;
+    box-shadow: -2px 0 6px 0 rgb(0, 0, 0, 0.2);
 }
 
 .personInCircle {
@@ -343,6 +353,15 @@ input {
 
 #nameId {
     font-size: 47px;
+}
+
+.profilePictureBig {
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    color: white;
+    font-size: 47px;
+    margin-right: 54px;
 }
 
 .editDeleteContact:hover {
