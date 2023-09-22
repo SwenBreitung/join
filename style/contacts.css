@@ -376,6 +376,10 @@ input {
 }
 
 /* Basics */
+section {
+    overflow-x: hidden;
+}
+
 .horicontal {
     display: flex !important;
     align-items: center !important;
