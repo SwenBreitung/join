@@ -9,10 +9,8 @@ let contactsArray = [];
  * 
  */
 async function initContacts() {
-    closePopup();
     await loadContacts();
     renderContacts();
-    // openContactBigInfo(contactsArray[0]);
 }
 
 async function loadContacts() {
@@ -117,16 +115,24 @@ async function createContact() {
  * ... create a animation
  */
 function openContactBigInfo(contact, i) {
-    toggleVisibility('contactInfoBigId', true);
-    document.getElementById('contactInfoBigId').classList.remove('slide-in');
-    setTimeout(function () {
-        document.getElementById('contactInfoBigId').classList.add('slide-in');
-        document.getElementById('nameId').innerHTML = /* html */ `<b>${contact['name']}</b>`;
-        document.getElementById('emailId').innerHTML = /* html */ `${contact['email']}`;
-        document.getElementById('phoneId').innerHTML = /* html */ `${contact['phone']}`;
-    }, 1);
+    slide();
+    document.getElementById('nameId').innerHTML = /* html */ `<b>${contact['name']}</b>`;
+    document.getElementById('emailId').innerHTML = /* html */ `${contact['email']}`;
+    document.getElementById('phoneId').innerHTML = /* html */ `${contact['phone']}`;
 
     deleteEditContactAtIndex(i);
+}
+
+
+/**
+ * This function is used to create a slide animation for the contact info overview
+ * 
+ */
+function slide() {
+    toggleVisibility('contactInfoBigId', true);
+    document.getElementById('contactInfoBigId').classList.remove('slide-in');
+    document.getElementById('contactInfoBigId').offsetHeight;
+    document.getElementById('contactInfoBigId').classList.add('slide-in');
 }
 
 
