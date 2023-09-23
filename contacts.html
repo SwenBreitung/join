@@ -28,9 +28,11 @@
         <div class="d-flex contactPage">
             <section class="contacts-container">
                 <div class="btnBackground horicontalAndVertical">
-                    <button type="button" class="btn btn-dark addNewContactButton horicontalAndVertical"
-                        onclick="addContact()">Add
-                        new Contact</button>
+                    <button type="button" class="btn btn-dark addNewContactButton horicontalAndVertical fontSize21"
+                        onclick="addContact()">
+                        Add new Contact
+                        <img src="./img/person_add.svg">
+                    </button>
                 </div>
                 <div class="scrollingContainer">
                     <div id="contactsId">
@@ -45,8 +47,8 @@
                     <div class="leftSideAddContactPopup horicontal">
                         <img src="./img/join.logo-white.svg">
                         <div class="addContactLeftText">
-                            <h1>Add contact</h1>
-                            <h3>Tasks are better with a team!</h3>
+                            <spline class="fontSize61"><b>Add contact</b></spline>
+                            <spline class="fontSize27">Tasks are better with a team!</spline>
                             <div class="blueLine">
                             </div>
                         </div>
@@ -58,25 +60,28 @@
                         </div>
                         <form class="contactInfo column" onsubmit="createContact(); return false;">
                             <div class="inputName">
-                                <input type="text" placeholder="Name" id="inputNameId">
+                                <input type="text" placeholder="Name" id="inputNameId" class="fontSize20">
                                 <img src="./img/user.svg">
                             </div>
                             <div class="inputEmail">
-                                <input type="email" placeholder="Email" id="inputEmailId">
+                                <input type="email" placeholder="Email" id="inputEmailId" class="fontSize20">
                                 <img src="./img/letter.svg">
                             </div>
                             <div class="inputPhone">
-                                <input type="tel" placeholder="Phone" id="inputPhoneId">
+                                <input type="tel" placeholder="Phone" id="inputPhoneId" class="fontSize20">
                                 <img src="./img/letter.svg">
                             </div>
                             <div class="d-flex textHorizontal addContactButtonContainer">
                                 <a href="#" class="cancelBtn d-flex" onclick="closePopup()">
-                                    Cancel
+                                    <spline class="fontSize20">Cancel</spline>
                                     <img src="./img/iconoir_cancel.svg">
                                 </a>
-                                <button class="btn btn-dark createContactButton horicontalAndVertical"><b>Create
-                                        contact</b>
-                                    <img src="./img/check.svg"></button>
+                                <button class="btn btn-dark createContactButton horicontalAndVertical">
+                                    <spline class="fontSize21">
+                                        <b>Create contact</b>
+                                    </spline>
+                                    <img src="./img/check.svg">
+                                </button>
                             </div>
                             <div class="closePopupCross pointer horicontalAndVertical" onclick="closePopup()">
                                 <img src="./img/close.svg">
@@ -90,7 +95,7 @@
                 <div class="contactsTitle horicontal">
                     <div class="fontSize61"><b>Contacts</b></div>
                     <img src="./img/Vector 5.svg">
-                    <h3>Better with a Team</3>
+                    <div class="fontSize27">Better with a Team</div>
                 </div>
 
                 <div class="contactInfoBig column d-none" id="contactInfoBigId">
@@ -100,29 +105,29 @@
 
                         </div>
                         <div>
-                            <div id="nameId">
+                            <div id="nameId" class="fontSize47">
 
                             </div>
-                            <div class="d-flex gap16 horicontal" id="deleteEditId">
+                            <div class="d-flex gap16 horicontal fontSize16" id="deleteEditId">
 
                             </div>
                         </div>
                     </div>
                     <!-- Middle Text -->
-                    <spline class="contactInfoTextBlock horicontal">
+                    <spline class="contactInfoTextBlock horicontal fontSize20">
                         Contact Information
                     </spline>
                     <!-- Rest -->
-                    <spline class="emailText">
+                    <spline class="emailText fontSize16">
                         <b>Email</b>
                     </spline>
-                    <div id="emailId">
+                    <div id="emailId" class="fontSize16">
 
                     </div>
-                    <spline class="phoneText">
+                    <spline class="phoneText fontSize16">
                         <b>Phone</b>
                     </spline>
-                    <div id="phoneId">
+                    <div id="phoneId" class="fontSize16">
 
                     </div>
                 </div>

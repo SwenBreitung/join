@@ -58,7 +58,7 @@ function renderContacts() {
 
         if (firstLetter !== previousFirstLetter) {
             userContent.innerHTML += /* html */
-                `<div class="firstLetterOverContact horicontal">
+                `<div class="firstLetterOverContact horicontal fontSize20">
                 ${firstLetter}
             </div>
             <div class="partingLine">
@@ -93,13 +93,16 @@ function addNameAbbreviationInContactsArray() {
  */
 function loadContactInfos(contact, nameAbbreviation, i) {
     return /* html */ `
-    <div class="horicontal contactsInfo pointer" onclick="openContactBigInfo(contactsArray[${i}], ${i}, '${nameAbbreviation}')">
+    <div class="horicontal contactsInfo pointer"
+        onclick="openContactBigInfo(contactsArray[${i}], ${i}, '${nameAbbreviation}')">
         <div class="profilePicture horicontalAndVertical" style="background-color: ${contact.color}">
-            ${nameAbbreviation}
+            <spline class="fontSize12">
+                ${nameAbbreviation}
+            </spline>
         </div>
-        <div>
-            <h5>${contact['name']}</h5>
-            <h6>${contact['email']}</h6>
+        <div class="column">
+            <spline class="fontSize20">${contact['name']}</spline>
+            <spline class="fontSize16 emailScrollMenu">${contact['email']}</spline>
         </div>
     </div>
     `
@@ -150,13 +153,13 @@ function openContactBigInfo(contact, i, nameAbbreviation) {
     slide('contactInfoBigId');
 
     document.getElementById('profilePictureBigId').innerHTML = /*html*/ `
-    <div class="profilePictureBig horicontalAndVertical" style="background-color: ${contact.color}">
+    <div class="profilePictureBig horicontalAndVertical fontSize47" style="background-color: ${contact.color}">
     ${nameAbbreviation}
     </div>
     `;
     document.getElementById('nameId').innerHTML = /*html*/ `<b>${contact['name']}</b>`;
     document.getElementById('emailId').innerHTML = /*html*/ `<a href="mailto:${contact['email']}">${contact['email']}</a>`;
-    document.getElementById('phoneId').innerHTML = /*html*/ `<a href="tel:${contact['phone']}">${contact['phone']}</a>`;
+    document.getElementById('phoneId').innerHTML = /*html*/ `<a class="phoneNumber" href="tel:${contact['phone']}">${contact['phone']}</a>`;
 
     deleteEditContactAtIndex(i);
 }

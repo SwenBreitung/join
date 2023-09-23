@@ -7,27 +7,6 @@ body {
     font-family: 'Inter' !important;
 }
 
-h5 {
-    /* font settings only for testing*/
-    font-family: Inter !important;
-    font-size: 20px !important;
-    font-style: normal !important;
-    font-weight: 400 !important;
-    line-height: 120% !important;
-    margin: 0 !important;
-}
-
-h6 {
-    /* font settings only for testing*/
-    color: #007CEE !important;
-    font-family: Inter !important;
-    font-size: 16px !important;
-    font-style: normal !important;
-    font-weight: 400 !important;
-    line-height: 120% !important;
-    margin: 0 !important;
-}
-
 .contactPage {
     margin-top: 110px;
 }
@@ -50,7 +29,7 @@ h6 {
     height: 42px;
     width: 42px;
     border-radius: 100%;
-    margin-right: 35px;
+    margin-right: 35px !important;
     color: white;
     border: 2px solid white;
     box-shadow: -2px 0 6px 0 rgb(0, 0, 0, 0.2);
@@ -75,10 +54,16 @@ h6 {
     width: 352px;
     height: 56px !important;
     padding: 0 !important;
+    gap: 16px;
 }
 
 .button:hover {
     background: #29ABE2 !important;
+}
+
+.addNewContactButton img {
+    width: 32px;
+    height: 32px;
 }
 
 .form-control:focus {
@@ -116,7 +101,6 @@ h6 {
 }
 
 .firstLetterOverContact {
-    font-size: 20px;
     padding: 17px 36px;
     height: 58px;
 }
@@ -343,19 +327,13 @@ input {
 
 .contactsTitle {
     gap: 30px;
-    width: 569px;
     height: 73px;
     margin-bottom: 32px;
     justify-content: space-between;
 }
 
 .contactInfoBig {
-    width: 569px;
     height: 364px;
-}
-
-#nameId {
-    font-size: 47px;
 }
 
 .profilePictureBig {
@@ -363,23 +341,31 @@ input {
     height: 120px;
     border-radius: 100%;
     color: white;
-    font-size: 47px;
-    margin: 0 54px 21px 0;
+    margin: 0 54px 21px 0 !important;
     border: 3px solid white;
     box-shadow: -2px 0 6px 0 rgb(0, 0, 0, 0.2);
 }
 
 .contactInfoTextBlock {
     height: 74px;
-    margin-bottom: 21px;
+    margin-bottom: 21px !important;
 }
 
 .emailText {
-    margin-bottom: 15px;
+    margin-bottom: 15px !important;
+}
+
+.emailScrollMenu,
+#emailid a {
+    color: #007CEE;
+}
+
+.phoneNumber {
+    color: black !important;
 }
 
 .phoneText {
-    margin: 22px 0 15px;
+    margin: 22px 0 15px !important;
 }
 
 .editDeleteContact:hover {
