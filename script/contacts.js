@@ -31,10 +31,9 @@ async function loadContacts() {
 }
 
 /**
- * This function us used to ...
- * ... pull the users JSON Array (names/emails)
- * ... pull the first letter from every user
- * ... sort alphabetically
+ * This function us used to render the contact informations and sort it
+ * 
+ *
  */
 function renderContacts() {
     let userContent = document.getElementById('contactsId');
@@ -42,13 +41,20 @@ function renderContacts() {
     let previousFirstLetter = '';
     contactsArray.sort((a, b) => a.name.localeCompare(b.name, 'de', { sensitivity: 'base' }));
     nameAbbreviationArray = [];
+    pullNameAbbreviation(userContent, previousFirstLetter);
+}
+
+/**
+ * This function is to create the name abbreviation
+ *
+ *
+ */
+function pullNameAbbreviation(userContent, previousFirstLetter) {
     for (let i = 0; i < contactsArray.length; i++) {
         let contact = contactsArray[i];
         // split first and last name
         let nameParts = contact.name.split(' ');
-        // first name
         let firstName = nameParts[0];
-        // last name if exists
         let lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
         // first letter of first name for the category split
         let firstLetter = contact.name.charAt(0).toUpperCase();
@@ -82,10 +88,6 @@ function addNameAbbreviationInContactsArray() {
     }
 }
 
-// function firstLetterForCategory() {
-
-// }
-
 /**
  * This function us used to display the contact infos 
  * 
@@ -108,6 +110,10 @@ function loadContactInfos(contact, nameAbbreviation, i) {
     `
 }
 
+/**
+ * This function is used to display the adding screen for new contacts
+ * 
+ */
 function addContact() {
     toggleVisibility('addContactId', true);
     slide('swipeContactPopupId');
@@ -144,24 +150,41 @@ function getColor() {
 }
 
 /**
- * This function is used to ...
- * ... display the contact info in a big container
- * ... create a animation
+ * This function is used to display the contact info in a big container
+ * 
+ * 
  */
 //
 function openContactBigInfo(contact, i, nameAbbreviation) {
     slide('contactInfoBigId');
+
+    highlightContact(i)
 
     document.getElementById('profilePictureBigId').innerHTML = /*html*/ `
     <div class="profilePictureBig horicontalAndVertical fontSize47" style="background-color: ${contact.color}">
     ${nameAbbreviation}
     </div>
     `;
-    document.getElementById('nameId').innerHTML = /*html*/ `<b>${contact['name']}</b>`;
+    document.getElementById('nameId').innerHTML = /*html*/ `${contact['name']}`;
     document.getElementById('emailId').innerHTML = /*html*/ `<a href="mailto:${contact['email']}">${contact['email']}</a>`;
     document.getElementById('phoneId').innerHTML = /*html*/ `<a class="phoneNumber" href="tel:${contact['phone']}">${contact['phone']}</a>`;
 
     deleteEditContactAtIndex(i);
+}
+
+/**
+ * This function is used to highlight the contact which is onclicked
+ * 
+ */
+function highlightContact(i) {
+    let highlightContact = document.querySelectorAll('.contactsInfo');
+    highlightContact.forEach((highlightContactElement) => {
+        highlightContactElement.style.backgroundColor = '';
+        highlightContactElement.style.color = '';
+    });
+
+    highlightContact[i].style.backgroundColor = '#2A3647';
+    highlightContact[i].style.color = 'white';
 }
 
 
