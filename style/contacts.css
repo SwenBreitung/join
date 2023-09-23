@@ -4,6 +4,7 @@ body {
     display: flex;
     margin: 0;
     width: 100vw;
+    font-family: 'Inter' !important;
 }
 
 h5 {
@@ -51,6 +52,8 @@ h6 {
     border-radius: 100%;
     margin-right: 35px;
     color: white;
+    border: 2px solid white;
+    box-shadow: -2px 0 6px 0 rgb(0, 0, 0, 0.2);
 }
 
 .btnBackground {
@@ -347,7 +350,7 @@ input {
 }
 
 .contactInfoBig {
-    width: 461px;
+    width: 569px;
     height: 364px;
 }
 
@@ -361,7 +364,22 @@ input {
     border-radius: 100%;
     color: white;
     font-size: 47px;
-    margin-right: 54px;
+    margin: 0 54px 21px 0;
+    border: 3px solid white;
+    box-shadow: -2px 0 6px 0 rgb(0, 0, 0, 0.2);
+}
+
+.contactInfoTextBlock {
+    height: 74px;
+    margin-bottom: 21px;
+}
+
+.emailText {
+    margin-bottom: 15px;
+}
+
+.phoneText {
+    margin: 22px 0 15px;
 }
 
 .editDeleteContact:hover {
@@ -376,6 +394,10 @@ input {
 }
 
 /* Basics */
+a {
+    text-decoration: none !important;
+}
+
 section {
     overflow-x: hidden;
 }

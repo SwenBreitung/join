@@ -155,8 +155,8 @@ function openContactBigInfo(contact, i, nameAbbreviation) {
     </div>
     `;
     document.getElementById('nameId').innerHTML = /*html*/ `<b>${contact['name']}</b>`;
-    document.getElementById('emailId').innerHTML = /*html*/ `${contact['email']}`;
-    document.getElementById('phoneId').innerHTML = /*html*/ `${contact['phone']}`;
+    document.getElementById('emailId').innerHTML = /*html*/ `<a href="mailto:${contact['email']}">${contact['email']}</a>`;
+    document.getElementById('phoneId').innerHTML = /*html*/ `<a href="tel:${contact['phone']}">${contact['phone']}</a>`;
 
     deleteEditContactAtIndex(i);
 }
