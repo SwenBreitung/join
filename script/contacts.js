@@ -3,11 +3,13 @@
  * 
  */
 let contactsArray = [];
+let nameAbbreviationArray = [];
 
 const colorArray = [
-    "#00008B", "#006400", "#8B0000", "#800080", "#808080",
+    "#006400", "#00008B", "#8B0000", "#800080", "#808080",
     "#0000CD", "#008000", "#FF0000", "#8A2BE2", "#FFA500",
-    "#2E8B57", "#9932CC", "#DC143C", "#228B22", "#20B2AA"
+    "#2E8B57", "#9932CC", "#DC143C", "#228B22", "#20B2AA",
+    "#FF1493", "#D2691E", "#00CED1", "#008080", "#FF6347"
 ];
 
 let colorIndex = 0;
@@ -39,10 +41,20 @@ function renderContacts() {
     userContent.innerHTML = '';
     let previousFirstLetter = '';
     contactsArray.sort((a, b) => a.name.localeCompare(b.name, 'de', { sensitivity: 'base' }));
-
+    nameAbbreviationArray = [];
     for (let i = 0; i < contactsArray.length; i++) {
-        const contact = contactsArray[i];
-        const firstLetter = contact.name.charAt(0).toUpperCase();
+        let contact = contactsArray[i];
+        // split first and last name
+        let nameParts = contact.name.split(' ');
+        // first name
+        let firstName = nameParts[0];
+        // last name if exists
+        let lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+        // first letter of first name for the category split
+        let firstLetter = contact.name.charAt(0).toUpperCase();
+        // first letter of first and last name combined
+        let nameAbbreviation = `${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`;
+        nameAbbreviationArray.push(nameAbbreviation);
 
         if (firstLetter !== previousFirstLetter) {
             userContent.innerHTML += /* html */
@@ -55,20 +67,35 @@ function renderContacts() {
             previousFirstLetter = firstLetter;
         }
 
-        userContent.innerHTML += loadContactInfos(contact, firstLetter, i);
+        userContent.innerHTML += loadContactInfos(contact, nameAbbreviation, i);
+        addNameAbbreviationInContactsArray();
     }
 }
+
+/**
+ * This function is used to save the name abbreviation in the contacts array
+ * 
+ */
+function addNameAbbreviationInContactsArray() {
+    for (let i = 0; i < contactsArray.length; i++) {
+        contactsArray[i].nameAbbreviation = nameAbbreviationArray[i];
+    }
+}
+
+// function firstLetterForCategory() {
+
+// }
 
 /**
  * This function us used to display the contact infos 
  * 
  * 
  */
-function loadContactInfos(contact, firstLetter, i) {
+function loadContactInfos(contact, nameAbbreviation, i) {
     return /* html */ `
-    <div class="horicontal contactsInfo pointer" onclick="openContactBigInfo(contactsArray[${i}], ${i}, '${firstLetter}')">
+    <div class="horicontal contactsInfo pointer" onclick="openContactBigInfo(contactsArray[${i}], ${i}, '${nameAbbreviation}')">
         <div class="profilePicture horicontalAndVertical" style="background-color: ${contact.color}">
-            ${firstLetter}
+            ${nameAbbreviation}
         </div>
         <div>
             <h5>${contact['name']}</h5>
@@ -78,35 +105,9 @@ function loadContactInfos(contact, firstLetter, i) {
     `
 }
 
-/**
- * This function is used to create some random colors for the profile image background
- * 
- */
-function getColor() {
-    const color = colorArray[colorIndex];
-    colorIndex = (colorIndex + 1) % colorArray.length; // Zirkulieren Sie durch die vordefinierten Farben
-    return color;
-}
-
 function addContact() {
-    unloadScrollBars();
     toggleVisibility('addContactId', true);
     slide('swipeContactPopupId');
-    setTimeout(function () {
-        reloadScrollBars();
-    }, 500);
-}
-
-
-
-function reloadScrollBars() {
-    document.documentElement.style.overflow = 'auto';
-    document.body.scroll = "yes";
-}
-
-function unloadScrollBars() {
-    document.documentElement.style.overflow = 'hidden';
-    document.body.scroll = "no";
 }
 
 /**
@@ -114,8 +115,9 @@ function unloadScrollBars() {
  * 
  */
 async function createContact() {
-    const newContact = {
+    let newContact = {
         "name": document.getElementById('inputNameId').value,
+        "nameAbbreviation": '',
         "email": document.getElementById('inputEmailId').value,
         "phone": document.getElementById('inputPhoneId').value,
         "color": getColor()
@@ -125,6 +127,17 @@ async function createContact() {
     await setItem('contactsArray', JSON.stringify(contactsArray));
     closePopup();
     renderContacts();
+    console.log(contactsArray);
+}
+
+/**
+ * This function is used to create some random colors for the profile image background
+ * 
+ */
+function getColor() {
+    const color = colorArray[colorIndex];
+    colorIndex = (colorIndex + 1) % colorArray.length;
+    return color;
 }
 
 /**
@@ -133,22 +146,17 @@ async function createContact() {
  * ... create a animation
  */
 //
-function openContactBigInfo(contact, i, firstLetter) {
-
+function openContactBigInfo(contact, i, nameAbbreviation) {
     slide('contactInfoBigId');
 
-    // setTimeout(function () {
-    //     reloadScrollBars();
-    // }, 500)
-
-    document.getElementById('profilePictureBigId').innerHTML = /* html */ `
+    document.getElementById('profilePictureBigId').innerHTML = /*html*/ `
     <div class="profilePictureBig horicontalAndVertical" style="background-color: ${contact.color}">
-    ${firstLetter}
+    ${nameAbbreviation}
     </div>
     `;
-    document.getElementById('nameId').innerHTML = /* html */ `<b>${contact['name']}</b>`;
-    document.getElementById('emailId').innerHTML = /* html */ `${contact['email']}`;
-    document.getElementById('phoneId').innerHTML = /* html */ `${contact['phone']}`;
+    document.getElementById('nameId').innerHTML = /*html*/ `<b>${contact['name']}</b>`;
+    document.getElementById('emailId').innerHTML = /*html*/ `${contact['email']}`;
+    document.getElementById('phoneId').innerHTML = /*html*/ `${contact['phone']}`;
 
     deleteEditContactAtIndex(i);
 }
