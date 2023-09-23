@@ -96,6 +96,10 @@ header {
     height: 29px;
 }
 
+.h1 {
+    font-size: 61px !important;
+}
+
 @media (max-width: 500px) {
     header {
         display: flex;

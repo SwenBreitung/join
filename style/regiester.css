@@ -113,17 +113,6 @@ header {
     padding-top: 40px;
 }
 
-.left-arrow::before {
-    content: "\2190";
-    /* Unicode-Zeichen für den linken Pfeil */
-    font-size: 30px;
-    /* Größe des Pfeils */
-    color: #12548d;
-    /* Farbe des Pfeils */
-    margin-right: 5px;
-    /* Abstand zwischen Pfeil und Text */
-}
-
 .test1 {
     display: flex;
     width: 100%;
