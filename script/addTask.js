@@ -1,30 +1,3 @@
-const allContacts = {
-    'contact1': {
-        'name': 'Udo Jürgens',
-        'styleColor': 'background-color: red',
-        'twoLetter': 'UJ',
-    },
-    'contact2': {
-        'name': 'Anna Müller',
-        'styleColor': 'background-color: blue',
-        'twoLetter': 'AM',
-    },
-    'contact3': {
-        'name': 'Peter Schmidt',
-        'styleColor': 'background-color: green',
-        'twoLetter': 'PS',
-    },
-    'contact4': {
-        'name': 'Lena Braun',
-        'styleColor': 'background-color: yellow',
-        'twoLetter': 'LB',
-    },
-    'contact5': {
-        'name': 'Karl Heinz',
-        'styleColor': 'background-color: orange',
-        'twoLetter': 'KH',
-    }
-};
 let selectedIndex = null;
 let selectedColorIndex = null;
 let colorCollection = [
@@ -190,17 +163,23 @@ function createTask() {
  * Retrieves data from form elements and adds a new task.
 */
 function addTask() {
+
     let task = {
-        'task': {
-            'titel': titel,
-            'description': description,
-            'assignedTo': assignedToContact,
-            'dueDate': dueDate,
-            'prio': prio,
-            'category': category,
-            'subtask': subtask,
-        }
-    };
+        'id': 0,
+        'status': '',
+        'category': '',
+        'categoryColor': '',
+        'title': titel,
+        'description': description,
+        'dueDate': dueDate,
+        'priority': prio,
+        'contactName': [],
+        'contactColor': [],
+        'contactAbbreviation': [],
+        'subtasksInProgress': subtask,
+        'subtasksFinish': [],
+    }
+        ;
     allTasks.push(task);
 }
 //---------------------------------------------------------------------------------//
@@ -252,12 +231,13 @@ function renderAllSelectedContacts() {
 
 
 
-function renderAllContactsForSearch(filterText = '') {
+async function renderAllContactsForSearch(filterText = '') {
+    await loadContacts();
     let contactZone = document.getElementById('contactsRenderContainer');
     contactZone.innerHTML = '';
     let i = 0;
-    for (let key in allContacts) {
-        const contacts = allContacts[key];
+    for (let key in contactsArray) {
+        const contacts = contactsArray[key];
 
         // Wenn ein Filtertext vorhanden ist und der Kontaktname ihn nicht enthält, überspringen Sie diesen Kontakt
         if (filterText && !contacts.name.toLowerCase().includes(filterText)) {
@@ -282,7 +262,7 @@ document.getElementById('assignedToInput').addEventListener('input', function (e
  * @param {string} key - Key of the contact in the `allContacts` collection.
  */
 function toggleContactSelection(i, key) {
-    const contact = allContacts[key];
+    const contact = contactsArray[key];
     const el = (suffix) => document.getElementById(`${suffix}${i}`);
     const mainElement = el('assignedContactsBox'), firstSecondary = el('assignedBox'), secondSecondary = el('assignedBoxChecked');
 
@@ -578,7 +558,7 @@ function resetAll() {
  */
 function returnRenderAllSelectedContacts(contacts) {
     return /*html*/`
-    <div style="${contacts.styleColor}" class="assignedToContactImg">${contacts.twoLetter}</div>
+    <div style="background-color:${contacts.color}" class="assignedToContactImg">${contacts.nameAbbreviation}</div>
     `;
 }
 
@@ -598,8 +578,8 @@ function returnRenderAllContactsForSearch(contacts, i, key) {
     return /*html*/`
         <div class="${mainClass}" id="assignedContactsBox${i}" onclick="toggleContactSelection(${i}, '${key}')">
             <div class="contactBoxLeft">
-                <div style="${contacts.styleColor}" class="assignedToContactImg">
-                    ${contacts.twoLetter}
+                <div style="background-color:${contacts.color}" class="assignedToContactImg">
+                    ${contacts.nameAbbreviation}
                 </div>
                 <span>${contacts.name}</span>
             </div>
@@ -607,10 +587,7 @@ function returnRenderAllContactsForSearch(contacts, i, key) {
             <img src="img/addTaskCheckBox.svg" class="${secondSecondaryClass}" id="assignedBoxChecked${i}">
         </div>`;
 }
-//---------------------------------------------------------------------------------//
 
-
-//return Hide and Show//
 
 /**
  * Toggles classes for the main settings element.
