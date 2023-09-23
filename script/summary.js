@@ -114,11 +114,17 @@ let userss = {
 
 
 function init() {
+    includeHTML();
     loadTimeOfDay();
     loadText();
+    searchFirstUrgantDate();
+    loadSvgs();
+    // highlightCurrentPageInHeader();
+}
+
+function loadSvgs() {
     loadSvgPen();
     loadSvgChop();
-    searchFirstUrgantDate();
 }
 
 
@@ -131,13 +137,18 @@ function loadText() {
     loadNumbersBoard();
 }
 
+function highlightCurrentPageInHeader() {
+    let colorSummery = document.getElementById('summary');
+    colorSummery.classList.add('blue-background');
+}
+
 //----------------------search function------------------------------
 //---Search User name----------------------------
 function loadUserName() {
     userName = document.getElementById('name')
     userName.innerText = userss['user0']['name'];
 }
-//================Search User name END==============================
+
 
 //----------------------search function cards------------------------------
 function loadNumbersBoard() {
@@ -147,7 +158,6 @@ function loadNumbersBoard() {
     let done = searchNumbers(userss['user0']['cards']['done']);
     let board = document.getElementById('board');
     board.innerText = (toDos + inProgress + awaitFeedback + done);
-
 }
 
 
@@ -178,6 +188,7 @@ function loadNumersDone() {
 function searchNumbers(collection) {
     let collectionAsJson = collection;
     let currentNumber = 0;
+
     if (Array.isArray(collectionAsJson)) {
         for (let i = 0; i < collectionAsJson.length; i++) {
             currentNumber++;
@@ -194,9 +205,8 @@ function searchNumbers(collection) {
 function searchFirstUrgantDate() {
     let urgentNumber = document.getElementById('urgent')
     let urgentDate = document.getElementById('date')
-    let urgentData = extractData(userss['user0']['cards']);
-    urgentNumber.innerHTML = urgentData['urgentCount']
-    urgentDate.innerHTML = urgentData['latestDateItem'];
+    urgentNumber.innerHTML = countUrgentTasks(userss['user0']['cards']);
+    urgentDate.innerHTML = findLatestDate(userss['user0']['cards']);
 }
 
 //======================== search function cards END==============================
@@ -226,49 +236,52 @@ function getTimeOfDay() {
 
 //===================load Time of Day END============================
 
-function extractData(obj) {
+function countUrgentTasks(obj) {
     let urgentCount = 0;
-    let latestDate = '00.00.00';
-    let latestDateItem = null;
-
     for (let category in obj) {
         for (let task in obj[category]) {
-            // Zähle die "urgent" Prioritäten
             if (obj[category][task].priority === "urgent") {
                 urgentCount++;
-                console.log(urgentCount)
-                console.log(latestDateItem)
-
-                // Vergleiche das Datum
-                let currentDate = obj[category][task].date;
-                if (compareDates(currentDate, latestDate) > 0) {
-                    latestDate = currentDate;
-                    latestDateItem = obj[category][task]['date'];
-                }
             }
         }
     }
-    console.log(urgentCount)
-    console.log(latestDateItem)
-    return {
-        urgentCount: urgentCount,
-        latestDateItem: latestDateItem
-    };
+    return urgentCount;
 }
+
+function findLatestDate(obj) {
+    let latestDate = "00.00.00";
+    let latestDateItem;
+
+    for (let category in obj) {
+        for (let task in obj[category]) {
+            let currentDate = obj[category][task].date;
+            if (compareDates(currentDate, latestDate) > 0) {
+                latestDate = currentDate;
+                latestDateItem = obj[category][task]['date'];
+            }
+        }
+    }
+    return latestDateItem;
+}
+
 
 // Diese Funktion vergleicht zwei Daten im Format "TT.MM.JJ"
 function compareDates(date1, date2) {
     const [day1, month1, year1] = date1.split('.').map(Number);
     const [day2, month2, year2] = date2.split('.').map(Number);
-
     if (year1 !== year2) return year1 - year2;
     if (month1 !== month2) return month1 - month2;
     return day1 - day2;
 }
 
 
-
-
+/**
+ * Compares two dates in the format "dd.mm.yyyy" and returns their difference.
+ *
+ * @param {string} date1 - The first date in "dd.mm.yyyy" format.
+ * @param {string} date2 - The second date in "dd.mm.yyyy" format.
+ * @returns {number} A positive number if date1 is greater than date2, negative if date2 is greater than date1, and 0 if they are equal.
+ */
 function compareDates(date1, date2) {
     const [day1, month1, year1] = date1.split('.').map(Number);
     const [day2, month2, year2] = date2.split('.').map(Number);
@@ -278,16 +291,42 @@ function compareDates(date1, date2) {
     return day1 - day2;
 }
 
-//------------------------------------------------------
+//------------------load SVGs------------------------------------
 
+/**
+ * Loads the Chop-SVG into the designated container.
+ * 
+ * This function sets the content of the element with the ID 'chop-container'
+ * to the returned SVG from the `loadChopSvg` function.
+ */
 function loadSvgChop() {
-    const penSVGContainer = document.getElementById('chop-container'); // Ändern Sie den Namen des Elements, auf das Sie zugreifen möchten
-    const penSVGContent = loadChopSvg();
-    penSVGContainer.innerHTML = penSVGContent;
+    /** @type {HTMLElement|null} The element where the SVG will be loaded into */
+    const chopSVGContainer = document.getElementById('chop-container');
+
+    /** @type {string} The SVG content to be loaded */
+    const chopSVGContent = loadChopSvg();
+
+    if (chopSVGContainer) {
+        chopSVGContainer.innerHTML = chopSVGContent;
+    }
 }
 
+
+/**
+ * Loads the Pen-SVG into the designated container.
+ * 
+ * This function sets the content of the element with the ID 'penContainer'
+ * to the returned SVG from the `loadPenSvg` function.
+ */
 function loadSvgPen() {
-    const penSVGContainer = document.getElementById('penContainer'); // Ändern Sie den Namen des Elements, auf das Sie zugreifen möchten
+    /** @type {HTMLElement|null} The element where the SVG will be loaded into */
+    const penSVGContainer = document.getElementById('penContainer');
+
+    /** @type {string} The SVG content to be loaded */
     const penSVGContent = loadPenSvg();
-    penSVGContainer.innerHTML = penSVGContent;
+
+    if (penSVGContainer) {
+        penSVGContainer.innerHTML = penSVGContent;
+    }
 }
+//====================load SVGs END============================

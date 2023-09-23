@@ -204,6 +204,10 @@ body {
     width: 50%;
 }
 
+.blue-background {
+    background-color: var(--active-sildebar-page)
+}
+
 @media(max-width:926px) {
     #time-of-day {
         font-size: 30px;

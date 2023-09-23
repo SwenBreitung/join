@@ -14,6 +14,7 @@
     --sidebarHoverElements: #2A3D59;
     --sidebarSelectedPage: #091931;
     --color-red: #FF3D00;
+    --active-sildebar-page: rgba(9, 25, 49, 1);
 }
 
 .content {
@@ -74,7 +75,7 @@
 
 .underline {
     height: 3px;
-    width: 72px;
+    width: 149px;
     background-color: var(--headline);
     border-radius: 5px;
 }
@@ -119,4 +120,8 @@
 
 .d-none {
     display: none;
+}
+
+.red-border {
+    border: 1px solid var(--color-red) !important;
 }

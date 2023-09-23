@@ -54,7 +54,6 @@ input {
     background-color: var(--text-white);
     border: 1px solid var(--border-grey);
     border-radius: 10px;
-    margin-bottom: 29px !important;
     padding-right: 10px;
     padding-left: 6px;
     padding-bottom: 4px;
@@ -86,6 +85,15 @@ header {
 
 .sing-up-mobile {
     display: none;
+}
+
+#warning-text-passwort,
+#warning-text-email {
+    color: var(--color-red);
+}
+
+.warning-field {
+    height: 29px;
 }
 
 @media (max-width: 500px) {

@@ -32,8 +32,6 @@ async function register() {
         await setItem('users', JSON.stringify(users));
         resetForm();
         window.location = 'index.html';
-    } else {
-        document.getElementById('dialog-full').classList.remove('d-none');
     }
 }
 

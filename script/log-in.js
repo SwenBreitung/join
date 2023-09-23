@@ -3,6 +3,7 @@ let dialog = document.getElementById('dialog');
 
 function init() {
     loadLogIn();
+    loadUsers();
 }
 
 
@@ -30,14 +31,27 @@ function login() {
     let email = document.getElementById('email');
     let passwort = document.getElementById('passwort');
     let user = users.find(u => u.email === email.value && u.password === passwort.value);
-    console.log(user);
     if (user) {
         window.location.href = "./summery.html";
     } else {
-        console.log('Registriere dich bitte');
+        loadRedBorderInput();
+        loadWarningTextTamplate();
     }
 }
 
+function loadRedBorderInput() {
+    let inputIds = ["input-email", "input-passwort"];
+    for (let id of inputIds) {
+        document.getElementById(id).classList.add("red-border");
+    }
+}
+
+function loadWarningTextTamplate() {
+    let warningIds = ["warning-text-passwort", "warning-text-email"];
+    for (let id of warningIds) {
+        document.getElementById(id).classList.remove("d-none");
+    }
+}
 
 function loadTemplateResetPasswort() {
     return /*html*/ `
@@ -46,10 +60,9 @@ function loadTemplateResetPasswort() {
     <h1>I forgot my passwort</h1>
     <span>Don´t worry! We send you an email with the instrctions to reset your passwort.</span>
 
-    <div class="input-field">
+    <div  class="input-field">
         <input type="text" placeholder="EMail">
-            <img src="./img/letter.svg" alt="Bild hinten" class="input-suffix">
-         
+            <img src="./img/letter.svg" alt="Bild hinten" class="input-suffix">   
     </div>  
     <button type="button" class="btn btn-dark button" onsubmit>Send new Passwort</button>  
     </form>
@@ -64,17 +77,25 @@ function loadTempleteLogIn() {
                     <h1>Log in</h1>
                     <div class="underline"></div>
                 </div>
-                <div class="input-fields">
-                    <div class="input-field">
+                <div  class="input-fields">
+                    <div id="input-email" class="input-field ">
                         <input id="email" type="text" placeholder="EMail">
                         <img src="./img/letter.svg" alt="Bild hinten" class="input-suffix">
                     </div>
-
-                    <div class="input-field">
+                    <div class="warning-field">
+                    <span id="warning-text-email" class="d-none">
+                    Bitte gebe die passende E-Mailadresse ein.
+                    </span>
+                    </div>
+                    <div id="input-passwort" class="input-field">
                         <input id="passwort" type="text" placeholder="passwort">
                         <img src="./img/lock.svg" alt="Bild hinten" class="input-suffix">
                     </div>
-
+                    <div class="warning-field">
+                    <span id="warning-text-passwort" class="d-none">
+                    Bitte gebe das passende Passwort ein.
+                    </span>
+                    </div>
                 </div>
 
                 <div class="checkbox">
