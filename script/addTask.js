@@ -1,5 +1,5 @@
 let selectedIndex = null;
-let selectedColorIndex = null;
+let selectedColorIndex = [];
 let colorCollection = [
     'background: #FF7A00',
     'background: #FC71FF',
@@ -318,6 +318,8 @@ function deselectContact(mainElement, firstSecondary, secondSecondary) {
 //---------------------------------------------------------------------------------//
 //Category functions//
 
+
+
 function renderCategorys() {
     let container = document.getElementById('categoryRenderContainer');
     container.innerHTML = ''; // Leert den Container bevor er neu gerendert wird
@@ -327,19 +329,24 @@ function renderCategorys() {
         const mName = main.name[m];
         const mColor = main.color[m];
         container.innerHTML += returnRenderMainCategorys(mName, mColor, m);
-        for (let a = 0; a < all.name.length; a++) {
-            const aName = all.name[a];
-            const aColor = all.color[a];
-            container.innerHTML += returnRenderAllCategorys(aName, aColor, a);
-        }
     }
+    for (let a = 0; a < all.name.length; a++) {
+        const aName = all.name[a];
+        const aColor = all.color[a];
+        container.innerHTML += returnRenderAllCategorys(aName, aColor, a);
+    }
+
 }
 
 function createCategoryWindow() {
     let container = document.getElementById('createCategoryContainer');
     container.innerHTML = returnCreateCategoryWindow();
+    createCategoryColors();
+}
+function createCategoryColors() {
     let colorContainer = document.getElementById('colorSettingBox');
     colorContainer.innerHTML = '';
+
     for (let index = 0; index < colorCollection.length; index++) {
         const color = colorCollection[index];
         colorContainer.innerHTML += returnCreateCategoryColors(color, index);
@@ -347,22 +354,19 @@ function createCategoryWindow() {
 }
 
 
-
-
-
-
-function selectColor(index) {
-    updateSelectedColorIndex(index);
-    refreshColorSelection();
+// Dies wird nun nur einmal definiert
+function selectColor(color) {
+    updateSelectedColorIndex(color);
+    createCategoryColors();
 }
 
 function updateSelectedColorIndex(index) {
     selectedColorIndex = selectedColorIndex === index ? null : index;
 }
 
-function refreshColorSelection() {
-    // TODO: Logik, um die ausgewählte Farbe im UI hervorzuheben.
-}
+
+
+
 
 function confirmCreateCategory() {
     if (isValidCategoryInput()) {
@@ -378,21 +382,37 @@ function isValidCategoryInput() {
     return inputElem.value.length >= 2 && selectedColorIndex !== null;
 }
 
+
 function addCategory() {
     let inputElem = document.getElementById('createCategoryInput');
     allCategorys[0].name.push(inputElem.value);
-    allCategorys[0].color.push(colorCollection[selectedColorIndex]);
+    allCategorys[0].color.push(selectedColorIndex);
 }
 
 function alertInvalidInput() {
     alert("Bitte geben Sie einen Kategorienamen mit mindestens 2 Buchstaben ein und wählen Sie eine Farbe aus.");
 }
 function selectCategory(type, index) {
+    if (selectedIndex !== null && selectedIndex === index && currentCategorySelected[0].name !== '') {
+        // Wenn die ausgewählte Kategorie erneut angeklickt wird, wird sie abgewählt.
+        deselectCategory();
+        return;
+    }
+
+    if (selectedIndex !== null && selectedIndex !== index) {
+        // Wenn bereits eine andere Kategorie ausgewählt ist, wird diese abgewählt.
+        unhighlightSelectedCategory();
+        resetCurrentCategorySelected();
+        resetInputs();
+    }
+
+    // Eine neue Kategorie wird ausgewählt.
     updateCurrentCategorySelected(type, index);
     updateInputs();
     selectedIndex = index; // Aktualisieren von selectedIndex beim Auswählen einer Kategorie
     highlightSelectedCategory();
 }
+
 function updateCurrentCategorySelected(type, index) {
     let categoryData = type === 'main' ? mainCategorys[0] : allCategorys[0];
     currentCategorySelected[0].name = categoryData.name[index];
@@ -421,11 +441,12 @@ function highlightSelectedCategory() {
         if (categoryElement) categoryElement.classList.add('selected');
     }
 }
+
 function deselectCategory() {
     unhighlightSelectedCategory();
     resetCurrentCategorySelected();
     resetInputs();
-    selectedIndex = null; // Setzt selectedIndex zurück
+    selectedIndex = null;
 }
 function resetCurrentCategorySelected() {
     currentCategorySelected[0].name = '';
@@ -446,52 +467,57 @@ function resetInputValueAndColor(inputElem) {
 
 function unhighlightSelectedCategory() {
     if (selectedIndex !== null) {
-        let categoryElement = document.getElementById(`categoryMainList${selectedIndex}`);
-        if (categoryElement) categoryElement.classList.remove('selected'); // Entfernt die Klasse
+        let categoryMainElement = document.getElementById(`categoryMainList${selectedIndex}`);
+        let categoryAllElement = document.getElementById(`categoryAllList${selectedIndex}`);
+        if (categoryMainElement) categoryMainElement.classList.remove('selected');
+        if (categoryAllElement) categoryAllElement.classList.remove('selected');
     }
 }
 
-
-
-
-
-
 function returnCreateCategoryWindow() {
     return /*html*/`
-    <input id="createCategoryInput" placeholder="Category name..." type="text">
+    <input id="createCategoryInput" placeholder = "New category name and choose a color for add..." type = "text" >
     <img onclick="stopCreateCategory()" class="editAbsolutCross"
-    src="img/close.svg">
-    <img onclick="confirmCreateCategory()" class="editAbsolutCheck"
-    src="img/SubtasksCheck.svg">
-    <div class="colorSettingBox" id="colorSettingBox">
-    </div>
-    `;
+        src="img/close.svg">
+        <img onclick="confirmCreateCategory()" class="editAbsolutCheck"
+            src="img/SubtasksCheck.svg">
+            <div class="colorSettingBox" id="colorSettingBox">
+            </div>
+            `;
 }
 function returnCreateCategoryColors(color, index) {
-    return /*html*/`
-        <div onclick='selectColor(${index})' style="${color}" class="colorCircle"></div>
-    `;
+    if (color === selectedColorIndex) {
+        return/*html*/`
+            <div onclick='selectColor("${color}")' style="${color}" id='colorCircle${index}' class="colorCircle selectedColor"></div>
+            `;
+    } else {
+        return/*html*/`
+            <div onclick='selectColor("${color}")' style="${color}" id='colorCircle${index}' class="colorCircle"></div>
+            `;
+    }
 }
 
 function returnRenderMainCategorys(name, color, i) {
     return /*html*/`
-    <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow">
-    <span>${name}</span>
-        <div class="colorCircle" style="${color}"></div>
-    </div>
-    `;
+            <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow">
+                <span>${name}</span>
+                <div class="colorCircle" style="${color}"></div>
+            </div>
+            `;
 }
+
 function returnRenderAllCategorys(name, color, i) {
     return /*html*/`
-    <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow">
-    <span>${name}</span>
-    <div class='categoryRowLeft'>
-        <div class="colorCircle" style="${color}"></div>
-        <img src="img/subTaskDelete.svg">
-    </div>
-    </div>
-    `;
+            <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow">
+                <span>${name}</span>
+                <div class='categoryRowLeft'>
+                    <div class="colorCircle" style="${color}"></div>
+                    <img src="img/subTaskDelete.svg">
+                </div>
+            </div>
+            `;
 }
+
 function stopCreateCategory() {
     input = document.getElementById('createCategoryInput');
     input.value = '';
@@ -504,11 +530,11 @@ function stopCreateCategory() {
 /**
  * Updates visual representation of priority buttons.
  * @param {string} btnId - ID of the priority button.
- * @param {string} iconId - ID of the inactive icon.
- * @param {string} activeIconId - ID of the active icon.
- * @param {string} activeClass - CSS class to apply when active.
- * @param {boolean} resetOther - Determines if other buttons should be reset.
- */
+            * @param {string} iconId - ID of the inactive icon.
+            * @param {string} activeIconId - ID of the active icon.
+            * @param {string} activeClass - CSS class to apply when active.
+            * @param {boolean} resetOther - Determines if other buttons should be reset.
+            */
 function activateButton(btnId, iconId, activeIconId, activeClass, iconSrc) {
     document.getElementById(btnId).classList.add(activeClass);
     document.getElementById(iconId).classList.add('d-none');
@@ -530,7 +556,9 @@ function prioSelectedToggle(btnId, iconId, activeIconId, activeClass, iconSrc, r
         if (resetOther) resetAll();
         activateButton(btnId, iconId, activeIconId, activeClass, iconSrc);
     }
-}/**
+}
+
+/**
  * Resets all priority buttons to their default states.
  */
 function resetAll() {
@@ -554,45 +582,45 @@ function resetAll() {
 /**
  * Returns an HTML string representing a selected contact.
  * @param {Object} contacts - The contact object to render.
- * @returns {string} - HTML string for the rendered contact.
- */
+            * @returns {string} - HTML string for the rendered contact.
+            */
 function returnRenderAllSelectedContacts(contacts) {
     return /*html*/`
-    <div style="background-color:${contacts.color}" class="assignedToContactImg">${contacts.nameAbbreviation}</div>
-    `;
+            <div style="background-color:${contacts.color}" class="assignedToContactImg">${contacts.nameAbbreviation}</div>
+            `;
 }
 
 
 /**
  * Returns an HTML string for the contact search functionality.
  * @param {Object} contacts - The contact object to render.
- * @param {number} i - Index of the contact.
- * @param {string} key - Key of the contact in the `allContacts` collection.
- * @returns {string} - HTML string for the rendered contact.
- */
+            * @param {number} i - Index of the contact.
+            * @param {string} key - Key of the contact in the `allContacts` collection.
+            * @returns {string} - HTML string for the rendered contact.
+            */
 function returnRenderAllContactsForSearch(contacts, i, key) {
     const isSelected = isContactInCollection(contacts);
     let mainClass = isSelected ? 'assignedContactsBoxSelected' : 'assignedContactsBox';
     let firstSecondaryClass = isSelected ? 'd-none' : '';
     let secondSecondaryClass = isSelected ? '' : 'd-none';
     return /*html*/`
-        <div class="${mainClass}" id="assignedContactsBox${i}" onclick="toggleContactSelection(${i}, '${key}')">
-            <div class="contactBoxLeft">
-                <div style="background-color:${contacts.color}" class="assignedToContactImg">
-                    ${contacts.nameAbbreviation}
+            <div class="${mainClass}" id="assignedContactsBox${i}" onclick="toggleContactSelection(${i}, '${key}')">
+                <div class="contactBoxLeft">
+                    <div style="background-color:${contacts.color}" class="assignedToContactImg">
+                        ${contacts.nameAbbreviation}
+                    </div>
+                    <span>${contacts.name}</span>
                 </div>
-                <span>${contacts.name}</span>
-            </div>
-            <img src="img/addTaskBox.svg" id="assignedBox${i}" class="${firstSecondaryClass}">
-            <img src="img/addTaskCheckBox.svg" class="${secondSecondaryClass}" id="assignedBoxChecked${i}">
-        </div>`;
+                <img src="img/addTaskBox.svg" id="assignedBox${i}" class="${firstSecondaryClass}">
+                    <img src="img/addTaskCheckBox.svg" class="${secondSecondaryClass}" id="assignedBoxChecked${i}">
+                    </div>`;
 }
 
 
 /**
  * Toggles classes for the main settings element.
  * @param {HTMLElement} mainElement - Main settings DOM element.
- */
+                    */
 function returnSettingsMain(mainElement) {
     if (mainElement.classList.contains('assignedContactsBox')) {
         mainElement.classList.remove('assignedContactsBox');
@@ -608,7 +636,7 @@ function returnSettingsMain(mainElement) {
 /**
  * Toggles visibility for the first settings element.
  * @param {HTMLElement} firstSecondary - First settings DOM element.
- */
+                    */
 function returnSettingsFirst(firstSecondary) {
     if (firstSecondary.classList.contains('d-none')) {
         firstSecondary.classList.remove('d-none');
@@ -622,7 +650,7 @@ function returnSettingsFirst(firstSecondary) {
 /**
  * Toggles visibility for the second settings element.
  * @param {HTMLElement} secondSecondary - Second settings DOM element.
- */
+                    */
 function returnSettingsSecond(secondSecondary) {
     if (secondSecondary.classList.contains('d-none')) {
         secondSecondary.classList.remove('d-none');
@@ -639,30 +667,30 @@ function returnSettingsSecond(secondSecondary) {
 /**
  * Returns an HTML string representing the subtask editing container.
  * @param {number} i - Index of the subtask.
- * @returns {string} - HTML string for the subtask edit container.
- */
+                    * @returns {string} - HTML string for the subtask edit container.
+                    */
 function returnEditContainer(i) {
     return /*html*/`<input id="editInput" type="text">
-        <img onclick="stopSubEdit()" class="editAbsolutCross" src="img/close.svg">
-        <img onclick="confirmSubEdit(${i})" class="editAbsolutCheck" src="img/SubtasksCheck.svg">
-        `;
+                        <img onclick="stopSubEdit()" class="editAbsolutCross" src="img/close.svg">
+                            <img onclick="confirmSubEdit(${i})" class="editAbsolutCheck" src="img/SubtasksCheck.svg">
+                                `;
 }
 
 
 /**
  * Returns an HTML string representing a collection of subtasks.
  * @param {Object} subCollection - The subtask collection to render.
- * @param {number} i - Index of the subtask in the collection.
- * @returns {string} - HTML string for the rendered subtask collection.
- */
+                                * @param {number} i - Index of the subtask in the collection.
+                                * @returns {string} - HTML string for the rendered subtask collection.
+                                */
 function returnSubTaskCollection(subCollection, i) {
     return /*html*/`
-        <ul class="dFlex spaceBtw">
-            <li>${subCollection}</li>
-            <div>
-                <img onclick="editSubtask(${i})" src="img/PenAddTask 1=edit.svg">
-                <img onclick="deleteSubtaskCollection(${i})" src="img/subTaskDelete.svg">
-            </div>
-        </ul>`;
+                                <ul class="dFlex spaceBtw">
+                                    <li>${subCollection}</li>
+                                    <div>
+                                        <img onclick="editSubtask(${i})" src="img/PenAddTask 1=edit.svg">
+                                            <img onclick="deleteSubtaskCollection(${i})" src="img/subTaskDelete.svg">
+                                            </div>
+                                        </ul>`;
 }
 //---------------------------------------------------------------------------------//
