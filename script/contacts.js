@@ -5,6 +5,10 @@
 let contactsArray = [];
 let nameAbbreviationArray = [];
 
+/**
+ * This Array is used to color the profile images
+ * 
+ */
 const colorArray = [
     "#006400", "#00008B", "#8B0000", "#800080", "#808080",
     "#0000CD", "#008000", "#FF0000", "#8A2BE2", "#FFA500",
@@ -13,6 +17,7 @@ const colorArray = [
 ];
 
 let colorIndex = 0;
+let nextColorIndex = 0;
 /**
  * This function is to load functions at start
  * 
@@ -25,6 +30,7 @@ async function initContacts() {
 async function loadContacts() {
     try {
         contactsArray = JSON.parse(await getItem('contactsArray'));
+        nextColorIndex = JSON.parse(await getItem('nextColorIndex'));
     } catch (e) {
         console.info('Could not load contacts');
     }
@@ -134,24 +140,42 @@ async function createContact() {
 
     contactsArray.push(newContact);
     await setItem('contactsArray', JSON.stringify(contactsArray));
+
+    document.getElementById('inputNameId').value = '';
+    document.getElementById('inputEmailId').value = '';
+    document.getElementById('inputPhoneId').value = '';
+
     closePopup();
     renderContacts();
-    console.log(contactsArray);
+}
+
+/**
+ * This function is used to create the profile image color
+ * 
+ */
+function getColor() {
+    if (nextColorIndex >= colorArray.length) {
+        nextColorIndex = 0;
+    }
+
+    let color = colorArray[nextColorIndex];
+    nextColorIndex++;
+    setItem('nextColorIndex', JSON.stringify(nextColorIndex));
+    return color;
 }
 
 /**
  * This function is used to create some random colors for the profile image background
  * 
  */
-function getColor() {
-    const color = colorArray[colorIndex];
-    colorIndex = (colorIndex + 1) % colorArray.length;
-    return color;
-}
+// function getColor() {
+//     const color = colorArray[colorIndex];
+//     colorIndex = (colorIndex + 1) % colorArray.length;
+//     return color;
+// }
 
 /**
  * This function is used to display the contact info in a big container
- * 
  * 
  */
 //
