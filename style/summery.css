@@ -1,14 +1,10 @@
 body {
-    display: flex;
-    margin: 0;
-}
-
-body {
     background-color: var(--main-background-color) !important;
     height: 100vh;
     display: flex;
     margin: 0;
     width: 100vw;
+    overflow: hidden !important;
 }
 
 .headline {
@@ -130,6 +126,23 @@ body {
     }
 }
 
+@media(max-width:688px) and (max-height:1031px) {
+    #header-summary {
+        margin-top: 3px !important;
+        margin-bottom: 8px;
+    }
+}
+
+@media(max-width:1025px) and (max-height:800px) {
+    #header-summary {
+        margin-top: 30px;
+        margin-bottom: 11px;
+    }
+    .test3 {
+        padding-left: 10px;
+    }
+}
+
 @media(max-width: 800px) {
     .task-cards {
         display: flex;
@@ -209,6 +222,10 @@ body {
 }
 
 @media(max-width: 700px) {
+    #header-summary {
+        margin-top: 3px !important;
+        margin-bottom: 8px;
+    }
     body {
         overflow: hidden;
     }
