@@ -33,15 +33,8 @@ let currentCategorySelected = [
     }
 ]
 let currentPrioSelected = "";
+let currentId = 0;
 
-
-const titel = document.getElementById('addTitel').value;
-const description = document.getElementById('addDescription').value;
-const assignedToContact = contactCollection;
-const dueDate = document.getElementById('datepicker').value;
-const prio = currentPrioSelected;
-const category = currentCategorySelected;
-const subtask = subTaskCollection;
 
 
 
@@ -163,24 +156,27 @@ function createTask() {
  * Retrieves data from form elements and adds a new task.
 */
 function addTask() {
+    const titel = document.getElementById('addTitel').value;
+    const description = document.getElementById('addDescription').value;
+    const dueDate = document.getElementById('datepicker').value;
 
     let task = {
-        'id': 0,
-        'status': '',
-        'category': '',
-        'categoryColor': '',
+        'id': currentId,
+        'status': 'toDo',
+        'category': currentCategorySelected[0].name,
+        'categoryColor': currentCategorySelected[0].color,
         'title': titel,
         'description': description,
         'dueDate': dueDate,
-        'priority': prio,
-        'contactName': [],
-        'contactColor': [],
-        'contactAbbreviation': [],
+        'priority': currentPrioSelected,
+        'contactName': contactCollection.name,
+        'contactColor': contactCollection.color,
+        'contactAbbreviation': contactCollection.nameAbbreviation,
         'subtasksInProgress': subtask,
         'subtasksFinish': [],
     }
-        ;
     allTasks.push(task);
+    currentId++;
 }
 //---------------------------------------------------------------------------------//
 
@@ -214,6 +210,16 @@ function toggleVisibility(id, id2) {
 
 
 //Contact functions//
+
+
+// container add d-none by body-click//
+document.body.addEventListener('click', function () {
+    toggleVisibility('assignedToContactsInputContainer', 'assignedToInputContainer')
+});
+
+document.getElementById('assignTo').addEventListener('click', function (event) {
+    event.stopPropagation();
+});
 
 /**
  * Renders all selected contacts to the DOM.
@@ -318,6 +324,14 @@ function deselectContact(mainElement, firstSecondary, secondSecondary) {
 //---------------------------------------------------------------------------------//
 //Category functions//
 
+// container add d-none by body-click//
+document.body.addEventListener('click', function () {
+    toggleVisibility('categoryAreaV2', 'categoryAreaV1')
+});
+
+document.getElementById('categorySection').addEventListener('click', function (event) {
+    event.stopPropagation();
+});
 
 
 function renderCategorys() {
@@ -338,86 +352,24 @@ function renderCategorys() {
 
 }
 
-function createCategoryWindow() {
-    let container = document.getElementById('createCategoryContainer');
-    container.innerHTML = returnCreateCategoryWindow();
-    createCategoryColors();
-}
-function createCategoryColors() {
-    let colorContainer = document.getElementById('colorSettingBox');
-    colorContainer.innerHTML = '';
-
-    for (let index = 0; index < colorCollection.length; index++) {
-        const color = colorCollection[index];
-        colorContainer.innerHTML += returnCreateCategoryColors(color, index);
-    }
-}
-
-
-// Dies wird nun nur einmal definiert
-function selectColor(color) {
-    updateSelectedColorIndex(color);
-    createCategoryColors();
-}
-
-function updateSelectedColorIndex(index) {
-    selectedColorIndex = selectedColorIndex === index ? null : index;
-}
 
 
 
-
-
-function confirmCreateCategory() {
-    if (isValidCategoryInput()) {
-        addCategory();
-        renderCategorys();
-    } else {
-        alertInvalidInput();
-    }
-}
-
-function isValidCategoryInput() {
-    let inputElem = document.getElementById('createCategoryInput');
-    return inputElem.value.length >= 2 && selectedColorIndex !== null;
-}
-
-
-function addCategory() {
-    let inputElem = document.getElementById('createCategoryInput');
-    allCategorys[0].name.push(inputElem.value);
-    allCategorys[0].color.push(selectedColorIndex);
-}
-
-function alertInvalidInput() {
-    alert("Bitte geben Sie einen Kategorienamen mit mindestens 2 Buchstaben ein und wählen Sie eine Farbe aus.");
-}
 function selectCategory(type, index) {
-    if (selectedIndex !== null && selectedIndex === index && currentCategorySelected[0].name !== '') {
-        // Wenn die ausgewählte Kategorie erneut angeklickt wird, wird sie abgewählt.
-        deselectCategory();
-        return;
+    let mainCategory = mainCategorys[0];
+    let allCategory = allCategorys[0];
+    if (type === 'main') {
+        currentCategorySelected[0].name = mainCategory.name[index];
+        currentCategorySelected[0].color = mainCategory.color[index];
     }
-
-    if (selectedIndex !== null && selectedIndex !== index) {
-        // Wenn bereits eine andere Kategorie ausgewählt ist, wird diese abgewählt.
-        unhighlightSelectedCategory();
-        resetCurrentCategorySelected();
-        resetInputs();
+    if (type === 'all') {
+        currentCategorySelected[0].name = allCategory.name[index];
+        currentCategorySelected[0].color = allCategory.color[index];
     }
-
-    // Eine neue Kategorie wird ausgewählt.
-    updateCurrentCategorySelected(type, index);
     updateInputs();
-    selectedIndex = index; // Aktualisieren von selectedIndex beim Auswählen einer Kategorie
-    highlightSelectedCategory();
+    renderCategorys();
 }
 
-function updateCurrentCategorySelected(type, index) {
-    let categoryData = type === 'main' ? mainCategorys[0] : allCategorys[0];
-    currentCategorySelected[0].name = categoryData.name[index];
-    currentCategorySelected[0].color = categoryData.color[index];
-}
 
 function updateInputs() {
     let inputV1 = document.getElementById('categoryInputV1');
@@ -425,33 +377,16 @@ function updateInputs() {
     setInputValueAndColor(inputV1);
     setInputValueAndColor(inputV2);
 }
-
 function setInputValueAndColor(inputElem) {
     inputElem.value = currentCategorySelected[0].name;
     inputElem.style.borderColor = getBorderColor();
 }
-
 function getBorderColor() {
     return currentCategorySelected[0].color.replace('background:', '').trim();
 }
 
-function highlightSelectedCategory() {
-    if (selectedIndex !== null) {
-        let categoryElement = document.getElementById(`categoryMainList${selectedIndex}`);
-        if (categoryElement) categoryElement.classList.add('selected');
-    }
-}
 
-function deselectCategory() {
-    unhighlightSelectedCategory();
-    resetCurrentCategorySelected();
-    resetInputs();
-    selectedIndex = null;
-}
-function resetCurrentCategorySelected() {
-    currentCategorySelected[0].name = '';
-    currentCategorySelected[0].color = '';
-}
+
 
 function resetInputs() {
     let inputV1 = document.getElementById('categoryInputV1');
@@ -474,6 +409,63 @@ function unhighlightSelectedCategory() {
     }
 }
 
+
+//create category//
+function createCategoryWindow() {
+    let container = document.getElementById('createCategoryContainer');
+    container.innerHTML = returnCreateCategoryWindow();
+    createCategoryColors();
+}
+
+
+function createCategoryColors() {
+    let colorContainer = document.getElementById('colorSettingBox');
+    colorContainer.innerHTML = '';
+
+    for (let index = 0; index < colorCollection.length; index++) {
+        const color = colorCollection[index];
+        colorContainer.innerHTML += returnCreateCategoryColors(color, index);
+    }
+}
+
+
+function selectColor(color) {
+    updateSelectedColorIndex(color);
+    createCategoryColors();
+}
+
+
+function addCategory() {
+    let inputElem = document.getElementById('createCategoryInput');
+    allCategorys[0].name.push(inputElem.value);
+    allCategorys[0].color.push(selectedColorIndex);
+}
+
+function updateSelectedColorIndex(index) {
+    selectedColorIndex = selectedColorIndex === index ? null : index;
+}
+
+
+function confirmCreateCategory() {
+    if (isValidCategoryInput()) {
+        addCategory();
+        renderCategorys();
+    } else {
+        alertInvalidInput();
+    }
+}
+
+function alertInvalidInput() {
+    alert("Bitte geben Sie einen Kategorienamen mit mindestens 2 Buchstaben ein und wählen Sie eine Farbe aus.");
+}
+function isValidCategoryInput() {
+    let inputElem = document.getElementById('createCategoryInput');
+    return inputElem.value.length >= 2 && selectedColorIndex !== null;
+}
+
+
+//categoryReturn//
+
 function returnCreateCategoryWindow() {
     return /*html*/`
     <input id="createCategoryInput" placeholder = "New category name and choose a color for add..." type = "text" >
@@ -485,6 +477,8 @@ function returnCreateCategoryWindow() {
             </div>
             `;
 }
+
+
 function returnCreateCategoryColors(color, index) {
     if (color === selectedColorIndex) {
         return/*html*/`
@@ -498,17 +492,29 @@ function returnCreateCategoryColors(color, index) {
 }
 
 function returnRenderMainCategorys(name, color, i) {
-    return /*html*/`
-            <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow">
+    if (currentCategorySelected[0].name === name &&
+        currentCategorySelected[0].color === color) {
+        return /*html*/`
+            <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow selected">
                 <span>${name}</span>
                 <div class="colorCircle" style="${color}"></div>
             </div>
             `;
+    } else {
+        return /*html*/`
+        <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow">
+            <span>${name}</span>
+            <div class="colorCircle" style="${color}"></div>
+        </div>
+        `;
+    }
 }
 
 function returnRenderAllCategorys(name, color, i) {
-    return /*html*/`
-            <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow">
+    if (currentCategorySelected[0].name === name &&
+        currentCategorySelected[0].color === color) {
+        return /*html*/`
+            <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow selected">
                 <span>${name}</span>
                 <div class='categoryRowLeft'>
                     <div class="colorCircle" style="${color}"></div>
@@ -516,6 +522,18 @@ function returnRenderAllCategorys(name, color, i) {
                 </div>
             </div>
             `;
+
+    } else {
+        return /*html*/`
+        <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow">
+            <span>${name}</span>
+            <div class='categoryRowLeft'>
+                <div class="colorCircle" style="${color}"></div>
+                <img src="img/subTaskDelete.svg">
+            </div>
+        </div>
+        `;
+    }
 }
 
 function stopCreateCategory() {
