@@ -285,6 +285,7 @@ async function deleteContact(position) {
  * 
  */
 async function editContact(i) {
+    slide('swipeContactPopupId');
     toggleVisibility('addContactId', true);
 
     document.getElementById('inputNameId').value = contactsArray[i]['name'];
