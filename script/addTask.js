@@ -155,7 +155,7 @@ function createTask() {
 /**
  * Retrieves data from form elements and adds a new task.
 */
-function addTask() {
+async function addTask() {
     const titel = document.getElementById('addTitel').value;
     const description = document.getElementById('addDescription').value;
     const dueDate = document.getElementById('datepicker').value;
@@ -172,10 +172,11 @@ function addTask() {
         'contactName': contactCollection.name,
         'contactColor': contactCollection.color,
         'contactAbbreviation': contactCollection.nameAbbreviation,
-        'subtasksInProgress': subtask,
+        'subtasksInProgress': subTaskCollection,
         'subtasksFinish': [],
     }
-    allTasks.push(task);
+    tasks.push(task);
+    await setItem('tasks', JSON.stringify(tasks));
     currentId++;
 }
 //---------------------------------------------------------------------------------//
