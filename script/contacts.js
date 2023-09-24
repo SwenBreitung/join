@@ -18,6 +18,7 @@ const colorArray = [
 
 let colorIndex = 0;
 let nextColorIndex = 0;
+
 /**
  * This function is to load functions at start
  * 
@@ -121,6 +122,11 @@ function loadContactInfos(contact, nameAbbreviation, i) {
  * 
  */
 function addContact() {
+    originalFunction();
+    originalText();
+    document.getElementById('inputNameId').value = '';
+    document.getElementById('inputEmailId').value = '';
+    document.getElementById('inputPhoneId').value = '';
     toggleVisibility('addContactId', true);
     slide('swipeContactPopupId');
 }
@@ -163,16 +169,6 @@ function getColor() {
     setItem('nextColorIndex', JSON.stringify(nextColorIndex));
     return color;
 }
-
-/**
- * This function is used to create some random colors for the profile image background
- * 
- */
-// function getColor() {
-//     const color = colorArray[colorIndex];
-//     colorIndex = (colorIndex + 1) % colorArray.length;
-//     return color;
-// }
 
 /**
  * This function is used to display the contact info in a big container
@@ -261,7 +257,7 @@ function toggleVisibility(id, show) {
 function deleteEditContactAtIndex(i) {
     let deleteContact = document.getElementById('deleteEditId');
     deleteContact.innerHTML = /* html */ `
-    <div class="editDeleteContact pointer">
+    <div class="editDeleteContact pointer" onclick="editContact(${i})">
         <img src="./img/PenAddTask 1=edit.svg">
         Edit
     </div>
@@ -282,4 +278,91 @@ async function deleteContact(position) {
     await setItem('contactsArray', JSON.stringify(contactsArray));
     toggleVisibility('contactInfoBigId', false);
     renderContacts();
+}
+
+/**
+ * This function is used to edit a contact
+ * 
+ */
+async function editContact(i) {
+    toggleVisibility('addContactId', true);
+
+    document.getElementById('inputNameId').value = contactsArray[i]['name'];
+    document.getElementById('inputEmailId').value = contactsArray[i]['email'];
+    document.getElementById('inputPhoneId').value = contactsArray[i]['phone'];
+
+    changeText();
+    changeFunction(i);
+
+    await setItem('contactsArray', JSON.stringify(contactsArray));
+    renderContacts();
+}
+
+/**
+ * This function is used to save the changes by editing a contact
+ * 
+ */
+function saveContact(i) {
+    contactsArray[i].name = document.getElementById('inputNameId').value;
+    contactsArray[i].email = document.getElementById('inputEmailId').value;
+    contactsArray[i].phone = document.getElementById('inputPhoneId').value;
+
+    setItem('contactsArray', JSON.stringify(contactsArray));
+
+    closePopup();
+    renderContacts();
+}
+
+/**
+ * This function is used to change the text in a container
+ * 
+ */
+function changeText() {
+    document.querySelector('#editCancelButtonId').textContent = "Delete";
+    document.querySelector('#textChangeToEditContactId').textContent = "Edit contact";
+    document.querySelector('#textChangeToSaveId').textContent = "Save";
+}
+
+/**
+ * This function is used to change a function
+ * 
+ */
+function changeFunction(i) {
+    const editContactForm = document.getElementById('editContactFormId');
+    editContactForm.onsubmit = function () {
+        saveContact(i);
+        return false;
+    };
+
+    const editCancelButton = document.getElementById('editCancelButtonId');
+    editCancelButton.onclick = function () {
+        deleteContact(i);
+    };
+}
+
+/**
+ * This function is to reset the changeText()
+ * 
+ */
+function originalText() {
+    document.querySelector('#editCancelButtonId').textContent = "Cancel";
+    document.querySelector('#textChangeToEditContactId').textContent = "Add contact";
+    document.querySelector('#textChangeToSaveId').textContent = "Add contact";
+}
+
+/**
+ * This function is to reset the changeFunction(i)
+ * 
+ */
+function originalFunction() {
+    const editContactForm = document.getElementById('editContactFormId');
+    editContactForm.onsubmit = function () {
+        createContact();
+        return false;
+    };
+
+    const editCancelButton = document.getElementById('editCancelButtonId');
+    editCancelButton.onclick = function () {
+        closePopup();
+    };
 }

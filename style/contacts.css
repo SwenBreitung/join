@@ -184,12 +184,17 @@ body {
 
 .addContactLeftText {
     position: relative;
-    width: 371px;
-    height: 113px;
+    /* width: 371px;
+    height: 113px; */
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding-bottom: 17.5px;
+    gap: 8px;
+
+}
+
+.textUnderAddContactTitle {
+    margin-bottom: 17.5px !important;
 }
 
 .blueLine {
@@ -358,6 +363,15 @@ input {
 .emailScrollMenu,
 #emailid a {
     color: #007CEE;
+}
+
+#emailid a {
+    width: 400px !important;
+}
+
+#emailid,
+.phoneNumber {
+    width: 100% !important;
 }
 
 .phoneNumber {

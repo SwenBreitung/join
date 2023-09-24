@@ -36,8 +36,6 @@
                 </div>
                 <div class="scrollingContainer">
                     <div id="contactsId">
-                        <!-- <div class="grey-line"></div> -->
-                        <!-- <div class="contact"></div> -->
                     </div>
                 </div>
             </section>
@@ -47,8 +45,8 @@
                     <div class="leftSideAddContactPopup horicontal">
                         <img src="./img/join.logo-white.svg">
                         <div class="addContactLeftText">
-                            <spline class="fontSize61"><b>Add contact</b></spline>
-                            <spline class="fontSize27">Tasks are better with a team!</spline>
+                            <spline class="fontSize61"><b id="textChangeToEditContactId">Add contact</b></spline>
+                            <spline class="fontSize27 textUnderAddContactTitle">Tasks are better with a team!</spline>
                             <div class="blueLine">
                             </div>
                         </div>
@@ -58,29 +56,31 @@
                             <img class="circle" src="./img/Group 9.svg">
                             <img class="personInCircle" src="./img/person.svg">
                         </div>
-                        <form class="contactInfo column" onsubmit="createContact(); return false;">
+                        <form class="contactInfo column" onsubmit="createContact(); return false;"
+                            id="editContactFormId">
                             <div class="inputName">
-                                <input type="text" placeholder="Name" id="inputNameId" class="fontSize20">
+                                <input type="text" placeholder="Name" id="inputNameId" class="fontSize20" required>
                                 <div>
                                     <img src="./img/person-white.svg">
                                 </div>
                             </div>
                             <div class="inputEmail">
-                                <input type="email" placeholder="Email" id="inputEmailId" class="fontSize20">
+                                <input type="email" placeholder="Email" id="inputEmailId" class="fontSize20" required>
                                 <img src="./img/mail.svg">
                             </div>
                             <div class="inputPhone">
-                                <input type="tel" placeholder="Phone" id="inputPhoneId" class="fontSize20">
-                                <img src="./img/call.svg">
+                                <input type="tel" placeholder="Phone" id="inputPhoneId" class="fontSize20"
+                                    pattern="^[0-9+\/\s]*$" required>
+                                <img src=" ./img/call.svg">
                             </div>
                             <div class="d-flex textHorizontal addContactButtonContainer">
                                 <a href="#" class="cancelBtn d-flex" onclick="closePopup()">
-                                    <spline class="fontSize20">Cancel</spline>
+                                    <spline class="fontSize20" id="editCancelButtonId">Cancel</spline>
                                     <img src="./img/iconoir_cancel.svg">
                                 </a>
                                 <button class="btn btn-dark createContactButton horicontalAndVertical">
                                     <spline class="fontSize21">
-                                        <b>Create contact</b>
+                                        <b id="textChangeToSaveId">Create contact</b>
                                     </spline>
                                     <img src="./img/check.svg">
                                 </button>
@@ -89,6 +89,9 @@
                                 <img src="./img/close.svg">
                             </div>
                         </form>
+
+
+
                     </div>
                 </div>
             </section>
@@ -111,7 +114,6 @@
 
                             </div>
                             <div class="d-flex gap16 horicontal fontSize16" id="deleteEditId">
-
                             </div>
                         </div>
                     </div>
@@ -130,14 +132,13 @@
                         <b>Phone</b>
                     </spline>
                     <div id="phoneId" class="fontSize16">
-
                     </div>
                 </div>
             </section>
 
         </div>
-
     </div>
+
 </body>
 
 </html>
