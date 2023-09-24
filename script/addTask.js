@@ -159,7 +159,9 @@ async function addTask() {
     const titel = document.getElementById('addTitel').value;
     const description = document.getElementById('addDescription').value;
     const dueDate = document.getElementById('datepicker').value;
-
+    contactNames = contactCollection.map(contact => contact.name);
+    contactColors = contactCollection.map(contact => contact.color);
+    contactNamesAbbreviation = contactCollection.map(contact => contact.nameAbbreviation);
     let task = {
         'id': currentId,
         'status': 'toDo',
@@ -169,9 +171,9 @@ async function addTask() {
         'description': description,
         'dueDate': dueDate,
         'priority': currentPrioSelected,
-        'contactName': contactCollection[0].name,
-        'contactColor': contactCollection[0].color,
-        'contactAbbreviation': contactCollection[0].nameAbbreviation,
+        'contactName': contactNames,
+        'contactColor': contactColors,
+        'contactAbbreviation': contactNamesAbbreviation,
         'subtasksInProgress': subTaskCollection,
         'subtasksFinish': [],
     }
