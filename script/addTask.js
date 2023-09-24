@@ -169,9 +169,9 @@ async function addTask() {
         'description': description,
         'dueDate': dueDate,
         'priority': currentPrioSelected,
-        'contactName': contactCollection.name,
-        'contactColor': contactCollection.color,
-        'contactAbbreviation': contactCollection.nameAbbreviation,
+        'contactName': contactCollection[0].name,
+        'contactColor': contactCollection[0].color,
+        'contactAbbreviation': contactCollection[0].nameAbbreviation,
         'subtasksInProgress': subTaskCollection,
         'subtasksFinish': [],
     }
