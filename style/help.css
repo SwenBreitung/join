@@ -1,3 +1,9 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -30,3 +36,11 @@ td h3 {
         padding-left: 10px;
     }
 }
+
+
+/* @media (max-width: 1080px) {
+    .header {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+} */
