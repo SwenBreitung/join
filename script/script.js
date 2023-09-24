@@ -2,7 +2,7 @@ let tasks = [];
 
 async function loadTasks() {
     try {
-        tasksArray = JSON.parse(await getItem('contactsArray'));
+        tasksArray = JSON.parse(await getItem('tasks'));
     } catch (e) {
         console.info('Could not load tasks');
     }
