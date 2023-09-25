@@ -251,6 +251,7 @@ async function addTask() {
 function clearButton() {
     resetAllAddTaskElements();
     renderAddTaskContent();
+    renderAddTaskContent();
 }
 function resetAllAddTaskElements() {
     currentCategorySelected = [
@@ -265,6 +266,7 @@ function resetAllAddTaskElements() {
     currentPrioSelected = "";
     contactCollection = [];
     resetInputs();
+    renderAddTaskContent();
 }
 //---------------------------------------------------------------------------------//
 
