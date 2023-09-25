@@ -94,8 +94,8 @@
     text-decoration: none;
 }
 
-.sidebar-bottom:hover {
-    background-color: var(--hover-color) !important;
+.sidebar-bottom a:hover {
+    color: var(--headline) !important;
 }
 
 .sidebar-text-area {
