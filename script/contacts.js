@@ -111,7 +111,7 @@ function loadContactInfos(contact, nameAbbreviation, i) {
     </div>
     <div class="column">
         <spline class="fontSize20">${contact['name']}</spline>
-        <spline class="fontSize16 emailScrollMenu">${contact['email']}</spline>
+            <spline class="fontSize16 emailScrollMenu">${contact['email']}</spline>
     </div>
 </div>
     `
@@ -153,7 +153,7 @@ async function createContact() {
 
     closePopup();
     renderContacts();
-    hoverNewContact(newContact)
+    hoverNewContact(newContact);
 }
 
 function hoverNewContact(newContact) {
@@ -183,6 +183,7 @@ function getColor() {
 //
 function openContactBigInfo(contact, i, nameAbbreviation) {
     slide('contactInfoBigId');
+    document.getElementById('changesSavedId').style.visibility = 'hidden';
 
     highlightContact(i)
 
@@ -299,6 +300,7 @@ function deleteEditContactAtIndex(i) {
  * 
  */
 async function deleteContact(position) {
+    changesSaved();
     contactsArray.splice(position, 1);
     await setItem('contactsArray', JSON.stringify(contactsArray));
     toggleVisibility('contactInfoBigId', false);
@@ -333,6 +335,7 @@ function saveContact(i) {
     contactsArray[i].name = document.getElementById('inputNameId').value;
     contactsArray[i].email = document.getElementById('inputEmailId').value;
     contactsArray[i].phone = document.getElementById('inputPhoneId').value;
+
     contactsArray[i].nameAbbreviation = document.getElementById('nameAbbreviationId').innerHTML;
 
     setItem('contactsArray', JSON.stringify(contactsArray));
@@ -341,11 +344,12 @@ function saveContact(i) {
     document.getElementById('emailId').innerHTML = contactsArray[i].email;
     document.getElementById('phoneId').innerHTML = contactsArray[i].phone;
 
-    closePopup();
-    renderContacts();
-    highlightContact(i);
+    toggleVisibility('contactInfoBigId', false);
+    changesSaved()
 
-    document.getElementById('nameAbbreviationId').textContent = contactsArray[i].nameAbbreviation;
+    closePopup();
+    highlightContact(i);
+    renderContacts();
 }
 
 /**
@@ -400,4 +404,9 @@ function originalFunction() {
     editCancelButton.onclick = function () {
         closePopup();
     };
+}
+
+function changesSaved() {
+    slide('changesSavedId');
+    document.getElementById('changesSavedId').style.visibility = 'visible';
 }
