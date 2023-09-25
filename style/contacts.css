@@ -459,6 +459,10 @@ section {
     }
 }
 
+.colorOnHover:hover path {
+    fill: #29ABE2 !important;
+}
+
 @media (max-width: 700px) {
 
     .contentContact {
