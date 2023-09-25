@@ -138,26 +138,31 @@ function openTask(i) {
                     <div class="task-description">
                         ${todos[i]['description']}
                     </div>
-                    <div class="task-detail-date">
+                    <div class="task-detail-flex">
                         <div class="task-detail-font-color">Due date:</div>
                         <div> ${todos[i]['dueDate']}</div>
                     </div>
-                    <div class="task-detail-priority">
+                    <div class="task-detail-flex">
                         <div class="task-detail-font-color">Priority:</div>
                         <div>
                             ${todos[i]['priority']}
                             <img src="img/prio${todos[i]['priority']}.svg" alt="${todos[i]['priority']}">
                         </div>
                     </div>
-                    <div class="task-detail-assignment">
-                        <div class="task-detail-font-color">Assigned To:</div>${todos[i]['contactName']}
+                    <div>
+                        <div class="margin-bottom10">Assigned To:</div>
+                        <div class="task-users">
+                            <div class="profile-picture horicontal-and-vertical" style="background-color:${todos['contactColor']} ">${todos['contactAbbreviation']}</div>
+                        </div>
+                        ${todos[i]['contactName']}
                     </div>
 
                     <div class="task-detail-subtasks">
-                        <div class="task-detail-font-color">
+                        <div class="task-detail-font-color margin-bottom10">
                             Subtasks
                         </div>
                         <img src="img/done.svg" alt="">
+                        ${todos[i]['subtask']}
                         <img src="img/addTaskBox.svg" alt="">
                         ${todos[i]['subtask']}
                     </div>
