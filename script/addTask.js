@@ -23,7 +23,6 @@ let allCategorys = [
     }
 ];
 
-let allTasks = [];
 let subTaskCollection = [];
 let contactCollection = [];
 let currentCategorySelected = [
@@ -38,6 +37,71 @@ let currentId = 0;
 
 
 
+function renderAddTaskContent() {
+    let assignTo1 = document.getElementById('assignedToInputContainer');
+    let assignTo2 = document.getElementById('assignedToContactsInputContainer');
+    let prioBox = document.getElementById('prioBox')
+    assignTo1.innerHTML = returnAssignToBox1();
+    assignTo2.innerHTML = returnAssignToBox2();
+    prioBox.innerHTML = returnPrioBox();
+    renderAllContactsForSearch();
+}
+
+function returnPrioBox() {
+    return/*html*/`
+    <div onclick="prioSelectedToggle('prioUrgentBtn', 'prioUrgentIcon', 'prioUrgentIconActiv', 'prioBtnActivUrgent', './img/prioUrgent.svg', true)"
+        id="prioUrgentBtn" class="prioBtn">Urgent
+        <img id="prioUrgentIcon" class="prioBtnIcons" src="./img/prioUrgent.svg">
+        <img id="prioUrgentIconActiv" class="prioBtnIcons d-none"
+            src="./img/PrioUrgentWhite.svg">
+    </div>
+    <div onclick="prioSelectedToggle('prioMediumBtn', 'prioMediumIcon', 'prioMediumIconActiv', 'prioBtnActivMedium', './img/prioMedium.svg', true)"
+        id="prioMediumBtn" class="prioBtn">Medium
+        <img id="prioMediumIcon" class="prioBtnIcons" src="./img/prioMedium.svg">
+        <img id="prioMediumIconActiv" class="prioBtnIcons d-none"
+            src="./img/PrioMediumWhite.svg">
+    </div>
+    <div onclick="prioSelectedToggle('prioLowBtn', 'prioLowIcon', 'prioLowIconActiv', 'prioBtnActivLow', './img/prioLow.svg', true)"
+        id="prioLowBtn" class="prioBtn">Low
+        <img id="prioLowIcon" class="prioBtnIcons" src="./img/prioLow.svg">
+        <img id="prioLowIconActiv" class="prioBtnIcons d-none"
+            src="./img/PrioLowWhite.svg">
+    </div>
+
+    `;
+}
+
+function returnAssignToBox1() {
+    return/*html*/`
+        <input class="click" id="assignedToInputCover"
+            onclick="toggleVisibilityAddTask('assignedToInputContainer', 'assignedToContactsInputContainer')"
+            type="text" readonly value="Select contacts to assign">
+        <img onclick="toggleVisibilityAddTask('assignedToInputContainer', 'assignedToContactsInputContainer')"
+            class="inputAbsolut" src="img/arrow_drop_downaa.svg">
+        <div id="selectedContactsContainer">
+        </div>
+        `;
+}
+
+
+
+function returnAssignToBox2() {
+    return/*html*/`
+    <input class="click" id="assignedToInput" type="text" placeholder="An:">
+    <img class="inputAbsolut"
+    onclick="toggleVisibilityAddTask('assignedToContactsInputContainer', 'assignedToInputContainer')"
+    src="img/arrow_drop_up.svg">
+    <div class="selectContactsPositionContainer">
+        <div class="ContactsRenderContainer show-scrollbar"
+            id="contactsRenderContainer">
+        </div>
+        <div onclick="addContact()" class="addNewContactBtn blueBtn">
+            <span>Add new contact</span>
+            <img class="addNewContactBtnIcon" src="img/addTaskperson_add.svg">
+        </div>
+    </div>
+                `;
+}
 
 //SubTaskFunctions//
 
@@ -73,7 +137,7 @@ function renderSubTaskCollection() {
 /**
  * Deletes a sub-task from the collection.
  * @param {number} i - Index of the sub-task.
- */
+                */
 function deleteSubtaskCollection(i) {
     subTaskCollection.splice(i, 1);
     renderSubTaskCollection();
@@ -83,7 +147,7 @@ function deleteSubtaskCollection(i) {
 /**
  * Edits a sub-task.
  * @param {number} i - Index of the sub-task.
- */
+                */
 function editSubtask(i) {
     let editSub = subTaskCollection[i];
     let inputContainer = document.getElementById('editContainer');
@@ -98,7 +162,7 @@ function editSubtask(i) {
 /**
  * Confirms the editing of a sub-task.
  * @param {number} i - Index of the sub-task.
-*/
+                */
 function confirmSubEdit(i) {
     let editedInput = document.getElementById('editInput');
     if (editedInput.value === '') {
@@ -180,6 +244,27 @@ async function addTask() {
     tasks.push(task);
     await setItem('tasks', JSON.stringify(tasks));
     currentId++;
+    await setItem('currentId', JSON.stringify(currentId));
+    resetAllAddTaskElements();
+    renderAddTaskContent();
+}
+function clearButton() {
+    resetAllAddTaskElements();
+    renderAddTaskContent();
+}
+function resetAllAddTaskElements() {
+    currentCategorySelected = [
+        {
+            'name': '',
+            'color': '',
+        }
+    ];
+    subTaskCollection = [];
+    selectedIndex = null;
+    selectedColorIndex = [];
+    currentPrioSelected = "";
+    contactCollection = [];
+    resetInputs();
 }
 //---------------------------------------------------------------------------------//
 
@@ -189,9 +274,9 @@ async function addTask() {
 /**
  * Toggles the visibility of two DOM elements.
  * @param {string} id - ID of the first DOM element.
- * @param {string} id2 - ID of the second DOM element.
-*/
-function toggleVisibility(id, id2) {
+                * @param {string} id2 - ID of the second DOM element.
+                */
+function toggleVisibilityAddTask(id, id2) {
     const elementOne = document.getElementById(id);
     const elementTwo = document.getElementById(id2);
     if (id === '') {
@@ -200,14 +285,15 @@ function toggleVisibility(id, id2) {
         if (id2 === '') {
             elementOne.classList.add('d-none');
         } else {
+
             elementOne.classList.add('d-none');
             elementTwo.classList.remove('d-none');
-            renderAllContactsForSearch();
-            renderAllSelectedContacts();
         }
     }
+    renderAllSelectedContacts();
     renderCategorys();
     createCategoryWindow();
+    borderColorCheck();
 }
 //---------------------------------------------------------------------------------//
 
@@ -215,14 +301,6 @@ function toggleVisibility(id, id2) {
 //Contact functions//
 
 
-// container add d-none by body-click//
-document.body.addEventListener('click', function () {
-    toggleVisibility('assignedToContactsInputContainer', 'assignedToInputContainer')
-});
-
-document.getElementById('assignTo').addEventListener('click', function (event) {
-    event.stopPropagation();
-});
 
 /**
  * Renders all selected contacts to the DOM.
@@ -230,11 +308,11 @@ document.getElementById('assignTo').addEventListener('click', function (event) {
 function renderAllSelectedContacts() {
     let contactZone = document.getElementById('selectedContactsContainer');
     contactZone.innerHTML = '';
-    let i = 0;
-    for (let key in contactCollection) {
-        const contacts = contactCollection[key];
-        contactZone.innerHTML += returnRenderAllSelectedContacts(contacts);
-        i++;
+    for (let index = 0; index < contactCollection.length; index++) {
+        contactColors = contactCollection[index].color;
+        contactNamesAbbreviation = contactCollection[index].nameAbbreviation;
+
+        contactZone.innerHTML += returnRenderAllSelectedContacts(contactColors, contactNamesAbbreviation);
     }
 }
 
@@ -244,34 +322,31 @@ async function renderAllContactsForSearch(filterText = '') {
     await loadContacts();
     let contactZone = document.getElementById('contactsRenderContainer');
     contactZone.innerHTML = '';
-    let i = 0;
-    for (let key in contactsArray) {
-        const contacts = contactsArray[key];
+    for (let index = 0; index < contactsArray.length; index++) {
+        contactColors = contactsArray[index].color;
+        contactNamesAbbreviation = contactsArray[index].nameAbbreviation;
+        contactNames = contactsArray[index].name;
 
         // Wenn ein Filtertext vorhanden ist und der Kontaktname ihn nicht enthält, überspringen Sie diesen Kontakt
         if (filterText && !contacts.name.toLowerCase().includes(filterText)) {
             continue;
         }
 
-        contactZone.innerHTML += returnRenderAllContactsForSearch(contacts, i, key);
-        i++;
+        contactZone.innerHTML += returnRenderAllContactsForSearch(contactColors, contactNamesAbbreviation, contactNames, index);
+
     }
 }
 
 
-document.getElementById('assignedToInput').addEventListener('input', function (event) {
-    const searchText = event.target.value.toLowerCase();
-    renderAllContactsForSearch(searchText);
-});
 
 
 /**
  * Selects or deselects a contact based on its current state.
  * @param {number} i - Index of the contact.
- * @param {string} key - Key of the contact in the `allContacts` collection.
- */
+                * @param {string} key - Key of the contact in the `allContacts` collection.
+                */
 function toggleContactSelection(i, key) {
-    const contact = contactsArray[key];
+    const contact = contactsArray[i];
     const el = (suffix) => document.getElementById(`${suffix}${i}`);
     const mainElement = el('assignedContactsBox'), firstSecondary = el('assignedBox'), secondSecondary = el('assignedBoxChecked');
 
@@ -289,8 +364,8 @@ function toggleContactSelection(i, key) {
 /**
  * Checks if a contact is in the `contactCollection`.
  * @param {Object} contact - The contact object to check.
- * @returns {boolean} - True if contact is in the collection, false otherwise.
-*/
+                * @returns {boolean} - True if contact is in the collection, false otherwise.
+                */
 function isContactInCollection(contact) {
     return contactCollection.includes(contact);
 }
@@ -299,9 +374,9 @@ function isContactInCollection(contact) {
 /**
  * Sets styles to visually select a contact.
  * @param {HTMLElement} mainElement - Main contact DOM element.
- * @param {HTMLElement} firstSecondary - First secondary DOM element.
- * @param {HTMLElement} secondSecondary - Second secondary DOM element.
-*/
+                * @param {HTMLElement} firstSecondary - First secondary DOM element.
+                * @param {HTMLElement} secondSecondary - Second secondary DOM element.
+                */
 function selectContact(mainElement, firstSecondary, secondSecondary) {
     mainElement.classList.remove('assignedContactsBox');
     mainElement.classList.add('assignedContactsBoxSelected');
@@ -314,9 +389,9 @@ function selectContact(mainElement, firstSecondary, secondSecondary) {
 /**
  * Sets styles to visually deselect a contact.
  * @param {HTMLElement} mainElement - Main contact DOM element.
- * @param {HTMLElement} firstSecondary - First secondary DOM element.
- * @param {HTMLElement} secondSecondary - Second secondary DOM element.
-*/
+                * @param {HTMLElement} firstSecondary - First secondary DOM element.
+                * @param {HTMLElement} secondSecondary - Second secondary DOM element.
+                */
 function deselectContact(mainElement, firstSecondary, secondSecondary) {
     mainElement.classList.remove('assignedContactsBoxSelected');
     mainElement.classList.add('assignedContactsBox');
@@ -327,14 +402,6 @@ function deselectContact(mainElement, firstSecondary, secondSecondary) {
 //---------------------------------------------------------------------------------//
 //Category functions//
 
-// container add d-none by body-click//
-document.body.addEventListener('click', function () {
-    toggleVisibility('categoryAreaV2', 'categoryAreaV1')
-});
-
-document.getElementById('categorySection').addEventListener('click', function (event) {
-    event.stopPropagation();
-});
 
 
 function renderCategorys() {
@@ -369,10 +436,17 @@ function selectCategory(type, index) {
         currentCategorySelected[0].name = allCategory.name[index];
         currentCategorySelected[0].color = allCategory.color[index];
     }
-    updateInputs();
     renderCategorys();
+    borderColorCheck();
 }
 
+function borderColorCheck() {
+    if (currentCategorySelected[0].name === '') {
+        resetInputs();
+    } else {
+        updateInputs();
+    }
+}
 
 function updateInputs() {
     let inputV1 = document.getElementById('categoryInputV1');
@@ -388,9 +462,6 @@ function getBorderColor() {
     return currentCategorySelected[0].color.replace('background:', '').trim();
 }
 
-
-
-
 function resetInputs() {
     let inputV1 = document.getElementById('categoryInputV1');
     let inputV2 = document.getElementById('categoryInputV2');
@@ -400,18 +471,8 @@ function resetInputs() {
 
 function resetInputValueAndColor(inputElem) {
     inputElem.value = 'Select task category';
-    inputElem.style.borderColor = 'initial';
+    inputElem.style.borderColor = '#D1D1D1';
 }
-
-function unhighlightSelectedCategory() {
-    if (selectedIndex !== null) {
-        let categoryMainElement = document.getElementById(`categoryMainList${selectedIndex}`);
-        let categoryAllElement = document.getElementById(`categoryAllList${selectedIndex}`);
-        if (categoryMainElement) categoryMainElement.classList.remove('selected');
-        if (categoryAllElement) categoryAllElement.classList.remove('selected');
-    }
-}
-
 
 //create category//
 function createCategoryWindow() {
@@ -471,26 +532,26 @@ function isValidCategoryInput() {
 
 function returnCreateCategoryWindow() {
     return /*html*/`
-    <input id="createCategoryInput" placeholder = "New category name and choose a color for add..." type = "text" >
-    <img onclick="stopCreateCategory()" class="editAbsolutCross"
-        src="img/close.svg">
-        <img onclick="confirmCreateCategory()" class="editAbsolutCheck"
-            src="img/SubtasksCheck.svg">
-            <div class="colorSettingBox" id="colorSettingBox">
-            </div>
-            `;
+                <input id="createCategoryInput" placeholder="New category name and choose a color for add..." type="text" >
+                    <img onclick="stopCreateCategory()" class="editAbsolutCross"
+                        src="img/close.svg">
+                        <img onclick="confirmCreateCategory()" class="editAbsolutCheck"
+                            src="img/SubtasksCheck.svg">
+                            <div class="colorSettingBox" id="colorSettingBox">
+                            </div>
+                            `;
 }
 
 
 function returnCreateCategoryColors(color, index) {
     if (color === selectedColorIndex) {
         return/*html*/`
-            <div onclick='selectColor("${color}")' style="${color}" id='colorCircle${index}' class="colorCircle selectedColor"></div>
-            `;
+                            <div onclick='selectColor("${color}")' style="${color}" id='colorCircle${index}' class="colorCircle selectedColor"></div>
+                            `;
     } else {
         return/*html*/`
-            <div onclick='selectColor("${color}")' style="${color}" id='colorCircle${index}' class="colorCircle"></div>
-            `;
+                            <div onclick='selectColor("${color}")' style="${color}" id='colorCircle${index}' class="colorCircle"></div>
+                            `;
     }
 }
 
@@ -498,18 +559,18 @@ function returnRenderMainCategorys(name, color, i) {
     if (currentCategorySelected[0].name === name &&
         currentCategorySelected[0].color === color) {
         return /*html*/`
-            <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow selected">
-                <span>${name}</span>
-                <div class="colorCircle" style="${color}"></div>
-            </div>
-            `;
+                            <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow selected">
+                                <span>${name}</span>
+                                <div class="colorCircle" style="${color}"></div>
+                            </div>
+                            `;
     } else {
         return /*html*/`
-        <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow">
-            <span>${name}</span>
-            <div class="colorCircle" style="${color}"></div>
-        </div>
-        `;
+                            <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow">
+                                <span>${name}</span>
+                                <div class="colorCircle" style="${color}"></div>
+                            </div>
+                            `;
     }
 }
 
@@ -517,32 +578,32 @@ function returnRenderAllCategorys(name, color, i) {
     if (currentCategorySelected[0].name === name &&
         currentCategorySelected[0].color === color) {
         return /*html*/`
-            <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow selected">
-                <span>${name}</span>
-                <div class='categoryRowLeft'>
-                    <div class="colorCircle" style="${color}"></div>
-                    <img src="img/subTaskDelete.svg">
-                </div>
-            </div>
-            `;
+                            <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow selected">
+                                <span>${name}</span>
+                                <div class='categoryRowLeft'>
+                                    <div class="colorCircle" style="${color}"></div>
+                                    <img src="img/subTaskDelete.svg">
+                                </div>
+                            </div>
+                            `;
 
     } else {
         return /*html*/`
-        <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow">
-            <span>${name}</span>
-            <div class='categoryRowLeft'>
-                <div class="colorCircle" style="${color}"></div>
-                <img src="img/subTaskDelete.svg">
-            </div>
-        </div>
-        `;
+                            <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow">
+                                <span>${name}</span>
+                                <div class='categoryRowLeft'>
+                                    <div class="colorCircle" style="${color}"></div>
+                                    <img src="img/subTaskDelete.svg">
+                                </div>
+                            </div>
+                            `;
     }
 }
 
 function stopCreateCategory() {
     input = document.getElementById('createCategoryInput');
     input.value = '';
-    toggleVisibility('createCategoryContainer', '');
+    toggleVisibilityAddTask('createCategoryContainer', '');
 }
 //---------------------------------------------------------------------------------//
 
@@ -551,11 +612,11 @@ function stopCreateCategory() {
 /**
  * Updates visual representation of priority buttons.
  * @param {string} btnId - ID of the priority button.
-            * @param {string} iconId - ID of the inactive icon.
-            * @param {string} activeIconId - ID of the active icon.
-            * @param {string} activeClass - CSS class to apply when active.
-            * @param {boolean} resetOther - Determines if other buttons should be reset.
-            */
+                            * @param {string} iconId - ID of the inactive icon.
+                            * @param {string} activeIconId - ID of the active icon.
+                            * @param {string} activeClass - CSS class to apply when active.
+                            * @param {boolean} resetOther - Determines if other buttons should be reset.
+                            */
 function activateButton(btnId, iconId, activeIconId, activeClass, iconSrc) {
     document.getElementById(btnId).classList.add(activeClass);
     document.getElementById(iconId).classList.add('d-none');
@@ -603,45 +664,50 @@ function resetAll() {
 /**
  * Returns an HTML string representing a selected contact.
  * @param {Object} contacts - The contact object to render.
-            * @returns {string} - HTML string for the rendered contact.
-            */
-function returnRenderAllSelectedContacts(contacts) {
+                            * @returns {string} - HTML string for the rendered contact.
+                            */
+function returnRenderAllSelectedContacts(contactColors, contactNamesAbbreviation) {
     return /*html*/`
-            <div style="background-color:${contacts.color}" class="assignedToContactImg">${contacts.nameAbbreviation}</div>
-            `;
+                            <div style="background-color:${contactColors}" class="assignedToContactImg">${contactNamesAbbreviation}</div>
+                            `;
 }
 
 
 /**
  * Returns an HTML string for the contact search functionality.
  * @param {Object} contacts - The contact object to render.
-            * @param {number} i - Index of the contact.
-            * @param {string} key - Key of the contact in the `allContacts` collection.
-            * @returns {string} - HTML string for the rendered contact.
-            */
-function returnRenderAllContactsForSearch(contacts, i, key) {
-    const isSelected = isContactInCollection(contacts);
+                            * @param {number} i - Index of the contact.
+                            * @param {string} key - Key of the contact in the `allContacts` collection.
+                            * @returns {string} - HTML string for the rendered contact.
+                            */
+function returnRenderAllContactsForSearch(contactColor, contactNamesAbbreviation, contactNames, index) {
+    let isSelected = '';
+    if (contactCollection.includes(contactNames)) {
+        isSelected = true;
+    } else {
+        isSelected = false;
+    }
     let mainClass = isSelected ? 'assignedContactsBoxSelected' : 'assignedContactsBox';
     let firstSecondaryClass = isSelected ? 'd-none' : '';
     let secondSecondaryClass = isSelected ? '' : 'd-none';
     return /*html*/`
-            <div class="${mainClass}" id="assignedContactsBox${i}" onclick="toggleContactSelection(${i}, '${key}')">
-                <div class="contactBoxLeft">
-                    <div style="background-color:${contacts.color}" class="assignedToContactImg">
-                        ${contacts.nameAbbreviation}
-                    </div>
-                    <span>${contacts.name}</span>
-                </div>
-                <img src="img/addTaskBox.svg" id="assignedBox${i}" class="${firstSecondaryClass}">
-                    <img src="img/addTaskCheckBox.svg" class="${secondSecondaryClass}" id="assignedBoxChecked${i}">
-                    </div>`;
+                            <div class="${mainClass}" id="assignedContactsBox${index}" onclick="toggleContactSelection(${index}, '${contactNames}')">
+                                <div class="contactBoxLeft">
+                                    <div style="background-color:${contactColor}" class="assignedToContactImg">
+                                        ${contactNamesAbbreviation}
+                                    </div>
+                                    <span>${contactNames}</span>
+                                </div>
+                                <img src="img/addTaskBox.svg" id="assignedBox${index}" class="${firstSecondaryClass}">
+                                    <img src="img/addTaskCheckBox.svg" class="${secondSecondaryClass}" id="assignedBoxChecked${index}">
+                                    </div>`;
 }
 
 
 /**
  * Toggles classes for the main settings element.
  * @param {HTMLElement} mainElement - Main settings DOM element.
-                    */
+                                    */
 function returnSettingsMain(mainElement) {
     if (mainElement.classList.contains('assignedContactsBox')) {
         mainElement.classList.remove('assignedContactsBox');
@@ -657,7 +723,7 @@ function returnSettingsMain(mainElement) {
 /**
  * Toggles visibility for the first settings element.
  * @param {HTMLElement} firstSecondary - First settings DOM element.
-                    */
+                                    */
 function returnSettingsFirst(firstSecondary) {
     if (firstSecondary.classList.contains('d-none')) {
         firstSecondary.classList.remove('d-none');
@@ -671,7 +737,7 @@ function returnSettingsFirst(firstSecondary) {
 /**
  * Toggles visibility for the second settings element.
  * @param {HTMLElement} secondSecondary - Second settings DOM element.
-                    */
+                                    */
 function returnSettingsSecond(secondSecondary) {
     if (secondSecondary.classList.contains('d-none')) {
         secondSecondary.classList.remove('d-none');
@@ -688,30 +754,30 @@ function returnSettingsSecond(secondSecondary) {
 /**
  * Returns an HTML string representing the subtask editing container.
  * @param {number} i - Index of the subtask.
-                    * @returns {string} - HTML string for the subtask edit container.
-                    */
+                                    * @returns {string} - HTML string for the subtask edit container.
+                                    */
 function returnEditContainer(i) {
     return /*html*/`<input id="editInput" type="text">
-                        <img onclick="stopSubEdit()" class="editAbsolutCross" src="img/close.svg">
-                            <img onclick="confirmSubEdit(${i})" class="editAbsolutCheck" src="img/SubtasksCheck.svg">
-                                `;
+                                        <img onclick="stopSubEdit()" class="editAbsolutCross" src="img/close.svg">
+                                            <img onclick="confirmSubEdit(${i})" class="editAbsolutCheck" src="img/SubtasksCheck.svg">
+                                                `;
 }
 
 
 /**
  * Returns an HTML string representing a collection of subtasks.
  * @param {Object} subCollection - The subtask collection to render.
-                                * @param {number} i - Index of the subtask in the collection.
-                                * @returns {string} - HTML string for the rendered subtask collection.
-                                */
+                                                * @param {number} i - Index of the subtask in the collection.
+                                                * @returns {string} - HTML string for the rendered subtask collection.
+                                                */
 function returnSubTaskCollection(subCollection, i) {
     return /*html*/`
-                                <ul class="dFlex spaceBtw">
-                                    <li>${subCollection}</li>
-                                    <div>
-                                        <img onclick="editSubtask(${i})" src="img/PenAddTask 1=edit.svg">
-                                            <img onclick="deleteSubtaskCollection(${i})" src="img/subTaskDelete.svg">
-                                            </div>
-                                        </ul>`;
+                                                <ul class="dFlex spaceBtw">
+                                                    <li>${subCollection}</li>
+                                                    <div>
+                                                        <img onclick="editSubtask(${i})" src="img/PenAddTask 1=edit.svg">
+                                                            <img onclick="deleteSubtaskCollection(${i})" src="img/subTaskDelete.svg">
+                                                            </div>
+                                                        </ul>`;
 }
 //---------------------------------------------------------------------------------//
