@@ -122,6 +122,7 @@ function loadContactInfos(contact, nameAbbreviation, i) {
  * 
  */
 function addContact() {
+    document.getElementById('changesSavedId').style.visibility = 'hidden';
     originalFunction();
     originalText();
     document.getElementById('inputNameId').value = '';
