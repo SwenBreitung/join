@@ -1,10 +1,10 @@
 let todos = [{
     'id': 0,
-    'status': 'done',
+    'status': 'to-do',
     'category': 'Testcategory',
     'categoryColor': '',
     'title': 'Test',
-    'description': 'Lorem',
+    'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint atque quos voluptatum, iusto architecto dolore minima itaque soluta recusandae magnam libero dolorem amet eveniet eos obcaecati fugiat similique, nihil numquam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint atque quos voluptatum, iusto architecto dolore minima itaque soluta recusandae magnam libero dolorem amet eveniet eos obcaecati fugiat similique, nihil numquam.',
     'dueDate': '12/12/12',
     'priority': 'Urgent',
     'contactName': ['Test'],
@@ -126,43 +126,49 @@ function openTask(i) {
     document.getElementById('popup-container').classList.remove('d-none');
     document.getElementById('popup-container').innerHTML = /*html*/ `
     <div class="task-detail">
+            <div class="task-detail-content-container">
+                <div class="task-detail-top">
+                    <div class="task-detail-category"> ${todos[i]['category']}</div>
+                    <img onclick="closeTask()" src="img/close.svg" alt="close">
+                </div>
+                <div class="task-detail-content">
+                    <div class="task-detail-title">
+                        <h1>${todos[i]['title']}</h1>
+                    </div>
+                    <div class="task-description">
+                        ${todos[i]['description']}
+                    </div>
+                    <div class="task-detail-date">
+                        <div class="task-detail-font-color">Due date:</div>
+                        <div> ${todos[i]['dueDate']}</div>
+                    </div>
+                    <div class="task-detail-priority">
+                        <div class="task-detail-font-color">Priority:</div>
+                        <div>
+                            ${todos[i]['priority']}
+                            <img src="img/prio${todos[i]['priority']}.svg" alt="${todos[i]['priority']}">
+                        </div>
+                    </div>
+                    <div class="task-detail-assignment">
+                        <div class="task-detail-font-color">Assigned To:</div>${todos[i]['contactName']}
+                    </div>
 
-
-        <div class="task-detail-content">
-            <div class="task-detail-top">
-                <div class="task-detail-category"> ${todos[i]['category']}</div>
-                <img onclick="closeTask()" src="img/close.svg" alt="close">
+                    <div class="task-detail-subtasks">
+                        <div class="task-detail-font-color">
+                            Subtasks
+                        </div>
+                        <img src="img/done.svg" alt="">
+                        <img src="img/addTaskBox.svg" alt="">
+                        ${todos[i]['subtask']}
+                    </div>
+                </div>
             </div>
-               
-
-            <div class="task-detail-title"><h1>${todos[i]['title']}</h1></div>
-            <div class="task-description"> ${todos[i]['description']}</div>
-            <div class="task-detail-font-color">Due date:</div>${todos[i]['dueDate']}
-            <div class="task-detail-font-color">Priority:</div>  
-                ${todos[i]['priority']}
-                <img src = "img/prio${todos[i]['priority']}.svg" alt = "${todos[i]['priority']}">
-           
-            <div class="task-detail-font-color">Assigned To:</div>${todos[i]['contactName']}
-
-            <div> 
-                <div class="task-detail-font-color">Subtasks</div>
-                
-                <img src="img/done.svg" alt="">
-                <img src="img/addTaskBox.svg" alt="">
-                ${todos[i]['subtask']}
-       
-               
+            <div class="task-detail-bottom">
+                <img src="img/subTaskDelete.svg" alt="">
+                <img src="img/PenAddTask 1=edit.svg" alt="">
             </div>
-
         </div>
 
-        <div class="task-detail-bottom">
-            <img src="img/subTaskDelete.svg" alt="">
-            <img src="img/PenAddTask 1=edit.svg" alt="">
-        </div>
-       
-
-    </div>
     `;
 }
 
