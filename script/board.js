@@ -1,20 +1,20 @@
-let tasks = [{
+let todos = [{
     'id': 0,
-    'status': '',
-    'category': '',
+    'status': 'done',
+    'category': 'Testcategory',
     'categoryColor': '',
-    'title': '',
-    'description': '',
-    'dueDate': '',
-    'priority': '',
-    'contactName': [],
-    'contactColor': [],
-    'contactAbbreviation': [],
+    'title': 'Test',
+    'description': 'Lorem',
+    'dueDate': '12/12/12',
+    'priority': 'Urgent',
+    'contactName': ['Test'],
+    'contactColor': ['#A8A8A8'],
+    'contactAbbreviation': ['B'],
     'subtasksInProgress': [],
     'subtasksFinish': [],
 }, {
     'id': 1,
-    'status': '',
+    'status': 'in-progress',
     'category': '',
     'categoryColor': '',
     'title': '',
@@ -91,7 +91,7 @@ function generateTaskHTML(element) {
             </div>
             <div class="task-users-prio">
                 <div class="task-users">
-                    <div class="profile-picture horicontal-and-vertical">A</div>
+                    <div class="profile-picture horicontal-and-vertical" style="background-color:${element['contactColor']} ">${element['contactAbbreviation']}</div>
                 </div>
                 <img src="img/prio${element['priority']}.svg" alt ="${element['priority']}" >
             </div>
@@ -142,7 +142,7 @@ function openTask(i) {
                 ${todos[i]['priority']}
                 <img src = "img/prio${todos[i]['priority']}.svg" alt = "${todos[i]['priority']}">
            
-            <div class="task-detail-font-color">Assigned To:</div>${todos[i]['assignedTo']}
+            <div class="task-detail-font-color">Assigned To:</div>${todos[i]['contactName']}
 
             <div> 
                 <div class="task-detail-font-color">Subtasks</div>
@@ -189,7 +189,20 @@ function revertDivColor() {
 
 
 
+async function includeHTML() {
+    let includeElements = document.querySelectorAll('[w3-include-html]');
+    for (let i = 0; i < includeElements.length; i++) {
+        const element = includeElements[i];
+        file = element.getAttribute("w3-include-html"); // "includes/header.html"
+        let resp = await fetch(file);
+        if (resp.ok) {
+            element.innerHTML = await resp.text();
+        } else {
+            element.innerHTML = 'Page not found';
+        }
+    }
 
+}
 
 //drag and drop END=============================================================================
 
