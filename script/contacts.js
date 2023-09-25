@@ -153,6 +153,12 @@ async function createContact() {
 
     closePopup();
     renderContacts();
+    hoverNewContact(newContact)
+}
+
+function hoverNewContact(newContact) {
+    const newIndex = contactsArray.findIndex(contact => contact.name === newContact.name);
+    openContactBigInfo(newContact, newIndex, newContact['nameAbbreviation']);
 }
 
 /**
@@ -181,7 +187,7 @@ function openContactBigInfo(contact, i, nameAbbreviation) {
     highlightContact(i)
 
     document.getElementById('profilePictureBigId').innerHTML = /*html*/ `
-    <div class="profilePictureBig horicontalAndVertical fontSize47" style="background-color: ${contact.color}">
+    <div class="profilePictureBig horicontalAndVertical fontSize47" style="background-color: ${contact.color}" id="nameAbbreviationId">
     ${nameAbbreviation}
     </div>
     `;
@@ -226,7 +232,6 @@ function slide(id) {
  */
 function closePopup() {
     toggleVisibility('addContactId', false);
-    toggleVisibility('contactInfoBigId', false);
 }
 
 
@@ -317,6 +322,7 @@ async function editContact(i) {
 
     await setItem('contactsArray', JSON.stringify(contactsArray));
     renderContacts();
+    highlightContact(i);
 }
 
 /**
@@ -327,11 +333,19 @@ function saveContact(i) {
     contactsArray[i].name = document.getElementById('inputNameId').value;
     contactsArray[i].email = document.getElementById('inputEmailId').value;
     contactsArray[i].phone = document.getElementById('inputPhoneId').value;
+    contactsArray[i].nameAbbreviation = document.getElementById('nameAbbreviationId').innerHTML;
 
     setItem('contactsArray', JSON.stringify(contactsArray));
 
+    document.getElementById('nameId').innerHTML = contactsArray[i].name;
+    document.getElementById('emailId').innerHTML = contactsArray[i].email;
+    document.getElementById('phoneId').innerHTML = contactsArray[i].phone;
+
     closePopup();
     renderContacts();
+    highlightContact(i);
+
+    document.getElementById('nameAbbreviationId').textContent = contactsArray[i].nameAbbreviation;
 }
 
 /**
