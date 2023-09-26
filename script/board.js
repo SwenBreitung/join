@@ -55,7 +55,7 @@ function generateTaskHTML(element, tasks) {
 
     let i = element['id']
     console.log(i)
-    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask(${tasks},${i})" class="task">
+    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask(${i})" class="task">
             <div>
                 <div class="task-category"> ${element['category']}</div>
                 <div class="task-title">${element['title']}</div>
@@ -93,7 +93,7 @@ function removeHighlight(id) {
 }
 
 /* --------------------------------------- */
-function openTask(tasks, i) {
+function openTask(i) {
     console.log(i)
     console.log('tasks in open Task',tasks)
 
@@ -119,26 +119,30 @@ function openTask(tasks, i) {
                     <div class="task-detail-flex">
                         <div class="task-detail-font-color">Priority:</div>
                         <div>
-                            ${tasks[i]['priority']}
-                            <img src="img/prio${tasks[i]['priority']}.svg">
+                            <img src="${tasks[i]['priority']}">
                         </div>
                     </div>
                     <div>
-                        <div class="margin-bottom10">Assigned To:</div>
+                        <div class="margin-bottom10 task-detail-font-color">Assigned To:</div>
                         <div class="task-users">
-                            <div class="profile-picture horicontal-and-vertical" style="background-color:${tasks['contactColor']} ">${tasks['contactAbbreviation']}</div>
+                            <div class="profile-picture horicontal-and-vertical" style="background-color:${tasks[i]['contactColor']}">${tasks[i]['contactAbbreviation']}</div>
+                            <div>${tasks[i]['contactName']}</div>     
                         </div>
-                        ${tasks[i]['contactName']}
                     </div>
 
                     <div class="task-detail-subtasks">
                         <div class="task-detail-font-color margin-bottom10">
                             Subtasks
                         </div>
-                        <img src="img/done.svg" alt="">
-                        ${tasks[i]['subtask']}
-                        <img src="img/addTaskBox.svg" alt="">
-                        ${tasks[i]['subtask']}
+                      
+                        <div class="task-detail-flex">
+                            <img src="img/addTaskBox.svg" alt="">
+                            ${tasks[i]['subtasksInProgress']}
+                            <img src="img/done.svg" alt="">
+                            ${tasks[i]['subtasksFinish']}
+                        </div>
+
+
                     </div>
                 </div>
             </div>

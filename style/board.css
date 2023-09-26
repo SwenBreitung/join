@@ -67,6 +67,11 @@ body {
     outline: none;
 }
 
+#fake-searchbar img {
+    height: 24px;
+    width: 24px;
+}
+
 #button-add-task {
     white-space: nowrap;
     background-color: var(--main-color);
@@ -173,7 +178,6 @@ h3 {
 .drag-area {
     height: 500px;
     width: 200px;
-    border: 1px dashed black;
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
@@ -292,6 +296,12 @@ h3 {
     margin-bottom: 10px;
 }
 
+.task-users{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
 .task-detail-assignment{
     margin-bottom: 10px;
 }
@@ -365,9 +375,31 @@ h3 {
     }
 }
 
+@media(max-width:1000px) {
+  .searchbox {
+    gap: 8px;
+  }
+
+  #fake-searchbar input {
+    width: 100px;
+}
+}
+
 @media(max-width:700px) {
     .task-detail {
         width: 80vw;
+    }
+
+    .search-board-container{
+        flex-direction: column;
+        align-items: self-start;
+        /* max-width: calc(100vw); */
+        max-width: 100vw;
+        left: 0;
+    }
+
+    #fake-searchbar input {
+        width: 100px;
     }
 }
 
