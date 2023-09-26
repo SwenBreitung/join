@@ -14,34 +14,34 @@ function init() {
 
 let currentDraggedElement;
 
-function updateHTML(tasksarray) {
-    console.log(tasksarray)
-    let todo = tasksarray.filter(t => t['status'] == 'toDo');
-    document.getElementById('to-do').innerHTML = '';
+function updateHTML(tasks) {
+    console.log(tasks)
+    let todo = tasks.filter(t => t['status'] == 'toDo');
+    document.getElementById('toDo').innerHTML = '';
     for (let index = 0; index < todo.length; index++) {
         const element = todo[index];
-        document.getElementById('to-do').innerHTML += generateTaskHTML(element, tasksArray);
+        document.getElementById('toDo').innerHTML += generateTaskHTML(element, tasks);
     }
 
-    let inProgress = tasksarray.filter(t => t['status'] == 'in-progress');
+    let inProgress = tasks.filter(t => t['status'] == 'in-progress');
     document.getElementById('in-progress').innerHTML = '';
     for (let index = 0; index < inProgress.length; index++) {
         const element = inProgress[index];
-        document.getElementById('in-progress').innerHTML += generateTaskHTML(element, tasksArray);
+        document.getElementById('in-progress').innerHTML += generateTaskHTML(element, tasks);
     }
 
-    let awaitingFeedback = tasksarray.filter(t => t['status'] == 'awaiting-feedback');
+    let awaitingFeedback = tasks.filter(t => t['status'] == 'awaiting-feedback');
     document.getElementById('awaiting-feedback').innerHTML = '';
     for (let index = 0; index < awaitingFeedback.length; index++) {
         const element = awaitingFeedback[index];
-        document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element, tasksArray);
+        document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element, tasks);
     }
 
-    let done = tasksarray.filter(t => t['status'] == 'done');
+    let done = tasks.filter(t => t['status'] == 'done');
     document.getElementById('done').innerHTML = '';
     for (let index = 0; index < done.length; index++) {
         const element = done[index];
-        document.getElementById('done').innerHTML += generateTaskHTML(element ,tasksArray);
+        document.getElementById('done').innerHTML += generateTaskHTML(element ,tasks);
     }
 }
 
@@ -49,13 +49,13 @@ function startDragging(id) {
     currentDraggedElement = id;
 }
 
-function generateTaskHTML(element, tasksArray) {
+function generateTaskHTML(element, tasks) {
     console.log(element['category'])
-    console.log('tasksArray in generatehtml',tasksArray)
+    console.log('tasks in generatehtml',tasks)
 
     let i = element['id']
     console.log(i)
-    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask(${tasksarray},${i})" class="task">
+    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask(${tasks},${i})" class="task">
             <div>
                 <div class="task-category"> ${element['category']}</div>
                 <div class="task-title">${element['title']}</div>
@@ -79,8 +79,8 @@ function allowDrop(ev) {
 // want to move the todo with the id which is saved in currentDragElement 
 // and change the status
 function moveTo(status) {
-    todos[currentDraggedElement]['status'] = status;
-    updateHTML();
+    tasks[currentDraggedElement]['status'] = status;
+    updateHTML(tasks);
     removeHighlight(status);
 }
 
@@ -93,42 +93,42 @@ function removeHighlight(id) {
 }
 
 /* --------------------------------------- */
-function openTask(tasksarray, i) {
+function openTask(tasks, i) {
     console.log(i)
-    console.log('tasksArray in open Task',tasksArray)
+    console.log('tasks in open Task',tasks)
 
     document.getElementById('popup-container').classList.remove('d-none');
     document.getElementById('popup-container').innerHTML = /*html*/ `
     <div class="task-detail">
             <div class="task-detail-content-container">
                 <div class="task-detail-top">
-                    <div class="task-detail-category"> ${tasksarray[i]['category']}</div>
+                    <div class="task-detail-category"> ${tasks[i]['category']}</div>
                     <img onclick="closeTask()" src="img/close.svg" alt="close">
                 </div>
                 <div class="task-detail-content">
                     <div class="task-detail-title">
-                        <h1>${tasksarray[i]['title']}</h1>
+                        <h1>${tasks[i]['title']}</h1>
                     </div>
                     <div class="task-description">
-                        ${tasksarray[i]['description']}
+                        ${tasks[i]['description']}
                     </div>
                     <div class="task-detail-flex">
                         <div class="task-detail-font-color">Due date:</div>
-                        <div> ${tasksarray[i]['dueDate']}</div>
+                        <div> ${tasks[i]['dueDate']}</div>
                     </div>
                     <div class="task-detail-flex">
                         <div class="task-detail-font-color">Priority:</div>
                         <div>
-                            ${tasksarray[i]['priority']}
-                            <img src="img/prio${tasksarray[i]['priority']}.svg">
+                            ${tasks[i]['priority']}
+                            <img src="img/prio${tasks[i]['priority']}.svg">
                         </div>
                     </div>
                     <div>
                         <div class="margin-bottom10">Assigned To:</div>
                         <div class="task-users">
-                            <div class="profile-picture horicontal-and-vertical" style="background-color:${tasksarray['contactColor']} ">${tasksarray['contactAbbreviation']}</div>
+                            <div class="profile-picture horicontal-and-vertical" style="background-color:${tasks['contactColor']} ">${tasks['contactAbbreviation']}</div>
                         </div>
-                        ${tasksarray[i]['contactName']}
+                        ${tasks[i]['contactName']}
                     </div>
 
                     <div class="task-detail-subtasks">
@@ -136,9 +136,9 @@ function openTask(tasksarray, i) {
                             Subtasks
                         </div>
                         <img src="img/done.svg" alt="">
-                        ${tasksarray[i]['subtask']}
+                        ${tasks[i]['subtask']}
                         <img src="img/addTaskBox.svg" alt="">
-                        ${tasksarray[i]['subtask']}
+                        ${tasks[i]['subtask']}
                     </div>
                 </div>
             </div>
