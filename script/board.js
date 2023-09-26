@@ -1,40 +1,7 @@
-let todos = [{
-    'id': 0,
-    'status': 'to-do',
-    'category': 'Testcategory',
-    'categoryColor': '',
-    'title': 'Test',
-    'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint atque quos voluptatum, iusto architecto dolore minima itaque soluta recusandae magnam libero dolorem amet eveniet eos obcaecati fugiat similique, nihil numquam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint atque quos voluptatum, iusto architecto dolore minima itaque soluta recusandae magnam libero dolorem amet eveniet eos obcaecati fugiat similique, nihil numquam.',
-    'dueDate': '12/12/12',
-    'priority': 'Urgent',
-    'contactName': ['Test'],
-    'contactColor': ['#A8A8A8'],
-    'contactAbbreviation': ['B'],
-    'subtasksInProgress': [],
-    'subtasksFinish': [],
-}, {
-    'id': 1,
-    'status': 'in-progress',
-    'category': '',
-    'categoryColor': '',
-    'title': '',
-    'description': '',
-    'dueDate': '',
-    'priority': '',
-    'contactName': [],
-    'contactColor': [],
-    'contactAbbreviation': [],
-    'subtasksInProgress': [],
-    'subtasksFinish': [],
-}];
-
-
 
 function init() {
     includeHTML();
-    updateHTML();
 }
-
 
 // wenn subtaskfinish = abgehakt img
 // wenn subtaskprogress = offen img
@@ -47,33 +14,34 @@ function init() {
 
 let currentDraggedElement;
 
-function updateHTML() {
-    let todo = todos.filter(t => t['status'] == 'to-do');
+function updateHTML(tasksarray) {
+    console.log(tasksarray)
+    let todo = tasksarray.filter(t => t['status'] == 'toDo');
     document.getElementById('to-do').innerHTML = '';
     for (let index = 0; index < todo.length; index++) {
         const element = todo[index];
-        document.getElementById('to-do').innerHTML += generateTaskHTML(element);
+        document.getElementById('to-do').innerHTML += generateTaskHTML(element, tasksArray);
     }
 
-    let inProgress = todos.filter(t => t['status'] == 'in-progress');
+    let inProgress = tasksarray.filter(t => t['status'] == 'in-progress');
     document.getElementById('in-progress').innerHTML = '';
     for (let index = 0; index < inProgress.length; index++) {
         const element = inProgress[index];
-        document.getElementById('in-progress').innerHTML += generateTaskHTML(element);
+        document.getElementById('in-progress').innerHTML += generateTaskHTML(element, tasksArray);
     }
 
-    let awaitingFeedback = todos.filter(t => t['status'] == 'awaiting-feedback');
+    let awaitingFeedback = tasksarray.filter(t => t['status'] == 'awaiting-feedback');
     document.getElementById('awaiting-feedback').innerHTML = '';
     for (let index = 0; index < awaitingFeedback.length; index++) {
         const element = awaitingFeedback[index];
-        document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element);
+        document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element, tasksArray);
     }
 
-    let done = todos.filter(t => t['status'] == 'done');
+    let done = tasksarray.filter(t => t['status'] == 'done');
     document.getElementById('done').innerHTML = '';
     for (let index = 0; index < done.length; index++) {
         const element = done[index];
-        document.getElementById('done').innerHTML += generateTaskHTML(element);
+        document.getElementById('done').innerHTML += generateTaskHTML(element ,tasksArray);
     }
 }
 
@@ -81,9 +49,13 @@ function startDragging(id) {
     currentDraggedElement = id;
 }
 
-function generateTaskHTML(element) {
+function generateTaskHTML(element, tasksArray) {
+    console.log(element['category'])
+    console.log('tasksArray in generatehtml',tasksArray)
+
     let i = element['id']
-    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask(${i})" class="task">
+    console.log(i)
+    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask(${tasksarray},${i})" class="task">
             <div>
                 <div class="task-category"> ${element['category']}</div>
                 <div class="task-title">${element['title']}</div>
@@ -93,7 +65,7 @@ function generateTaskHTML(element) {
                 <div class="task-users">
                     <div class="profile-picture horicontal-and-vertical" style="background-color:${element['contactColor']} ">${element['contactAbbreviation']}</div>
                 </div>
-                <img src="img/prio${element['priority']}.svg" alt ="${element['priority']}" >
+                <img src="${element['priority']}">
             </div>
         </div>
     `;
@@ -121,40 +93,42 @@ function removeHighlight(id) {
 }
 
 /* --------------------------------------- */
-function openTask(i) {
-    console.log(todos[i]['title'])
+function openTask(tasksarray, i) {
+    console.log(i)
+    console.log('tasksArray in open Task',tasksArray)
+
     document.getElementById('popup-container').classList.remove('d-none');
     document.getElementById('popup-container').innerHTML = /*html*/ `
     <div class="task-detail">
             <div class="task-detail-content-container">
                 <div class="task-detail-top">
-                    <div class="task-detail-category"> ${todos[i]['category']}</div>
+                    <div class="task-detail-category"> ${tasksarray[i]['category']}</div>
                     <img onclick="closeTask()" src="img/close.svg" alt="close">
                 </div>
                 <div class="task-detail-content">
                     <div class="task-detail-title">
-                        <h1>${todos[i]['title']}</h1>
+                        <h1>${tasksarray[i]['title']}</h1>
                     </div>
                     <div class="task-description">
-                        ${todos[i]['description']}
+                        ${tasksarray[i]['description']}
                     </div>
                     <div class="task-detail-flex">
                         <div class="task-detail-font-color">Due date:</div>
-                        <div> ${todos[i]['dueDate']}</div>
+                        <div> ${tasksarray[i]['dueDate']}</div>
                     </div>
                     <div class="task-detail-flex">
                         <div class="task-detail-font-color">Priority:</div>
                         <div>
-                            ${todos[i]['priority']}
-                            <img src="img/prio${todos[i]['priority']}.svg" alt="${todos[i]['priority']}">
+                            ${tasksarray[i]['priority']}
+                            <img src="img/prio${tasksarray[i]['priority']}.svg">
                         </div>
                     </div>
                     <div>
                         <div class="margin-bottom10">Assigned To:</div>
                         <div class="task-users">
-                            <div class="profile-picture horicontal-and-vertical" style="background-color:${todos['contactColor']} ">${todos['contactAbbreviation']}</div>
+                            <div class="profile-picture horicontal-and-vertical" style="background-color:${tasksarray['contactColor']} ">${tasksarray['contactAbbreviation']}</div>
                         </div>
-                        ${todos[i]['contactName']}
+                        ${tasksarray[i]['contactName']}
                     </div>
 
                     <div class="task-detail-subtasks">
@@ -162,9 +136,9 @@ function openTask(i) {
                             Subtasks
                         </div>
                         <img src="img/done.svg" alt="">
-                        ${todos[i]['subtask']}
+                        ${tasksarray[i]['subtask']}
                         <img src="img/addTaskBox.svg" alt="">
-                        ${todos[i]['subtask']}
+                        ${tasksarray[i]['subtask']}
                     </div>
                 </div>
             </div>
@@ -200,20 +174,20 @@ function revertDivColor() {
 
 
 
-async function includeHTML() {
-    let includeElements = document.querySelectorAll('[w3-include-html]');
-    for (let i = 0; i < includeElements.length; i++) {
-        const element = includeElements[i];
-        file = element.getAttribute("w3-include-html"); // "includes/header.html"
-        let resp = await fetch(file);
-        if (resp.ok) {
-            element.innerHTML = await resp.text();
-        } else {
-            element.innerHTML = 'Page not found';
-        }
-    }
+// async function includeHTML() {
+//     let includeElements = document.querySelectorAll('[w3-include-html]');
+//     for (let i = 0; i < includeElements.length; i++) {
+//         const element = includeElements[i];
+//         file = element.getAttribute("w3-include-html"); // "includes/header.html"
+//         let resp = await fetch(file);
+//         if (resp.ok) {
+//             element.innerHTML = await resp.text();
+//         } else {
+//             element.innerHTML = 'Page not found';
+//         }
+//     }
 
-}
+// }
 
 //drag and drop END=============================================================================
 

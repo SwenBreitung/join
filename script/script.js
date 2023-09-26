@@ -1,8 +1,11 @@
 let tasks = [];
 
+let tasksarray;
+
 async function loadTasks() {
     try {
         tasksArray = JSON.parse(await getItem('tasks'));
+        updateHTML(tasksArray)
     } catch (e) {
         console.info('Could not load tasks');
     }
