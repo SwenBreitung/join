@@ -288,6 +288,21 @@ h3 {
     display: flex;
 }
 
+.task-detail-users{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-details{
+    display: flex;
+    align-items: center;
+    width: 400px;
+}
+
+.user-name{
+    margin-left: 25px;
+}
 
 .subtask-margin {
     margin-bottom: 10px;

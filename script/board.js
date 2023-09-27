@@ -66,8 +66,7 @@ function startDragging(id) {
 
 
 
-//     // console.log(element['subtasksInProgress'])
-//     // console.log(element['subtasksFinish'])
+
 
 function generateTaskHTML(element) {
     let i = element['id']
@@ -123,7 +122,33 @@ function removeHighlight(id) {
 /* --------------------------------------- */
 function openTask(i) {
     console.log(i)
-    console.log('tasks in open Task', tasks)
+    console.log('tasks in open Task', tasks[i])
+
+    //     // console.log(element['subtasksInProgress'])
+    //     // console.log(element['subtasksFinish'])
+
+    let userNames = tasks[i]['contactName']
+    let users = tasks[i]['contactAbbreviation']
+    let colors = tasks[i]['contactColor']
+    let assignedUser = '';
+    for (let j = 0; j < users.length; j++) {
+        let user = users[j];
+        let userName = userNames[j]
+        let color = colors[j]
+        console.log(user, color)
+        assignedUser += /*html*/ ` 
+        <div class="user-details">
+            <div class="profile-picture horicontal-and-vertical" style="background-color:${color}">
+                ${user}
+            </div>
+            <div class="user-name">
+                ${userName}
+            </div>   
+        </div>
+        `;
+    }
+
+
 
     document.getElementById('popup-container').classList.remove('d-none');
     document.getElementById('popup-container').innerHTML = /*html*/ `
@@ -152,9 +177,10 @@ function openTask(i) {
                     </div>
                     <div>
                         <div class="margin-bottom10 task-detail-font-color">Assigned To:</div>
-                        <div class="task-users">
-                            <div class="profile-picture horicontal-and-vertical" style="background-color:${tasks[i]['contactColor']}">${tasks[i]['contactAbbreviation']}</div>
-                            <div>${tasks[i]['contactName']}</div>     
+                        <div class="task-detail-users">
+                       
+                        ${assignedUser}
+
                         </div>
                     </div>
 
