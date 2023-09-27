@@ -76,7 +76,6 @@ function generateTaskHTML(element) {
     for (let j = 0; j < users.length; j++) {
         let user = users[j];
         let color = colors[j]
-        console.log(user, color)
         assignedUser += /*html*/ ` 
        <div class="profile-picture horicontal-and-vertical" style="background-color:${color} ">${user}</div>`;
     }
@@ -120,12 +119,19 @@ function removeHighlight(id) {
 }
 
 /* --------------------------------------- */
-function openTask(i) {
-    console.log(i)
-    console.log('tasks in open Task', tasks[i])
 
-    //     // console.log(element['subtasksInProgress'])
-    //     // console.log(element['subtasksFinish'])
+
+
+
+async function openTask(i) {
+    renderTaskdetailHTML(i)
+}
+
+
+
+function renderTaskdetailHTML(i) {
+
+    console.log('tasks in open Task', tasks[i])
 
     let userNames = tasks[i]['contactName']
     let users = tasks[i]['contactAbbreviation']
@@ -135,7 +141,6 @@ function openTask(i) {
         let user = users[j];
         let userName = userNames[j]
         let color = colors[j]
-        console.log(user, color)
         assignedUser += /*html*/ ` 
         <div class="user-details">
             <div class="profile-picture horicontal-and-vertical" style="background-color:${color}">
@@ -148,7 +153,35 @@ function openTask(i) {
         `;
     }
 
+    let inProgress = '';
+    let subtasksInProgress = tasks[i]['subtasksInProgress'];
+    let subtaskHeadline ='';
 
+
+    for (let k = 0; k < subtasksInProgress.length; k++) {
+        let subtaskInProgress = subtasksInProgress[k];
+
+        subtaskHeadline = /*html*/ `
+        <div class="task-detail-font-color margin-bottom10">
+            Subtasks
+        </div>`
+        inProgress += /*html*/ ` 
+        <div class="task-detail-flex margin-bottom10">
+            <img class="task-box" src="img/addTaskBox.svg" alt="">
+            ${subtaskInProgress}
+        </div>
+        `;
+    }
+
+    // let subtasksFinished = tasks[i]['subtasksFinish']
+    // for (let l = 0; l < subtasksFinished.length; l++) {
+    //     let subtaskFinished = subtasksFinished[l];
+
+    //     console.log(subtaskFinished.length)
+    //     // assignedUser += /*html*/ ` 
+    //     //  <img src="img/done.svg" alt="">
+    //     // `;
+    // }
 
     document.getElementById('popup-container').classList.remove('d-none');
     document.getElementById('popup-container').innerHTML = /*html*/ `
@@ -178,24 +211,15 @@ function openTask(i) {
                     <div>
                         <div class="margin-bottom10 task-detail-font-color">Assigned To:</div>
                         <div class="task-detail-users">
-                       
+                            
                         ${assignedUser}
 
                         </div>
                     </div>
-
                     <div class="task-detail-subtasks">
-                        <div class="task-detail-font-color margin-bottom10">
-                            Subtasks
-                        </div>
-                      
-                        <div class="task-detail-flex">
-                            <img src="img/addTaskBox.svg" alt="">
-                            ${tasks[i]['subtasksInProgress']}
-                            <img src="img/done.svg" alt="">
-                            ${tasks[i]['subtasksFinish']}
-                        </div>
-
+                        
+                        ${subtaskHeadline}
+                        ${inProgress}
 
                     </div>
                 </div>
@@ -208,6 +232,7 @@ function openTask(i) {
 
     `;
 }
+
 
 
 function closeTask() {

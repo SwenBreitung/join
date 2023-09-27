@@ -232,8 +232,9 @@ h3 {
     margin-top: 20px;
 }
 .task-detail {
-    height: 70vh;
-    width: 30vw;
+    height: fit-content;
+    max-height: 80vh;
+    width: 35vw;
     background-color: white;
     border-radius: 10px;
     display: flex;
@@ -315,6 +316,10 @@ h3 {
 .task-users{
     display: flex;
     align-items: center;
+}
+
+.task-box{
+    margin-right: 10px;
 }
 
 .task-detail-assignment{
