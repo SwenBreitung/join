@@ -1,4 +1,3 @@
-
 function init() {
     includeHTML();
 }
@@ -12,7 +11,15 @@ function init() {
 // percent = Math.round(percent * 100);
 
 
+
 let currentDraggedElement;
+
+async function clearArray() {
+    tasks.splice(0, tasks.length);
+    currentId = ""
+    await setItem('tasks', JSON.stringify(tasks));
+    await setItem('currentId', JSON.stringify(currentId));
+}
 
 function updateHTML(tasks) {
     console.log(tasks)
@@ -41,7 +48,7 @@ function updateHTML(tasks) {
     document.getElementById('done').innerHTML = '';
     for (let index = 0; index < done.length; index++) {
         const element = done[index];
-        document.getElementById('done').innerHTML += generateTaskHTML(element ,tasks);
+        document.getElementById('done').innerHTML += generateTaskHTML(element, tasks);
     }
 }
 
@@ -51,7 +58,7 @@ function startDragging(id) {
 
 function generateTaskHTML(element, tasks) {
     console.log(element['category'])
-    console.log('tasks in generatehtml',tasks)
+    console.log('tasks in generatehtml', tasks)
 
     let i = element['id']
     console.log(i)
@@ -95,7 +102,7 @@ function removeHighlight(id) {
 /* --------------------------------------- */
 function openTask(i) {
     console.log(i)
-    console.log('tasks in open Task',tasks)
+    console.log('tasks in open Task', tasks)
 
     document.getElementById('popup-container').classList.remove('d-none');
     document.getElementById('popup-container').innerHTML = /*html*/ `
