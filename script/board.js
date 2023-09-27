@@ -29,6 +29,7 @@ function updateBoardHTML() {
     for (let index = 0; index < todo.length; index++) {
         const element = todo[index];
         document.getElementById('toDo').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
     }
 
     let inProgress = tasks.filter(t => t['status'] == 'in-progress');
@@ -36,6 +37,8 @@ function updateBoardHTML() {
     for (let index = 0; index < inProgress.length; index++) {
         const element = inProgress[index];
         document.getElementById('in-progress').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+
     }
 
     let awaitingFeedback = tasks.filter(t => t['status'] == 'awaiting-feedback');
@@ -43,6 +46,8 @@ function updateBoardHTML() {
     for (let index = 0; index < awaitingFeedback.length; index++) {
         const element = awaitingFeedback[index];
         document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+
     }
 
     let done = tasks.filter(t => t['status'] == 'done');
@@ -50,6 +55,8 @@ function updateBoardHTML() {
     for (let index = 0; index < done.length; index++) {
         const element = done[index];
         document.getElementById('done').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+
     }
 }
 
@@ -57,12 +64,24 @@ function startDragging(id) {
     currentDraggedElement = id;
 }
 
-function generateTaskHTML(element) {
-    console.log(element['category'])
-    console.log('tasks in generatehtml', tasks)
 
+
+//     // console.log(element['subtasksInProgress'])
+//     // console.log(element['subtasksFinish'])
+
+function generateTaskHTML(element) {
     let i = element['id']
-    console.log(i)
+    let users = element['contactAbbreviation']
+    let colors = element['contactColor']
+    let assignedUser = '';
+    for (let j = 0; j < users.length; j++) {
+        let user = users[j];
+        let color = colors[j]
+        console.log(user, color)
+        assignedUser += /*html*/ ` 
+       <div class="profile-picture horicontal-and-vertical" style="background-color:${color} ">${user}</div>`;
+    }
+
     return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask(${i})" class="task">
             <div>
                 <div class="task-category"> ${element['category']}</div>
@@ -71,7 +90,7 @@ function generateTaskHTML(element) {
             </div>
             <div class="task-users-prio">
                 <div class="task-users">
-                    <div class="profile-picture horicontal-and-vertical" style="background-color:${element['contactColor']} ">${element['contactAbbreviation']}</div>
+                   ${assignedUser}
                 </div>
                 <img src="${element['priority']}">
             </div>
