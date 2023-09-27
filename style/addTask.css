@@ -546,8 +546,8 @@ textarea:focus {
     padding-left: 10px;
     height: 35px;
     border: none;
-    border-left: 5px solid #2A3647;
-    border-right: 5px solid #2A3647;
+    border-left: 5px solid #2A3647 !important;
+    border-right: 5px solid #2A3647 !important;
     border-bottom: 1px dotted #D1D1D1;
     border-top: 5px solid #2A3647 !important;
 }
