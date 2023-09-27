@@ -87,6 +87,7 @@ function allowDrop(ev) {
 // and change the status
 function moveTo(status) {
     tasks[currentDraggedElement]['status'] = status;
+    setItem('tasks', JSON.stringify(tasks));
     updateHTML(tasks);
     removeHighlight(status);
 }
