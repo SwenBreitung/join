@@ -229,6 +229,7 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 20px;
 }
 .task-detail {
     height: 70vh;
@@ -312,14 +313,17 @@ h3 {
 
 
 .profile-picture {
-    height: 42px;
-    width: 42px;
+    height: 32px;
+    width: 32px;
+    border: 1px solid white;
     border-radius: 100%;
     color: white;
+    margin-right: -10px;
    
 }
 
 .horicontal-and-vertical {
+    font-size: 12px;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
