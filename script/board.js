@@ -21,34 +21,35 @@ async function clearArray() {
     await setItem('currentId', JSON.stringify(currentId));
 }
 
-function updateHTML(tasks) {
-    console.log(tasks)
+
+function updateBoardHTML() {
+
     let todo = tasks.filter(t => t['status'] == 'toDo');
     document.getElementById('toDo').innerHTML = '';
     for (let index = 0; index < todo.length; index++) {
         const element = todo[index];
-        document.getElementById('toDo').innerHTML += generateTaskHTML(element, tasks);
+        document.getElementById('toDo').innerHTML += generateTaskHTML(element);
     }
 
     let inProgress = tasks.filter(t => t['status'] == 'in-progress');
     document.getElementById('in-progress').innerHTML = '';
     for (let index = 0; index < inProgress.length; index++) {
         const element = inProgress[index];
-        document.getElementById('in-progress').innerHTML += generateTaskHTML(element, tasks);
+        document.getElementById('in-progress').innerHTML += generateTaskHTML(element);
     }
 
     let awaitingFeedback = tasks.filter(t => t['status'] == 'awaiting-feedback');
     document.getElementById('awaiting-feedback').innerHTML = '';
     for (let index = 0; index < awaitingFeedback.length; index++) {
         const element = awaitingFeedback[index];
-        document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element, tasks);
+        document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element);
     }
 
     let done = tasks.filter(t => t['status'] == 'done');
     document.getElementById('done').innerHTML = '';
     for (let index = 0; index < done.length; index++) {
         const element = done[index];
-        document.getElementById('done').innerHTML += generateTaskHTML(element, tasks);
+        document.getElementById('done').innerHTML += generateTaskHTML(element);
     }
 }
 
@@ -56,7 +57,7 @@ function startDragging(id) {
     currentDraggedElement = id;
 }
 
-function generateTaskHTML(element, tasks) {
+function generateTaskHTML(element) {
     console.log(element['category'])
     console.log('tasks in generatehtml', tasks)
 
@@ -88,7 +89,7 @@ function allowDrop(ev) {
 function moveTo(status) {
     tasks[currentDraggedElement]['status'] = status;
     setItem('tasks', JSON.stringify(tasks));
-    updateHTML(tasks);
+    updateBoardHTML();
     removeHighlight(status);
 }
 

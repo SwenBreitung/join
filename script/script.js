@@ -3,7 +3,7 @@ let tasks = [];
 async function loadTasks() {
     try {
         tasks = JSON.parse(await getItem('tasks'));
-        updateHTML(tasks)
+        updateBoardHTML();
     } catch (e) {
         console.info('Could not load tasks');
     }
