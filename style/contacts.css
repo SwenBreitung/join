@@ -88,7 +88,6 @@ body {
 
 .scrollingContainer {
     margin-top: 101px;
-    z-index: 0;
 }
 
 .contactsInfo {
@@ -473,8 +472,10 @@ section {
     fill: #29ABE2 !important;
 }
 
-.main-containe {
+/* added from summary.html */
+.content {
     display: none !important;
+    z-index: 0 !important;
 }
 
 @media (max-width: 700px) {
