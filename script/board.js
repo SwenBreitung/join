@@ -23,43 +23,14 @@ async function clearArray() {
 }
 
 
-function updateBoardHTML() {
 
-    let todo = tasks.filter(t => t['status'] == 'toDo');
-    document.getElementById('toDo').innerHTML = '';
-    for (let index = 0; index < todo.length; index++) {
-        const element = todo[index];
-        document.getElementById('toDo').innerHTML += generateTaskHTML(element);
-        // searchUsers(element);
-    }
+async function deleteTask(i) {
+    tasks.splice(i, 1);
+    await setItem('tasks', JSON.stringify(tasks));
+    closeTask();
 
-    let inProgress = tasks.filter(t => t['status'] == 'in-progress');
-    document.getElementById('in-progress').innerHTML = '';
-    for (let index = 0; index < inProgress.length; index++) {
-        const element = inProgress[index];
-        document.getElementById('in-progress').innerHTML += generateTaskHTML(element);
-        // searchUsers(element);
-
-    }
-
-    let awaitingFeedback = tasks.filter(t => t['status'] == 'awaiting-feedback');
-    document.getElementById('awaiting-feedback').innerHTML = '';
-    for (let index = 0; index < awaitingFeedback.length; index++) {
-        const element = awaitingFeedback[index];
-        document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element);
-        // searchUsers(element);
-
-    }
-
-    let done = tasks.filter(t => t['status'] == 'done');
-    document.getElementById('done').innerHTML = '';
-    for (let index = 0; index < done.length; index++) {
-        const element = done[index];
-        document.getElementById('done').innerHTML += generateTaskHTML(element);
-        // searchUsers(element);
-
-    }
 }
+
 
 function startDragging(id) {
     console.log("Dragging element with ID:", id);
@@ -67,13 +38,6 @@ function startDragging(id) {
 }
 
 
-// async function deleteTask(i) {
-
-//     tasks.splice(i, 1);
-//     await setItem('tasks', JSON.stringify(tasks));
-//     updateBoardHTML();
-
-// }
 
 
 function generateTaskHTML(element) {
@@ -137,6 +101,44 @@ function removeHighlight(id) {
 /* --------------------------------------- */
 
 
+
+function updateBoardHTML() {
+
+    let todo = tasks.filter(t => t['status'] == 'toDo');
+    document.getElementById('toDo').innerHTML = '';
+    for (let index = 0; index < todo.length; index++) {
+        const element = todo[index];
+        document.getElementById('toDo').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+    }
+
+    let inProgress = tasks.filter(t => t['status'] == 'in-progress');
+    document.getElementById('in-progress').innerHTML = '';
+    for (let index = 0; index < inProgress.length; index++) {
+        const element = inProgress[index];
+        document.getElementById('in-progress').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+
+    }
+
+    let awaitingFeedback = tasks.filter(t => t['status'] == 'awaiting-feedback');
+    document.getElementById('awaiting-feedback').innerHTML = '';
+    for (let index = 0; index < awaitingFeedback.length; index++) {
+        const element = awaitingFeedback[index];
+        document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+
+    }
+
+    let done = tasks.filter(t => t['status'] == 'done');
+    document.getElementById('done').innerHTML = '';
+    for (let index = 0; index < done.length; index++) {
+        const element = done[index];
+        document.getElementById('done').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+
+    }
+}
 
 
 async function openTask(i) {
