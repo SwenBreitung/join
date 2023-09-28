@@ -34,6 +34,8 @@ let allCategorys = [
 
 let subTaskCollection = [];
 
+let subtasksFinish = [];
+
 let contactCollection = [];
 
 let currentCategorySelected = [
@@ -54,7 +56,6 @@ async function initAddTask() {
     await initializeStorage('allCategorys', allCategorys);
     await loadAddTaskCurrentId();
     await loadAddTaskAllCategorys();
-    save();
     renderAddTaskContent();
 }
 
@@ -85,11 +86,12 @@ function renderAddTaskContent() {
     borderColorCheck();
     renderAllContactsForSearch();
 }
-
+//####################################################//
 function renderAddTaskPage() {
     let page = document.getElementById('addTaskPage');
     page.innerHTML = returnRenderAddTaskPage();
 }
+//####################################################//
 
 function save() {
     localStorage.setItem('categoryCollectionAsText', JSON.stringify(currentCategorySelected));
@@ -101,6 +103,7 @@ function save() {
     localStorage.setItem('titelAsText', JSON.stringify(titleAddTask));
     localStorage.setItem('descriptionAsText', JSON.stringify(descriptionAddTask));
     localStorage.setItem('dueDateAsText', JSON.stringify(dueDateAddTask));
+    localStorage.setItem('subTaskFinishAsText', JSON.stringify(subtasksFinish));
 }
 
 function load() {
@@ -113,7 +116,8 @@ function load() {
     let titelLoad = localStorage.getItem('titelAsText');
     let descriptionLoad = localStorage.getItem('descriptionAsText');
     let dueDateLoad = localStorage.getItem('dueDateAsText');
-    if (currentCategoryLoad && currentPrioLoad && subTaskCollectionLoad && contactCollectionLoad && selectedIndexLoad && selectedColorLoad && titelLoad && descriptionLoad && dueDateLoad) {
+    let subTaskFinishLoad = localStorage.getItem('subTaskFinishAsText');
+    if (currentCategoryLoad && currentPrioLoad && subTaskCollectionLoad && contactCollectionLoad && selectedIndexLoad && selectedColorLoad && titelLoad && descriptionLoad && dueDateLoad && subTaskFinishLoad) {
         currentCategorySelected = JSON.parse(currentCategoryLoad);
         currentPrioSelected = JSON.parse(currentPrioLoad);
         subTaskCollection = JSON.parse(subTaskCollectionLoad);
@@ -123,6 +127,7 @@ function load() {
         titleAddTask = JSON.parse(titelLoad);
         descriptionAddTask = JSON.parse(descriptionLoad);
         dueDateAddTask = JSON.parse(dueDateLoad);
+        subtasksFinish = JSON.parse(subTaskFinishLoad);
     }
 }
 
@@ -142,6 +147,7 @@ async function loadAddTaskAllCategorys() {
     }
 }
 
+//####################################################//
 
 function returnRenderAddTaskPage() {
     return /*html*/`
@@ -234,7 +240,7 @@ function returnRenderAddTaskPage() {
     </form>
     `;
 }
-
+//####################################################//
 
 
 function returnButtonAreaAddTask() {
@@ -275,7 +281,6 @@ function returnCategoryBox2() {
             <img class="addNewContactBtnIcon" src="img/addTaskCategory.svg">
         </div>
     </div>
-
     `;
 }
 
@@ -299,7 +304,6 @@ function returnPrioBox() {
         <img id="prioLowIconActiv" class="prioBtnIcons d-none"
             src="./img/PrioLowWhite.svg">
     </div>
-
     `;
 }
 
@@ -332,7 +336,7 @@ function returnAssignToBox2() {
             <img class="addNewContactBtnIcon" src="img/addTaskperson_add.svg">
         </div>
     </div>
-                `;
+    `;
 }
 
 //SubTaskFunctions//
@@ -371,7 +375,7 @@ function renderSubTaskCollection() {
 /**
  * Deletes a sub-task from the collection.
  * @param {number} i - Index of the sub-task.
-                */
+ */
 function deleteSubtaskCollection(i) {
     subTaskCollection.splice(i, 1);
     save()
@@ -382,7 +386,7 @@ function deleteSubtaskCollection(i) {
 /**
  * Edits a sub-task.
  * @param {number} i - Index of the sub-task.
-                */
+ */
 function editSubtask(i) {
     let editSub = subTaskCollection[i];
     let inputContainer = document.getElementById('editContainer');
@@ -397,7 +401,7 @@ function editSubtask(i) {
 /**
  * Confirms the editing of a sub-task.
  * @param {number} i - Index of the sub-task.
-                */
+ */
 function confirmSubEdit(i) {
     let editedInput = document.getElementById('editInput');
     if (editedInput.value === '') {
@@ -476,7 +480,7 @@ async function addTask() {
         'contactColor': contactColors,
         'contactAbbreviation': contactNamesAbbreviation,
         'subtasksInProgress': subTaskCollection,
-        'subtasksFinish': [],
+        'subtasksFinish': subtasksFinish,
     }
     tasks.push(task);
     currentId++;
@@ -487,6 +491,8 @@ async function addTask() {
 
 function clearButton() {
     resetAllAddTaskElements();
+    window.location.reload();
+
 }
 
 function resetAllAddTaskElements() {
@@ -499,6 +505,7 @@ function resetAllAddTaskElements() {
             'color': '',
         }
     ];
+    subtasksFinish = [];
     subTaskCollection = [];
     selectedIndex = null;
     selectedColorIndex = [];
@@ -507,7 +514,7 @@ function resetAllAddTaskElements() {
     clearAddTaskInputs();
     resetInputs();
     save();
-    window.location.reload();
+    window.location.href = './board.html';
 }
 
 function clearAddTaskInputs() {
@@ -653,6 +660,8 @@ function deselectContact(mainElement, firstSecondary, secondSecondary) {
     return;
 }
 //---------------------------------------------------------------------------------//
+
+
 //Category functions//
 
 
