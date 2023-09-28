@@ -1,6 +1,6 @@
 function init() {
     includeHTML();
-   
+
 }
 
 // wenn subtaskfinish = abgehakt img
@@ -28,19 +28,22 @@ async function deleteTask(i) {
     tasks.splice(i, 1);
     await setItem('tasks', JSON.stringify(tasks));
     closeTask();
+    window.location.reload();
 
 }
 
 
 function startDragging(id) {
     console.log("Dragging element with ID:", id);
-    currentDraggedElement = id;
+    let index = tasks.findIndex(task => task.id === id);
+    currentDraggedElement = index;
 }
 
 
 
 
 function generateTaskHTML(element) {
+    console.log(element);
     let i = element['id']
     let users = element['contactAbbreviation']
     let colors = element['contactColor']
@@ -134,7 +137,8 @@ function updateBoardHTML() {
 
 
 async function openTask(i) {
-    renderTaskdetailHTML(i)
+    let index = tasks.findIndex(task => task.id === i);
+    renderTaskdetailHTML(index)
 }
 
 async function switchSubtaskStatusToUndone(i, l) {
@@ -155,9 +159,9 @@ function renderTaskdetailHTML(i) {
 
     console.log('tasks in open Task', tasks[i])
 
-    let userNames = tasks[i]['contactName']
-    let users = tasks[i]['contactAbbreviation']
-    let colors = tasks[i]['contactColor']
+    let userNames = tasks[i]['contactName'];
+    let users = tasks[i]['contactAbbreviation'];
+    let colors = tasks[i]['contactColor'];
     let assignedUser = '';
     for (let j = 0; j < users.length; j++) {
         let user = users[j];
