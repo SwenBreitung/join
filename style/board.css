@@ -4,6 +4,10 @@ body {
     width: 100vw;
 }
 
+
+.text-line-through {
+    text-decoration: line-through;
+}
 .dialog-bg {
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 999;
