@@ -76,14 +76,6 @@ function allowDrop(ev) {
 // want to move the todo with the id which is saved in currentDragElement 
 // and change the status
 async function moveTo(status) {
-    console.log("currentDraggedElement:", currentDraggedElement);
-    console.log("tasks:", tasks);
-    console.log("tasks[currentDraggedElement]:", tasks[currentDraggedElement]);
-    if (currentDraggedElement >= 0 && currentDraggedElement < tasks.length) {
-        // Hier ist es sicher, auf tasks[currentDraggedElement] zuzugreifen
-    } else {
-        console.error("Ungültiger Index:", currentDraggedElement);
-    }
     tasks[currentDraggedElement]['status'] = status;
     await setItem('tasks', JSON.stringify(tasks));
     updateBoardHTML();
