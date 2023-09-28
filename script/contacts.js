@@ -128,6 +128,7 @@ function addContact() {
     document.getElementById('inputNameId').value = '';
     document.getElementById('inputEmailId').value = '';
     document.getElementById('inputPhoneId').value = '';
+
     toggleVisibility('addContactId', true);
     slide('swipeContactPopupId');
 }

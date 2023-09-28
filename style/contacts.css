@@ -44,9 +44,15 @@ body {
 
 .createContactButton,
 .addNewContactButton {
-    background-color: var(--main-color) !important;
-    color: var(--text-white) !important;
-    border: none !important;
+    background: #2A3647 !important;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+.addNewContactButton:hover {
+    background: #29ABE2;
+    box-shadow: -2px 0 6px 0 rgb(0, 0, 0, 0.2);
 }
 
 .addNewContactButton {
@@ -72,11 +78,11 @@ body {
     box-shadow: none !important;
 }
 
-
+/* header 96px */
 .contacts-container {
     top: 300px;
-    width: 400px;
-    height: calc(100vh - 56px);
+    width: 456px;
+    height: calc(100vh - 96px);
     padding: 0 24px 32px;
     margin-top: -110px;
     display: flex;
@@ -84,6 +90,10 @@ body {
     align-items: center;
     background: #FFF;
     overflow-y: scroll;
+}
+
+.marginBottom32px {
+    margin-bottom: 47px;
 }
 
 .scrollingContainer {
@@ -101,14 +111,14 @@ body {
 }
 
 .firstLetterOverContact {
+    width: 352px;
     padding: 17px 36px;
     height: 58px;
 }
 
 .partingLine {
     height: 1px;
-    background: #DDDDDD;
-    width: 336px;
+    background: #D1D1D1;
     margin: 8px 0 8px;
     font-weight: 400;
 }
@@ -327,7 +337,7 @@ input {
 /* Text on right side */
 .contactInfoBig,
 .contactsTitle {
-    margin-left: 55px;
+    margin: 0 55px;
 }
 
 .contactsTitle {
@@ -448,7 +458,7 @@ section {
     display: flex;
     flex-direction: column;
     padding-left: 200px;
-    margin-top: 56px;
+    margin-top: 96px;
     width: 100%;
     height: auto;
     overflow-y: auto;
@@ -456,6 +466,10 @@ section {
 
 .slide-in {
     animation: slideIn 0.5s ease;
+}
+
+#nameId {
+    max-width: 400px;
 }
 
 @keyframes slideIn {
@@ -478,21 +492,270 @@ section {
     z-index: 0 !important;
 }
 
-@media (max-width: 700px) {
+.d-none {
+    display: none;
+}
 
-    .contentContact {
-        display: flex;
+@media (max-width: 1345px) {
+    .contactsTitle {
+        display: flex !important;
         flex-direction: column;
-        margin-top: 56px;
-        padding-left: 0px;
-        padding-bottom: 80px;
-        margin-bottom: 0;
-        width: 100%;
-        height: auto;
-        overflow-y: auto;
+        margin-bottom: 140px !important;
+        gap: 0;
+    }
+
+    .contactsTitle img {
+        transform: rotate(90deg);
+    }
+
+    .profilePictureArea vertical {
+        display: none !important;
+    }
+
+    .leftSideAddContactPopup {
+        padding: 66px 16px;
+    }
+
+    .leftSideAddContactPopup img {
+        top: 70px !important;
+        left: 18px !important;
+    }
+
+    .fontSize61 {
+        font-size: 40px !important;
+    }
+
+    .profilePicAndNameBig {
+        margin-bottom: 24px;
+    }
+
+
+
+}
+
+@media (max-width: 1120px) {
+
+    .addNewContactButton,
+    .firstLetterOverContact {
+        width: 300px;
     }
 
     .contacts-container {
-        height: calc(100vh - 56px - 80px);
+        width: 375px !important;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
+    .contactsTitle {
+        margin-left: 25px !important;
+        margin-right: 25px !important;
+        text-align: center;
+    }
+
+    .contactInfoBig {
+        margin-left: 25px !important;
+        margin-right: 25px !important;
+    }
+
+    .contactsTitle img {
+        transform: rotate(90deg);
+    }
+}
+
+@media (max-width: 1010px) {
+    .profilePictureBig {
+        margin: 0 16px 21px 0 !important;
+        width: 60px;
+        height: 60px;
+        font-size: 24px !important;
+    }
+}
+
+@media (max-width: 870px) {
+
+    .addNewContactButton img {
+        display: none;
+    }
+
+    .addNewContactButton,
+    .firstLetterOverContact {
+        width: 200px;
+    }
+
+    .contacts-container {
+        width: 280px !important;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
+    .contactsTitle {
+        margin-left: 8px !important;
+        margin-right: 8px !important;
+        text-align: center;
+    }
+
+    .contactInfoBig {
+        margin-left: 8px !important;
+        margin-right: 8px !important;
+    }
+
+    .contactsTitle img {
+        transform: rotate(90deg);
+    }
+
+    .fontSize47 {
+        font-size: 20px !important;
+        font-weight: 750 !important;
+    }
+
+    .fontSize20 {
+        font-size: 12px !important;
+    }
+
+    #profilePictureBigId {
+        display: none !important;
+    }
+
+    #nameId {
+        margin-bottom: 16px;
+    }
+
+    .addNewContactButton {
+        width: 230px !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .mobileDelete {
+        display: none !important;
+    }
+
+    .scrollingContainer {
+        margin-top: 0 !important;
+    }
+
+    .contactPage {
+        width: 100% !important;
+    }
+
+    .contentContact {
+        display: flex;
+        flex-direction: row !important;
+        padding-left: 0px !important;
+        width: 100vw !important;
+    }
+
+    .contacts-container {
+        width: 100% !important;
+    }
+
+    .firstLetterOverContact {
+        width: 100% !important;
+    }
+
+    #contactsId {
+        width: 100vw !important;
+        padding-left: 38px !important;
+        padding-right: 38px !important;
+    }
+
+    .addContactPopup {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center;
+        height: calc(100vh - 20px) !important;
+        width: calc(100vw - 32px) !important;
+    }
+
+    .leftSideAddContactPopup {
+        border-top-right-radius: 30px !important;
+        border-bottom-left-radius: 0 !important;
+        height: calc(100vh * 0.4) !important;
+        width: calc(100vw - 32px) !important;
+        padding: 66px 24px !important;
+    }
+
+    .rightSidePopup {
+        flex-direction: column;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        height: calc(100vh * 0.6) !important;
+    }
+
+    .profilePictureArea {
+        position: absolute !important;
+    }
+
+    .textUnderAddContactTitle {
+        margin-bottom: 13.5px !important;
+    }
+
+    .circle {
+        margin-top: -60px !important;
+    }
+
+    .personInCircle {
+        top: 0px;
+    }
+
+    .contactInfo {
+        width: 100%;
+        height: auto !important;
+        margin: 0 !important;
+        align-items: center !important;
+        width: 90% !important;
+        gap: 15px !important;
+    }
+
+    .addContactButtonContainer {
+        z-index: 0 !important;
+        justify-content: center;
+    }
+
+    .cancelBtn {
+        margin-right: 20px !important;
+        visibility: hidden;
+    }
+
+    .inputName input,
+    .inputEmail input,
+    .inputPhone input {
+        width: calc(100vw - 64px) !important;
+        height: calc(26px + 15px) !important;
+    }
+
+    .closePopupCross path {
+        fill: white !important;
+    }
+
+    .closePopupCross {
+        position: absolute;
+        top: calc(0px - (100vh * 0.4) + 24px) !important;
+        right: 32px !important;
+    }
+
+    .mobileAddContact {
+        position: absolute;
+        bottom: calc(80px + 32px);
+        right: 16px;
+        background-color: #2A3647;
+        width: 56px;
+        height: 56px;
+        border-radius: 100%;
+        box-shadow: -2px 0 6px 0 rgb(0, 0, 0, 0.2);
+    }
+
+    .mobileAddContact img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .mobileAddContact:hover {
+        background-color: #29ABE2;
+    }
+
+    .contacts-container {
+        /* margin-bottom: calc(80px + 90px) !important; */
     }
 }
