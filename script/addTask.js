@@ -1,5 +1,13 @@
+let titleAddTask = '';
+
+let descriptionAddTask = '';
+
+let dueDateAddTask = '';
+
 let selectedIndex = null;
+
 let selectedColorIndex = [];
+
 let colorCollection = [
     'background: #FF7A00',
     'background: #FC71FF',
@@ -7,7 +15,8 @@ let colorCollection = [
     'background: #0038FF',
     'background: #FFC701',
     'background: #29ABE2',
-    'background: #091931',];
+    'background: #091931',
+];
 
 let mainCategorys = [
     {
@@ -24,27 +33,255 @@ let allCategorys = [
 ];
 
 let subTaskCollection = [];
+
+let subtasksFinish = [];
+
 let contactCollection = [];
+
 let currentCategorySelected = [
     {
         'name': '',
         'color': '',
     }
-]
+];
+
 let currentPrioSelected = "";
+
 let currentId = 0;
 
+load();
 
+
+async function initAddTask() {
+    await initializeStorage('allCategorys', allCategorys);
+    await loadAddTaskCurrentId();
+    await loadAddTaskAllCategorys();
+    renderAddTaskContent();
+}
+
+async function initializeStorage(key, initialValue) {
+    try {
+        await getItem(key);
+    } catch (e) {
+        console.info(`Key "${key}" not found in storage. Initializing with default value.`);
+        await setItem(key, JSON.stringify(initialValue));
+    }
+}
 
 
 function renderAddTaskContent() {
+    load();
     let assignTo1 = document.getElementById('assignedToInputContainer');
     let assignTo2 = document.getElementById('assignedToContactsInputContainer');
-    let prioBox = document.getElementById('prioBox')
+    let categoryBox1 = document.getElementById('categoryAreaV1');
+    let categoryBox2 = document.getElementById('categoryAreaV2');
+    let prioBox = document.getElementById('prioBox');
+    let buttonArea = document.getElementById('buttonAreaAddTask');
+    buttonArea.innerHTML = returnButtonAreaAddTask();
     assignTo1.innerHTML = returnAssignToBox1();
     assignTo2.innerHTML = returnAssignToBox2();
+    categoryBox1.innerHTML = returnCategoryBox1();
+    categoryBox2.innerHTML = returnCategoryBox2();
     prioBox.innerHTML = returnPrioBox();
+    borderColorCheck();
     renderAllContactsForSearch();
+}
+//####################################################//
+function renderAddTaskPage() {
+    let page = document.getElementById('addTaskPage');
+    page.innerHTML = returnRenderAddTaskPage();
+}
+//####################################################//
+
+function save() {
+    localStorage.setItem('categoryCollectionAsText', JSON.stringify(currentCategorySelected));
+    localStorage.setItem('currentPrioAsText', JSON.stringify(currentPrioSelected));
+    localStorage.setItem('subTaskCollectionAsText', JSON.stringify(subTaskCollection));
+    localStorage.setItem('contactCollectionAsText', JSON.stringify(contactCollection));
+    localStorage.setItem('selectedIndexAsText', JSON.stringify(selectedIndex));
+    localStorage.setItem('selectedColorIndexAsText', JSON.stringify(selectedColorIndex));
+    localStorage.setItem('titelAsText', JSON.stringify(titleAddTask));
+    localStorage.setItem('descriptionAsText', JSON.stringify(descriptionAddTask));
+    localStorage.setItem('dueDateAsText', JSON.stringify(dueDateAddTask));
+    localStorage.setItem('subTaskFinishAsText', JSON.stringify(subtasksFinish));
+}
+
+function load() {
+    let currentCategoryLoad = localStorage.getItem('categoryCollectionAsText');
+    let currentPrioLoad = localStorage.getItem('currentPrioAsText');
+    let subTaskCollectionLoad = localStorage.getItem('subTaskCollectionAsText');
+    let contactCollectionLoad = localStorage.getItem('contactCollectionAsText');
+    let selectedIndexLoad = localStorage.getItem('selectedIndexAsText');
+    let selectedColorLoad = localStorage.getItem('selectedColorIndexAsText');
+    let titelLoad = localStorage.getItem('titelAsText');
+    let descriptionLoad = localStorage.getItem('descriptionAsText');
+    let dueDateLoad = localStorage.getItem('dueDateAsText');
+    let subTaskFinishLoad = localStorage.getItem('subTaskFinishAsText');
+    if (currentCategoryLoad && currentPrioLoad && subTaskCollectionLoad && contactCollectionLoad && selectedIndexLoad && selectedColorLoad && titelLoad && descriptionLoad && dueDateLoad && subTaskFinishLoad) {
+        currentCategorySelected = JSON.parse(currentCategoryLoad);
+        currentPrioSelected = JSON.parse(currentPrioLoad);
+        subTaskCollection = JSON.parse(subTaskCollectionLoad);
+        contactCollection = JSON.parse(contactCollectionLoad);
+        selectedIndex = JSON.parse(selectedIndexLoad);
+        selectedColorIndex = JSON.parse(selectedColorLoad);
+        titleAddTask = JSON.parse(titelLoad);
+        descriptionAddTask = JSON.parse(descriptionLoad);
+        dueDateAddTask = JSON.parse(dueDateLoad);
+        subtasksFinish = JSON.parse(subTaskFinishLoad);
+    }
+}
+
+async function loadAddTaskCurrentId() {
+    try {
+        currentId = JSON.parse(await getItem('currentId'));
+    } catch (e) {
+        console.info('Could not load currentId');
+    }
+}
+
+async function loadAddTaskAllCategorys() {
+    try {
+        allCategorys = JSON.parse(await getItem('allCategorys'));
+    } catch (e) {
+        console.info('Could not load categorys');
+    }
+}
+
+//####################################################//
+
+function returnRenderAddTaskPage() {
+    return /*html*/`
+    <form onsubmit="return false" id="myForm">
+        <div class="taskArea">
+
+            <div class="boxLeft">
+                <div id="titelBox" class="marginBottom16">
+                    <span>Titel</span>
+                    <input class="click" id="addTitel" required placeholder="Enter a title" type="text">
+                </div>
+
+            <div class="column">
+                <span>Description</span>
+                <textarea class="click" id="addDescription" required placeholder="Enter a Description"
+                    type="text"></textarea>
+            </div>
+
+            <div>
+                <span>Assigned to</span>
+                <div id="assignTo">
+                    <div class="custom-select marginBottom16" id="assignedToInputContainer">
+                    </div>
+                    <div class="custom-select d-none" id="assignedToContactsInputContainer">
+                    </div>
+                </div>
+            </div>
+            <script>
+                // container add d-none by body-click//
+                document.body.addEventListener('click', function () {
+                    toggleVisibilityAddTask('assignedToContactsInputContainer', 'assignedToInputContainer')
+                });
+                document.getElementById('assignTo').addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
+            </script>
+
+            </div>
+            <div class="boxRight">
+                <div>
+                    <div>
+                        <span>Due date</span>
+                        <div>
+                            <input class="click" required placeholder="dd/mm/yyyy" type="text" id="datepicker">
+                        </div>
+                    </div>
+
+                    <div class="column marginTop16">
+                        <span>Prio</span>
+                        <div id="prioBox" class="prioButtonContainer">
+                        </div>
+                    </div>
+
+                    <div id="categorySection" class="column">
+                        <span>Category</span>
+                        <div class="custom-select marginBottom16" id="categoryAreaV1">
+                        </div>
+
+                    <div class="custom-select marginBottom16 d-none" id="categoryAreaV2">
+                    </div>
+                    <script>// container add d-none by body-click//
+                        document.body.addEventListener('click', function () {
+                            toggleVisibilityAddTask('categoryAreaV2', 'categoryAreaV1')
+                        });
+
+                        document.getElementById('categorySection').addEventListener('click', function (event) {
+                            event.stopPropagation();
+                        });
+                        </script>
+                    </div>
+
+                    <div class="column">
+                        <span>Subtasks</span>
+                        <div class="custom-select">
+                            <input class="click" placeholder="Add new subtask" id="subTaskSelectInput">
+                            <img onclick="addSubTaskToCollection()" class="inputAbsolut"
+                                src="img/plusAddTask.svg">
+                        </div>
+                        <div class="selectedSubTask show-scrollbar" id="selectedSubTaskContainer">
+                        </div>
+                        <div id="editContainer" class="d-none custom-select">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id="buttonAreaAddTask" class="selectBtnArea gap16">
+        </div>
+    </form>
+    `;
+}
+//####################################################//
+
+
+function returnButtonAreaAddTask() {
+    return /*html*/`
+    <button onclick="clearButton()" class="clearBtn">Clear<img class="clearImg"
+            src="./img/crossAddTask.svg" alt=""></button>
+    <button onclick="createTask()" class="createBtn blueBtn">Create Task<img class="createImg"
+            src="./img/check.svg"></button>
+    `;
+}
+
+function returnCategoryBox1() {
+    return /*html*/`
+    <input onclick="toggleVisibilityAddTask('categoryAreaV1', 'categoryAreaV2')"
+        class="click" id="categoryInputV1" type="text" readonly
+        value="Select task category">
+    <img onclick="toggleVisibilityAddTask('categoryAreaV1', 'categoryAreaV2')"
+        class="inputAbsolut" src="img/arrow_drop_downaa.svg">
+    `;
+}
+
+function returnCategoryBox2() {
+    return /*html*/`
+    <input onclick="toggleVisibilityAddTask('categoryAreaV2', 'categoryAreaV1')"
+        class="click" id="categoryInputV2" type="text" readonly
+        value="Select task category">
+    <img onclick="toggleVisibilityAddTask('categoryAreaV2', 'categoryAreaV1')"
+        class="inputAbsolut" src="img/arrow_drop_up.svg">
+    <div class="selectContactsPositionContainer" id="categoryContainer">
+        <div class="categoryRenderContainer show-scrollbar"
+            id="categoryRenderContainer">
+        </div>
+        <div id="createCategoryContainer" class="d-none custom-select">
+        </div>
+        <div onclick="toggleVisibilityAddTask('', 'createCategoryContainer')"
+            class="addNewContactBtn blueBtn">
+            <span>Add new category</span>
+            <img class="addNewContactBtnIcon" src="img/addTaskCategory.svg">
+        </div>
+    </div>
+    `;
 }
 
 function returnPrioBox() {
@@ -67,7 +304,6 @@ function returnPrioBox() {
         <img id="prioLowIconActiv" class="prioBtnIcons d-none"
             src="./img/PrioLowWhite.svg">
     </div>
-
     `;
 }
 
@@ -100,11 +336,11 @@ function returnAssignToBox2() {
             <img class="addNewContactBtnIcon" src="img/addTaskperson_add.svg">
         </div>
     </div>
-                `;
+    `;
 }
 
 //SubTaskFunctions//
-
+//################################################################################//
 /**
  * Adds a sub-task to the collection.
  */
@@ -114,15 +350,17 @@ function addSubTaskToCollection() {
         return;
     } else {
         subTaskCollection.push(input.value);
+        save();
         renderSubTaskCollection();
         input.value = '';
     }
 }
+//################################################################################//
 
 
 /**
  * Renders the sub-task collection to the DOM.
-*/
+ */
 function renderSubTaskCollection() {
     let collection = document.getElementById('selectedSubTaskContainer');
     collection.innerHTML = '';
@@ -137,9 +375,10 @@ function renderSubTaskCollection() {
 /**
  * Deletes a sub-task from the collection.
  * @param {number} i - Index of the sub-task.
-                */
+ */
 function deleteSubtaskCollection(i) {
     subTaskCollection.splice(i, 1);
+    save()
     renderSubTaskCollection();
 }
 
@@ -147,7 +386,7 @@ function deleteSubtaskCollection(i) {
 /**
  * Edits a sub-task.
  * @param {number} i - Index of the sub-task.
-                */
+ */
 function editSubtask(i) {
     let editSub = subTaskCollection[i];
     let inputContainer = document.getElementById('editContainer');
@@ -162,7 +401,7 @@ function editSubtask(i) {
 /**
  * Confirms the editing of a sub-task.
  * @param {number} i - Index of the sub-task.
-                */
+ */
 function confirmSubEdit(i) {
     let editedInput = document.getElementById('editInput');
     if (editedInput.value === '') {
@@ -170,6 +409,7 @@ function confirmSubEdit(i) {
     } else {
         subTaskCollection[i] = editedInput.value;
     }
+    save();
     renderSubTaskCollection();
 }
 
@@ -186,7 +426,7 @@ function stopSubEdit() {
 
 /**
  * show edit window.
-*/
+ */
 function showEditContainer() {
     let inputContainer = document.getElementById('editContainer');
     inputContainer.classList.remove('d-none');
@@ -211,6 +451,10 @@ function hideEditContainer() {
 function createTask() {
     var form = document.getElementById('myForm');
     if (form.checkValidity()) {
+        titleAddTask = document.getElementById('addTitel').value;
+        descriptionAddTask = document.getElementById('addDescription').value;
+        dueDateAddTask = document.getElementById('datepicker').value;
+        save();
         addTask();
     }
 }
@@ -218,11 +462,8 @@ function createTask() {
 
 /**
  * Retrieves data from form elements and adds a new task.
-*/
+ */
 async function addTask() {
-    const titel = document.getElementById('addTitel').value;
-    const description = document.getElementById('addDescription').value;
-    const dueDate = document.getElementById('datepicker').value;
     contactNames = contactCollection.map(contact => contact.name);
     contactColors = contactCollection.map(contact => contact.color);
     contactNamesAbbreviation = contactCollection.map(contact => contact.nameAbbreviation);
@@ -231,42 +472,58 @@ async function addTask() {
         'status': 'toDo',
         'category': currentCategorySelected[0].name,
         'categoryColor': currentCategorySelected[0].color,
-        'title': titel,
-        'description': description,
-        'dueDate': dueDate,
+        'title': titleAddTask,
+        'description': descriptionAddTask,
+        'dueDate': dueDateAddTask,
         'priority': currentPrioSelected,
         'contactName': contactNames,
         'contactColor': contactColors,
         'contactAbbreviation': contactNamesAbbreviation,
         'subtasksInProgress': subTaskCollection,
-        'subtasksFinish': [],
+        'subtasksFinish': subtasksFinish,
     }
     tasks.push(task);
-    await setItem('tasks', JSON.stringify(tasks));
     currentId++;
+    await setItem('tasks', JSON.stringify(tasks));
     await setItem('currentId', JSON.stringify(currentId));
     resetAllAddTaskElements();
-    renderAddTaskContent();
 }
+
 function clearButton() {
     resetAllAddTaskElements();
-    renderAddTaskContent();
-    renderAddTaskContent();
+    window.location.reload();
+
 }
+
 function resetAllAddTaskElements() {
+    titleAddTask = '';
+    descriptionAddTask = '';
+    dueDateAddTask = '';
     currentCategorySelected = [
         {
             'name': '',
             'color': '',
         }
     ];
+    subtasksFinish = [];
     subTaskCollection = [];
     selectedIndex = null;
     selectedColorIndex = [];
     currentPrioSelected = "";
     contactCollection = [];
+    clearAddTaskInputs();
     resetInputs();
-    renderAddTaskContent();
+    save();
+    window.location.href = './board.html';
+}
+
+function clearAddTaskInputs() {
+    titleAddTask = document.getElementById('addTitel').value;
+    descriptionAddTask = document.getElementById('addDescription').value;
+    dueDateAddTask = document.getElementById('datepicker').value;
+    titleAddTask = '';
+    descriptionAddTask = '';
+    dueDateAddTask = '';
 }
 //---------------------------------------------------------------------------------//
 
@@ -276,8 +533,8 @@ function resetAllAddTaskElements() {
 /**
  * Toggles the visibility of two DOM elements.
  * @param {string} id - ID of the first DOM element.
-                * @param {string} id2 - ID of the second DOM element.
-                */
+ * @param {string} id2 - ID of the second DOM element.
+ */
 function toggleVisibilityAddTask(id, id2) {
     const elementOne = document.getElementById(id);
     const elementTwo = document.getElementById(id2);
@@ -345,8 +602,8 @@ async function renderAllContactsForSearch(filterText = '') {
 /**
  * Selects or deselects a contact based on its current state.
  * @param {number} i - Index of the contact.
-                * @param {string} key - Key of the contact in the `allContacts` collection.
-                */
+ * @param {string} key - Key of the contact in the `allContacts` collection.
+ */
 function toggleContactSelection(i, key) {
     const contact = contactsArray[i];
     const el = (suffix) => document.getElementById(`${suffix}${i}`);
@@ -360,14 +617,15 @@ function toggleContactSelection(i, key) {
         const index = contactCollection.indexOf(contact);
         if (index > -1) contactCollection.splice(index, 1);
     }
+    save();
 }
 
 
 /**
  * Checks if a contact is in the `contactCollection`.
  * @param {Object} contact - The contact object to check.
-                * @returns {boolean} - True if contact is in the collection, false otherwise.
-                */
+ * @returns {boolean} - True if contact is in the collection, false otherwise.
+ */
 function isContactInCollection(contact) {
     return contactCollection.includes(contact);
 }
@@ -376,9 +634,9 @@ function isContactInCollection(contact) {
 /**
  * Sets styles to visually select a contact.
  * @param {HTMLElement} mainElement - Main contact DOM element.
-                * @param {HTMLElement} firstSecondary - First secondary DOM element.
-                * @param {HTMLElement} secondSecondary - Second secondary DOM element.
-                */
+ * @param {HTMLElement} firstSecondary - First secondary DOM element.
+ * @param {HTMLElement} secondSecondary - Second secondary DOM element.
+ */
 function selectContact(mainElement, firstSecondary, secondSecondary) {
     mainElement.classList.remove('assignedContactsBox');
     mainElement.classList.add('assignedContactsBoxSelected');
@@ -391,9 +649,9 @@ function selectContact(mainElement, firstSecondary, secondSecondary) {
 /**
  * Sets styles to visually deselect a contact.
  * @param {HTMLElement} mainElement - Main contact DOM element.
-                * @param {HTMLElement} firstSecondary - First secondary DOM element.
-                * @param {HTMLElement} secondSecondary - Second secondary DOM element.
-                */
+ * @param {HTMLElement} firstSecondary - First secondary DOM element.
+ * @param {HTMLElement} secondSecondary - Second secondary DOM element.
+ */
 function deselectContact(mainElement, firstSecondary, secondSecondary) {
     mainElement.classList.remove('assignedContactsBoxSelected');
     mainElement.classList.add('assignedContactsBox');
@@ -402,6 +660,8 @@ function deselectContact(mainElement, firstSecondary, secondSecondary) {
     return;
 }
 //---------------------------------------------------------------------------------//
+
+
 //Category functions//
 
 
@@ -421,10 +681,16 @@ function renderCategorys() {
         const aColor = all.color[a];
         container.innerHTML += returnRenderAllCategorys(aName, aColor, a);
     }
-
 }
 
 
+async function deleteCategory(i) {
+    let allCategory = allCategorys[0];
+    allCategory.name.splice(i, 1);
+    allCategory.color.splice(i, 1);
+    await setItem('allCategorys', JSON.stringify(allCategorys));
+    save()
+}
 
 
 function selectCategory(type, index) {
@@ -439,14 +705,16 @@ function selectCategory(type, index) {
         currentCategorySelected[0].color = allCategory.color[index];
     }
     renderCategorys();
+    save();
     borderColorCheck();
 }
 
 function borderColorCheck() {
-    if (currentCategorySelected[0].name === '') {
-        resetInputs();
-    } else {
+    load();
+    if (currentCategorySelected[0].name) {
         updateInputs();
+    } else {
+        resetInputs();
     }
 }
 
@@ -458,10 +726,6 @@ function updateInputs() {
 }
 function setInputValueAndColor(inputElem) {
     inputElem.value = currentCategorySelected[0].name;
-    inputElem.style.borderColor = getBorderColor();
-}
-function getBorderColor() {
-    return currentCategorySelected[0].color.replace('background:', '').trim();
 }
 
 function resetInputs() {
@@ -501,14 +765,16 @@ function selectColor(color) {
 }
 
 
-function addCategory() {
+async function addCategory() {
     let inputElem = document.getElementById('createCategoryInput');
     allCategorys[0].name.push(inputElem.value);
     allCategorys[0].color.push(selectedColorIndex);
+    await setItem('allCategorys', JSON.stringify(allCategorys));
 }
 
 function updateSelectedColorIndex(index) {
     selectedColorIndex = selectedColorIndex === index ? null : index;
+    save();
 }
 
 
@@ -519,6 +785,13 @@ function confirmCreateCategory() {
     } else {
         alertInvalidInput();
     }
+    clearCreateWindow();
+}
+
+function clearCreateWindow() {
+    let input = document.getElementById('createCategoryInput');
+    input.value = '';
+    selectedColorIndex = null;
 }
 
 function alertInvalidInput() {
@@ -529,31 +802,35 @@ function isValidCategoryInput() {
     return inputElem.value.length >= 2 && selectedColorIndex !== null;
 }
 
+function stopCreateCategory() {
+    clearCreateWindow();
+    toggleVisibilityAddTask('createCategoryContainer', '');
+}
 
 //categoryReturn//
 
 function returnCreateCategoryWindow() {
     return /*html*/`
-                <input id="createCategoryInput" placeholder="New category name and choose a color for add..." type="text" >
-                    <img onclick="stopCreateCategory()" class="editAbsolutCross"
-                        src="img/close.svg">
-                        <img onclick="confirmCreateCategory()" class="editAbsolutCheck"
-                            src="img/SubtasksCheck.svg">
-                            <div class="colorSettingBox" id="colorSettingBox">
-                            </div>
-                            `;
+    <input id="createCategoryInput" placeholder="New category name..." type="text" >
+    <img onclick="stopCreateCategory()" class="editAbsolutCross"
+    src="img/close.svg">
+    <img onclick="confirmCreateCategory()" class="editAbsolutCheck"
+    src="img/SubtasksCheck.svg">
+    <div class="colorSettingBox" id="colorSettingBox">
+    </div>
+    `;
 }
 
 
 function returnCreateCategoryColors(color, index) {
     if (color === selectedColorIndex) {
         return/*html*/`
-                            <div onclick='selectColor("${color}")' style="${color}" id='colorCircle${index}' class="colorCircle selectedColor"></div>
-                            `;
+        <div onclick='selectColor("${color}")' style="${color}" id='colorCircle${index}' class="colorCircle selectedColor"></div>
+        `;
     } else {
         return/*html*/`
-                            <div onclick='selectColor("${color}")' style="${color}" id='colorCircle${index}' class="colorCircle"></div>
-                            `;
+        <div onclick='selectColor("${color}")' style="${color}" id='colorCircle${index}' class="colorCircle"></div>
+        `;
     }
 }
 
@@ -561,18 +838,18 @@ function returnRenderMainCategorys(name, color, i) {
     if (currentCategorySelected[0].name === name &&
         currentCategorySelected[0].color === color) {
         return /*html*/`
-                            <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow selected">
-                                <span>${name}</span>
-                                <div class="colorCircle" style="${color}"></div>
-                            </div>
-                            `;
+        <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow selected">
+            <span>${name}</span>
+            <div class="colorCircle" style="${color}"></div>
+        </div>
+        `;
     } else {
         return /*html*/`
-                            <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow">
-                                <span>${name}</span>
-                                <div class="colorCircle" style="${color}"></div>
-                            </div>
-                            `;
+        <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow">
+            <span>${name}</span>
+            <div class="colorCircle" style="${color}"></div>
+        </div>
+        `;
     }
 }
 
@@ -580,33 +857,27 @@ function returnRenderAllCategorys(name, color, i) {
     if (currentCategorySelected[0].name === name &&
         currentCategorySelected[0].color === color) {
         return /*html*/`
-                            <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow selected">
-                                <span>${name}</span>
-                                <div class='categoryRowLeft'>
-                                    <div class="colorCircle" style="${color}"></div>
-                                    <img src="img/subTaskDelete.svg">
-                                </div>
-                            </div>
-                            `;
-
+        <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow selected">
+            <span>${name}</span>
+            <div class='categoryRowLeft'>
+                <div class="colorCircle" style="${color}"></div>
+                <img onclick='deleteCategory(${i})' src="img/subTaskDelete.svg">
+            </div>
+        </div>
+        `;
     } else {
         return /*html*/`
-                            <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow">
-                                <span>${name}</span>
-                                <div class='categoryRowLeft'>
-                                    <div class="colorCircle" style="${color}"></div>
-                                    <img src="img/subTaskDelete.svg">
-                                </div>
-                            </div>
-                            `;
+        <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow">
+            <span>${name}</span>
+            <div class='categoryRowLeft'>
+                <div class="colorCircle" style="${color}"></div>
+                <img onclick='deleteCategory(${i})' src="img/subTaskDelete.svg">
+            </div>
+        </div>
+        `;
     }
 }
 
-function stopCreateCategory() {
-    input = document.getElementById('createCategoryInput');
-    input.value = '';
-    toggleVisibilityAddTask('createCategoryContainer', '');
-}
 //---------------------------------------------------------------------------------//
 
 //Prio Buttons class-change//
@@ -614,16 +885,17 @@ function stopCreateCategory() {
 /**
  * Updates visual representation of priority buttons.
  * @param {string} btnId - ID of the priority button.
-                            * @param {string} iconId - ID of the inactive icon.
-                            * @param {string} activeIconId - ID of the active icon.
-                            * @param {string} activeClass - CSS class to apply when active.
-                            * @param {boolean} resetOther - Determines if other buttons should be reset.
-                            */
+ * @param {string} iconId - ID of the inactive icon.
+ * @param {string} activeIconId - ID of the active icon.
+ * @param {string} activeClass - CSS class to apply when active.
+ * @param {boolean} resetOther - Determines if other buttons should be reset.
+ */
 function activateButton(btnId, iconId, activeIconId, activeClass, iconSrc) {
     document.getElementById(btnId).classList.add(activeClass);
     document.getElementById(iconId).classList.add('d-none');
     document.getElementById(activeIconId).classList.remove('d-none');
     currentPrioSelected = iconSrc;
+    save();
 }
 
 function deactivateButton(btnId, iconId, activeIconId, activeClass) {
@@ -631,6 +903,7 @@ function deactivateButton(btnId, iconId, activeIconId, activeClass) {
     document.getElementById(iconId).classList.remove('d-none');
     document.getElementById(activeIconId).classList.add('d-none');
     currentPrioSelected = "";
+    save();
 }
 
 function prioSelectedToggle(btnId, iconId, activeIconId, activeClass, iconSrc, resetOther) {
@@ -657,6 +930,7 @@ function resetAll() {
         document.getElementById(activeIcons[i]).classList.add('d-none');
     }
     currentPrioSelected = "";
+    save();
 }
 //---------------------------------------------------------------------------------//
 
@@ -670,18 +944,18 @@ function resetAll() {
                             */
 function returnRenderAllSelectedContacts(contactColors, contactNamesAbbreviation) {
     return /*html*/`
-                            <div style="background-color:${contactColors}" class="assignedToContactImg">${contactNamesAbbreviation}</div>
-                            `;
+    <div style="background-color:${contactColors}" class="assignedToContactImg">${contactNamesAbbreviation}</div>
+    `;
 }
 
 
 /**
  * Returns an HTML string for the contact search functionality.
  * @param {Object} contacts - The contact object to render.
-                            * @param {number} i - Index of the contact.
-                            * @param {string} key - Key of the contact in the `allContacts` collection.
-                            * @returns {string} - HTML string for the rendered contact.
-                            */
+ * @param {number} i - Index of the contact.
+ * @param {string} key - Key of the contact in the `allContacts` collection.
+ * @returns {string} - HTML string for the rendered contact.
+ */
 function returnRenderAllContactsForSearch(contactColor, contactNamesAbbreviation, contactNames, index) {
     let isSelected = '';
     if (contactCollection.includes(contactNames)) {
@@ -693,16 +967,17 @@ function returnRenderAllContactsForSearch(contactColor, contactNamesAbbreviation
     let firstSecondaryClass = isSelected ? 'd-none' : '';
     let secondSecondaryClass = isSelected ? '' : 'd-none';
     return /*html*/`
-                            <div class="${mainClass}" id="assignedContactsBox${index}" onclick="toggleContactSelection(${index}, '${contactNames}')">
-                                <div class="contactBoxLeft">
-                                    <div style="background-color:${contactColor}" class="assignedToContactImg">
-                                        ${contactNamesAbbreviation}
-                                    </div>
-                                    <span>${contactNames}</span>
-                                </div>
-                                <img src="img/addTaskBox.svg" id="assignedBox${index}" class="${firstSecondaryClass}">
-                                    <img src="img/addTaskCheckBox.svg" class="${secondSecondaryClass}" id="assignedBoxChecked${index}">
-                                    </div>`;
+    <div class="${mainClass}" id="assignedContactsBox${index}" onclick="toggleContactSelection(${index}, '${contactNames}')">
+        <div class="contactBoxLeft">
+            <div style="background-color:${contactColor}" class="assignedToContactImg">
+                ${contactNamesAbbreviation}
+            </div>
+            <span>${contactNames}</span>
+        </div>
+        <img src="img/addTaskBox.svg" id="assignedBox${index}" class="${firstSecondaryClass}">
+        <img src="img/addTaskCheckBox.svg" class="${secondSecondaryClass}" id="assignedBoxChecked${index}">
+    </div>
+    `;
 }
 
 
@@ -756,30 +1031,83 @@ function returnSettingsSecond(secondSecondary) {
 /**
  * Returns an HTML string representing the subtask editing container.
  * @param {number} i - Index of the subtask.
-                                    * @returns {string} - HTML string for the subtask edit container.
-                                    */
+ * @returns {string} - HTML string for the subtask edit container.
+ */
 function returnEditContainer(i) {
-    return /*html*/`<input id="editInput" type="text">
-                                        <img onclick="stopSubEdit()" class="editAbsolutCross" src="img/close.svg">
-                                            <img onclick="confirmSubEdit(${i})" class="editAbsolutCheck" src="img/SubtasksCheck.svg">
-                                                `;
+    return /*html*/`
+    <input id="editInput" type="text">
+    <img onclick="stopSubEdit()" class="editAbsolutCross" src="img/close.svg">
+    <img onclick="confirmSubEdit(${i})" class="editAbsolutCheck" src="img/SubtasksCheck.svg">
+    `;
 }
 
 
 /**
  * Returns an HTML string representing a collection of subtasks.
  * @param {Object} subCollection - The subtask collection to render.
-                                                * @param {number} i - Index of the subtask in the collection.
-                                                * @returns {string} - HTML string for the rendered subtask collection.
-                                                */
+ * @param {number} i - Index of the subtask in the collection.
+ * @returns {string} - HTML string for the rendered subtask collection.
+ */
 function returnSubTaskCollection(subCollection, i) {
     return /*html*/`
-                                                <ul class="dFlex spaceBtw">
-                                                    <li>${subCollection}</li>
-                                                    <div>
-                                                        <img onclick="editSubtask(${i})" src="img/PenAddTask 1=edit.svg">
-                                                            <img onclick="deleteSubtaskCollection(${i})" src="img/subTaskDelete.svg">
-                                                            </div>
-                                                        </ul>`;
+    <ul class="dFlex spaceBtw">
+        <li>${subCollection}</li>
+        <div>
+            <img onclick="editSubtask(${i})" src="img/PenAddTask 1=edit.svg">
+            <img onclick="deleteSubtaskCollection(${i})" src="img/subTaskDelete.svg">
+        </div>
+    </ul>
+    `;
 }
 //---------------------------------------------------------------------------------//
+//only for date-input by addTask.html/ Due date//
+
+document.addEventListener('DOMContentLoaded', function () {
+    var dateInput = document.getElementById('datepicker');
+
+    var picker = new Pikaday({
+        field: dateInput,
+        position: 'top right',
+        format: 'DD/MM/YYYY',
+        minDate: new Date(), // Das stellt sicher, dass kein Datum vor dem heutigen Datum ausgewählt werden kann.
+        onSelect: function (date) {
+            const formattedDate = [
+                date.getDate().toString().padStart(2, '0'),
+                (date.getMonth() + 1).toString().padStart(2, '0'),
+                date.getFullYear()
+            ].join('/');
+            dateInput.value = formattedDate;
+        }
+    });
+
+    dateInput.addEventListener('focus', function () {
+        if (!this.value) {
+            const today = new Date();
+            const formattedDate = [
+                today.getDate().toString().padStart(2, '0'),
+                (today.getMonth() + 1).toString().padStart(2, '0'),
+                today.getFullYear()
+            ].join('/');
+            this.value = formattedDate;
+            picker.show();
+        }
+    });
+});
+
+
+//category container add d-none by body-click//
+document.body.addEventListener('click', function () {
+    toggleVisibilityAddTask('categoryAreaV2', 'categoryAreaV1')
+});
+
+document.getElementById('categorySection').addEventListener('click', function (event) {
+    event.stopPropagation();
+});
+
+//contact container add d-none by body-click//
+document.body.addEventListener('click', function () {
+    toggleVisibilityAddTask('assignedToContactsInputContainer', 'assignedToInputContainer')
+});
+document.getElementById('assignTo').addEventListener('click', function (event) {
+    event.stopPropagation();
+});

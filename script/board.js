@@ -1,4 +1,3 @@
-
 function init() {
     includeHTML();
 }
@@ -12,36 +11,52 @@ function init() {
 // percent = Math.round(percent * 100);
 
 
+
 let currentDraggedElement;
 
-function updateHTML(tasks) {
-    console.log(tasks)
+async function clearArray() {
+    tasks.splice(0, tasks.length);
+    currentId = ""
+    await setItem('tasks', JSON.stringify(tasks));
+    await setItem('currentId', JSON.stringify(currentId));
+}
+
+
+function updateBoardHTML() {
+
     let todo = tasks.filter(t => t['status'] == 'toDo');
     document.getElementById('toDo').innerHTML = '';
     for (let index = 0; index < todo.length; index++) {
         const element = todo[index];
-        document.getElementById('toDo').innerHTML += generateTaskHTML(element, tasks);
+        document.getElementById('toDo').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
     }
 
     let inProgress = tasks.filter(t => t['status'] == 'in-progress');
     document.getElementById('in-progress').innerHTML = '';
     for (let index = 0; index < inProgress.length; index++) {
         const element = inProgress[index];
-        document.getElementById('in-progress').innerHTML += generateTaskHTML(element, tasks);
+        document.getElementById('in-progress').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+
     }
 
     let awaitingFeedback = tasks.filter(t => t['status'] == 'awaiting-feedback');
     document.getElementById('awaiting-feedback').innerHTML = '';
     for (let index = 0; index < awaitingFeedback.length; index++) {
         const element = awaitingFeedback[index];
-        document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element, tasks);
+        document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+
     }
 
     let done = tasks.filter(t => t['status'] == 'done');
     document.getElementById('done').innerHTML = '';
     for (let index = 0; index < done.length; index++) {
         const element = done[index];
-        document.getElementById('done').innerHTML += generateTaskHTML(element ,tasks);
+        document.getElementById('done').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+
     }
 }
 
@@ -49,13 +64,23 @@ function startDragging(id) {
     currentDraggedElement = id;
 }
 
-function generateTaskHTML(element, tasks) {
-    console.log(element['category'])
-    console.log('tasks in generatehtml',tasks)
 
+
+
+
+function generateTaskHTML(element) {
     let i = element['id']
-    console.log(i)
-    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask(${tasks},${i})" class="task">
+    let users = element['contactAbbreviation']
+    let colors = element['contactColor']
+    let assignedUser = '';
+    for (let j = 0; j < users.length; j++) {
+        let user = users[j];
+        let color = colors[j]
+        assignedUser += /*html*/ ` 
+       <div class="profile-picture horicontal-and-vertical" style="background-color:${color} ">${user}</div>`;
+    }
+
+    return /*html*/ `<div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask(${i})" class="task">
             <div>
                 <div class="task-category"> ${element['category']}</div>
                 <div class="task-title">${element['title']}</div>
@@ -63,7 +88,7 @@ function generateTaskHTML(element, tasks) {
             </div>
             <div class="task-users-prio">
                 <div class="task-users">
-                    <div class="profile-picture horicontal-and-vertical" style="background-color:${element['contactColor']} ">${element['contactAbbreviation']}</div>
+                   ${assignedUser}
                 </div>
                 <img src="${element['priority']}">
             </div>
@@ -80,7 +105,8 @@ function allowDrop(ev) {
 // and change the status
 function moveTo(status) {
     tasks[currentDraggedElement]['status'] = status;
-    updateHTML(tasks);
+    setItem('tasks', JSON.stringify(tasks));
+    updateBoardHTML();
     removeHighlight(status);
 }
 
@@ -93,9 +119,69 @@ function removeHighlight(id) {
 }
 
 /* --------------------------------------- */
-function openTask(tasks, i) {
-    console.log(i)
-    console.log('tasks in open Task',tasks)
+
+
+
+
+async function openTask(i) {
+    renderTaskdetailHTML(i)
+}
+
+
+
+function renderTaskdetailHTML(i) {
+
+    console.log('tasks in open Task', tasks[i])
+
+    let userNames = tasks[i]['contactName']
+    let users = tasks[i]['contactAbbreviation']
+    let colors = tasks[i]['contactColor']
+    let assignedUser = '';
+    for (let j = 0; j < users.length; j++) {
+        let user = users[j];
+        let userName = userNames[j]
+        let color = colors[j]
+        assignedUser += /*html*/ ` 
+        <div class="user-details">
+            <div class="profile-picture horicontal-and-vertical" style="background-color:${color}">
+                ${user}
+            </div>
+            <div class="user-name">
+                ${userName}
+            </div>   
+        </div>
+        `;
+    }
+
+    let inProgress = '';
+    let subtasksInProgress = tasks[i]['subtasksInProgress'];
+    let subtaskHeadline ='';
+
+
+    for (let k = 0; k < subtasksInProgress.length; k++) {
+        let subtaskInProgress = subtasksInProgress[k];
+
+        subtaskHeadline = /*html*/ `
+        <div class="task-detail-font-color margin-bottom10">
+            Subtasks
+        </div>`
+        inProgress += /*html*/ ` 
+        <div class="task-detail-flex margin-bottom10">
+            <img class="task-box" src="img/addTaskBox.svg" alt="">
+            ${subtaskInProgress}
+        </div>
+        `;
+    }
+
+    // let subtasksFinished = tasks[i]['subtasksFinish']
+    // for (let l = 0; l < subtasksFinished.length; l++) {
+    //     let subtaskFinished = subtasksFinished[l];
+
+    //     console.log(subtaskFinished.length)
+    //     // assignedUser += /*html*/ ` 
+    //     //  <img src="img/done.svg" alt="">
+    //     // `;
+    // }
 
     document.getElementById('popup-container').classList.remove('d-none');
     document.getElementById('popup-container').innerHTML = /*html*/ `
@@ -119,26 +205,22 @@ function openTask(tasks, i) {
                     <div class="task-detail-flex">
                         <div class="task-detail-font-color">Priority:</div>
                         <div>
-                            ${tasks[i]['priority']}
-                            <img src="img/prio${tasks[i]['priority']}.svg">
+                            <img src="${tasks[i]['priority']}">
                         </div>
                     </div>
                     <div>
-                        <div class="margin-bottom10">Assigned To:</div>
-                        <div class="task-users">
-                            <div class="profile-picture horicontal-and-vertical" style="background-color:${tasks['contactColor']} ">${tasks['contactAbbreviation']}</div>
-                        </div>
-                        ${tasks[i]['contactName']}
-                    </div>
+                        <div class="margin-bottom10 task-detail-font-color">Assigned To:</div>
+                        <div class="task-detail-users">
+                            
+                        ${assignedUser}
 
-                    <div class="task-detail-subtasks">
-                        <div class="task-detail-font-color margin-bottom10">
-                            Subtasks
                         </div>
-                        <img src="img/done.svg" alt="">
-                        ${tasks[i]['subtask']}
-                        <img src="img/addTaskBox.svg" alt="">
-                        ${tasks[i]['subtask']}
+                    </div>
+                    <div class="task-detail-subtasks">
+                        
+                        ${subtaskHeadline}
+                        ${inProgress}
+
                     </div>
                 </div>
             </div>
@@ -150,6 +232,7 @@ function openTask(tasks, i) {
 
     `;
 }
+
 
 
 function closeTask() {
