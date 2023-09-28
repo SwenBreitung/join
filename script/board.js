@@ -1,5 +1,6 @@
 function init() {
     includeHTML();
+   
 }
 
 // wenn subtaskfinish = abgehakt img
@@ -61,11 +62,18 @@ function updateBoardHTML() {
 }
 
 function startDragging(id) {
+    console.log("Dragging element with ID:", id);
     currentDraggedElement = id;
 }
 
 
+// async function deleteTask(i) {
 
+//     tasks.splice(i, 1);
+//     await setItem('tasks', JSON.stringify(tasks));
+//     updateBoardHTML();
+
+// }
 
 
 function generateTaskHTML(element) {
@@ -103,9 +111,17 @@ function allowDrop(ev) {
 
 // want to move the todo with the id which is saved in currentDragElement 
 // and change the status
-function moveTo(status) {
+async function moveTo(status) {
+    console.log("currentDraggedElement:", currentDraggedElement);
+    console.log("tasks:", tasks);
+    console.log("tasks[currentDraggedElement]:", tasks[currentDraggedElement]);
+    if (currentDraggedElement >= 0 && currentDraggedElement < tasks.length) {
+        // Hier ist es sicher, auf tasks[currentDraggedElement] zuzugreifen
+    } else {
+        console.error("Ungültiger Index:", currentDraggedElement);
+    }
     tasks[currentDraggedElement]['status'] = status;
-    setItem('tasks', JSON.stringify(tasks));
+    await setItem('tasks', JSON.stringify(tasks));
     updateBoardHTML();
     removeHighlight(status);
 }
@@ -127,35 +143,19 @@ async function openTask(i) {
     renderTaskdetailHTML(i)
 }
 
-function switchSubtaskStatusToUndone(i, l){
-    // console.log(i)
-    // console.log(l)
-    console.log(tasks[i]['subtasksFinish'][l])
-
-    // let splicedSubtask = tasks[i]['subtasksFinish'].splice(l, 1)
-
-    console.log(tasks[i]['subtasksFinish'])
-
-    // tasks[i]['subtasksInProgress'].push(splicedSubtask)
-
-    console.log(tasks['subtasksInProgress'])
-
-    // setItem('tasks', JSON.stringify(tasks));
-
-    // renderTaskdetailHTML(i);
- }
-
-function switchSubtaskStatusToFinished(i, k){
-    // console.log(i)
-    // console.log(k)
-    console.log(tasks[i]['subtasksInProgress'][k])
-    let splicedSubtask = tasks[i]['subtasksInProgress'].splice(k, 1)
-    console.log(tasks[i]['subtasksInProgress'])
-    tasks[i]['subtasksFinish'].push(splicedSubtask)
-    console.log(tasks['subtasksFinished'])
-    setItem('tasks', JSON.stringify(tasks));
+async function switchSubtaskStatusToUndone(i, l) {
+    let splicedSubtask = tasks[i]['subtasksFinish'].splice(l, 1)
+    tasks[i]['subtasksInProgress'].push(splicedSubtask)
+    await setItem('tasks', JSON.stringify(tasks));
     renderTaskdetailHTML(i);
- }
+}
+
+async function switchSubtaskStatusToFinished(i, k) {
+    let splicedSubtask = tasks[i]['subtasksInProgress'].splice(k, 1)
+    tasks[i]['subtasksFinish'].push(splicedSubtask)
+    await setItem('tasks', JSON.stringify(tasks));
+    renderTaskdetailHTML(i);
+}
 
 function renderTaskdetailHTML(i) {
 
@@ -182,12 +182,12 @@ function renderTaskdetailHTML(i) {
     }
 
     let inProgress = '';
-    let subtasksInProgress = tasks[i]['subtasksInProgress'];
-    let subtaskHeadline ='';
+    let subtasksProgress = tasks[i]['subtasksInProgress'];
+    let subtaskHeadline = '';
 
-    for (let k = 0; k < subtasksInProgress.length; k++) {
-        let subtaskInProgress = subtasksInProgress[k];
-        console.log(subtaskInProgress)
+    for (let k = 0; k < subtasksProgress.length; k++) {
+        let subtaskProgress = subtasksProgress[k];
+
         subtaskHeadline = /*html*/ `
         <div class="task-detail-font-color margin-bottom10">
             Subtasks
@@ -195,28 +195,28 @@ function renderTaskdetailHTML(i) {
 
         inProgress += /*html*/ ` 
         <div class="task-detail-flex margin-bottom10">
-            <img onclick="switchSubtaskStatus(${i}, ${k})" class="task-box" src="img/addTaskBox.svg" alt="">
-            ${subtaskInProgress}
+            <img onclick="switchSubtaskStatusToFinished(${i}, ${k})" class="task-box" src="img/addTaskBox.svg" alt="">
+            ${subtaskProgress}
         </div>
         `;
     }
 
     let finished = '';
-    let subtasksFinished = tasks[i]['subtasksFinish']
+    let subtasksDone = tasks[i]['subtasksFinish']
 
-    for (let l = 0; l < subtasksFinished.length; l++) {
-        let subtaskFinished = subtasksFinished[l];
-        console.log(subtaskFinished)
+    for (let l = 0; l < subtasksDone.length; l++) {
+        let subtaskDone = subtasksDone[l];
+
         // let subtaskHeadline ='';
         subtaskHeadline = /*html*/ `
-        <div class="task-detail-font-color margin-bottom10">
+        <div class="task-detail-font-color margin-bottom10 text-decoration-none">
             Subtasks
         </div>`
 
-       finished += /*html*/ ` 
+        finished += /*html*/ ` 
        <div class="task-detail-flex margin-bottom10 text-line-through">
-           <img class="task-box" src="img/done.svg" alt="">
-           ${subtaskFinished}
+           <img onclick="switchSubtaskStatusToUndone(${i},${l})" class="task-box" src="img/done.svg" alt="">
+           ${subtaskDone}
        </div>`
     }
 
@@ -263,11 +263,10 @@ function renderTaskdetailHTML(i) {
                 </div>
             </div>
             <div class="task-detail-bottom">
-                <img src="img/subTaskDelete.svg" alt="">
+                <img onclick="deleteTask(${i})" src="img/subTaskDelete.svg" alt="">
                 <img src="img/PenAddTask 1=edit.svg" alt="">
             </div>
         </div>
-
     `;
 }
 
@@ -294,50 +293,6 @@ function revertDivColor() {
 
 
 
-// async function includeHTML() {
-//     let includeElements = document.querySelectorAll('[w3-include-html]');
-//     for (let i = 0; i < includeElements.length; i++) {
-//         const element = includeElements[i];
-//         file = element.getAttribute("w3-include-html"); // "includes/header.html"
-//         let resp = await fetch(file);
-//         if (resp.ok) {
-//             element.innerHTML = await resp.text();
-//         } else {
-//             element.innerHTML = 'Page not found';
-//         }
-//     }
-
-// }
-
-//drag and drop END=============================================================================
-
-//loop for User IMG------------------------------------------------------------------------
-
-// function loadUserImgLoop() {
-//     for (let i = 0; i <= 3; i++) {
-//         loadUserImg(i);
-//     }
-// }
-
-//img from card-user-img--------------------------------------------------
-// function loadUserImg(i) {
-//     let initials;
-//     if (i <= 2) {
-//         initials = generateInitials()
-//         document.getElementById('card-user-img[i]').innerHTML = `${initials[0]} ${initials[1]}`
-//     } else if (Array.length == 3) {
-//         initials = generateInitials()
-//         document.getElementById('card-user-img[i]').innerHTML = `${initials[0]} ${initials[1]}`
-//     } else if (Array.length >= 3) {
-//         document.getElementById('card-user-img[i]').innerHTML = `+`
-//     }
-// }
-
-// function generateInitials() {
-//     let jsonString = '{"text": " hallo Welt"}';
-
-// JSON-String in ein JavaScript-Objekt umwandeln
-// let data = JSON.parse(jsonString);
 
 // Textfeld aus dem JSON-Objekt extrahieren
 // let text = data.text.trim();
