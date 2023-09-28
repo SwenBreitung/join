@@ -411,3 +411,4 @@ function changesSaved() {
     slide('changesSavedId');
     document.getElementById('changesSavedId').style.visibility = 'visible';
 }
+
