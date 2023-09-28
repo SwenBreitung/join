@@ -5,7 +5,7 @@ body {
 }
 
 .join-logo-contain {
-    position: relative;
+    position: absolute;
     width: 100vw;
     height: 100vh;
     background: #F6F7F8;
@@ -20,15 +20,29 @@ body {
     transform: translate(-50%, -50%);
 }
 
-img {
+.join-logo-contain img {
     width: 919px;
     height: 240px;
     padding: 5px 5px 5px 5px;
 }
 
+.join-logo-contain.animated {
+    animation: containerAnimation 625ms forwards;
+    animation-delay: 2000ms;
+}
+
 @keyframes containerAnimation {
-    to {
-        background: #f6f7f800;
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    99% {
+        opacity: 0;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
     }
 }
 
