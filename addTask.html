@@ -94,19 +94,52 @@
                                 <div id="editContainer" class="d-none custom-select">
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
                 <div id="buttonAreaAddTask" class="selectBtnArea gap16">
                 </div>
             </form>
-
         </div>
     </div>
+    <section class="addContactContainer d-none">
+        <div class="addContactPopupBox">
+            <div class="addContactPopupBoxLeft">
+                <div class="addContactPopupBoxLeftPosition">
+                    <img class="logoContactPopup" src="./img/join.logo-white.svg">
+                    <spline class="addContactPopupBoxLeftHeadline"><b>Add contact</b>
+                    </spline>
+                    <spline class="addContactPopupBoxLeftText">Tasks are better with a team!</spline>
+                    <div class="blueUnderline"></div>
+                </div>
+            </div>
+            <div class="addContactPopupBoxRight">
+                <div class="addContactPopupBoxRightImgPosition">
+                    <img class="addContactPopupBoxRightImg" src="./img/person.svg">
+                </div>
+                <div class="addContactPopupBoxRightFormPosition">
+                    <form onsubmit="return false">
+                        <div>
+                            <input placeholder="Name" type="text">
+                        </div>
+                        <div>
+                            <input placeholder="Email" type="text">
+                        </div>
+                        <div>
+                            <input placeholder="Phone" type="text">
+                        </div>
+                        <div class="addContactPopupBoxRightBtnPosition">
+                            <button class="clearBtn">Cancel<img class="clearImg" src="./img/crossAddTask.svg"
+                                    alt=""></button>
+                            <button class="createBtn blueBtn">Create contact<img class="createImg"
+                                    src="./img/check.svg"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 </body>
-
-
 
 </html>
