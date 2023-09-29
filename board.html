@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
     <script src="templates/templates.js"></script>
 
-    <script src="script/addTask.js"></script>
+    <script defer src="script/addTask.js"></script>
     <script src="script/contacts.js"></script>
     <script src="./script/script.js"></script>
     <script src="./script/board.js"></script>
@@ -190,6 +190,48 @@
 
         </div>
     </section>
+    <section id="contactPopupByAddTask" class="popupContainer d-none">
+        <div class="addContactPopupBox">
+            <div class="addContactPopupBoxLeft">
+                <div class="addContactPopupBoxLeftPosition">
+                    <img class="logoContactPopup" src="./img/join.logo-white.svg">
+                    <spline class="addContactPopupBoxLeftHeadline"><b>Add contact</b>
+                    </spline>
+                    <spline class="addContactPopupBoxLeftText">Tasks are better with a team!</spline>
+                    <div class="blueUnderline"></div>
+                </div>
+            </div>
+            <div class="addContactPopupBoxRight">
+                <div class="addContactPopupBoxRightImgPosition">
+                    <img class="addContactPopupBoxRightImg" src="./img/person.svg">
+                </div>
+                <div class="addContactPopupBoxRightFormPosition">
+                    <form onsubmit="return false">
+                        <div class="custom-select">
+                            <input placeholder="Name" type="text">
+                            <img class="inputAbsolut" src="img/person-white.svg" alt="">
+                        </div>
+                        <div class="custom-select">
+                            <input placeholder="Email" type="text">
+                            <img class="inputAbsolut" src="img/mail.svg" alt="">
+                        </div>
+                        <div class="custom-select">
+                            <input placeholder="Phone" type="text">
+                            <img class="inputAbsolut" src="img/call.svg" alt="">
+                        </div>
+                        <div class="addContactPopupBoxRightBtnPosition">
+                            <button onclick="toggleVisibilityAddTask('contactPopupByAddTask', '')"
+                                class="clearBtn">Cancel<img class="clearImg" src="./img/crossAddTask.svg"
+                                    alt=""></button>
+                            <button class="createBtn blueBtn">Create contact<img class="createImg"
+                                    src="./img/check.svg"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 
 </body>

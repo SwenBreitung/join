@@ -100,7 +100,7 @@
             </form>
         </div>
     </div>
-    <section class="popupContainer d-none">
+    <section id="contactPopupByAddTask" class="popupContainer d-none">
         <div class="addContactPopupBox">
             <div class="addContactPopupBoxLeft">
                 <div class="addContactPopupBoxLeftPosition">
@@ -117,17 +117,21 @@
                 </div>
                 <div class="addContactPopupBoxRightFormPosition">
                     <form onsubmit="return false">
-                        <div>
+                        <div class="custom-select">
                             <input placeholder="Name" type="text">
+                            <img class="inputAbsolut" src="img/person-white.svg" alt="">
                         </div>
-                        <div>
+                        <div class="custom-select">
                             <input placeholder="Email" type="text">
+                            <img class="inputAbsolut" src="img/mail.svg" alt="">
                         </div>
-                        <div>
+                        <div class="custom-select">
                             <input placeholder="Phone" type="text">
+                            <img class="inputAbsolut" src="img/call.svg" alt="">
                         </div>
                         <div class="addContactPopupBoxRightBtnPosition">
-                            <button class="clearBtn">Cancel<img class="clearImg" src="./img/crossAddTask.svg"
+                            <button onclick="toggleVisibilityAddTask('contactPopupByAddTask', '')"
+                                class="clearBtn">Cancel<img class="clearImg" src="./img/crossAddTask.svg"
                                     alt=""></button>
                             <button class="createBtn blueBtn">Create contact<img class="createImg"
                                     src="./img/check.svg"></button>

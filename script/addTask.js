@@ -331,7 +331,7 @@ function returnAssignToBox2() {
         <div class="ContactsRenderContainer show-scrollbar"
             id="contactsRenderContainer">
         </div>
-        <div onclick="addContact()" class="addNewContactBtn blueBtn">
+        <div onclick="toggleVisibilityAddTask('', 'contactPopupByAddTask')" class="addNewContactBtn blueBtn">
             <span>Add new contact</span>
             <img class="addNewContactBtnIcon" src="img/addTaskperson_add.svg">
         </div>
