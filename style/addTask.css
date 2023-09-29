@@ -703,7 +703,7 @@ ul {
     margin-bottom: -3px;
 }
 
-.addContactContainer {
+.popupContainer {
     position: fixed;
     top: 0;
     left: 0;

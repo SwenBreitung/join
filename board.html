@@ -5,12 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Board</title>
+    <link rel="stylesheet" href="style/addTask.css">
     <link rel="stylesheet" href="templates/header_footer.css">
     <link rel="stylesheet" href="./style/style.css">
     <link rel="stylesheet" href="./style/board.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="shortcut icon" href="img/Logo for Favicon construction.svg" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 
+
+    <script defer src="script/addTask.js"></script>
     <script src="script/contacts.js"></script>
     <script src="./script/script.js"></script>
     <script defer src="./script/board.js"></script>
@@ -19,14 +23,14 @@
 </head>
 
 
-<body onload="init()">
+<body onload="init(), initAddTask()">
     <!-- aria-label="Search" -->
 
 
     <div w3-include-html="templates/sidebar.html"></div>
     <div w3-include-html="templates/header.html"></div>
     <div id="popup-container" class="dialog-bg d-none"></div>
-    <div class="content bg-main-color">
+    <div class="content-board show-scrollbarTaskWindow bg-main-color">
 
         <div class="search-board-container">
             <h1>Board</h1>
@@ -37,7 +41,7 @@
                     <img src="img/VectorSearchbar.svg">
                     <img src="img/search.svg">
                 </div>
-                <button onclick="window.location.href='addTask.html';" id="button-ad-task" type="button"
+                <button onclick="toggleVisibilityAddTask('', 'addTaskPop')" id="button-ad-task" type="button"
                     class="button">Add task<img src="img/plusAddTaskWhite.svg" alt="">
                 </button>
             </form>
@@ -103,7 +107,89 @@
         </div>
         <!-- </div> -->
     </div>
+    <section id="addTaskPop" class="popupContainer d-none">
+        <div class="addTaskPopupPosition">
+            <div class="contentPositionAddTaskPopup show-scrollbarTaskWindow">
+                <div class="addTaskPopupHeadlineContainer">
+                    <h1 class="fw-bold">Add Task</h1>
+                    <img onclick="toggleVisibilityAddTask('addTaskPop', '')" class="click" src="img/crossAddTask.svg"
+                        alt="">
+                </div>
 
+                <form onsubmit="return false" id="myForm">
+                    <div class="taskArea">
+
+                        <div class="boxLeft">
+                            <div id="titelBox" class="marginBottom16">
+                                <span>Titel</span>
+                                <input class="click" id="addTitel" required placeholder="Enter a title" type="text">
+                            </div>
+
+                            <div class="column">
+                                <span>Description</span>
+                                <textarea class="click" id="addDescription" required placeholder="Enter a Description"
+                                    type="text"></textarea>
+                            </div>
+
+                            <div>
+                                <span>Assigned to</span>
+                                <div id="assignTo">
+                                    <div class="custom-select marginBottom16" id="assignedToInputContainer">
+                                    </div>
+                                    <div class="custom-select d-none" id="assignedToContactsInputContainer">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="boxRight">
+                            <div>
+                                <div>
+                                    <span>Due date</span>
+                                    <div>
+                                        <input class="click" required placeholder="dd/mm/yyyy" type="text"
+                                            id="datepicker">
+                                    </div>
+                                </div>
+
+                                <div class="column marginTop16">
+                                    <span>Prio</span>
+                                    <div id="prioBox" class="prioButtonContainer">
+                                    </div>
+                                </div>
+
+                                <div id="categorySection" class="column">
+                                    <span>Category</span>
+                                    <div class="custom-select marginBottom16" id="categoryAreaV1">
+                                    </div>
+
+                                    <div class="custom-select marginBottom16 d-none" id="categoryAreaV2">
+                                    </div>
+                                </div>
+
+                                <div class="column">
+                                    <span>Subtasks</span>
+                                    <div class="custom-select">
+                                        <input class="click" placeholder="Add new subtask" id="subTaskSelectInput">
+                                        <img onclick="addSubTaskToCollection()" class="inputAbsolut"
+                                            src="img/plusAddTask.svg">
+                                    </div>
+                                    <div class="selectedSubTask show-scrollbar" id="selectedSubTaskContainer">
+                                    </div>
+                                    <div id="editContainer" class="d-none custom-select">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="buttonAreaAddTask" class="selectBtnArea gap16">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 
 </body>
 
