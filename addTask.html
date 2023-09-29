@@ -141,6 +141,36 @@
             </div>
         </div>
     </section>
+    <section id="createCategoryPopupByAddTask" class="popupContainer d-none">
+        <div class="addContactPopupBox">
+            <div class="addContactPopupBoxLeft">
+                <div class="addContactPopupBoxLeftPosition">
+                    <img class="logoContactPopup" src="./img/join.logo-white.svg">
+                    <spline class="addContactPopupBoxLeftHeadline"><b>Add new category</b>
+                    </spline>
+                    <spline class="addContactPopupBoxLeftText">Tasks are better with a team!</spline>
+                    <div class="blueUnderline"></div>
+                </div>
+            </div>
+            <div class="addContactPopupBoxRight">
+                <div class="addContactPopupBoxRightImgPosition">
+                    <img class="addCategoryPopupBoxRightImg" src="./img/addTaskCategory.svg">
+                </div>
+                <div class="addContactPopupBoxRightFormPosition">
+                    <div class="custom-select">
+                        <input id="createCategoryInput" placeholder="New category name..." type="text">
+                        <div class="colorSettingBox" id="colorSettingBox">
+                        </div>
+                        <div class="addContactPopupBoxRightBtnPosition">
+                            <button onclick="stopCreateCategory()" class="clearBtn">Cancel<img class="clearImg"
+                                    src="./img/crossAddTask.svg" alt=""></button>
+                            <button onclick="confirmCreateCategory()" class="createBtn blueBtn">Create category<img
+                                    class="createImg" src="./img/check.svg"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 </body>
 

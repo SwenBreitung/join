@@ -275,7 +275,7 @@ function returnCategoryBox2() {
         </div>
         <div id="createCategoryContainer" class="d-none custom-select">
         </div>
-        <div onclick="toggleVisibilityAddTask('', 'createCategoryContainer')"
+        <div onclick="toggleVisibilityAddTask('', 'createCategoryPopupByAddTask')"
             class="addNewContactBtn blueBtn">
             <span>Add new category</span>
             <img class="addNewContactBtnIcon" src="img/addTaskCategory.svg">
@@ -742,8 +742,6 @@ function resetInputValueAndColor(inputElem) {
 
 //create category//
 function createCategoryWindow() {
-    let container = document.getElementById('createCategoryContainer');
-    container.innerHTML = returnCreateCategoryWindow();
     createCategoryColors();
 }
 
@@ -770,6 +768,7 @@ async function addCategory() {
     allCategorys[0].name.push(inputElem.value);
     allCategorys[0].color.push(selectedColorIndex);
     await setItem('allCategorys', JSON.stringify(allCategorys));
+    toggleVisibilityAddTask('createCategoryPopupByAddTask', '')
 }
 
 function updateSelectedColorIndex(index) {
@@ -804,22 +803,11 @@ function isValidCategoryInput() {
 
 function stopCreateCategory() {
     clearCreateWindow();
-    toggleVisibilityAddTask('createCategoryContainer', '');
+    toggleVisibilityAddTask('createCategoryPopupByAddTask', '')
 }
 
 //categoryReturn//
 
-function returnCreateCategoryWindow() {
-    return /*html*/`
-    <input id="createCategoryInput" placeholder="New category name..." type="text" >
-    <img onclick="stopCreateCategory()" class="editAbsolutCross"
-    src="img/close.svg">
-    <img onclick="confirmCreateCategory()" class="editAbsolutCheck"
-    src="img/SubtasksCheck.svg">
-    <div class="colorSettingBox" id="colorSettingBox">
-    </div>
-    `;
-}
 
 
 function returnCreateCategoryColors(color, index) {
@@ -861,7 +849,6 @@ function returnRenderAllCategorys(name, color, i) {
             <span>${name}</span>
             <div class='categoryRowLeft'>
                 <div class="colorCircle" style="${color}"></div>
-                <img onclick='deleteCategory(${i})' src="img/subTaskDelete.svg">
             </div>
         </div>
         `;
@@ -870,8 +857,8 @@ function returnRenderAllCategorys(name, color, i) {
         <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow">
             <span>${name}</span>
             <div class='categoryRowLeft'>
-                <div class="colorCircle" style="${color}"></div>
                 <img onclick='deleteCategory(${i})' src="img/subTaskDelete.svg">
+                <div class="colorCircle" style="${color}"></div>
             </div>
         </div>
         `;
