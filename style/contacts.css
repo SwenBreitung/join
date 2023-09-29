@@ -340,9 +340,7 @@ input {
     border-radius: 100%;
 }
 
-
 /* Text on right side */
-
 .contactInfoBig,
 .contactsTitle {
     margin: 0 55px;
@@ -352,13 +350,7 @@ input {
     gap: 30px;
     height: 73px;
     margin-bottom: 32px;
-    justify-content: space-between;
 }
-
-/* .contactsTitle svg {
-    height: 59px !important;
-    width: 10px !important;
-} */
 
 .contactInfoBig {
     height: 364px;
@@ -440,7 +432,6 @@ input {
     border-top-right-radius: 10px;
 }
 
-.mobileDeleteText:hover,
 .mobileEditText:hover,
 .mobileEdit:hover,
 .mobileDelete:hover {
@@ -539,10 +530,6 @@ section {
 
 .slide-out {
     animation: slideOut 0.5s ease;
-}
-
-#nameId {
-    max-width: 400px;
 }
 
 @keyframes slideIn {
@@ -703,7 +690,6 @@ section {
 
     .cancelBtn {
         margin-right: 20px !important;
-        visibility: hidden;
     }
 
     .inputName input,

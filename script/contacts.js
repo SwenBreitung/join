@@ -124,8 +124,9 @@ function loadContactInfos(contact, nameAbbreviation, i) {
  */
 function addContact() {
     document.getElementById('changesSavedId').style.visibility = 'hidden';
-    originalFunction();
-    originalText();
+    resetFunctionText();
+
+    showNotOnMobileView('cancelBtnMobileId');
     document.getElementById('inputNameId').value = '';
     document.getElementById('inputEmailId').value = '';
     document.getElementById('inputPhoneId').value = '';
@@ -154,6 +155,8 @@ async function createContact() {
     document.getElementById('inputEmailId').value = '';
     document.getElementById('inputPhoneId').value = '';
 
+    toggleVisibility('mobileBackArrowId', false);
+    toggleVisibility('mobileVisibilityId', true);
     closePopup();
     renderContacts();
     hoverNewContact(newContact);
@@ -196,6 +199,7 @@ function openContactBigInfo(contact, i, nameAbbreviation) {
     document.getElementById('profilePictureBigId').innerHTML = contactImage(contact, nameAbbreviation);
     contactDescription(contact);
 
+    changeImage();
     document.getElementById('editMobileButtonId').innerHTML = editContactMobile(i);
     deleteEditContactAtIndex(i);
 }
@@ -206,12 +210,8 @@ function openContactBigInfo(contact, i, nameAbbreviation) {
  */
 function showArrowMobileView() {
     document.getElementById('mobileVisibilityId').classList.add('mobileContactOverview');
+    showOnMobileView('mobileBackArrowId');
     toggleVisibility('mobileVisibilityId', true);
-    if (window.innerWidth <= 700) {
-        toggleVisibility('mobileBackArrowId', true);
-    } else {
-        toggleVisibility('mobileBackArrowId', false);
-    }
 }
 
 /**
@@ -241,6 +241,7 @@ function contactDescription(contact) {
  * 
  */
 function editContactMobile(i) {
+    showOnMobileView('cancelBtnMobileId');
     return /* html */ `
 <div class="mobileEdit gap8 d-flex padding8 pointer colorOnHover" onclick="editContact(${i})">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -297,8 +298,7 @@ function closePopupMobile() {
     toggleVisibility('mobileEditDeleteBoxId', false);
     toggleVisibility('mobileVisibilityId', false);
     toggleVisibility('mobileBackArrowId', false);
-    originalText();
-    originalFunction();
+    resetFunctionImageText();
     let highlightContact = document.querySelectorAll('.contactsInfo');
     highlightContact.forEach((highlightContactElement) => {
         highlightContactElement.style.backgroundColor = '';
@@ -370,11 +370,14 @@ function deleteEditContactAtIndex(i) {
  * 
  * 
  */
-async function deleteContact(position) {
+async function deleteContact(i) {
     changesSaved();
+    resetFunctionImageText();
     toggleVisibility('mobileEditDeleteBoxId', false);
-    contactsArray.splice(position, 1);
+    toggleVisibility('mobileVisibilityId', false);
+    contactsArray.splice(i, 1);
     await setItem('contactsArray', JSON.stringify(contactsArray));
+    toggleVisibility('mobileBackArrowId', false);
     toggleVisibility('contactInfoBigId', false);
     renderContacts();
 }
@@ -418,8 +421,9 @@ function saveContact(i) {
     document.getElementById('phoneId').innerHTML = contactsArray[i].phone;
 
     toggleVisibility('contactInfoBigId', false);
-    changesSaved()
+    changesSaved();
 
+    resetFunctionImageText();
     toggleVisibility('mobileBackArrowId', false);
     toggleVisibility('mobileVisibilityId', false);
     closePopup();
@@ -441,22 +445,32 @@ function changeText() {
  * This function is used to change a function
  * 
  */
-function changeFunction(i) {
+function changeFunction(id) {
     const editContactForm = document.getElementById('editContactFormId');
     editContactForm.onsubmit = function () {
-        saveContact(i);
+        saveContact(id);
         return false;
     };
 
     const editCancelButton = document.getElementById('editCancelButtonId');
     editCancelButton.onclick = function () {
-        deleteContact(i);
+        deleteContact(id);
     };
 
     const editAddContactButton = document.getElementById('mobileAddContactId');
     editAddContactButton.onclick = function () {
-        openMobileEditMenu(i);
+        openMobileEditMenu(id);
     };
+}
+
+/**
+ * This function is to change the image on mobile view
+ * 
+ */
+function changeImage() {
+    let newImage = './img/more_vert.svg';
+    let switchImage = document.querySelector('#mobileAddContactId img');
+    switchImage.src = newImage;
 }
 
 /**
@@ -492,12 +506,34 @@ function originalFunction() {
 }
 
 /**
+ * This function is to reset the changeImage()
+ * 
+ */
+function originalImage() {
+    let newImage = './img/person_add.svg';
+    let switchImage = document.querySelector('#mobileAddContactId img');
+    switchImage.src = newImage;
+}
+
+/**
  * This function is used to the edit and delete menu on the mobile view
  * 
  */
 function changesSaved() {
     slide('changesSavedId');
     document.getElementById('changesSavedId').style.visibility = 'visible';
+}
+
+function resetFunctionImageText() {
+    originalImage();
+    originalText();
+    originalFunction();
+}
+
+function resetFunctionText() {
+    originalImage();
+    originalText();
+    originalFunction();
 }
 
 /**
@@ -532,4 +568,28 @@ function mobileView() {
  */
 function openMobileEditMenu() {
     slide('mobileEditDeleteBoxId');
+}
+
+/**
+ * This function is to toggle the visibility (mobile view = yes)
+ * 
+ */
+function showNotOnMobileView(id) {
+    if (window.innerWidth <= 700) {
+        toggleVisibility(id, false);
+    } else {
+        toggleVisibility(id, true);
+    }
+}
+
+/**
+ * This function is to toggle the visibility (mobile view = no)
+ * 
+ */
+function showOnMobileView(id) {
+    if (window.innerWidth <= 700) {
+        toggleVisibility(id, true);
+    } else {
+        toggleVisibility(id, false);
+    }
 }
