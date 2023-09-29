@@ -541,17 +541,6 @@ textarea:focus {
     box-shadow: 2px 4px 4px 2px rgba(0, 0, 0, 0.30);
 }
 
-#createCategoryInput {
-    border-radius: 0;
-    padding: 0px;
-    padding-left: 10px;
-    height: 35px;
-    border: none;
-    border-left: 5px solid #2A3647 !important;
-    border-right: 5px solid #2A3647 !important;
-    border-bottom: 1px dotted #D1D1D1;
-    border-top: 5px solid #2A3647 !important;
-}
 
 .categoryRowLeft {
     display: flex;
@@ -568,9 +557,7 @@ textarea:focus {
     padding: 5px 5px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
-    border-left: 5px solid #2A3647;
-    border-right: 5px solid #2A3647;
-    border-bottom: 5px solid #2A3647;
+    border: 5px solid #2A3647;
 }
 
 .selectedColor {
@@ -805,6 +792,7 @@ ul {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-right: 20px;
 }
 
 .addContactPopupBoxRightBtnPosition {
