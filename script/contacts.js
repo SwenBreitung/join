@@ -296,8 +296,8 @@ function closePopup() {
 
 function closePopupMobile() {
     toggleVisibility('mobileEditDeleteBoxId', false);
-    toggleVisibility('mobileVisibilityId', false);
     toggleVisibility('mobileBackArrowId', false);
+    toggleVisibility('mobileVisibilityId', false);
     resetFunctionImageText();
     let highlightContact = document.querySelectorAll('.contactsInfo');
     highlightContact.forEach((highlightContactElement) => {
