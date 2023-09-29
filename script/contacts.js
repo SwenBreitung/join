@@ -26,6 +26,7 @@ let nextColorIndex = 0;
 async function initContacts() {
     await loadContacts();
     renderContacts();
+    mobileView();
 }
 
 async function loadContacts() {
@@ -187,6 +188,12 @@ function openContactBigInfo(contact, i, nameAbbreviation) {
     slide('contactInfoBigId');
     document.getElementById('changesSavedId').style.visibility = 'hidden';
 
+    document.getElementById('mobileVisibilityId').classList.add('mobileContactOverview');
+    toggleVisibility('mobileVisibilityId', true);
+    toggleVisibility('mobileBackArrowId', true);
+
+    changeFunction(i);
+
     highlightContact(i)
 
     document.getElementById('profilePictureBigId').innerHTML = /*html*/ `
@@ -197,6 +204,23 @@ function openContactBigInfo(contact, i, nameAbbreviation) {
     document.getElementById('nameId').innerHTML = /*html*/ `${contact['name']}`;
     document.getElementById('emailId').innerHTML = /*html*/ `<a href="mailto:${contact['email']}">${contact['email']}</a>`;
     document.getElementById('phoneId').innerHTML = /*html*/ `<a class="phoneNumber" href="tel:${contact['phone']}">${contact['phone']}</a>`;
+
+    document.getElementById('editMobileButtonId').innerHTML = /* html */ `
+    <div class="mobileEdit gap8 d-flex padding8 pointer colorOnHover" onclick="editContact(${i})">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <mask id="mask0_89141_3992" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+            width="24" height="24">
+            <rect width="24" height="24" fill="#D9D9D9" />
+        </mask>
+        <g mask="url(#mask0_89141_3992)">
+            <path
+                d="M5 19H6.4L15.025 10.375L13.625 8.975L5 17.6V19ZM19.3 8.925L15.05 4.725L16.45 3.325C16.8333 2.94167 17.3042 2.75 17.8625 2.75C18.4208 2.75 18.8917 2.94167 19.275 3.325L20.675 4.725C21.0583 5.10833 21.2583 5.57083 21.275 6.1125C21.2917 6.65417 21.1083 7.11667 20.725 7.5L19.3 8.925ZM17.85 10.4L7.25 21H3V16.75L13.6 6.15L17.85 10.4Z"
+                fill="#2A3647" />
+        </g>
+    </svg>
+    <spline class="fontSize16 mobileEditText">Edit</spline>
+</div>
+    `
 
     deleteEditContactAtIndex(i);
 }
@@ -216,9 +240,8 @@ function highlightContact(i) {
     highlightContact[i].style.color = 'white';
 }
 
-
 /**
- * This function is used to create a slide animation
+ * This function is used to create a slide in animation
  * 
  */
 function slide(id) {
@@ -228,13 +251,25 @@ function slide(id) {
     document.getElementById(id).classList.add('slide-in');
 }
 
-
 /**
  * This function is used to close the popup window
  * 
  */
 function closePopup() {
     toggleVisibility('addContactId', false);
+}
+
+function closePopupMobile() {
+    toggleVisibility('mobileEditDeleteBoxId', false);
+    toggleVisibility('mobileVisibilityId', false);
+    toggleVisibility('mobileBackArrowId', false);
+    originalText();
+    originalFunction();
+    let highlightContact = document.querySelectorAll('.contactsInfo');
+    highlightContact.forEach((highlightContactElement) => {
+        highlightContactElement.style.backgroundColor = '';
+        highlightContactElement.style.color = '';
+    });
 }
 
 
@@ -303,6 +338,7 @@ function deleteEditContactAtIndex(i) {
  */
 async function deleteContact(position) {
     changesSaved();
+    toggleVisibility('mobileEditDeleteBoxId', false);
     contactsArray.splice(position, 1);
     await setItem('contactsArray', JSON.stringify(contactsArray));
     toggleVisibility('contactInfoBigId', false);
@@ -316,6 +352,7 @@ async function deleteContact(position) {
 async function editContact(i) {
     slide('swipeContactPopupId');
     toggleVisibility('addContactId', true);
+    toggleVisibility('mobileEditDeleteBoxId', false);
 
     document.getElementById('inputNameId').value = contactsArray[i]['name'];
     document.getElementById('inputEmailId').value = contactsArray[i]['email'];
@@ -379,6 +416,11 @@ function changeFunction(i) {
     editCancelButton.onclick = function () {
         deleteContact(i);
     };
+
+    const editAddContactButton = document.getElementById('mobileAddContactId');
+    editAddContactButton.onclick = function () {
+        openMobileEditMenu(i);
+    };
 }
 
 /**
@@ -406,6 +448,11 @@ function originalFunction() {
     editCancelButton.onclick = function () {
         closePopup();
     };
+
+    const editAddContactButton = document.getElementById('mobileAddContactId');
+    editAddContactButton.onclick = function () {
+        addContact();
+    };
 }
 
 function changesSaved() {
@@ -413,3 +460,30 @@ function changesSaved() {
     document.getElementById('changesSavedId').style.visibility = 'visible';
 }
 
+function mobileView() {
+    if (window.innerWidth <= 700) {
+        toggleVisibility('mobileVisibilityId', false);
+        toggleVisibility('btnBackgroundId', false);
+        toggleVisibility('joinLogoAddContactId', false);
+        toggleVisibility('mobileAddContactId', true);
+        toggleVisibility('blueLineId', true);
+        toggleVisibility('deleteEditId', false);
+        toggleVisibility('mobileBackArrowId', false);
+        document.getElementById('contactsTitleId').classList.remove('horicontal');
+        document.getElementById('mobileVisibilityId').classList.add('mobileEditDeleteBoxId');
+    } else {
+        toggleVisibility('mobileVisibilityId', true);
+        toggleVisibility('btnBackgroundId', true);
+        toggleVisibility('joinLogoAddContactId', true);
+        toggleVisibility('mobileAddContactId', false);
+        toggleVisibility('blueLineId', false);
+        toggleVisibility('deleteEditId', true);
+        toggleVisibility('mobileBackArrowId', false);
+        document.getElementById('contactsTitleId').classList.add('horicontal');
+        document.getElementById('mobileVisibilityId').classList.remove('mobileEditDeleteBoxId');
+    }
+}
+
+function openMobileEditMenu() {
+    slide('mobileEditDeleteBoxId');
+}
