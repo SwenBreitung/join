@@ -786,4 +786,10 @@ section {
     .contactInfoTextBlock {
         height: auto !important;
     }
+
+    .cancelBtn,
+    .createContactButton {
+        padding: 18px 10px !important;
+        width: auto !important;
+    }
 }
