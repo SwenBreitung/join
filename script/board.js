@@ -1,19 +1,9 @@
+let currentDraggedElement;
+
+
 function init() {
     includeHTML();
-
 }
-
-// wenn subtaskfinish = abgehakt img
-// wenn subtaskprogress = offen img
-
-
-
-// let progressPercent = subtasksFinish.length / subtasksInProgress.length;
-// percent = Math.round(percent * 100);
-
-
-
-let currentDraggedElement;
 
 async function clearArray() {
     tasks.splice(0, tasks.length);
@@ -23,23 +13,90 @@ async function clearArray() {
 }
 
 
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
-async function deleteTask(i) {
-    tasks.splice(i, 1);
+
+//listens for focus on textbox
+document.getElementById('searchInput').addEventListener("focus", changeDivColor);
+//this is fired when the textbox is focused
+function changeDivColor() {
+    document.getElementById('fake-searchbar').style.borderColor = "#29ABE2";
+}
+
+//listens for blur on textbox
+document.getElementById('searchInput').addEventListener("blur", revertDivColor);
+
+//this is fired when the textbox is no longer focused
+function revertDivColor() {
+    document.getElementById('fake-searchbar').style.borderColor = "#A8A8A8";
+}
+
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
+
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+
+// want to move the todo with the id which is saved in currentDragElement 
+// and change the status
+async function moveTo(status) {
+    tasks[currentDraggedElement]['status'] = status;
     await setItem('tasks', JSON.stringify(tasks));
-    closeTask();
-    window.location.reload();
-
+    updateBoardHTML();
+    removeHighlight(status);
 }
 
 
-function startDragging(id) {
-    console.log("Dragging element with ID:", id);
-    let index = tasks.findIndex(task => task.id === id);
-    currentDraggedElement = index;
+function highlight(id) {
+    document.getElementById(id).classList.add('drag-area-highlight');
 }
 
 
+function removeHighlight(id) {
+    document.getElementById(id).classList.remove('drag-area-highlight');
+}
+
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
+
+
+function updateBoardHTML() {
+
+    let todo = tasks.filter(t => t['status'] == 'toDo');
+    document.getElementById('toDo').innerHTML = '';
+    for (let index = 0; index < todo.length; index++) {
+        const element = todo[index];
+        document.getElementById('toDo').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+    }
+
+    let inProgress = tasks.filter(t => t['status'] == 'in-progress');
+    document.getElementById('in-progress').innerHTML = '';
+    for (let index = 0; index < inProgress.length; index++) {
+        const element = inProgress[index];
+        document.getElementById('in-progress').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+    }
+
+    let awaitingFeedback = tasks.filter(t => t['status'] == 'awaiting-feedback');
+    document.getElementById('awaiting-feedback').innerHTML = '';
+    for (let index = 0; index < awaitingFeedback.length; index++) {
+        const element = awaitingFeedback[index];
+        document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+    }
+
+    let done = tasks.filter(t => t['status'] == 'done');
+    document.getElementById('done').innerHTML = '';
+    for (let index = 0; index < done.length; index++) {
+        const element = done[index];
+        document.getElementById('done').innerHTML += generateTaskHTML(element);
+        // searchUsers(element);
+    }
+}
 
 
 function generateTaskHTML(element) {
@@ -72,67 +129,10 @@ function generateTaskHTML(element) {
 }
 
 
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-// want to move the todo with the id which is saved in currentDragElement 
-// and change the status
-async function moveTo(status) {
-    tasks[currentDraggedElement]['status'] = status;
-    await setItem('tasks', JSON.stringify(tasks));
-    updateBoardHTML();
-    removeHighlight(status);
-}
-
-function highlight(id) {
-    document.getElementById(id).classList.add('drag-area-highlight');
-}
-
-function removeHighlight(id) {
-    document.getElementById(id).classList.remove('drag-area-highlight');
-}
-
-/* --------------------------------------- */
-
-
-
-function updateBoardHTML() {
-
-    let todo = tasks.filter(t => t['status'] == 'toDo');
-    document.getElementById('toDo').innerHTML = '';
-    for (let index = 0; index < todo.length; index++) {
-        const element = todo[index];
-        document.getElementById('toDo').innerHTML += generateTaskHTML(element);
-        // searchUsers(element);
-    }
-
-    let inProgress = tasks.filter(t => t['status'] == 'in-progress');
-    document.getElementById('in-progress').innerHTML = '';
-    for (let index = 0; index < inProgress.length; index++) {
-        const element = inProgress[index];
-        document.getElementById('in-progress').innerHTML += generateTaskHTML(element);
-        // searchUsers(element);
-
-    }
-
-    let awaitingFeedback = tasks.filter(t => t['status'] == 'awaiting-feedback');
-    document.getElementById('awaiting-feedback').innerHTML = '';
-    for (let index = 0; index < awaitingFeedback.length; index++) {
-        const element = awaitingFeedback[index];
-        document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element);
-        // searchUsers(element);
-
-    }
-
-    let done = tasks.filter(t => t['status'] == 'done');
-    document.getElementById('done').innerHTML = '';
-    for (let index = 0; index < done.length; index++) {
-        const element = done[index];
-        document.getElementById('done').innerHTML += generateTaskHTML(element);
-        // searchUsers(element);
-
-    }
+function startDragging(id) {
+    console.log("Dragging element with ID:", id);
+    let index = tasks.findIndex(task => task.id === id);
+    currentDraggedElement = index;
 }
 
 
@@ -141,19 +141,6 @@ async function openTask(i) {
     renderTaskdetailHTML(index)
 }
 
-async function switchSubtaskStatusToUndone(i, l) {
-    let splicedSubtask = tasks[i]['subtasksFinish'].splice(l, 1)
-    tasks[i]['subtasksInProgress'].push(splicedSubtask)
-    await setItem('tasks', JSON.stringify(tasks));
-    renderTaskdetailHTML(i);
-}
-
-async function switchSubtaskStatusToFinished(i, k) {
-    let splicedSubtask = tasks[i]['subtasksInProgress'].splice(k, 1)
-    tasks[i]['subtasksFinish'].push(splicedSubtask)
-    await setItem('tasks', JSON.stringify(tasks));
-    renderTaskdetailHTML(i);
-}
 
 function renderTaskdetailHTML(i) {
 
@@ -269,25 +256,33 @@ function renderTaskdetailHTML(i) {
 }
 
 
+async function switchSubtaskStatusToFinished(i, k) {
+    let splicedSubtask = tasks[i]['subtasksInProgress'].splice(k, 1)
+    tasks[i]['subtasksFinish'].push(splicedSubtask)
+    await setItem('tasks', JSON.stringify(tasks));
+    renderTaskdetailHTML(i);
+}
+
+
+async function switchSubtaskStatusToUndone(i, l) {
+    let splicedSubtask = tasks[i]['subtasksFinish'].splice(l, 1)
+    tasks[i]['subtasksInProgress'].push(splicedSubtask)
+    await setItem('tasks', JSON.stringify(tasks));
+    renderTaskdetailHTML(i);
+}
+
+
 function closeTask() {
     document.getElementById('popup-container').classList.add('d-none');
 }
 
-//listens for focus on textbox
-document.getElementById('searchInput').addEventListener("focus", changeDivColor);
-//this is fired when the textbox is focused
-function changeDivColor() {
-    document.getElementById('fake-searchbar').style.borderColor = "#29ABE2";
+
+async function deleteTask(i) {
+    tasks.splice(i, 1);
+    await setItem('tasks', JSON.stringify(tasks));
+    closeTask();
+    window.location.reload();
 }
-
-//listens for blur on textbox
-document.getElementById('searchInput').addEventListener("blur", revertDivColor);
-
-//this is fired when the textbox is no longer focused
-function revertDivColor() {
-    document.getElementById('fake-searchbar').style.borderColor = "#A8A8A8";
-}
-
 
 
 

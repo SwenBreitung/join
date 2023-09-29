@@ -77,11 +77,19 @@ body {
     padding-bottom: 10px !important;
     padding-right: 0 !important;
     margin-bottom: 5px;
+    width: 200px !important;
 }
 
-#fake-searchbar img {
-    height: 24px;
-    width: 24px;
+
+
+.search-vector {
+    height: 32px;
+}
+
+.search-symbol {
+    padding-right: 10px;
+    height: 32px;
+    width: 32px;
 }
 
 #button-add-task {
