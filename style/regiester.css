@@ -1,5 +1,7 @@
 body {
     height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .button {
@@ -8,7 +10,7 @@ body {
 }
 
 .button:hover {
-    background-color: var(--hover-color) !important;
+    background-color: var(--headline) !important;
 }
 
 .button-guest-login {

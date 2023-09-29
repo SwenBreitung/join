@@ -78,7 +78,9 @@ body {
     box-shadow: none !important;
 }
 
+
 /* header 96px */
+
 .contacts-container {
     top: 300px;
     width: 456px;
@@ -123,7 +125,9 @@ body {
     font-weight: 400;
 }
 
+
 /* add contact container */
+
 .profilePictureArea {
     position: relative;
     width: 275px;
@@ -200,7 +204,6 @@ body {
     flex-direction: column;
     justify-content: space-around;
     gap: 8px;
-
 }
 
 .textUnderAddContactTitle {
@@ -248,7 +251,9 @@ body {
     position: relative;
 }
 
+
 /* deactivates all input focuses */
+
 textarea:focus,
 input:focus {
     outline: 1px solid #29ABE2;
@@ -278,7 +283,9 @@ input {
     margin-top: 16px;
 }
 
+
 /* all pictures of right popup side */
+
 .contactInfo img {
     width: 24px;
     height: 24px;
@@ -315,7 +322,6 @@ input {
     border: 1px solid var(--version-2-main-color, #29ABE2);
     background: #F8F8F8;
     color: #29ABE2;
-
 }
 
 .cancelBtn:hover,
@@ -334,7 +340,9 @@ input {
     border-radius: 100%;
 }
 
+
 /* Text on right side */
+
 .contactInfoBig,
 .contactsTitle {
     margin: 0 55px;
@@ -465,6 +473,7 @@ input {
     white-space: nowrap;
 }
 
+/* Basics */
 a {
     text-decoration: none !important;
 }
@@ -550,7 +559,9 @@ section {
     fill: #29ABE2 !important;
 }
 
+
 /* scroll-bar */
+
 .contacts-container::-webkit-scrollbar-button:start:decrement {
     background-position: center !important;
     background-image: url('../img/arrow_drop_up.svg') !important;
@@ -565,7 +576,9 @@ section {
     border-bottom-left-radius: 100% !important;
 }
 
+
 /* width */
+
 .contacts-container::-webkit-scrollbar {
     display: block !important;
     width: 8px !important;
@@ -573,18 +586,24 @@ section {
     /* 20px oben und unten, 0px links und rechts */
 }
 
+
 /* background */
+
 .contacts-container::-webkit-scrollbar-track {
     background-color: transparent !important;
 }
 
+
 /* color */
+
 .contacts-container::-webkit-scrollbar-thumb {
     background-color: #909090 !important;
     border-radius: 10px;
 }
 
+
 /* added from summary.html */
+
 .content {
     display: none !important;
     z-index: 0 !important;
