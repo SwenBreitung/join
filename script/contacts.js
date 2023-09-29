@@ -183,46 +183,80 @@ function getColor() {
  * This function is used to display the contact info in a big container
  * 
  */
-//
 function openContactBigInfo(contact, i, nameAbbreviation) {
     slide('contactInfoBigId');
     document.getElementById('changesSavedId').style.visibility = 'hidden';
 
-    document.getElementById('mobileVisibilityId').classList.add('mobileContactOverview');
-    toggleVisibility('mobileVisibilityId', true);
-    toggleVisibility('mobileBackArrowId', true);
+    showArrowMobileView();
 
     changeFunction(i);
 
     highlightContact(i)
 
-    document.getElementById('profilePictureBigId').innerHTML = /*html*/ `
-    <div class="profilePictureBig horicontalAndVertical fontSize47" style="background-color: ${contact.color}" id="nameAbbreviationId">
-    ${nameAbbreviation}
-    </div>
-    `;
+    document.getElementById('profilePictureBigId').innerHTML = contactImage(contact, nameAbbreviation);
+    contactDescription(contact);
+
+    document.getElementById('editMobileButtonId').innerHTML = editContactMobile(i);
+    deleteEditContactAtIndex(i);
+}
+
+/**
+ * This function is used to show the back button on the mobile view
+ * 
+ */
+function showArrowMobileView() {
+    document.getElementById('mobileVisibilityId').classList.add('mobileContactOverview');
+    toggleVisibility('mobileVisibilityId', true);
+    if (window.innerWidth <= 700) {
+        toggleVisibility('mobileBackArrowId', true);
+    } else {
+        toggleVisibility('mobileBackArrowId', false);
+    }
+}
+
+/**
+ * This function is used to show the color image on the contact detail view
+ * 
+ */
+function contactImage(contact, nameAbbreviation) {
+    return /*html*/ `
+<div class="profilePictureBig horicontalAndVertical fontSize47" style="background-color: ${contact.color}" id="nameAbbreviationId">
+${nameAbbreviation}
+</div>
+`;
+}
+
+/**
+ * This function is used to show the contact description on the detail view
+ * 
+ */
+function contactDescription(contact) {
     document.getElementById('nameId').innerHTML = /*html*/ `${contact['name']}`;
     document.getElementById('emailId').innerHTML = /*html*/ `<a href="mailto:${contact['email']}">${contact['email']}</a>`;
     document.getElementById('phoneId').innerHTML = /*html*/ `<a class="phoneNumber" href="tel:${contact['phone']}">${contact['phone']}</a>`;
+}
 
-    document.getElementById('editMobileButtonId').innerHTML = /* html */ `
-    <div class="mobileEdit gap8 d-flex padding8 pointer colorOnHover" onclick="editContact(${i})">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <mask id="mask0_89141_3992" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
-            width="24" height="24">
-            <rect width="24" height="24" fill="#D9D9D9" />
-        </mask>
-        <g mask="url(#mask0_89141_3992)">
-            <path
-                d="M5 19H6.4L15.025 10.375L13.625 8.975L5 17.6V19ZM19.3 8.925L15.05 4.725L16.45 3.325C16.8333 2.94167 17.3042 2.75 17.8625 2.75C18.4208 2.75 18.8917 2.94167 19.275 3.325L20.675 4.725C21.0583 5.10833 21.2583 5.57083 21.275 6.1125C21.2917 6.65417 21.1083 7.11667 20.725 7.5L19.3 8.925ZM17.85 10.4L7.25 21H3V16.75L13.6 6.15L17.85 10.4Z"
-                fill="#2A3647" />
-        </g>
-    </svg>
-    <spline class="fontSize16 mobileEditText">Edit</spline>
+/**
+ * This function is used to display the Edit Button on the mobile view
+ * 
+ */
+function editContactMobile(i) {
+    return /* html */ `
+<div class="mobileEdit gap8 d-flex padding8 pointer colorOnHover" onclick="editContact(${i})">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <mask id="mask0_89141_3992" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+        width="24" height="24">
+        <rect width="24" height="24" fill="#D9D9D9" />
+    </mask>
+    <g mask="url(#mask0_89141_3992)">
+        <path
+            d="M5 19H6.4L15.025 10.375L13.625 8.975L5 17.6V19ZM19.3 8.925L15.05 4.725L16.45 3.325C16.8333 2.94167 17.3042 2.75 17.8625 2.75C18.4208 2.75 18.8917 2.94167 19.275 3.325L20.675 4.725C21.0583 5.10833 21.2583 5.57083 21.275 6.1125C21.2917 6.65417 21.1083 7.11667 20.725 7.5L19.3 8.925ZM17.85 10.4L7.25 21H3V16.75L13.6 6.15L17.85 10.4Z"
+            fill="#2A3647" />
+    </g>
+</svg>
+<spline class="fontSize16 mobileEditText">Edit</spline>
 </div>
-    `
-
-    deleteEditContactAtIndex(i);
+`
 }
 
 /**
@@ -386,6 +420,8 @@ function saveContact(i) {
     toggleVisibility('contactInfoBigId', false);
     changesSaved()
 
+    toggleVisibility('mobileBackArrowId', false);
+    toggleVisibility('mobileVisibilityId', false);
     closePopup();
     highlightContact(i);
     renderContacts();
@@ -455,11 +491,19 @@ function originalFunction() {
     };
 }
 
+/**
+ * This function is used to the edit and delete menu on the mobile view
+ * 
+ */
 function changesSaved() {
     slide('changesSavedId');
     document.getElementById('changesSavedId').style.visibility = 'visible';
 }
 
+/**
+ * This function is used to disable and enable some id's on the mobile view
+ * 
+ */
 function mobileView() {
     if (window.innerWidth <= 700) {
         toggleVisibility('mobileVisibilityId', false);
@@ -468,7 +512,6 @@ function mobileView() {
         toggleVisibility('mobileAddContactId', true);
         toggleVisibility('blueLineId', true);
         toggleVisibility('deleteEditId', false);
-        toggleVisibility('mobileBackArrowId', false);
         document.getElementById('contactsTitleId').classList.remove('horicontal');
         document.getElementById('mobileVisibilityId').classList.add('mobileEditDeleteBoxId');
     } else {
@@ -478,12 +521,15 @@ function mobileView() {
         toggleVisibility('mobileAddContactId', false);
         toggleVisibility('blueLineId', false);
         toggleVisibility('deleteEditId', true);
-        toggleVisibility('mobileBackArrowId', false);
         document.getElementById('contactsTitleId').classList.add('horicontal');
         document.getElementById('mobileVisibilityId').classList.remove('mobileEditDeleteBoxId');
     }
 }
 
+/**
+ * This function is used to show an animation on the menu on the mobile view
+ * 
+ */
 function openMobileEditMenu() {
     slide('mobileEditDeleteBoxId');
 }
