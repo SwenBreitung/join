@@ -2,14 +2,25 @@ let dialog = document.getElementById('dialog');
 
 
 function init() {
+    startAnimation();
     loadLogIn();
     loadUsers();
+
 }
 
 
 function loadLogIn() {
     dialog.innerHTML = loadTempleteLogIn();
 }
+
+
+function startAnimation() {
+    if (!document.referrer) { // Wenn referrer leer ist
+        document.querySelector('.join-logo-contain').classList.add('animated');
+        document.querySelector('.join-logo-contain').classList.remove('d-none');
+        document.querySelector('.join-logo').classList.add('animated');
+    }
+};
 
 
 function loadRegister() {

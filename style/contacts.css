@@ -78,7 +78,9 @@ body {
     box-shadow: none !important;
 }
 
+
 /* header 96px */
+
 .contacts-container {
     top: 300px;
     width: 456px;
@@ -123,7 +125,9 @@ body {
     font-weight: 400;
 }
 
+
 /* add contact container */
+
 .profilePictureArea {
     position: relative;
     width: 275px;
@@ -200,7 +204,6 @@ body {
     flex-direction: column;
     justify-content: space-around;
     gap: 8px;
-
 }
 
 .textUnderAddContactTitle {
@@ -248,7 +251,9 @@ body {
     position: relative;
 }
 
+
 /* deactivates all input focuses */
+
 textarea:focus,
 input:focus {
     outline: 1px solid #29ABE2;
@@ -278,7 +283,9 @@ input {
     margin-top: 16px;
 }
 
+
 /* all pictures of right popup side */
+
 .contactInfo img {
     width: 24px;
     height: 24px;
@@ -315,7 +322,6 @@ input {
     border: 1px solid var(--version-2-main-color, #29ABE2);
     background: #F8F8F8;
     color: #29ABE2;
-
 }
 
 .cancelBtn:hover,
@@ -334,7 +340,9 @@ input {
     border-radius: 100%;
 }
 
+
 /* Text on right side */
+
 .contactInfoBig,
 .contactsTitle {
     margin: 0 55px;
@@ -412,7 +420,9 @@ input {
     cursor: default;
 }
 
+
 /* Basics */
+
 a {
     text-decoration: none !important;
 }
@@ -476,7 +486,6 @@ section {
     0% {
         transform: translateX(400%);
     }
-
     100% {
         transform: translateX(0);
     }
@@ -486,7 +495,9 @@ section {
     fill: #29ABE2 !important;
 }
 
+
 /* scroll-bar */
+
 .contacts-container::-webkit-scrollbar-button:start:decrement {
     background-position: center !important;
     background-image: url('../img/arrow_drop_up.svg') !important;
@@ -501,7 +512,9 @@ section {
     border-bottom-left-radius: 100% !important;
 }
 
+
 /* width */
+
 .contacts-container::-webkit-scrollbar {
     display: block !important;
     width: 8px !important;
@@ -509,18 +522,24 @@ section {
     /* 20px oben und unten, 0px links und rechts */
 }
 
+
 /* background */
+
 .contacts-container::-webkit-scrollbar-track {
     background-color: transparent !important;
 }
 
+
 /* color */
+
 .contacts-container::-webkit-scrollbar-thumb {
     background-color: #909090 !important;
     border-radius: 10px;
 }
 
+
 /* added from summary.html */
+
 .content {
     display: none !important;
     z-index: 0 !important;
@@ -537,60 +556,46 @@ section {
         margin-bottom: 140px !important;
         gap: 0;
     }
-
     .contactsTitle img {
         transform: rotate(90deg);
     }
-
     .profilePictureArea vertical {
         display: none !important;
     }
-
     .leftSideAddContactPopup {
         padding: 66px 16px;
     }
-
     .leftSideAddContactPopup img {
         top: 70px !important;
         left: 18px !important;
     }
-
     .fontSize61 {
         font-size: 40px !important;
     }
-
     .profilePicAndNameBig {
         margin-bottom: 24px;
     }
-
-
-
 }
 
 @media (max-width: 1120px) {
-
     .addNewContactButton,
     .firstLetterOverContact {
         width: 300px;
     }
-
     .contacts-container {
         width: 375px !important;
         padding-left: 8px !important;
         padding-right: 8px !important;
     }
-
     .contactsTitle {
         margin-left: 25px !important;
         margin-right: 25px !important;
         text-align: center;
     }
-
     .contactInfoBig {
         margin-left: 25px !important;
         margin-right: 25px !important;
     }
-
     .contactsTitle img {
         transform: rotate(90deg);
     }
@@ -606,54 +611,43 @@ section {
 }
 
 @media (max-width: 870px) {
-
     .addNewContactButton img {
         display: none;
     }
-
     .addNewContactButton,
     .firstLetterOverContact {
         width: 200px;
     }
-
     .contacts-container {
         width: 280px !important;
         padding-left: 8px !important;
         padding-right: 8px !important;
     }
-
     .contactsTitle {
         margin-left: 8px !important;
         margin-right: 8px !important;
         text-align: center;
     }
-
     .contactInfoBig {
         margin-left: 8px !important;
         margin-right: 8px !important;
     }
-
     .contactsTitle img {
         transform: rotate(90deg);
     }
-
     .fontSize47 {
         font-size: 20px !important;
         font-weight: 750 !important;
     }
-
     .fontSize20 {
         font-size: 12px !important;
     }
-
     #profilePictureBigId {
         display: none !important;
     }
-
     #nameId {
         margin-bottom: 16px;
     }
-
     .addNewContactButton {
         width: 230px !important;
     }
@@ -663,36 +657,29 @@ section {
     .mobileDelete {
         display: none !important;
     }
-
     .scrollingContainer {
         margin-top: 0 !important;
     }
-
     .contactPage {
         width: 100% !important;
     }
-
     .contentContact {
         display: flex;
         flex-direction: row !important;
         padding-left: 0px !important;
         width: 100vw !important;
     }
-
     .contacts-container {
         width: 100% !important;
     }
-
     .firstLetterOverContact {
         width: 100% !important;
     }
-
     #contactsId {
         width: 100vw !important;
         padding-left: 38px !important;
         padding-right: 38px !important;
     }
-
     .addContactPopup {
         display: flex !important;
         flex-direction: column !important;
@@ -700,7 +687,6 @@ section {
         height: calc(100vh - 20px) !important;
         width: calc(100vw - 32px) !important;
     }
-
     .leftSideAddContactPopup {
         border-top-right-radius: 30px !important;
         border-bottom-left-radius: 0 !important;
@@ -708,7 +694,6 @@ section {
         width: calc(100vw - 32px) !important;
         padding: 66px 24px !important;
     }
-
     .rightSidePopup {
         flex-direction: column;
         align-items: center !important;
@@ -716,23 +701,18 @@ section {
         width: 100% !important;
         height: calc(100vh * 0.6) !important;
     }
-
     .profilePictureArea {
         position: absolute !important;
     }
-
     .textUnderAddContactTitle {
         margin-bottom: 13.5px !important;
     }
-
     .circle {
         margin-top: -60px !important;
     }
-
     .personInCircle {
         top: 0px;
     }
-
     .contactInfo {
         width: 100%;
         height: auto !important;
@@ -741,34 +721,28 @@ section {
         width: 90% !important;
         gap: 15px !important;
     }
-
     .addContactButtonContainer {
         z-index: 0 !important;
         justify-content: center;
     }
-
     .cancelBtn {
         margin-right: 20px !important;
         visibility: hidden;
     }
-
     .inputName input,
     .inputEmail input,
     .inputPhone input {
         width: calc(100vw - 64px) !important;
         height: calc(26px + 15px) !important;
     }
-
     .closePopupCross path {
         fill: white !important;
     }
-
     .closePopupCross {
         position: absolute;
         top: calc(0px - (100vh * 0.4) + 24px) !important;
         right: 32px !important;
     }
-
     .mobileAddContact {
         position: absolute;
         bottom: calc(80px + 32px);
@@ -779,16 +753,13 @@ section {
         border-radius: 100%;
         box-shadow: -2px 0 6px 0 rgb(0, 0, 0, 0.2);
     }
-
     .mobileAddContact img {
         width: 32px;
         height: 32px;
     }
-
     .mobileAddContact:hover {
         background-color: #29ABE2;
     }
-
     .contacts-container {
         /* margin-bottom: calc(80px + 90px) !important; */
     }

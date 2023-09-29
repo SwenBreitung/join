@@ -164,15 +164,12 @@
         padding-right: 15px;
         margin-bottom: 110px;
     }
-
     .headerHeadlineBox {
         display: none !important;
     }
-
     .headImgLeft {
         display: unset;
     }
-
     /*------------------------------------------------*/
     #header-summary {
         margin-bottom: 0px;
@@ -183,7 +180,6 @@
         margin-left: 9px;
         margin-top: 0;
     }
-
     /*Sidebar*/
     .sidebar {
         position: fixed;
@@ -198,15 +194,12 @@
         width: 100vw;
         background-color: var(--main-color) !important;
     }
-
     .logo-container {
         display: none;
     }
-
     .sidebar-bottom {
         display: none;
     }
-
     .sidebar-text {
         padding-bottom: 13px;
         padding-top: 13px;
@@ -217,19 +210,16 @@
         font-size: 15px;
         width: 23%;
     }
-
     .sidebar-text-sub {
         display: flex;
         flex-direction: column;
         align-items: center;
         padding-left: 0px;
     }
-
     .sidebar-text img {
         height: 26px;
         width: 26px;
     }
-
     .sidebar-text-area {
         display: flex;
         align-items: center;
@@ -240,11 +230,9 @@
         width: 100%;
         flex-direction: row;
     }
-
     .police {
         display: none;
     }
-
     /* header {
         display: none;
     } */
@@ -258,7 +246,6 @@
         margin-left: 9px;
         margin-top: 0;
     }
-
     /* ? */
     /* ? */
     .header-mobile-containe {
@@ -268,18 +255,15 @@
         height: 0px;
         padding-top: 10px;
     }
-
     /* ? */
     .header-mobile {
         display: flex;
         background-color: var(--main-color);
         width: 100%;
     }
-
     .sidebar-mobile {
         display: flex;
     }
-
     .sidebar-mobile {
         display: flex;
         width: 100%;
