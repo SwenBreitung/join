@@ -6,6 +6,7 @@
 body {
     display: flex;
     flex-direction: column;
+    background-color: var(--body-background-color) !important;
 }
 
 .button {
@@ -20,8 +21,9 @@ body {
 .button-guest-login {
     background-color: var(--text-white)!important;
     color: var(--main-color) !important;
-    margin: 35px;
+    /* margin: 30px; */
     height: 51px !important;
+    width: 145px !important;
     min-width: 161 !important;
     padding-top: 4px !important;
     padding-right: 16px !important;
@@ -86,6 +88,7 @@ input {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 32px;
 }
 
 header {
@@ -123,7 +126,20 @@ header {
     gap: 16px;
 }
 
-@media (max-width: 500px) {
+.police a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.police :hover a {
+    color: var(--headline);
+    font-weight: bold;
+}
+
+@media (max-width: 700px) {
+    body {
+        padding: 12px;
+    }
     header {
         display: flex;
         justify-content: space-between;
@@ -132,15 +148,20 @@ header {
         padding-right: 15px;
         padding-left: 15px;
     }
+    span {
+        font-weight: bold;
+    }
     .sing-up-mobile {
         padding-top: 90px;
         display: flex;
         justify-content: space-around;
         height: 49px;
+        z-index: 1;
+        align-items: center;
     }
     .button-sing-up-mobile {
-        height: 30px !important;
-        width: 110px !important;
+        height: 48px !important;
+        width: 80px !important;
         display: flex !important;
         align-content: center !important;
         align-items: center !important;
@@ -162,13 +183,17 @@ header {
     .checkbox a {
         padding: 10px;
     }
+    .buttons {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 375px) {
     .sing-up-mobile {
         display: flex;
         justify-content: space-around;
-        padding-top: 0;
+        padding-top: 44px;
         height: 0;
     }
     .checkbox {

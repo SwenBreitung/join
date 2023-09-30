@@ -9,6 +9,7 @@ body {
     width: 100vw;
     height: 100vh;
     background: #F6F7F8;
+    z-index: 2;
 }
 
 .join-logo {
