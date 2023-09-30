@@ -116,24 +116,23 @@
                     <img class="addContactPopupBoxRightImg" src="./img/person.svg">
                 </div>
                 <div class="addContactPopupBoxRightFormPosition">
-                    <form onsubmit="return false">
+                    <form onsubmit="createContactByPopup(); return false;">
                         <div class="custom-select">
-                            <input placeholder="Name" type="text">
+                            <input required id="inputNameId" placeholder="Name" type="text">
                             <img class="inputAbsolut" src="img/person-white.svg" alt="">
                         </div>
                         <div class="custom-select">
-                            <input placeholder="Email" type="text">
+                            <input required id="inputEmailId" placeholder="Email" type="text">
                             <img class="inputAbsolut" src="img/mail.svg" alt="">
                         </div>
                         <div class="custom-select">
-                            <input placeholder="Phone" type="text">
+                            <input required id="inputPhoneId" placeholder="Phone" type="text">
                             <img class="inputAbsolut" src="img/call.svg" alt="">
                         </div>
                         <div class="addContactPopupBoxRightBtnPosition">
-                            <button onclick="toggleVisibilityAddTask('contactPopupByAddTask', '')"
-                                class="clearBtn">Cancel<img class="clearImg" src="./img/crossAddTask.svg"
-                                    alt=""></button>
-                            <button class="createBtn blueBtn">Create contact<img class="createImg"
+                            <button type="reset" onclick="clearContactPopup()" class="clearBtn">Cancel<img
+                                    class="clearImg" src="./img/crossAddTask.svg" alt=""></button>
+                            <button type="submit" class="createBtn blueBtn">Create contact<img class="createImg"
                                     src="./img/check.svg"></button>
                         </div>
                     </form>
@@ -148,7 +147,7 @@
                     <img class="logoContactPopup" src="./img/join.logo-white.svg">
                     <spline class="addContactPopupBoxLeftHeadline"><b>Add new category</b>
                     </spline>
-                    <spline class="addContactPopupBoxLeftText">Tasks are better with a team!</spline>
+                    <spline class="addContactPopupBoxLeftText">Tasks are better with a category!</spline>
                     <div class="blueUnderline"></div>
                 </div>
             </div>

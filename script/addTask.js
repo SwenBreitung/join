@@ -9,13 +9,13 @@ let selectedIndex = null;
 let selectedColorIndex = [];
 
 let colorCollection = [
-    'background: #FF7A00',
-    'background: #FC71FF',
-    'background: #1FD7C1',
-    'background: #0038FF',
-    'background: #FFC701',
-    'background: #29ABE2',
-    'background: #091931',
+    'background: #006400', 'background: #00008B', 'background: #8B0000',
+    'background: #800080', 'background: #808080', 'background: #0000CD',
+    'background: #008000', 'background: #FF0000', 'background: #8A2BE2',
+    'background: #FFA500', 'background: #2E8B57', 'background: #9932CC',
+    'background: #DC143C', 'background: #228B22', 'background: #20B2AA',
+    'background: #FF1493', 'background: #D2691E', 'background: #00CED1',
+    'background: #008080', 'background: #FF6347'
 ];
 
 let mainCategorys = [
@@ -84,7 +84,9 @@ function renderAddTaskContent() {
     categoryBox2.innerHTML = returnCategoryBox2();
     prioBox.innerHTML = returnPrioBox();
     borderColorCheck();
-    renderAllContactsForSearch();
+    renderAllSelectedContacts();
+    renderAllContactsForSearch()
+
 }
 //####################################################//
 function renderAddTaskPage() {
@@ -578,6 +580,7 @@ function renderAllSelectedContacts() {
 
 
 async function renderAllContactsForSearch(filterText = '') {
+
     await loadContacts();
     let contactZone = document.getElementById('contactsRenderContainer');
     contactZone.innerHTML = '';
@@ -604,17 +607,17 @@ async function renderAllContactsForSearch(filterText = '') {
  * @param {number} i - Index of the contact.
  * @param {string} key - Key of the contact in the `allContacts` collection.
  */
-function toggleContactSelection(i, key) {
+function toggleContactSelection(i) {
     const contact = contactsArray[i];
     const el = (suffix) => document.getElementById(`${suffix}${i}`);
     const mainElement = el('assignedContactsBox'), firstSecondary = el('assignedBox'), secondSecondary = el('assignedBoxChecked');
 
     if (mainElement.classList.contains('assignedContactsBox')) {
         selectContact(mainElement, firstSecondary, secondSecondary);
-        if (!contactCollection.includes(contact)) contactCollection.push(contact);
+        if (!contactCollection.some(c => c.name === contact.name && c.color === contact.color)) contactCollection.push(contact);
     } else {
         deselectContact(mainElement, firstSecondary, secondSecondary);
-        const index = contactCollection.indexOf(contact);
+        const index = contactCollection.findIndex(c => c.name === contact.name && c.color === contact.color);
         if (index > -1) contactCollection.splice(index, 1);
     }
     save();
@@ -658,6 +661,31 @@ function deselectContact(mainElement, firstSecondary, secondSecondary) {
     firstSecondary.classList.remove('d-none');
     secondSecondary.classList.add('d-none');
     return;
+}
+
+async function createContactByPopup() {
+    let newContact = {
+        "name": document.getElementById('inputNameId').value,
+        "nameAbbreviation": '',
+        "email": document.getElementById('inputEmailId').value,
+        "phone": document.getElementById('inputPhoneId').value,
+        "color": getColor()
+    }
+    contactsArray.push(newContact);
+    await setItem('contactsArray', JSON.stringify(contactsArray));
+
+    document.getElementById('inputNameId').value = '';
+    document.getElementById('inputEmailId').value = '';
+    document.getElementById('inputPhoneId').value = '';
+    toggleVisibilityAddTask('contactPopupByAddTask', '')
+    renderAllContactsForSearch()
+}
+
+function clearContactPopup() {
+    document.getElementById('inputNameId').value = '';
+    document.getElementById('inputEmailId').value = '';
+    document.getElementById('inputPhoneId').value = '';
+    toggleVisibilityAddTask('contactPopupByAddTask', '')
 }
 //---------------------------------------------------------------------------------//
 
@@ -945,7 +973,7 @@ function returnRenderAllSelectedContacts(contactColors, contactNamesAbbreviation
  */
 function returnRenderAllContactsForSearch(contactColor, contactNamesAbbreviation, contactNames, index) {
     let isSelected = '';
-    if (contactCollection.includes(contactNames)) {
+    if (contactCollection.some(contact => contact.name === contactNames && contact.color === contactColor)) {
         isSelected = true;
     } else {
         isSelected = false;
@@ -966,6 +994,8 @@ function returnRenderAllContactsForSearch(contactColor, contactNamesAbbreviation
     </div>
     `;
 }
+
+
 
 
 /**
