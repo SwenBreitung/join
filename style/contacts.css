@@ -210,8 +210,6 @@ body {
 
 .addContactLeftText {
     position: relative;
-    /* width: 371px;
-    height: 113px; */
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -224,7 +222,6 @@ body {
 
 .blueLine {
     position: absolute;
-    /* Dieses bottom muss später noch angepasst werden */
     bottom: 0;
     left: 0;
     height: 3px;
@@ -601,6 +598,12 @@ section {
 
 .d-none {
     display: none;
+}
+
+@media (max-width: 1345px) {
+    .contactsTitle {
+        /* flex-direction: column; */
+    }
 }
 
 @media (max-width: 700px) {

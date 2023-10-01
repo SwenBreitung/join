@@ -191,7 +191,7 @@ function openContactBigInfo(contact, i, nameAbbreviation) {
     slide('contactInfoBigId');
     showArrowMobileView();
     changeFunction(i);
-    highlightContact(i)
+    highlightContact(i);
 
     document.getElementById('profilePictureBigId').innerHTML = contactImage(contact, nameAbbreviation);
     contactDescription(contact);
@@ -206,8 +206,9 @@ function openContactBigInfo(contact, i, nameAbbreviation) {
  * 
  */
 function showArrowMobileView() {
-    document.getElementById('mobileVisibilityId').classList.add('mobileContactOverview');
     showOnMobileView('mobileBackArrowId');
+    document.getElementById('mobileVisibilityId').classList.add('mobileContactOverview');
+
     toggleVisibility('mobileVisibilityId', true);
 }
 
@@ -377,6 +378,7 @@ async function deleteContact(i) {
     toggleVisibility('contactInfoBigId', false);
     toggleVisibility('contactsTitleId', true);
     showNotOnMobileView('mobileVisibilityId');
+    changeButtonTextToDeleted();
     renderContacts();
 }
 
@@ -423,6 +425,7 @@ function saveContact(i) {
     changesSaved();
 
     resetFunctionImageText();
+    changeText();
     toggleVisibility('mobileBackArrowId', false);
     toggleVisibility('contactInfoBigId', false);
     toggleVisibility('contactsTitleId', true);
@@ -440,6 +443,11 @@ function changeText() {
     document.querySelector('#editCancelButtonId').textContent = "Delete";
     document.querySelector('#textChangeToEditContactId').textContent = "Edit contact";
     document.querySelector('#textChangeToSaveId').textContent = "Save";
+    document.querySelector('#successfullyCreatedId').textContent = "Contact successfully saved";
+}
+
+function changeButtonTextToDeleted() {
+    document.querySelector('#successfullyCreatedId').textContent = "Contact successfully deleted";
 }
 
 /**
@@ -462,8 +470,6 @@ function changeFunction(id) {
     editAddContactButton.onclick = function () {
         openMobileEditMenu(id);
     };
-
-    // const editSaveFunction = 
 }
 
 /**
@@ -484,6 +490,7 @@ function originalText() {
     document.querySelector('#editCancelButtonId').textContent = "Cancel";
     document.querySelector('#textChangeToEditContactId').textContent = "Add contact";
     document.querySelector('#textChangeToSaveId').textContent = "Add contact";
+    document.querySelector('#successfullyCreatedId').textContent = "Contact successfully created";
 }
 
 /**
@@ -548,27 +555,19 @@ function resetFunctionText() {
  * 
  */
 function mobileView() {
-    if (window.innerWidth <= 700) {
-        toggleVisibility('mobileVisibilityId', false);
-        toggleVisibility('btnBackgroundId', false);
-        toggleVisibility('joinLogoAddContactId', false);
-        toggleVisibility('mobileAddContactId', true);
-        toggleVisibility('blueLineId', true);
-        toggleVisibility('deleteEditId', false);
-        document.getElementById('contactsTitleId').classList.remove('horicontal');
-        document.getElementById('mobileVisibilityId').classList.add('mobileEditDeleteBoxId');
+    const isMobile = window.innerWidth <= 700;
 
-    } else {
-        toggleVisibility('mobileVisibilityId', true);
-        toggleVisibility('btnBackgroundId', true);
-        toggleVisibility('joinLogoAddContactId', true);
-        toggleVisibility('mobileAddContactId', false);
-        toggleVisibility('blueLineId', false);
-        toggleVisibility('deleteEditId', true);
-        document.getElementById('contactsTitleId').classList.add('horicontal');
-        document.getElementById('mobileVisibilityId').classList.remove('mobileEditDeleteBoxId');
-    }
+    toggleVisibility('mobileVisibilityId', !isMobile);
+    toggleVisibility('btnBackgroundId', !isMobile);
+    toggleVisibility('joinLogoAddContactId', !isMobile);
+    toggleVisibility('mobileAddContactId', isMobile);
+    toggleVisibility('blueLineId', isMobile);
+    toggleVisibility('deleteEditId', !isMobile);
+
+    document.getElementById('contactsTitleId').classList.toggle('horicontal', !isMobile);
+    document.getElementById('mobileVisibilityId').classList.toggle('mobileEditDeleteBoxId', isMobile);
 }
+
 
 /**
  * This function is used to show an animation on the menu on the mobile view
