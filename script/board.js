@@ -1,9 +1,9 @@
 let currentDraggedElement;
 
 
-function init() {
-    includeHTML();
-}
+// function init() {
+//     includeHTML();
+// }
 
 async function clearArray() {
     tasks.splice(0, tasks.length);
@@ -14,7 +14,15 @@ async function clearArray() {
 
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
-
+function searchTasks() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    
+    return tasks.filter(task => 
+        task.title.toLowerCase().includes(searchTerm) || 
+        task.description.toLowerCase().includes(searchTerm)
+    );
+}
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
 //listens for focus on textbox
 document.getElementById('searchInput').addEventListener("focus", changeDivColor);
