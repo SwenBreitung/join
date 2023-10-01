@@ -123,7 +123,6 @@ function loadContactInfos(contact, nameAbbreviation, i) {
  * 
  */
 function addContact() {
-    document.getElementById('changesSavedId').style.visibility = 'hidden';
     resetFunctionText();
 
     showNotOnMobileView('cancelBtnMobileId');
@@ -157,8 +156,10 @@ async function createContact() {
 
     toggleVisibility('mobileBackArrowId', false);
     toggleVisibility('mobileVisibilityId', true);
+
     closePopup();
     renderContacts();
+    changesSaved();
     hoverNewContact(newContact);
 }
 
@@ -188,12 +189,8 @@ function getColor() {
  */
 function openContactBigInfo(contact, i, nameAbbreviation) {
     slide('contactInfoBigId');
-    document.getElementById('changesSavedId').style.visibility = 'hidden';
-
     showArrowMobileView();
-
     changeFunction(i);
-
     highlightContact(i)
 
     document.getElementById('profilePictureBigId').innerHTML = contactImage(contact, nameAbbreviation);
@@ -374,11 +371,12 @@ async function deleteContact(i) {
     changesSaved();
     resetFunctionImageText();
     toggleVisibility('mobileEditDeleteBoxId', false);
-    toggleVisibility('mobileVisibilityId', false);
     contactsArray.splice(i, 1);
     await setItem('contactsArray', JSON.stringify(contactsArray));
     toggleVisibility('mobileBackArrowId', false);
     toggleVisibility('contactInfoBigId', false);
+    toggleVisibility('contactsTitleId', true);
+    showNotOnMobileView('mobileVisibilityId');
     renderContacts();
 }
 
@@ -388,6 +386,7 @@ async function deleteContact(i) {
  */
 async function editContact(i) {
     slide('swipeContactPopupId');
+    toggleVisibility('cancelBtnMobileId', true);
     toggleVisibility('addContactId', true);
     toggleVisibility('mobileEditDeleteBoxId', false);
 
@@ -425,7 +424,9 @@ function saveContact(i) {
 
     resetFunctionImageText();
     toggleVisibility('mobileBackArrowId', false);
-    toggleVisibility('mobileVisibilityId', false);
+    toggleVisibility('contactInfoBigId', false);
+    toggleVisibility('contactsTitleId', true);
+    showNotOnMobileView('mobileVisibilityId');
     closePopup();
     highlightContact(i);
     renderContacts();
@@ -461,6 +462,8 @@ function changeFunction(id) {
     editAddContactButton.onclick = function () {
         openMobileEditMenu(id);
     };
+
+    // const editSaveFunction = 
 }
 
 /**
@@ -520,8 +523,12 @@ function originalImage() {
  * 
  */
 function changesSaved() {
-    slide('changesSavedId');
-    document.getElementById('changesSavedId').style.visibility = 'visible';
+    let changesSaved = document.getElementById('successfullyCreatedId');
+    changesSaved.classList.remove('d-none');
+    slide('successfullyCreatedId');
+    setTimeout(function () {
+        changesSaved.classList.add('d-none');
+    }, 2500);
 }
 
 function resetFunctionImageText() {
@@ -550,6 +557,7 @@ function mobileView() {
         toggleVisibility('deleteEditId', false);
         document.getElementById('contactsTitleId').classList.remove('horicontal');
         document.getElementById('mobileVisibilityId').classList.add('mobileEditDeleteBoxId');
+
     } else {
         toggleVisibility('mobileVisibilityId', true);
         toggleVisibility('btnBackgroundId', true);

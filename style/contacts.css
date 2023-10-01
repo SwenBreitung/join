@@ -63,6 +63,18 @@ body {
     gap: 16px;
 }
 
+.successfullyBtn {
+    position: absolute;
+    bottom: 160px;
+    left: 711px;
+    background: #2A3647;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 326px;
+    height: 74px !important;
+}
+
 .button:hover {
     background: #29ABE2 !important;
 }
@@ -94,8 +106,8 @@ body {
     overflow-y: scroll;
 }
 
-.marginBottom32px {
-    margin-bottom: 47px;
+.emptyContainer {
+    height: 78px;
 }
 
 .scrollingContainer {
@@ -409,15 +421,6 @@ input {
     margin-right: 8px;
 }
 
-#changesSavedId {
-    visibility: hidden;
-    position: absolute;
-    top: 90vh;
-    right: 5vh;
-    z-index: 4;
-    cursor: default;
-}
-
 .mobileEditDeleteBox {
     position: absolute;
     bottom: calc(80px + 32px);
@@ -622,6 +625,7 @@ section {
 
     .contacts-container {
         width: 100% !important;
+        height: calc(100vh - 96px - 80px) !important;
     }
 
     .firstLetterOverContact {
@@ -660,10 +664,6 @@ section {
 
     .profilePictureArea {
         position: absolute !important;
-    }
-
-    .textUnderAddContactTitle {
-        margin-bottom: 13.5px !important;
     }
 
     .circle {
@@ -729,10 +729,6 @@ section {
         background-color: #29ABE2;
     }
 
-    .contacts-container {
-        /* margin-bottom: calc(80px + 90px) !important; */
-    }
-
     .mobileContactOverview {
         position: absolute;
         top: 80px;
@@ -791,5 +787,10 @@ section {
     .createContactButton {
         padding: 18px 10px !important;
         width: auto !important;
+    }
+
+    .successfullyBtn {
+        bottom: 120px !important;
+        left: 12px !important;
     }
 }
