@@ -5,6 +5,10 @@ let currentDraggedElement;
 //     includeHTML();
 // }
 
+/**
+ * This function is used to clear all values of the tasks array
+ * 
+ */
 async function clearArray() {
     tasks.splice(0, tasks.length);
     currentId = ""
@@ -14,14 +18,37 @@ async function clearArray() {
 
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
+
+
+/**
+ * This function filters the tasks array for title and description  
+ * @returns new arrays for every element of the content who matches with the value of the searchInput 
+ */
 function searchTasks() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    
+    const searchValue = document.getElementById('searchInput').value.toLowerCase();
+    console.log("searching")
     return tasks.filter(task => 
-        task.title.toLowerCase().includes(searchTerm) || 
-        task.description.toLowerCase().includes(searchTerm)
+        task.title.toLowerCase().includes(searchValue) || 
+        task.description.toLowerCase().includes(searchValue)
     );
 }
+
+ /**
+  * This function displays the results of the search
+  * 
+  */
+ function renderSearchResults(){
+    let results = searchTasks();
+    console.log(results)
+    let resultsContainer = document.getElementById('searchResults');
+    resultsContainer.innerHTML = '';
+
+    results.forEach(task => {
+        resultsContainer.innerHTML += generateTaskHTML(task)
+    })
+}
+
+
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
 //listens for focus on textbox
@@ -50,6 +77,11 @@ function allowDrop(ev) {
 
 // want to move the todo with the id which is saved in currentDragElement 
 // and change the status
+
+/**
+ * 
+ * @param {string} status 
+ */
 async function moveTo(status) {
     tasks[currentDraggedElement]['status'] = status;
     await setItem('tasks', JSON.stringify(tasks));

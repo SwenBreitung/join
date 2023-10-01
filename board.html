@@ -37,10 +37,9 @@
             <h1>Board</h1>
             <form class="searchbox" role="search">
                 <div id="fake-searchbar">
-                    <input id="searchInput" onkeydown="boardSearch()" aria-label="Search" placeholder="Find Task"
-                        required>
+                    <input id="searchInput" onkeydown="renderSearchResults()" aria-label="Search" placeholder="Find Task">
                     <img class="search-vector" src="img/VectorSearchbar.svg">
-                    <img class="search-symbol" src="img/search.svg">
+                    <img onclick="searchTasks()" class="search-symbol" src="img/search.svg">
                 </div>
                 <button onclick="toggleVisibilityAddTask('', 'addTaskPop')" id="button-ad-task" type="button"
                     class="button">Add task<img src="img/plusAddTaskWhite.svg" alt="">
@@ -53,7 +52,7 @@
         <!-- <div> -->
         <div class="contentposition">
 
-            <div class="board-main-section">
+            <div id="searchResults" class="board-main-section">
 
                 <section>
                     <div class="statusheadline">
