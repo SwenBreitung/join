@@ -98,6 +98,10 @@ body {
     width: 32px;
 }
 
+.searchbar-symbol:hover {
+    cursor: pointer;
+}
+
 #button-add-task {
     white-space: nowrap;
     background-color: var(--main-color);

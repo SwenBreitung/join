@@ -27,6 +27,7 @@ async function clearArray() {
  * @returns new arrays for every element of the content who matches with the value of the searchInput 
  */
 function searchTasks() {
+    document.getElementById('contentposition').classList.add('d-none');
     const searchValue = document.getElementById('searchInput').value.toLowerCase();
     console.log("searching")
     return tasks.filter(task =>
@@ -55,9 +56,10 @@ function renderSearchResults() {
 
 function clearInput() {
     document.getElementById('searchInput').value = '';
+    document.getElementById('searchResults').innerHTML = '';
     document.getElementById('searchLogo').classList.remove('d-none');
     document.getElementById('searchClose').classList.add('d-none')
-    includeHTMl();
+    document.getElementById('contentposition').classList.remove('d-none');
 }
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
