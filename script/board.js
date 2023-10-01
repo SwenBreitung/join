@@ -38,6 +38,9 @@ function searchTasks() {
   * 
   */
  function renderSearchResults(){
+    document.getElementById('searchLogo').classList.add('d-none');
+    document.getElementById('searchClose').classList.remove('d-none')
+    // x d-none weg lupe d-none hin x onclick = reset function to normal board view
     let results = searchTasks();
     console.log(results)
     let resultsContainer = document.getElementById('searchResults');
@@ -48,6 +51,12 @@ function searchTasks() {
     })
 }
 
+function clearInput(){
+    document.getElementById('searchInput').value = '';
+    document.getElementById('searchLogo').classList.remove('d-none');
+    document.getElementById('searchClose').classList.add('d-none')
+    includeHTMl();
+}
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
