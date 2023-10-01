@@ -42,13 +42,13 @@ body {
     height: 110px;
     position: fixed;
     margin-top: 56px;
-    left: 200px;
+    left: 243px;
     top: 0px;
     z-index: 2;
     background-color: var(--main-background-color);
     padding-left: 96px;
     padding-right: 96px;
-    max-width: calc(100vw - 200px);
+    max-width: calc(100vw - 243px);
     padding-bottom: 15px;
 }
 
@@ -136,8 +136,8 @@ body {
     bottom: 0;
     display: flex;
     flex-direction: column;
-    left: 200px;
-    max-width: calc(100vw - 200px);
+    left: 243px;
+    max-width: calc(100vw - 243px);
     margin-top: 56px;
     width: 100%;
     max-height: calc(100vh - 125px);

@@ -580,7 +580,6 @@ function renderAllSelectedContacts() {
 
 
 async function renderAllContactsForSearch(filterText = '') {
-
     await loadContacts();
     let contactZone = document.getElementById('contactsRenderContainer');
     contactZone.innerHTML = '';
@@ -607,7 +606,8 @@ async function renderAllContactsForSearch(filterText = '') {
  * @param {number} i - Index of the contact.
  * @param {string} key - Key of the contact in the `allContacts` collection.
  */
-function toggleContactSelection(i) {
+async function toggleContactSelection(i) {
+    await loadContacts();
     const contact = contactsArray[i];
     const el = (suffix) => document.getElementById(`${suffix}${i}`);
     const mainElement = el('assignedContactsBox'), firstSecondary = el('assignedBox'), secondSecondary = el('assignedBoxChecked');
@@ -673,12 +673,11 @@ async function createContactByPopup() {
     }
     contactsArray.push(newContact);
     await setItem('contactsArray', JSON.stringify(contactsArray));
-
+    changesSaved();
     document.getElementById('inputNameId').value = '';
     document.getElementById('inputEmailId').value = '';
     document.getElementById('inputPhoneId').value = '';
     toggleVisibilityAddTask('contactPopupByAddTask', '')
-    renderAllContactsForSearch()
 }
 
 function clearContactPopup() {
