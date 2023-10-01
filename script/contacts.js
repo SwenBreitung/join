@@ -27,6 +27,7 @@ async function initContacts() {
     await loadContacts();
     renderContacts();
     mobileView();
+    markCategory();
 }
 
 async function loadContacts() {
