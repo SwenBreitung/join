@@ -1,9 +1,11 @@
 let currentDraggedElement;
 
 
-// function init() {
-//     includeHTML();
-// }
+async function init() {
+    includeHTML();
+    tasks = JSON.parse(await getItem('tasks'));
+    updateBoardHTML();
+}
 
 /**
  * This function is used to clear all values of the tasks array
