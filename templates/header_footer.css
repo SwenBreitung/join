@@ -64,47 +64,59 @@
     flex-direction: column;
     justify-content: space-around;
     height: 100vh;
-    width: 200px;
+    width: 243px;
     background-color: var(--main-color) !important;
     z-index: 1;
 }
 
 .sidebar-text {
-    width: 100%;
-    padding-bottom: 15px;
-    display: flex;
-    padding-top: 15px;
-}
-
-.sidebar-text:hover {
-    background-color: var(--sidebarHoverElements) !important;
+    height: 30px;
+    gap: 15px;
+    color: #CDCDCD;
 }
 
 .sidebar-text-sub {
-    padding-left: 49px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 56px;
+    width: 100%;
 }
 
-.sidebar-text a {
-    color: var(--text-color);
-    text-decoration: none;
-}
-
-.sidebar-bottom a {
-    color: var(--text-color);
-    text-decoration: none;
-}
-
-.sidebar-bottom a:hover {
-    color: var(--headline) !important;
+.sidebar-text-sub img {
+    width: 30px;
+    height: 30px;
 }
 
 .sidebar-text-area {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
 }
+
+.sidebar-text-area a {
+    text-decoration: none;
+}
+
+.sideBarCategory {
+    margin: 7.5px 0;
+}
+
+.sideBarCategory:hover {
+    background: #2A3D59;
+}
+
+/* .sidebar-text a {
+    color: var(--text-color);
+    text-decoration: none;
+} */
+
+/* .sidebar-bottom a {
+    color: var(--text-color);
+    text-decoration: none;
+} */
+
+/* .sidebar-bottom a:hover {
+    color: var(--headline) !important;
+} */
 
 
 /*------------------------------------------------*/
@@ -164,12 +176,15 @@
         padding-right: 15px;
         margin-bottom: 110px;
     }
+
     .headerHeadlineBox {
         display: none !important;
     }
+
     .headImgLeft {
         display: unset;
     }
+
     /*------------------------------------------------*/
     #header-summary {
         margin-bottom: 0px;
@@ -180,6 +195,7 @@
         margin-left: 9px;
         margin-top: 0;
     }
+
     /*Sidebar*/
     .sidebar {
         position: fixed;
@@ -194,12 +210,15 @@
         width: 100vw;
         background-color: var(--main-color) !important;
     }
+
     .logo-container {
         display: none;
     }
+
     .sidebar-bottom {
         display: none;
     }
+
     .sidebar-text {
         padding-bottom: 13px;
         padding-top: 13px;
@@ -210,16 +229,19 @@
         font-size: 15px;
         width: 23%;
     }
+
     .sidebar-text-sub {
         display: flex;
         flex-direction: column;
         align-items: center;
         padding-left: 0px;
     }
+
     .sidebar-text img {
         height: 26px;
         width: 26px;
     }
+
     .sidebar-text-area {
         display: flex;
         align-items: center;
@@ -230,9 +252,11 @@
         width: 100%;
         flex-direction: row;
     }
+
     .police {
         display: none;
     }
+
     /* header {
         display: none;
     } */
@@ -246,6 +270,7 @@
         margin-left: 9px;
         margin-top: 0;
     }
+
     /* ? */
     /* ? */
     .header-mobile-containe {
@@ -255,15 +280,18 @@
         height: 0px;
         padding-top: 10px;
     }
+
     /* ? */
     .header-mobile {
         display: flex;
         background-color: var(--main-color);
         width: 100%;
     }
+
     .sidebar-mobile {
         display: flex;
     }
+
     .sidebar-mobile {
         display: flex;
         width: 100%;
