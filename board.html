@@ -23,7 +23,7 @@
 </head>
 
 
-<body onload="init(), initAddTask()">
+<body onload="init()">
     <!-- aria-label="Search" -->
 
 
@@ -37,7 +37,8 @@
             <h1>Board</h1>
             <form class="searchbox" role="search">
                 <div id="fake-searchbar">
-                    <input id="searchInput" onkeydown="renderSearchResults()" aria-label="Search" placeholder="Find Task">
+                    <input id="searchInput" onkeydown="renderSearchResults()" aria-label="Search"
+                        placeholder="Find Task">
                     <img class="search-vector" src="img/VectorSearchbar.svg">
                     <img onclick="searchTasks()" class="searchbar-symbol" id="searchLogo" src="img/search.svg">
                     <img src="img/close.svg" class="searchbar-symbol d-none" id="searchClose">

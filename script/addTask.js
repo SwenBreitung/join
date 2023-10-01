@@ -673,11 +673,11 @@ async function createContactByPopup() {
     }
     contactsArray.push(newContact);
     await setItem('contactsArray', JSON.stringify(contactsArray));
-    changesSaved();
     document.getElementById('inputNameId').value = '';
     document.getElementById('inputEmailId').value = '';
     document.getElementById('inputPhoneId').value = '';
-    toggleVisibilityAddTask('contactPopupByAddTask', '')
+    toggleVisibilityAddTask('contactPopupByAddTask', '');
+    renderAllContactsForSearch();
 }
 
 function clearContactPopup() {

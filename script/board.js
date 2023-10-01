@@ -3,7 +3,7 @@ let currentDraggedElement;
 
 async function init() {
     includeHTML();
-    tasks = JSON.parse(await getItem('tasks'));
+    await loadTasks();
     updateBoardHTML();
 }
 
@@ -29,17 +29,17 @@ async function clearArray() {
 function searchTasks() {
     const searchValue = document.getElementById('searchInput').value.toLowerCase();
     console.log("searching")
-    return tasks.filter(task => 
-        task.title.toLowerCase().includes(searchValue) || 
+    return tasks.filter(task =>
+        task.title.toLowerCase().includes(searchValue) ||
         task.description.toLowerCase().includes(searchValue)
     );
 }
 
- /**
-  * This function displays the results of the search
-  * 
-  */
- function renderSearchResults(){
+/**
+ * This function displays the results of the search
+ * 
+ */
+function renderSearchResults() {
     document.getElementById('searchLogo').classList.add('d-none');
     document.getElementById('searchClose').classList.remove('d-none')
     // x d-none weg lupe d-none hin x onclick = reset function to normal board view
@@ -53,7 +53,7 @@ function searchTasks() {
     })
 }
 
-function clearInput(){
+function clearInput() {
     document.getElementById('searchInput').value = '';
     document.getElementById('searchLogo').classList.remove('d-none');
     document.getElementById('searchClose').classList.add('d-none')

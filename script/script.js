@@ -3,7 +3,7 @@ let tasks = [];
 async function loadTasks() {
     try {
         tasks = JSON.parse(await getItem('tasks'));
-       
+
     } catch (e) {
         console.info('Could not load tasks');
     }
@@ -21,7 +21,6 @@ async function includeHTML() {
             element.innerHTML = 'Page not found';
         }
     }
-    loadTasks();
 }
 
 
