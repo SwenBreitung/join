@@ -12,20 +12,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="shortcut icon" href="img/Logo for Favicon construction.svg" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
-    <script src="templates/templates.js"></script>
+    <script defer src="templates/templates.js"></script>
 
     <script defer src="script/addTask.js"></script>
     <script src="script/contacts.js"></script>
-    <script src="./script/script.js"></script>
+    <script defer src="./script/script.js"></script>
     <script defer src="./script/board.js"></script>
     <script src="./script/storge.js"></script>
 
 </head>
 
 
-<body onload="init()">
+<body onload="initBoard()">
     <!-- aria-label="Search" -->
 
+    <!-- <div w3-include-html="summery.html"></div>  -->
 
     <div w3-include-html="templates/sidebar.html"></div>
     <div w3-include-html="templates/header.html"></div>

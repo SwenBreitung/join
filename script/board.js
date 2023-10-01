@@ -1,7 +1,7 @@
 let currentDraggedElement;
 
 
-async function init() {
+async function initBoard() {
     includeHTML();
     await loadTasks();
     updateBoardHTML();
