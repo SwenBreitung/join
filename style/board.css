@@ -4,6 +4,12 @@ body {
     width: 100vw;
 }
 
+/* added from summary.html */
+.content {
+    display: none !important;
+    z-index: 0 !important;
+}
+
 
 .text-line-through {
     text-decoration: line-through;
