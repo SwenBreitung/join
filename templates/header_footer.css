@@ -256,6 +256,10 @@
         height: 24px !important;
     }
 
+    .htmlActive {
+        border-radius: 16px;
+    }
+
     /* header {
         display: none;
     } */
