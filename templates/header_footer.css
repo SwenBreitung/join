@@ -206,6 +206,7 @@
     .sidebar {
         position: fixed;
         left: 0;
+        padding: 0 0 !important;
         top: unset;
         bottom: 0;
         display: flex;
@@ -221,46 +222,35 @@
         display: none;
     }
 
-    .sidebar-bottom {
+    .quickLinksSidebar {
         display: none;
     }
 
-    .sidebar-text {
-        padding-bottom: 13px;
-        padding-top: 13px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border-radius: 15px;
-        font-size: 15px;
-        width: 23%;
+    .sideBarCategory:hover {
+        background: none;
     }
 
     .sidebar-text-sub {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-left: 0px;
-    }
-
-    .sidebar-text img {
-        height: 26px;
-        width: 26px;
+        flex-direction: column !important;
+        font-size: 14px !important;
+        height: 76px !important;
+        width: 76px !important;
+        padding: 0 0 !important;
+        justify-content: center !important;
     }
 
     .sidebar-text-area {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        display: flex;
-        margin-right: 0px;
-        margin-left: 0px;
-        width: 100%;
-        flex-direction: row;
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 30px !important;
+        height: 80px !important;
+        justify-content: space-evenly !important;
+        align-items: center !important;
     }
 
-    .police {
-        display: none;
+    .sidebar-text-sub img {
+        width: 24px !important;
+        height: 24px !important;
     }
 
     /* header {
