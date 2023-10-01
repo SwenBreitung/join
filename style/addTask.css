@@ -142,8 +142,8 @@ textarea:focus {
     top: 0;
     right: 5px;
     display: flex;
-    left: 296px;
-    max-width: calc(100vw - 296px);
+    left: 339px;
+    max-width: calc(100vw - 339px);
     margin-top: 60px;
     z-index: 1.7;
 }
@@ -155,8 +155,8 @@ textarea:focus {
     bottom: 0px;
     display: flex;
     flex-direction: column;
-    left: 200px;
-    max-width: calc(100vw - 200px);
+    left: 243px;
+    max-width: calc(100vw - 243px);
     width: 100%;
     max-height: calc(100vh - 160px);
     overflow-y: auto;
@@ -817,8 +817,8 @@ ul {
 
     .addTaskHeadlineContainer {
         top: 0px;
-        left: 259px;
-        max-width: calc(100vw - 259px);
+        left: 302px;
+        max-width: calc(100vw - 302px);
     }
 
 
