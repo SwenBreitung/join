@@ -242,9 +242,9 @@
     .sidebar-text-area {
         display: flex !important;
         flex-direction: row !important;
-        gap: 30px !important;
         height: 80px !important;
-        justify-content: space-evenly !important;
+        width: 100vw !important;
+        justify-content: space-around !important;
         align-items: center !important;
     }
 
