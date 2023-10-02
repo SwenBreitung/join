@@ -124,6 +124,9 @@
     font-weight: bold;
 }
 
+.htmlActive {
+    background-color: #091931;
+}
 
 /*------------------------------------------------*/
 
@@ -251,6 +254,10 @@
     .sidebar-text-sub img {
         width: 24px !important;
         height: 24px !important;
+    }
+
+    .htmlActive {
+        border-radius: 16px;
     }
 
     /* header {

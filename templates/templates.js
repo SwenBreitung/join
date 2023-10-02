@@ -6,8 +6,6 @@ isPolice = false;
 isNotice = false;
 openMenu = false;
 
-
-
 function loadHeaderSidebar(boolian) {
     resetBoolians();
     includeHTML();
@@ -35,4 +33,17 @@ function openHeaderMenu() {
 
     let headerMenu = document.getElementById('menu-header-container');
     openMenu ? headerMenu.classList.remove('d-none') : headerMenu.classList.add('d-none');
+}
+
+/**
+ * This function is used to mark the active .html page
+ * 
+ */
+function markCategory() {
+    const currentPage = window.location.href.split('/').pop() || 'index.html';
+    const links = document.querySelectorAll(`.sidebar-text[href*="${currentPage}"]`);
+
+    links.forEach(link => {
+        link.querySelector('.sidebar-text-sub').classList.add('htmlActive');
+    });
 }
