@@ -145,6 +145,7 @@ body {
         margin-top: 30px;
         margin-bottom: 11px;
     }
+
     .test3 {
         padding-left: 10px;
     }
@@ -159,6 +160,7 @@ body {
         margin-right: 10px;
         margin-left: 9px;
     }
+
     .greeting-text {
         width: 145px;
         height: 145px;
@@ -185,7 +187,7 @@ body {
 #urgent {
     font-size: 32px;
     margin: 0;
-    font-weight: 700!important;
+    font-weight: 700 !important;
 }
 
 #date {
@@ -234,15 +236,19 @@ body {
         margin-top: 3px !important;
         margin-bottom: 8px;
     }
+
     body {
         overflow: hidden;
     }
+
     footer {
         margin-bottom: 0px;
     }
+
     .data-panel {
         height: 150px;
     }
+
     .main-containe {
         flex: 1;
         flex-direction: column-reverse;
@@ -250,9 +256,11 @@ body {
         height: 0px;
         padding-top: 10px;
     }
+
     .greeting-text {
         margin-right: 10px;
     }
+
     .summary-line {
         height: 6px;
         width: 167px;
@@ -260,13 +268,16 @@ body {
         margin-right: 3px;
         margin-left: 2px;
     }
+
     h1 {
         font-size: 47px !important;
     }
+
     .headline {
         display: flex;
         flex-direction: column-reverse;
     }
+
     .task-cards {
         width: 100px;
         height: 100px;

@@ -559,7 +559,7 @@ function resetFunctionImageText() {
  * 
  */
 function mobileView() {
-    const isMobile = window.innerWidth <= 700;
+    const isMobile = window.innerWidth <= 768;
 
     toggleVisibility('mobileVisibilityId', !isMobile);
     toggleVisibility('btnBackgroundId', !isMobile);

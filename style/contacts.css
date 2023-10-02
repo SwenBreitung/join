@@ -749,7 +749,7 @@ section {
     }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
     .mobileDelete {
         display: none !important;
     }
