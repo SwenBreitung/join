@@ -18,19 +18,15 @@ let colorCollection = [
     'background: #008080', 'background: #FF6347'
 ];
 
-let mainCategorys = [
-    {
-        'name': ['Technical Task', 'User Story',],
-        'color': ['background: #1FD7C1', 'background: #0038FF',],
-    }
-];
+let mainCategorys = [{
+    'name': ['Technical Task', 'User Story', ],
+    'color': ['background: #1FD7C1', 'background: #0038FF', ],
+}];
 
-let allCategorys = [
-    {
-        'name': [],
-        'color': [],
-    }
-];
+let allCategorys = [{
+    'name': [],
+    'color': [],
+}];
 
 let subTaskCollection = [];
 
@@ -38,12 +34,10 @@ let subtasksFinish = [];
 
 let contactCollection = [];
 
-let currentCategorySelected = [
-    {
-        'name': '',
-        'color': '',
-    }
-];
+let currentCategorySelected = [{
+    'name': '',
+    'color': '',
+}];
 
 let currentPrioSelected = "";
 
@@ -311,6 +305,8 @@ function createTask() {
         dueDateAddTask = document.getElementById('datepicker').value;
         save();
         addTask();
+        document.getElementById('createTaskButton').classList.remove('d-none');
+        document.getElementById('editTaskButton').classList.add('d-none');
     }
 }
 
@@ -356,12 +352,10 @@ function resetAllAddTaskElements() {
     titleAddTask = '';
     descriptionAddTask = '';
     dueDateAddTask = '';
-    currentCategorySelected = [
-        {
-            'name': '',
-            'color': '',
-        }
-    ];
+    currentCategorySelected = [{
+        'name': '',
+        'color': '',
+    }];
     subtasksFinish = [];
     subTaskCollection = [];
     selectedIndex = null;
@@ -459,7 +453,9 @@ async function toggleContactSelection(i) {
     await loadContacts();
     const contact = contactsArray[i];
     const el = (suffix) => document.getElementById(`${suffix}${i}`);
-    const mainElement = el('assignedContactsBox'), firstSecondary = el('assignedBox'), secondSecondary = el('assignedBoxChecked');
+    const mainElement = el('assignedContactsBox'),
+        firstSecondary = el('assignedBox'),
+        secondSecondary = el('assignedBoxChecked');
 
     if (mainElement.classList.contains('assignedContactsBox')) {
         selectContact(mainElement, firstSecondary, secondSecondary);
@@ -826,11 +822,11 @@ document.getElementById('assignTo').addEventListener('click', function (event) {
 
 function returnCreateCategoryColors(color, index) {
     if (color === selectedColorIndex) {
-        return/*html*/`
+        return /*html*/ `
         <div onclick='selectColor("${color}")' style="${color}" id='colorCircle${index}' class="colorCircle selectedColor"></div>
         `;
     } else {
-        return/*html*/`
+        return /*html*/ `
         <div onclick='selectColor("${color}")' style="${color}" id='colorCircle${index}' class="colorCircle"></div>
         `;
     }
@@ -840,14 +836,14 @@ function returnCreateCategoryColors(color, index) {
 function returnRenderMainCategorys(name, color, i) {
     if (currentCategorySelected[0].name === name &&
         currentCategorySelected[0].color === color) {
-        return /*html*/`
+        return /*html*/ `
         <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow selected">
             <span>${name}</span>
             <div class="colorCircle" style="${color}"></div>
         </div>
         `;
     } else {
-        return /*html*/`
+        return /*html*/ `
         <div onclick='selectCategory("main", ${i})' id='categoryMainList${i}' class="categoryRow">
             <span>${name}</span>
             <div class="colorCircle" style="${color}"></div>
@@ -860,7 +856,7 @@ function returnRenderMainCategorys(name, color, i) {
 function returnRenderAllCategorys(name, color, i) {
     if (currentCategorySelected[0].name === name &&
         currentCategorySelected[0].color === color) {
-        return /*html*/`
+        return /*html*/ `
         <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow selected">
             <span>${name}</span>
             <div class='categoryRowLeft'>
@@ -869,7 +865,7 @@ function returnRenderAllCategorys(name, color, i) {
         </div>
         `;
     } else {
-        return /*html*/`
+        return /*html*/ `
         <div onclick='selectCategory("all", ${i})' id='categoryAllList${i}' class="categoryRow">
             <span>${name}</span>
             <div class='categoryRowLeft'>
@@ -889,10 +885,10 @@ function returnRenderAllCategorys(name, color, i) {
 /**
  * Returns an HTML string representing a selected contact.
  * @param {Object} contacts - The contact object to render.
-                            * @returns {string} - HTML string for the rendered contact.
-                            */
+ * @returns {string} - HTML string for the rendered contact.
+ */
 function returnRenderAllSelectedContacts(contactColors, contactNamesAbbreviation) {
-    return /*html*/`
+    return /*html*/ `
     <div style="background-color:${contactColors}" class="assignedToContactImg">${contactNamesAbbreviation}</div>
     `;
 }
@@ -915,7 +911,7 @@ function returnRenderAllContactsForSearch(contactColor, contactNamesAbbreviation
     let mainClass = isSelected ? 'assignedContactsBoxSelected' : 'assignedContactsBox';
     let firstSecondaryClass = isSelected ? 'd-none' : '';
     let secondSecondaryClass = isSelected ? '' : 'd-none';
-    return /*html*/`
+    return /*html*/ `
     <div class="${mainClass}" id="assignedContactsBox${index}" onclick="toggleContactSelection(${index}, '${contactNames}')">
         <div class="contactBoxLeft">
             <div style="background-color:${contactColor}" class="assignedToContactImg">
@@ -984,7 +980,7 @@ function returnSettingsSecond(secondSecondary) {
  * @returns {string} - HTML string for the subtask edit container.
  */
 function returnEditContainer(i) {
-    return /*html*/`
+    return /*html*/ `
     <input id="editInput" type="text">
     <img onclick="stopSubEdit()" class="editAbsolutCross" src="img/close.svg">
     <img onclick="confirmSubEdit(${i})" class="editAbsolutCheck" src="img/SubtasksCheck.svg">
@@ -999,7 +995,7 @@ function returnEditContainer(i) {
  * @returns {string} - HTML string for the rendered subtask collection.
  */
 function returnSubTaskCollection(subCollection, i) {
-    return /*html*/`
+    return /*html*/ `
     <ul class="dFlex spaceBtw">
         <li>${subCollection}</li>
         <div>
@@ -1016,17 +1012,19 @@ function returnSubTaskCollection(subCollection, i) {
 
 
 function returnButtonAreaAddTask() {
-    return /*html*/`
+    return /*html*/ `
     <button onclick="clearButton()" class="clearBtn">Clear<img class="clearImg"
             src="./img/crossAddTask.svg" alt=""></button>
-    <button onclick="createTask()" class="createBtn blueBtn">Create Task<img class="createImg"
+    <button id="createTaskButton" onclick="createTask()" class="createBtn blueBtn">Create Task<img class="createImg"
+            src="./img/check.svg"></button>
+    <button id="editTaskButton" onclick="createTask()" class="createBtn blueBtn d-none">Edit Task<img class="createImg"
             src="./img/check.svg"></button>
     `;
 }
 
 
 function returnCategoryBox1() {
-    return /*html*/`
+    return /*html*/ `
     <input onclick="toggleVisibilityAddTask('categoryAreaV1', 'categoryAreaV2')"
         class="click" id="categoryInputV1" type="text" readonly
         value="Select task category">
@@ -1037,7 +1035,7 @@ function returnCategoryBox1() {
 
 
 function returnCategoryBox2() {
-    return /*html*/`
+    return /*html*/ `
     <input onclick="toggleVisibilityAddTask('categoryAreaV2', 'categoryAreaV1')"
         class="click" id="categoryInputV2" type="text" readonly
         value="Select task category">
@@ -1060,7 +1058,7 @@ function returnCategoryBox2() {
 
 
 function returnPrioBox() {
-    return/*html*/`
+    return /*html*/ `
     <div onclick="prioSelectedToggle('prioUrgentBtn', 'prioUrgentIcon', 'prioUrgentIconActiv', 'prioBtnActivUrgent', './img/prioUrgent.svg', true)"
         id="prioUrgentBtn" class="prioBtn">Urgent
         <img id="prioUrgentIcon" class="prioBtnIcons" src="./img/prioUrgent.svg">
@@ -1084,7 +1082,7 @@ function returnPrioBox() {
 
 
 function returnAssignToBox1() {
-    return/*html*/`
+    return /*html*/ `
         <input class="click" id="assignedToInputCover"
             onclick="toggleVisibilityAddTask('assignedToInputContainer', 'assignedToContactsInputContainer')"
             type="text" readonly value="Select contacts to assign">
@@ -1097,7 +1095,7 @@ function returnAssignToBox1() {
 
 
 function returnAssignToBox2() {
-    return/*html*/`
+    return /*html*/ `
     <input class="click" id="assignedToInput" type="text" placeholder="An:">
     <img class="inputAbsolut"
     onclick="toggleVisibilityAddTask('assignedToContactsInputContainer', 'assignedToInputContainer')"

@@ -302,11 +302,39 @@ function renderTaskdetailHTML(i) {
             </div>
             <div class="task-detail-bottom">
                 <img onclick="deleteTask(${i})" src="img/subTaskDelete.svg" alt="">
-                <img src="img/PenAddTask 1=edit.svg" alt="">
+                <img onclick="editTask(${i})"   src="img/PenAddTask 1=edit.svg" alt="">
             </div>
         </div>
     `;
 }
+
+
+async function editTask(i) {
+    document.getElementById('addTaskPop').classList.remove('d-none');
+    closeTask();
+    let taskToEdit = tasks[i];
+   console.log(taskToEdit)
+   renderAllSelectedContacts();
+    renderCategorys();
+   createCategoryWindow();
+   borderColorCheck();
+
+    document.getElementById("addTitel").value = taskToEdit.title;
+    document.getElementById("addDescription").value = taskToEdit.description;
+    document.getElementById("selectedContactsContainer").value = taskToEdit.description;
+    document.getElementById("datepicker").value = taskToEdit.dueDate;
+    document.getElementById("categoryInputV1").value = taskToEdit.status;
+
+
+
+    document.getElementById('createTaskButton').classList.add('d-none');
+    document.getElementById('editTaskButton').classList.remove('d-none');
+    
+}
+
+ 
+  
+
 
 
 async function switchSubtaskStatusToFinished(i, k) {
