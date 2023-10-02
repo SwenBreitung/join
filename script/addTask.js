@@ -49,8 +49,35 @@ let currentPrioSelected = "";
 
 let currentId = 0;
 
+let taskIdForEdit = '';
 load();
 //---------------------------------------------------------------------------------//
+
+
+//edit task//
+
+
+function editTaskWindow() {
+    let titelInput = document.getElementById('addTitel');
+    let descriptionInput = document.getElementById('addDescription');
+    let dueDateInput = document.getElementById('datepicker');
+    let assignTo1 = document.getElementById('assignedToInputContainer');
+    let assignTo2 = document.getElementById('assignedToContactsInputContainer');
+    let categoryBox1 = document.getElementById('categoryAreaV1');
+    let categoryBox2 = document.getElementById('categoryAreaV2');
+    let prioBox = document.getElementById('prioBox');
+    let buttonArea = document.getElementById('buttonAreaAddTask');
+    buttonArea.innerHTML = returnButtonAreaAddTask();
+    assignTo1.innerHTML = returnAssignToBox1();
+    assignTo2.innerHTML = returnAssignToBox2();
+    categoryBox1.innerHTML = returnCategoryBox1();
+    categoryBox2.innerHTML = returnCategoryBox2();
+    prioBox.innerHTML = returnPrioBox();
+    borderColorCheck();
+    renderAllSelectedContacts();
+    renderAllContactsForSearch();
+
+}
 
 
 //Init functions//
@@ -60,8 +87,10 @@ async function initAddTask() {
     await initializeStorage('allCategorys', allCategorys);
     await loadAddTaskCurrentId();
     await loadAddTaskAllCategorys();
+    markCategory();
     renderAddTaskContent();
 }
+
 
 async function initializeStorage(key, initialValue) {
     try {
@@ -89,8 +118,7 @@ function renderAddTaskContent() {
     prioBox.innerHTML = returnPrioBox();
     borderColorCheck();
     renderAllSelectedContacts();
-    renderAllContactsForSearch()
-
+    renderAllContactsForSearch();
 }
 //---------------------------------------------------------------------------------//
 
@@ -109,6 +137,7 @@ function save() {
     localStorage.setItem('descriptionAsText', JSON.stringify(descriptionAddTask));
     localStorage.setItem('dueDateAsText', JSON.stringify(dueDateAddTask));
     localStorage.setItem('subTaskFinishAsText', JSON.stringify(subtasksFinish));
+    localStorage.setItem('taskIdAsText', JSON.stringify(taskIdForEdit));
 }
 
 
@@ -123,6 +152,12 @@ function load() {
     let descriptionLoad = localStorage.getItem('descriptionAsText');
     let dueDateLoad = localStorage.getItem('dueDateAsText');
     let subTaskFinishLoad = localStorage.getItem('subTaskFinishAsText');
+    let taskIdLoad = localStorage.getItem('taskIdAsText');
+    returnLoad(currentCategoryLoad, currentPrioLoad, subTaskCollectionLoad, contactCollectionLoad, selectedIndexLoad, selectedColorLoad, titelLoad, descriptionLoad, dueDateLoad, subTaskFinishLoad, taskIdLoad);
+}
+
+
+function returnLoad(currentCategoryLoad, currentPrioLoad, subTaskCollectionLoad, contactCollectionLoad, selectedIndexLoad, selectedColorLoad, titelLoad, descriptionLoad, dueDateLoad, subTaskFinishLoad, taskIdLoad) {
     if (currentCategoryLoad && currentPrioLoad && subTaskCollectionLoad && contactCollectionLoad && selectedIndexLoad && selectedColorLoad && titelLoad && descriptionLoad && dueDateLoad && subTaskFinishLoad) {
         currentCategorySelected = JSON.parse(currentCategoryLoad);
         currentPrioSelected = JSON.parse(currentPrioLoad);
@@ -134,6 +169,7 @@ function load() {
         descriptionAddTask = JSON.parse(descriptionLoad);
         dueDateAddTask = JSON.parse(dueDateLoad);
         subtasksFinish = JSON.parse(subTaskFinishLoad);
+        taskIdForEdit = JSON.parse(taskIdLoad);
     }
 }
 

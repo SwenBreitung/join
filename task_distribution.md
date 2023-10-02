@@ -18,13 +18,13 @@
 
 <!-- addTask -->
 **JS:**
-
+David Peterka
 **CSS:**
-
+David Peterka
 **HTML:**
-
+David Peterka
 **Mobile View:**
-
+David Peterka
 <!-- board -->
 **JS:**
 
@@ -58,7 +58,7 @@ Bernhard Sigl (Design Optimization)
 **JS:**
 
 **CSS:**
-
+David Peterka
 **HTML:**
 
 **Mobile View:**
