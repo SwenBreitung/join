@@ -50,6 +50,11 @@ let currentPrioSelected = "";
 let currentId = 0;
 
 let taskIdForEdit = '';
+
+let statusEdit = '';
+
+let editTask = '';
+
 load();
 //---------------------------------------------------------------------------------//
 
@@ -57,7 +62,29 @@ load();
 //edit task//
 
 
+function loadEditTask(i) {
+    toggleVisibilityAddTask('', 'addTaskPop');
+    editTask.push(tasks[i]);
+    titleAddTask.push(editTask.title);
+    descriptionAddTask.push(editTask.description);
+    dueDateAddTask.push(editTask.dueDate);
+    currentPrioSelected.push(editTask.priority);
+    subTaskCollection.push(editTask.subtasksInProgress);
+    subtasksFinish.push(editTask.subtaskFinish);
+    taskIdForEdit.push(editTask.id);
+    contactCollection.nameAbbreviation.push(editTask.contactAbbreviation);
+    contactCollection.color.push(editTask.contactColor);
+    contactCollection.name.push(editTask.contactName);
+    currentCategorySelected[0].color.push(editTask.categoryColor);
+    currentCategorySelected[0].name.push(editTask.category);
+    statusEdit.push(editTask.status);
+    save()
+    editTaskWindow();
+}
+
+
 function editTaskWindow() {
+    load();
     let titelInput = document.getElementById('addTitel');
     let descriptionInput = document.getElementById('addDescription');
     let dueDateInput = document.getElementById('datepicker');
@@ -67,7 +94,10 @@ function editTaskWindow() {
     let categoryBox2 = document.getElementById('categoryAreaV2');
     let prioBox = document.getElementById('prioBox');
     let buttonArea = document.getElementById('buttonAreaAddTask');
-    buttonArea.innerHTML = returnButtonAreaAddTask();
+    titelInput.value = titleAddTask;
+    descriptionInput.value = descriptionAddTask;
+    dueDateInput.value = dueDateAddTask;
+    buttonArea.innerHTML = returnButtonAreaEditTask();
     assignTo1.innerHTML = returnAssignToBox1();
     assignTo2.innerHTML = returnAssignToBox2();
     categoryBox1.innerHTML = returnCategoryBox1();
@@ -138,6 +168,7 @@ function save() {
     localStorage.setItem('dueDateAsText', JSON.stringify(dueDateAddTask));
     localStorage.setItem('subTaskFinishAsText', JSON.stringify(subtasksFinish));
     localStorage.setItem('taskIdAsText', JSON.stringify(taskIdForEdit));
+    localStorage.setItem('statusAsText', JSON.stringify(statusEdit));
 }
 
 
@@ -153,12 +184,13 @@ function load() {
     let dueDateLoad = localStorage.getItem('dueDateAsText');
     let subTaskFinishLoad = localStorage.getItem('subTaskFinishAsText');
     let taskIdLoad = localStorage.getItem('taskIdAsText');
-    returnLoad(currentCategoryLoad, currentPrioLoad, subTaskCollectionLoad, contactCollectionLoad, selectedIndexLoad, selectedColorLoad, titelLoad, descriptionLoad, dueDateLoad, subTaskFinishLoad, taskIdLoad);
+    let statusLoad = localStorage.getItem('statusAsText');
+    returnLoad(currentCategoryLoad, currentPrioLoad, subTaskCollectionLoad, contactCollectionLoad, selectedIndexLoad, selectedColorLoad, titelLoad, descriptionLoad, dueDateLoad, subTaskFinishLoad, taskIdLoad, statusLoad);
 }
 
 
-function returnLoad(currentCategoryLoad, currentPrioLoad, subTaskCollectionLoad, contactCollectionLoad, selectedIndexLoad, selectedColorLoad, titelLoad, descriptionLoad, dueDateLoad, subTaskFinishLoad, taskIdLoad) {
-    if (currentCategoryLoad && currentPrioLoad && subTaskCollectionLoad && contactCollectionLoad && selectedIndexLoad && selectedColorLoad && titelLoad && descriptionLoad && dueDateLoad && subTaskFinishLoad) {
+function returnLoad(currentCategoryLoad, currentPrioLoad, subTaskCollectionLoad, contactCollectionLoad, selectedIndexLoad, selectedColorLoad, titelLoad, descriptionLoad, dueDateLoad, subTaskFinishLoad, taskIdLoad, statusLoad) {
+    if (currentCategoryLoad && currentPrioLoad && subTaskCollectionLoad && contactCollectionLoad && selectedIndexLoad && selectedColorLoad && titelLoad && descriptionLoad && dueDateLoad && subTaskFinishLoad && taskIdLoad && statusLoad) {
         currentCategorySelected = JSON.parse(currentCategoryLoad);
         currentPrioSelected = JSON.parse(currentPrioLoad);
         subTaskCollection = JSON.parse(subTaskCollectionLoad);
@@ -170,6 +202,7 @@ function returnLoad(currentCategoryLoad, currentPrioLoad, subTaskCollectionLoad,
         dueDateAddTask = JSON.parse(dueDateLoad);
         subtasksFinish = JSON.parse(subTaskFinishLoad);
         taskIdForEdit = JSON.parse(taskIdLoad);
+        statusEdit = JSON.parse(statusLoad);
     }
 }
 
@@ -756,6 +789,8 @@ function resetAll() {
     currentPrioSelected = "";
     save();
 }
+
+
 //---------------------------------------------------------------------------------//
 
 
@@ -1020,6 +1055,16 @@ function returnButtonAreaAddTask() {
     <button onclick="clearButton()" class="clearBtn">Clear<img class="clearImg"
             src="./img/crossAddTask.svg" alt=""></button>
     <button onclick="createTask()" class="createBtn blueBtn">Create Task<img class="createImg"
+            src="./img/check.svg"></button>
+    `;
+}
+
+
+function returnButtonAreaEditTask() {
+    return /*html*/`
+    <button onclick="cancelButtonEditTask()" class="clearBtn">Cancel<img class="clearImg"
+            src="./img/crossAddTask.svg" alt=""></button>
+    <button onclick="editTaskFinished()" class="createBtn blueBtn">Edit task<img class="createImg"
             src="./img/check.svg"></button>
     `;
 }
