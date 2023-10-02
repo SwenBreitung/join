@@ -101,7 +101,6 @@ function addNameAbbreviationInContactsArray() {
 /**
  * This function us used to display the contact infos 
  * 
- * 
  */
 function loadContactInfos(contact, nameAbbreviation, i) {
     return /* html */ `
@@ -120,6 +119,10 @@ function loadContactInfos(contact, nameAbbreviation, i) {
     `
 }
 
+/**
+ * This function is to limit the output letters
+ * 
+ */
 function maxLetters(text, maxLength) {
     if (text.length > maxLength) {
         return text.substring(0, maxLength - 3) + "...";
@@ -388,6 +391,7 @@ async function deleteContact(i) {
     toggleVisibility('contactInfoBigId', false);
     toggleVisibility('contactsTitleId', true);
     showNotOnMobileView('mobileVisibilityId');
+    toggleVisibility('mobileVisibilityId', false);
     changeButtonTextToDeleted();
     renderContacts();
 }
@@ -439,7 +443,8 @@ function saveContact(i) {
     toggleVisibility('mobileBackArrowId', false);
     toggleVisibility('contactInfoBigId', false);
     toggleVisibility('contactsTitleId', true);
-    showNotOnMobileView('mobileVisibilityId');
+    toggleVisibility('mobileVisibilityId', false);
+
     closePopup();
     highlightContact(i);
     renderContacts();
