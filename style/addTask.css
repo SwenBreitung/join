@@ -4,6 +4,7 @@ body {
     margin: 0;
 }
 
+
 section {
     display: flex;
     flex-direction: column;
@@ -144,21 +145,21 @@ textarea:focus {
     display: flex;
     left: 339px;
     max-width: calc(100vw - 339px);
-    margin-top: 60px;
+    margin-top: 90px;
     z-index: 1.7;
 }
 
 
 .contentAddTask {
     position: absolute;
-    top: 160px;
+    top: 200px;
     bottom: 0px;
     display: flex;
     flex-direction: column;
     left: 243px;
     max-width: calc(100vw - 243px);
     width: 100%;
-    max-height: calc(100vh - 160px);
+    max-height: calc(100vh - 200px);
     overflow-y: auto;
 }
 
@@ -695,6 +696,9 @@ ul {
 
 .popupContainer {
     position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     top: 0;
     left: 0;
     bottom: 0;
@@ -706,24 +710,17 @@ ul {
 }
 
 .addContactPopupBox {
-    position: absolute;
     display: flex;
-    left: 220px;
-    right: 20px;
-    top: 200px;
-    bottom: 200px;
-    max-width: calc(100vw - 240px);
-    max-height: calc(100vh - 400px);
-    width: 100%;
-    height: 100%;
+    width: 1000px;
+    height: 450px;
 }
 
 .addContactPopupBoxLeft {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     padding: 30px 22px;
-    width: 38%;
+    width: 350px;
     height: 100%;
     background-color: #2A3647;
     border-top-left-radius: 20px;
@@ -734,8 +731,8 @@ ul {
     display: flex;
     align-items: flex-start;
     flex-direction: column;
-    width: 100%;
-    height: 65%;
+    width: 300px;
+    margin-bottom: 70px;
 }
 
 .logoContactPopup {
@@ -763,7 +760,7 @@ ul {
 
 .addContactPopupBoxRight {
     display: flex;
-    width: 62%;
+    width: 100%;
     height: 100%;
     background-color: #FFF;
     border-top-right-radius: 20px;
@@ -771,17 +768,16 @@ ul {
 }
 
 .addContactPopupBoxRightImgPosition {
-    width: 30%;
+    width: 300px;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
 
 }
 
 .addContactPopupBoxRightImg {
-    width: 80px;
+    width: 110px;
     background-color: gray;
     border: 2px solid white;
     border-radius: 50%;
@@ -789,12 +785,12 @@ ul {
 }
 
 .addContactPopupBoxRightFormPosition {
-    width: 70%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    padding-right: 20px;
+    padding-right: 40px;
+    padding-left: 20px;
 }
 
 .addContactPopupBoxRightBtnPosition {
@@ -804,13 +800,12 @@ ul {
 }
 
 .addCategoryPopupBoxRightImg {
-    width: 115px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
     background-color: gray;
     border: 2px solid white;
     border-radius: 50%;
-    padding: 15px 0px;
-
+    padding: 0px 25px;
 }
 
 @media (max-width: 1080px) {
@@ -859,8 +854,120 @@ ul {
         box-sizing: border-box;
     }
 
-}
+    .addContactPopupBox {
+        display: flex;
+        flex-direction: column;
+        min-width: 320px;
+        width: 500px;
+        height: 650px;
+    }
 
+    .addContactPopupBoxLeft {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 22px;
+        width: 100%;
+        height: 450px;
+        background-color: #2A3647;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 0px;
+    }
+
+    .addContactPopupBoxLeftPosition {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+        padding-left: 60px;
+        margin-bottom: 0px;
+        margin-top: -60px;
+    }
+
+    .logoContactPopup {
+        width: 40px;
+        display: none;
+    }
+
+    .addContactPopupBoxLeftHeadline {
+        font-size: 42px;
+        font-stretch: normal;
+        color: white;
+    }
+
+    .addContactPopupBoxLeftText {
+        font-size: 20px;
+        color: white;
+    }
+
+
+    .blueUnderline {
+        width: 60px;
+        height: 3px;
+        margin-top: 3px;
+        background-color: #29ABE2;
+    }
+
+    .addContactPopupBoxRight {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background-color: #FFF;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+
+    .addContactPopupBoxRightImgPosition {
+        width: 300px;
+        margin-top: -130px;
+        height: 190px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .addContactPopupBoxRightImg {
+        width: 110px;
+        background-color: gray;
+        border: 2px solid white;
+        border-radius: 50%;
+        padding: 15px 15px;
+    }
+
+    .addContactPopupBoxRightFormPosition {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-right: 40px;
+        padding-left: 20px;
+    }
+
+    .addContactPopupBoxRightBtnPosition {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+        gap: 15px;
+    }
+
+    .addCategoryPopupBoxRightImg {
+        width: 120px;
+        height: 120px;
+        margin-top: -30px;
+        background-color: gray;
+        border: 2px solid white;
+        border-radius: 50%;
+        padding: 0px 25px;
+
+    }
+}
 
 @media (max-width: 1030px) {
     .contentPosition {
@@ -923,14 +1030,14 @@ ul {
 
     .contentAddTask {
         position: absolute;
-        top: 145px;
+        top: 165px;
         bottom: 150px;
         display: flex;
         flex-direction: column;
         left: 0px;
         max-width: unset;
         width: 100%;
-        max-height: calc(100vh - 195px);
+        max-height: calc(100vh - 215px);
         overflow-y: auto;
     }
 
@@ -976,6 +1083,7 @@ ul {
         height: 87px;
         padding-bottom: 10px;
         max-width: calc(100vw - 12px);
+        margin-top: 80px;
     }
 
 
@@ -1047,6 +1155,122 @@ ul {
         width: 100%;
         box-sizing: border-box;
     }
+
+    .addContactPopupBox {
+        display: flex;
+        flex-direction: column;
+        min-width: 320px;
+        width: 310px;
+        height: 650px;
+    }
+
+    .addContactPopupBoxLeft {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0px 0px;
+        width: 100%;
+        height: 450px;
+        background-color: #2A3647;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 0px;
+    }
+
+    .addContactPopupBoxLeftPosition {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+        padding-left: 10px;
+        margin-bottom: 0px;
+        margin-top: -60px;
+    }
+
+    .logoContactPopup {
+        width: 40px;
+        display: none;
+    }
+
+    .addContactPopupBoxLeftHeadline {
+        font-size: 42px;
+        text-align: center;
+        font-stretch: normal;
+        color: white;
+    }
+
+    .addContactPopupBoxLeftText {
+        font-size: 20px;
+        color: white;
+    }
+
+
+    .blueUnderline {
+        width: 60px;
+        height: 3px;
+        margin-top: 3px;
+        background-color: #29ABE2;
+    }
+
+    .addContactPopupBoxRight {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background-color: #FFF;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+
+    .addContactPopupBoxRightImgPosition {
+        width: 300px;
+        margin-top: -130px;
+        height: 190px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .addContactPopupBoxRightImg {
+        width: 110px;
+        background-color: gray;
+        border: 2px solid white;
+        border-radius: 50%;
+        padding: 15px 15px;
+    }
+
+    .addContactPopupBoxRightFormPosition {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+    .addContactPopupBoxRightBtnPosition {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+        gap: 15px;
+    }
+
+    .addCategoryPopupBoxRightImg {
+        width: 120px;
+        height: 120px;
+        margin-top: 0px;
+        background-color: gray;
+        border: 2px solid white;
+        border-radius: 50%;
+        padding: 0px 25px;
+
+    }
+
 
 }
 
