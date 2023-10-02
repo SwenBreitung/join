@@ -26,6 +26,7 @@ let nextColorIndex = 0;
 async function initContacts() {
     await loadContacts();
     renderContacts();
+    desktopViewSmall();
     mobileView();
     markCategory();
 }
@@ -112,11 +113,19 @@ function loadContactInfos(contact, nameAbbreviation, i) {
         </spline>
     </div>
     <div class="column">
-        <spline class="fontSize20">${contact['name']}</spline>
-            <spline class="fontSize16 emailScrollMenu">${contact['email']}</spline>
+        <spline class="fontSize20">${maxLetters(contact['name'], 99)}</spline>
+            <spline class="fontSize16 emailScrollMenu">${maxLetters(contact['email'], 99)}</spline>
     </div>
 </div>
     `
+}
+
+function maxLetters(text, maxLength) {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength - 3) + "...";
+    } else {
+        return text;
+    }
 }
 
 /**
@@ -124,7 +133,7 @@ function loadContactInfos(contact, nameAbbreviation, i) {
  * 
  */
 function addContact() {
-    resetFunctionText();
+    resetFunctionImageText();
 
     showNotOnMobileView('cancelBtnMobileId');
     document.getElementById('inputNameId').value = '';
@@ -545,12 +554,6 @@ function resetFunctionImageText() {
     originalFunction();
 }
 
-function resetFunctionText() {
-    originalImage();
-    originalText();
-    originalFunction();
-}
-
 /**
  * This function is used to disable and enable some id's on the mobile view
  * 
@@ -569,6 +572,14 @@ function mobileView() {
     document.getElementById('mobileVisibilityId').classList.toggle('mobileEditDeleteBoxId', isMobile);
 }
 
+/**
+ * This function is used to disable and enable some id's on the mobile view
+ * 
+ */
+function desktopViewSmall() {
+    const is1345px = window.innerWidth <= 1345;
+    toggleVisibility('blueLineId', is1345px);
+}
 
 /**
  * This function is used to show an animation on the menu on the mobile view
