@@ -96,8 +96,8 @@ body {
 .contacts-container {
     top: 300px;
     width: 456px;
+    min-width: 456px;
     height: calc(100vh - 96px);
-    padding: 0 24px 32px;
     margin-top: -110px;
     display: flex;
     flex-direction: column;
@@ -613,141 +613,32 @@ section {
     }
 
     .contacts-container {
-        max-width: 370px;
-    }
-}
-
-@media (max-width: 1100px) {
-    .contactsTitle {
-        margin: 0px 12px 32px !important;
+        max-width: 375px !important;
+        min-width: 375px !important;
     }
 
-    .contactInfoBig {
-        margin: 0 12px;
-    }
-
-    .addNewContactButton img {
-        display: none;
-    }
-
-
-    .addNewContactButton,
-    .firstLetterOverContact {
-        width: 210px;
-        justify-content: center;
-    }
-
-    .contactsInfo {
-        padding: 8px 0;
-        flex-direction: column;
-        text-align: center;
-        max-width: 210px;
-    }
-
-    .profilePicture {
-        margin-right: 0px !important;
-    }
-
-    .profilePictureBig {
-        width: 80px !important;
-        height: 80px !important;
-        margin-right: 20px !important;
-    }
-
-    .contacts-container {
-        width: auto;
-        min-width: 230px;
-        max-width: 230px;
-    }
-
-    .fontSize61 {
-        font-size: 42px !important;
-    }
-
-    .fontSize47 {
-        font-size: 36px !important;
-    }
-
-    .fontSize27 {
-        font-size: 16px !important;
-    }
-}
-
-@media (max-width: 900px) {
     .profilePicAndNameBig {
         flex-direction: column;
         align-items: flex-start !important;
     }
 }
 
-@media (max-width: 700px) {
-    .mobileDelete {
-        display: none !important;
-    }
-
-    .scrollingContainer {
-        margin-top: 0 !important;
-    }
-
-    .profilePicture {
-        margin-right: 35px !important;
-    }
-
-    .profilePicAndNameBig {
-        flex-direction: row !important;
-        align-items: center !important;
-    }
-
-    .contactPage {
-        width: 100% !important;
-    }
-
-    .contactsInfo {
-        max-width: 100% !important;
-        padding: 15px 24px !important;
-        flex-direction: row !important;
-        text-align: start !important;
-    }
-
-    .contentContact {
-        display: flex;
-        flex-direction: row !important;
-        padding-left: 0px !important;
-        width: 100vw !important;
-        margin-top: 80px !important;
-    }
-
-    .contacts-container {
-        width: 100% !important;
-        min-width: 100vw !important;
-        max-width: 100vw !important;
-        height: calc(100vh - 160px) !important;
-    }
-
-    .firstLetterOverContact {
-        width: 100% !important;
-        justify-content: flex-start !important;
-    }
-
-    #contactsId {
-        width: 100vw !important;
-        padding-left: 38px !important;
-        padding-right: 38px !important;
-    }
-
+@media (max-width: 1250px) {
     .addContactPopup {
         display: flex !important;
         flex-direction: column !important;
         align-items: center;
         height: calc(100vh - 20px) !important;
-        width: calc(100vw - 32px) !important;
+        /* width: calc(100vw - 32px) !important; */
+        width: 592px !important;
     }
 
     .leftSideAddContactPopup {
         border-top-right-radius: 30px !important;
         border-bottom-left-radius: 0 !important;
         height: calc(100vh * 0.4) !important;
-        width: calc(100vw - 32px) !important;
+        /* width: calc(100vw - 32px) !important; */
+        width: 592px !important;
         padding: 66px 24px !important;
     }
 
@@ -792,7 +683,7 @@ section {
     .inputName input,
     .inputEmail input,
     .inputPhone input {
-        width: calc(100vw - 64px) !important;
+        width: calc(592px - 64px) !important;
         height: calc(26px + 15px) !important;
     }
 
@@ -805,6 +696,133 @@ section {
         top: calc(0px - (100vh * 0.4) + 24px) !important;
         right: 32px !important;
     }
+
+    .cancelBtn,
+    .createContactButton {
+        padding: 18px 10px !important;
+        width: auto !important;
+    }
+
+    .leftSideAddContactPopup img {
+        top: 100px !important;
+        left: 20px !important;
+    }
+}
+
+@media (max-width: 1100px) {
+    .contactsTitle {
+        margin: 0px 12px 32px !important;
+    }
+
+    .contactInfoBig {
+        margin: 0 12px;
+    }
+
+    .contactsInfo {
+        max-width: 352px !important;
+        min-width: 352px !important;
+    }
+
+    .contacts-container {
+        width: auto;
+        min-width: 230px;
+        max-width: 230px;
+    }
+
+    .fontSize61 {
+        font-size: 42px !important;
+    }
+
+    .fontSize47 {
+        font-size: 36px !important;
+    }
+
+    .fontSize27 {
+        font-size: 16px !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .profilePicAndNameBig {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .mobileDelete {
+        display: none !important;
+    }
+
+    .scrollingContainer {
+        margin-top: 0 !important;
+    }
+
+    .profilePicAndNameBig {
+        flex-direction: row !important;
+        align-items: center !important;
+    }
+
+    .contactPage {
+        width: 100% !important;
+    }
+
+    .contactsInfo {
+        max-width: 100% !important;
+        min-width: 50vw !important;
+        padding: 15px 24px !important;
+        flex-direction: row !important;
+        text-align: start !important;
+    }
+
+    .contentContact {
+        display: flex;
+        flex-direction: row !important;
+        padding-left: 0px !important;
+        width: 100vw !important;
+        margin-top: 80px !important;
+    }
+
+    .contacts-container {
+        width: 100% !important;
+        min-width: 100vw !important;
+        max-width: 100vw !important;
+        height: calc(100vh - 160px) !important;
+    }
+
+    .firstLetterOverContact {
+        width: 100% !important;
+        justify-content: flex-start !important;
+    }
+
+    #contactsId {
+        width: 100vw !important;
+        padding-left: 38px !important;
+        padding-right: 38px !important;
+    }
+
+    /* popup */
+
+    .addContactPopup {
+        width: calc(100vw - 32px) !important;
+    }
+
+    .leftSideAddContactPopup {
+        width: calc(100vw - 32px) !important;
+    }
+
+    .inputName input,
+    .inputEmail input,
+    .inputPhone input {
+        width: calc(100vw - 64px) !important;
+    }
+
+    .leftSideAddContactPopup img {
+        top: 154px !important;
+        left: 48px !important;
+    }
+
+    /* popup ende */
 
     .mobileAddContact {
         position: absolute;
@@ -874,14 +892,22 @@ section {
         height: auto !important;
     }
 
-    .cancelBtn,
-    .createContactButton {
-        padding: 18px 10px !important;
-        width: auto !important;
-    }
-
     .successfullyBtn {
         bottom: 120px !important;
         left: 12px !important;
+    }
+}
+
+
+@media (max-width: 400px) {
+    .contactsInfo {
+        display: flex;
+        flex-direction: column !important;
+        padding: 15px 24px 15px 4px !important;
+        align-items: flex-start !important;
+    }
+
+    .firstLetterOverContact {
+        padding: 17px 36px 17px 4px !important;
     }
 }
