@@ -302,14 +302,14 @@ function renderTaskdetailHTML(i) {
             </div>
             <div class="task-detail-bottom">
                 <img onclick="deleteTask(${i})" src="img/subTaskDelete.svg" alt="">
-                <img onclick="editTask(${i})"   src="img/PenAddTask 1=edit.svg" alt="">
+                <img onclick="editTaskNew(${i})"   src="img/PenAddTask 1=edit.svg" alt="">
             </div>
         </div>
     `;
 }
 
 
-async function editTask(i) {
+async function editTaskNew(i) {
     document.getElementById('addTaskPop').classList.remove('d-none');
     closeTask();
     let taskToEdit = tasks[i];
