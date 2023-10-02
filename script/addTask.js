@@ -50,6 +50,10 @@ let currentPrioSelected = "";
 let currentId = 0;
 
 load();
+//---------------------------------------------------------------------------------//
+
+
+//Init functions//
 
 
 async function initAddTask() {
@@ -88,12 +92,11 @@ function renderAddTaskContent() {
     renderAllContactsForSearch()
 
 }
-//####################################################//
-function renderAddTaskPage() {
-    let page = document.getElementById('addTaskPage');
-    page.innerHTML = returnRenderAddTaskPage();
-}
-//####################################################//
+//---------------------------------------------------------------------------------//
+
+
+//Load & Save//
+
 
 function save() {
     localStorage.setItem('categoryCollectionAsText', JSON.stringify(currentCategorySelected));
@@ -107,6 +110,7 @@ function save() {
     localStorage.setItem('dueDateAsText', JSON.stringify(dueDateAddTask));
     localStorage.setItem('subTaskFinishAsText', JSON.stringify(subtasksFinish));
 }
+
 
 function load() {
     let currentCategoryLoad = localStorage.getItem('categoryCollectionAsText');
@@ -133,6 +137,7 @@ function load() {
     }
 }
 
+
 async function loadAddTaskCurrentId() {
     try {
         currentId = JSON.parse(await getItem('currentId'));
@@ -141,6 +146,7 @@ async function loadAddTaskCurrentId() {
     }
 }
 
+
 async function loadAddTaskAllCategorys() {
     try {
         allCategorys = JSON.parse(await getItem('allCategorys'));
@@ -148,201 +154,12 @@ async function loadAddTaskAllCategorys() {
         console.info('Could not load categorys');
     }
 }
+//---------------------------------------------------------------------------------//
 
-//####################################################//
-
-function returnRenderAddTaskPage() {
-    return /*html*/`
-    <form onsubmit="return false" id="myForm">
-        <div class="taskArea">
-
-            <div class="boxLeft">
-                <div id="titelBox" class="marginBottom16">
-                    <span>Titel</span>
-                    <input class="click" id="addTitel" required placeholder="Enter a title" type="text">
-                </div>
-
-            <div class="column">
-                <span>Description</span>
-                <textarea class="click" id="addDescription" required placeholder="Enter a Description"
-                    type="text"></textarea>
-            </div>
-
-            <div>
-                <span>Assigned to</span>
-                <div id="assignTo">
-                    <div class="custom-select marginBottom16" id="assignedToInputContainer">
-                    </div>
-                    <div class="custom-select d-none" id="assignedToContactsInputContainer">
-                    </div>
-                </div>
-            </div>
-            <script>
-                // container add d-none by body-click//
-                document.body.addEventListener('click', function () {
-                    toggleVisibilityAddTask('assignedToContactsInputContainer', 'assignedToInputContainer')
-                });
-                document.getElementById('assignTo').addEventListener('click', function (event) {
-                    event.stopPropagation();
-                });
-            </script>
-
-            </div>
-            <div class="boxRight">
-                <div>
-                    <div>
-                        <span>Due date</span>
-                        <div>
-                            <input class="click" required placeholder="dd/mm/yyyy" type="text" id="datepicker">
-                        </div>
-                    </div>
-
-                    <div class="column marginTop16">
-                        <span>Prio</span>
-                        <div id="prioBox" class="prioButtonContainer">
-                        </div>
-                    </div>
-
-                    <div id="categorySection" class="column">
-                        <span>Category</span>
-                        <div class="custom-select marginBottom16" id="categoryAreaV1">
-                        </div>
-
-                    <div class="custom-select marginBottom16 d-none" id="categoryAreaV2">
-                    </div>
-                    <script>// container add d-none by body-click//
-                        document.body.addEventListener('click', function () {
-                            toggleVisibilityAddTask('categoryAreaV2', 'categoryAreaV1')
-                        });
-
-                        document.getElementById('categorySection').addEventListener('click', function (event) {
-                            event.stopPropagation();
-                        });
-                        </script>
-                    </div>
-
-                    <div class="column">
-                        <span>Subtasks</span>
-                        <div class="custom-select">
-                            <input class="click" placeholder="Add new subtask" id="subTaskSelectInput">
-                            <img onclick="addSubTaskToCollection()" class="inputAbsolut"
-                                src="img/plusAddTask.svg">
-                        </div>
-                        <div class="selectedSubTask show-scrollbar" id="selectedSubTaskContainer">
-                        </div>
-                        <div id="editContainer" class="d-none custom-select">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div id="buttonAreaAddTask" class="selectBtnArea gap16">
-        </div>
-    </form>
-    `;
-}
-//####################################################//
-
-
-function returnButtonAreaAddTask() {
-    return /*html*/`
-    <button onclick="clearButton()" class="clearBtn">Clear<img class="clearImg"
-            src="./img/crossAddTask.svg" alt=""></button>
-    <button onclick="createTask()" class="createBtn blueBtn">Create Task<img class="createImg"
-            src="./img/check.svg"></button>
-    `;
-}
-
-function returnCategoryBox1() {
-    return /*html*/`
-    <input onclick="toggleVisibilityAddTask('categoryAreaV1', 'categoryAreaV2')"
-        class="click" id="categoryInputV1" type="text" readonly
-        value="Select task category">
-    <img onclick="toggleVisibilityAddTask('categoryAreaV1', 'categoryAreaV2')"
-        class="inputAbsolut" src="img/arrow_drop_downaa.svg">
-    `;
-}
-
-function returnCategoryBox2() {
-    return /*html*/`
-    <input onclick="toggleVisibilityAddTask('categoryAreaV2', 'categoryAreaV1')"
-        class="click" id="categoryInputV2" type="text" readonly
-        value="Select task category">
-    <img onclick="toggleVisibilityAddTask('categoryAreaV2', 'categoryAreaV1')"
-        class="inputAbsolut" src="img/arrow_drop_up.svg">
-    <div class="selectContactsPositionContainer" id="categoryContainer">
-        <div class="categoryRenderContainer show-scrollbar"
-            id="categoryRenderContainer">
-        </div>
-        <div id="createCategoryContainer" class="d-none custom-select">
-        </div>
-        <div onclick="toggleVisibilityAddTask('', 'createCategoryPopupByAddTask')"
-            class="addNewContactBtn blueBtn">
-            <span>Add new category</span>
-            <img class="addNewContactBtnIcon" src="img/addTaskCategory.svg">
-        </div>
-    </div>
-    `;
-}
-
-function returnPrioBox() {
-    return/*html*/`
-    <div onclick="prioSelectedToggle('prioUrgentBtn', 'prioUrgentIcon', 'prioUrgentIconActiv', 'prioBtnActivUrgent', './img/prioUrgent.svg', true)"
-        id="prioUrgentBtn" class="prioBtn">Urgent
-        <img id="prioUrgentIcon" class="prioBtnIcons" src="./img/prioUrgent.svg">
-        <img id="prioUrgentIconActiv" class="prioBtnIcons d-none"
-            src="./img/PrioUrgentWhite.svg">
-    </div>
-    <div onclick="prioSelectedToggle('prioMediumBtn', 'prioMediumIcon', 'prioMediumIconActiv', 'prioBtnActivMedium', './img/prioMedium.svg', true)"
-        id="prioMediumBtn" class="prioBtn">Medium
-        <img id="prioMediumIcon" class="prioBtnIcons" src="./img/prioMedium.svg">
-        <img id="prioMediumIconActiv" class="prioBtnIcons d-none"
-            src="./img/PrioMediumWhite.svg">
-    </div>
-    <div onclick="prioSelectedToggle('prioLowBtn', 'prioLowIcon', 'prioLowIconActiv', 'prioBtnActivLow', './img/prioLow.svg', true)"
-        id="prioLowBtn" class="prioBtn">Low
-        <img id="prioLowIcon" class="prioBtnIcons" src="./img/prioLow.svg">
-        <img id="prioLowIconActiv" class="prioBtnIcons d-none"
-            src="./img/PrioLowWhite.svg">
-    </div>
-    `;
-}
-
-function returnAssignToBox1() {
-    return/*html*/`
-        <input class="click" id="assignedToInputCover"
-            onclick="toggleVisibilityAddTask('assignedToInputContainer', 'assignedToContactsInputContainer')"
-            type="text" readonly value="Select contacts to assign">
-        <img onclick="toggleVisibilityAddTask('assignedToInputContainer', 'assignedToContactsInputContainer')"
-            class="inputAbsolut" src="img/arrow_drop_downaa.svg">
-        <div id="selectedContactsContainer">
-        </div>
-        `;
-}
-
-
-
-function returnAssignToBox2() {
-    return/*html*/`
-    <input class="click" id="assignedToInput" type="text" placeholder="An:">
-    <img class="inputAbsolut"
-    onclick="toggleVisibilityAddTask('assignedToContactsInputContainer', 'assignedToInputContainer')"
-    src="img/arrow_drop_up.svg">
-    <div class="selectContactsPositionContainer">
-        <div class="ContactsRenderContainer show-scrollbar"
-            id="contactsRenderContainer">
-        </div>
-        <div onclick="toggleVisibilityAddTask('', 'contactPopupByAddTask')" class="addNewContactBtn blueBtn">
-            <span>Add new contact</span>
-            <img class="addNewContactBtnIcon" src="img/addTaskperson_add.svg">
-        </div>
-    </div>
-    `;
-}
 
 //SubTaskFunctions//
-//################################################################################//
+
+
 /**
  * Adds a sub-task to the collection.
  */
@@ -357,7 +174,6 @@ function addSubTaskToCollection() {
         input.value = '';
     }
 }
-//################################################################################//
 
 
 /**
@@ -447,6 +263,7 @@ function hideEditContainer() {
 
 //AddTask//
 
+
 /**
  * Validates the form and adds a task if the form is valid.
  */
@@ -491,11 +308,13 @@ async function addTask() {
     resetAllAddTaskElements();
 }
 
+
 function clearButton() {
     resetAllAddTaskElements();
     window.location.reload();
 
 }
+
 
 function resetAllAddTaskElements() {
     titleAddTask = '';
@@ -519,6 +338,7 @@ function resetAllAddTaskElements() {
     window.location.href = './board.html';
 }
 
+
 function clearAddTaskInputs() {
     titleAddTask = document.getElementById('addTitel').value;
     descriptionAddTask = document.getElementById('addDescription').value;
@@ -531,6 +351,7 @@ function clearAddTaskInputs() {
 
 
 //Hide and Show functions//
+
 
 /**
  * Toggles the visibility of two DOM elements.
@@ -562,7 +383,6 @@ function toggleVisibilityAddTask(id, id2) {
 //Contact functions//
 
 
-
 /**
  * Renders all selected contacts to the DOM.
  */
@@ -572,11 +392,9 @@ function renderAllSelectedContacts() {
     for (let index = 0; index < contactCollection.length; index++) {
         contactColors = contactCollection[index].color;
         contactNamesAbbreviation = contactCollection[index].nameAbbreviation;
-
         contactZone.innerHTML += returnRenderAllSelectedContacts(contactColors, contactNamesAbbreviation);
     }
 }
-
 
 
 async function renderAllContactsForSearch(filterText = '') {
@@ -588,17 +406,12 @@ async function renderAllContactsForSearch(filterText = '') {
         contactNamesAbbreviation = contactsArray[index].nameAbbreviation;
         contactNames = contactsArray[index].name;
 
-        // Wenn ein Filtertext vorhanden ist und der Kontaktname ihn nicht enthält, überspringen Sie diesen Kontakt
         if (filterText && !contacts.name.toLowerCase().includes(filterText)) {
             continue;
         }
-
         contactZone.innerHTML += returnRenderAllContactsForSearch(contactColors, contactNamesAbbreviation, contactNames, index);
-
     }
 }
-
-
 
 
 /**
@@ -680,6 +493,7 @@ async function createContactByPopup() {
     renderAllContactsForSearch();
 }
 
+
 function clearContactPopup() {
     document.getElementById('inputNameId').value = '';
     document.getElementById('inputEmailId').value = '';
@@ -690,7 +504,6 @@ function clearContactPopup() {
 
 
 //Category functions//
-
 
 
 function renderCategorys() {
@@ -736,6 +549,7 @@ function selectCategory(type, index) {
     borderColorCheck();
 }
 
+
 function borderColorCheck() {
     load();
     if (currentCategorySelected[0].name) {
@@ -745,15 +559,19 @@ function borderColorCheck() {
     }
 }
 
+
 function updateInputs() {
     let inputV1 = document.getElementById('categoryInputV1');
     let inputV2 = document.getElementById('categoryInputV2');
     setInputValueAndColor(inputV1);
     setInputValueAndColor(inputV2);
 }
+
+
 function setInputValueAndColor(inputElem) {
     inputElem.value = currentCategorySelected[0].name;
 }
+
 
 function resetInputs() {
     let inputV1 = document.getElementById('categoryInputV1');
@@ -762,12 +580,17 @@ function resetInputs() {
     resetInputValueAndColor(inputV2);
 }
 
+
 function resetInputValueAndColor(inputElem) {
     inputElem.value = 'Select task category';
     inputElem.style.borderColor = '#D1D1D1';
 }
+//---------------------------------------------------------------------------------//
+
 
 //create category//
+
+
 function createCategoryWindow() {
     createCategoryColors();
 }
@@ -798,6 +621,7 @@ async function addCategory() {
     toggleVisibilityAddTask('createCategoryPopupByAddTask', '')
 }
 
+
 function updateSelectedColorIndex(index) {
     selectedColorIndex = selectedColorIndex === index ? null : index;
     save();
@@ -814,27 +638,154 @@ function confirmCreateCategory() {
     clearCreateWindow();
 }
 
+
 function clearCreateWindow() {
     let input = document.getElementById('createCategoryInput');
     input.value = '';
     selectedColorIndex = null;
 }
 
+
 function alertInvalidInput() {
     alert("Bitte geben Sie einen Kategorienamen mit mindestens 2 Buchstaben ein und wählen Sie eine Farbe aus.");
 }
+
+
 function isValidCategoryInput() {
     let inputElem = document.getElementById('createCategoryInput');
     return inputElem.value.length >= 2 && selectedColorIndex !== null;
 }
 
+
 function stopCreateCategory() {
     clearCreateWindow();
     toggleVisibilityAddTask('createCategoryPopupByAddTask', '')
 }
+//---------------------------------------------------------------------------------//
+
+
+//Prio Buttons class-change//
+
+
+/**
+ * Updates visual representation of priority buttons.
+ * @param {string} btnId - ID of the priority button.
+ * @param {string} iconId - ID of the inactive icon.
+ * @param {string} activeIconId - ID of the active icon.
+ * @param {string} activeClass - CSS class to apply when active.
+ * @param {boolean} resetOther - Determines if other buttons should be reset.
+ */
+function activateButton(btnId, iconId, activeIconId, activeClass, iconSrc) {
+    document.getElementById(btnId).classList.add(activeClass);
+    document.getElementById(iconId).classList.add('d-none');
+    document.getElementById(activeIconId).classList.remove('d-none');
+    currentPrioSelected = iconSrc;
+    save();
+}
+
+
+function deactivateButton(btnId, iconId, activeIconId, activeClass) {
+    document.getElementById(btnId).classList.remove(activeClass);
+    document.getElementById(iconId).classList.remove('d-none');
+    document.getElementById(activeIconId).classList.add('d-none');
+    currentPrioSelected = "";
+    save();
+}
+
+
+function prioSelectedToggle(btnId, iconId, activeIconId, activeClass, iconSrc, resetOther) {
+    if (currentPrioSelected === iconSrc) {
+        deactivateButton(btnId, iconId, activeIconId, activeClass);
+    } else {
+        if (resetOther) resetAll();
+        activateButton(btnId, iconId, activeIconId, activeClass, iconSrc);
+    }
+}
+
+
+/**
+ * Resets all priority buttons to their default states.
+ */
+function resetAll() {
+    const buttons = ['prioUrgentBtn', 'prioMediumBtn', 'prioLowBtn'];
+    const icons = ['prioUrgentIcon', 'prioMediumIcon', 'prioLowIcon'];
+    const activeIcons = ['prioUrgentIconActiv', 'prioMediumIconActiv', 'prioLowIconActiv'];
+    const activeClasses = ['prioBtnActivUrgent', 'prioBtnActivMedium', 'prioBtnActivLow'];
+
+    for (let i = 0; i < buttons.length; i++) {
+        document.getElementById(buttons[i]).classList.remove(activeClasses[i]);
+        document.getElementById(icons[i]).classList.remove('d-none');
+        document.getElementById(activeIcons[i]).classList.add('d-none');
+    }
+    currentPrioSelected = "";
+    save();
+}
+//---------------------------------------------------------------------------------//
+
+
+//only for date-input by addTask.html/ Due date//
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    var dateInput = document.getElementById('datepicker');
+
+    var picker = new Pikaday({
+        field: dateInput,
+        position: 'top right',
+        format: 'DD/MM/YYYY',
+        minDate: new Date(), // Das stellt sicher, dass kein Datum vor dem heutigen Datum ausgewählt werden kann.
+        onSelect: function (date) {
+            const formattedDate = [
+                date.getDate().toString().padStart(2, '0'),
+                (date.getMonth() + 1).toString().padStart(2, '0'),
+                date.getFullYear()
+            ].join('/');
+            dateInput.value = formattedDate;
+        }
+    });
+
+
+    dateInput.addEventListener('focus', function () {
+        if (!this.value) {
+            const today = new Date();
+            const formattedDate = [
+                today.getDate().toString().padStart(2, '0'),
+                (today.getMonth() + 1).toString().padStart(2, '0'),
+                today.getFullYear()
+            ].join('/');
+            this.value = formattedDate;
+            picker.show();
+        }
+    });
+});
+//---------------------------------------------------------------------------------//
+
+
+//category container add d-none by body-click//
+
+
+document.body.addEventListener('click', function () {
+    toggleVisibilityAddTask('categoryAreaV2', 'categoryAreaV1')
+});
+document.getElementById('categorySection').addEventListener('click', function (event) {
+    event.stopPropagation();
+});
+//---------------------------------------------------------------------------------//
+
+
+//contact container add d-none by body-click//
+
+
+document.body.addEventListener('click', function () {
+    toggleVisibilityAddTask('assignedToContactsInputContainer', 'assignedToInputContainer')
+});
+document.getElementById('assignTo').addEventListener('click', function (event) {
+    event.stopPropagation();
+});
+//---------------------------------------------------------------------------------//
+
 
 //categoryReturn//
-
 
 
 function returnCreateCategoryColors(color, index) {
@@ -848,6 +799,7 @@ function returnCreateCategoryColors(color, index) {
         `;
     }
 }
+
 
 function returnRenderMainCategorys(name, color, i) {
     if (currentCategorySelected[0].name === name &&
@@ -867,6 +819,7 @@ function returnRenderMainCategorys(name, color, i) {
         `;
     }
 }
+
 
 function returnRenderAllCategorys(name, color, i) {
     if (currentCategorySelected[0].name === name &&
@@ -891,65 +844,11 @@ function returnRenderAllCategorys(name, color, i) {
         `;
     }
 }
-
-//---------------------------------------------------------------------------------//
-
-//Prio Buttons class-change//
-
-/**
- * Updates visual representation of priority buttons.
- * @param {string} btnId - ID of the priority button.
- * @param {string} iconId - ID of the inactive icon.
- * @param {string} activeIconId - ID of the active icon.
- * @param {string} activeClass - CSS class to apply when active.
- * @param {boolean} resetOther - Determines if other buttons should be reset.
- */
-function activateButton(btnId, iconId, activeIconId, activeClass, iconSrc) {
-    document.getElementById(btnId).classList.add(activeClass);
-    document.getElementById(iconId).classList.add('d-none');
-    document.getElementById(activeIconId).classList.remove('d-none');
-    currentPrioSelected = iconSrc;
-    save();
-}
-
-function deactivateButton(btnId, iconId, activeIconId, activeClass) {
-    document.getElementById(btnId).classList.remove(activeClass);
-    document.getElementById(iconId).classList.remove('d-none');
-    document.getElementById(activeIconId).classList.add('d-none');
-    currentPrioSelected = "";
-    save();
-}
-
-function prioSelectedToggle(btnId, iconId, activeIconId, activeClass, iconSrc, resetOther) {
-    if (currentPrioSelected === iconSrc) {
-        deactivateButton(btnId, iconId, activeIconId, activeClass);
-    } else {
-        if (resetOther) resetAll();
-        activateButton(btnId, iconId, activeIconId, activeClass, iconSrc);
-    }
-}
-
-/**
- * Resets all priority buttons to their default states.
- */
-function resetAll() {
-    const buttons = ['prioUrgentBtn', 'prioMediumBtn', 'prioLowBtn'];
-    const icons = ['prioUrgentIcon', 'prioMediumIcon', 'prioLowIcon'];
-    const activeIcons = ['prioUrgentIconActiv', 'prioMediumIconActiv', 'prioLowIconActiv'];
-    const activeClasses = ['prioBtnActivUrgent', 'prioBtnActivMedium', 'prioBtnActivLow'];
-
-    for (let i = 0; i < buttons.length; i++) {
-        document.getElementById(buttons[i]).classList.remove(activeClasses[i]);
-        document.getElementById(icons[i]).classList.remove('d-none');
-        document.getElementById(activeIcons[i]).classList.add('d-none');
-    }
-    currentPrioSelected = "";
-    save();
-}
 //---------------------------------------------------------------------------------//
 
 
 //return render Contacts(all and selected)//
+
 
 /**
  * Returns an HTML string representing a selected contact.
@@ -995,12 +894,10 @@ function returnRenderAllContactsForSearch(contactColor, contactNamesAbbreviation
 }
 
 
-
-
 /**
  * Toggles classes for the main settings element.
  * @param {HTMLElement} mainElement - Main settings DOM element.
-                                    */
+ */
 function returnSettingsMain(mainElement) {
     if (mainElement.classList.contains('assignedContactsBox')) {
         mainElement.classList.remove('assignedContactsBox');
@@ -1016,7 +913,7 @@ function returnSettingsMain(mainElement) {
 /**
  * Toggles visibility for the first settings element.
  * @param {HTMLElement} firstSecondary - First settings DOM element.
-                                    */
+ */
 function returnSettingsFirst(firstSecondary) {
     if (firstSecondary.classList.contains('d-none')) {
         firstSecondary.classList.remove('d-none');
@@ -1030,7 +927,7 @@ function returnSettingsFirst(firstSecondary) {
 /**
  * Toggles visibility for the second settings element.
  * @param {HTMLElement} secondSecondary - Second settings DOM element.
-                                    */
+ */
 function returnSettingsSecond(secondSecondary) {
     if (secondSecondary.classList.contains('d-none')) {
         secondSecondary.classList.remove('d-none');
@@ -1043,6 +940,7 @@ function returnSettingsSecond(secondSecondary) {
 
 
 //return Subtask//
+
 
 /**
  * Returns an HTML string representing the subtask editing container.
@@ -1076,54 +974,107 @@ function returnSubTaskCollection(subCollection, i) {
     `;
 }
 //---------------------------------------------------------------------------------//
-//only for date-input by addTask.html/ Due date//
-
-document.addEventListener('DOMContentLoaded', function () {
-    var dateInput = document.getElementById('datepicker');
-
-    var picker = new Pikaday({
-        field: dateInput,
-        position: 'top right',
-        format: 'DD/MM/YYYY',
-        minDate: new Date(), // Das stellt sicher, dass kein Datum vor dem heutigen Datum ausgewählt werden kann.
-        onSelect: function (date) {
-            const formattedDate = [
-                date.getDate().toString().padStart(2, '0'),
-                (date.getMonth() + 1).toString().padStart(2, '0'),
-                date.getFullYear()
-            ].join('/');
-            dateInput.value = formattedDate;
-        }
-    });
-
-    dateInput.addEventListener('focus', function () {
-        if (!this.value) {
-            const today = new Date();
-            const formattedDate = [
-                today.getDate().toString().padStart(2, '0'),
-                (today.getMonth() + 1).toString().padStart(2, '0'),
-                today.getFullYear()
-            ].join('/');
-            this.value = formattedDate;
-            picker.show();
-        }
-    });
-});
 
 
-//category container add d-none by body-click//
-document.body.addEventListener('click', function () {
-    toggleVisibilityAddTask('categoryAreaV2', 'categoryAreaV1')
-});
+//return render functions//
 
-document.getElementById('categorySection').addEventListener('click', function (event) {
-    event.stopPropagation();
-});
 
-//contact container add d-none by body-click//
-document.body.addEventListener('click', function () {
-    toggleVisibilityAddTask('assignedToContactsInputContainer', 'assignedToInputContainer')
-});
-document.getElementById('assignTo').addEventListener('click', function (event) {
-    event.stopPropagation();
-});
+function returnButtonAreaAddTask() {
+    return /*html*/`
+    <button onclick="clearButton()" class="clearBtn">Clear<img class="clearImg"
+            src="./img/crossAddTask.svg" alt=""></button>
+    <button onclick="createTask()" class="createBtn blueBtn">Create Task<img class="createImg"
+            src="./img/check.svg"></button>
+    `;
+}
+
+
+function returnCategoryBox1() {
+    return /*html*/`
+    <input onclick="toggleVisibilityAddTask('categoryAreaV1', 'categoryAreaV2')"
+        class="click" id="categoryInputV1" type="text" readonly
+        value="Select task category">
+    <img onclick="toggleVisibilityAddTask('categoryAreaV1', 'categoryAreaV2')"
+        class="inputAbsolut" src="img/arrow_drop_downaa.svg">
+    `;
+}
+
+
+function returnCategoryBox2() {
+    return /*html*/`
+    <input onclick="toggleVisibilityAddTask('categoryAreaV2', 'categoryAreaV1')"
+        class="click" id="categoryInputV2" type="text" readonly
+        value="Select task category">
+    <img onclick="toggleVisibilityAddTask('categoryAreaV2', 'categoryAreaV1')"
+        class="inputAbsolut" src="img/arrow_drop_up.svg">
+    <div class="selectContactsPositionContainer" id="categoryContainer">
+        <div class="categoryRenderContainer show-scrollbar"
+            id="categoryRenderContainer">
+        </div>
+        <div id="createCategoryContainer" class="d-none custom-select">
+        </div>
+        <div onclick="toggleVisibilityAddTask('', 'createCategoryPopupByAddTask')"
+            class="addNewContactBtn blueBtn">
+            <span>Add new category</span>
+            <img class="addNewContactBtnIcon" src="img/addTaskCategory.svg">
+        </div>
+    </div>
+    `;
+}
+
+
+function returnPrioBox() {
+    return/*html*/`
+    <div onclick="prioSelectedToggle('prioUrgentBtn', 'prioUrgentIcon', 'prioUrgentIconActiv', 'prioBtnActivUrgent', './img/prioUrgent.svg', true)"
+        id="prioUrgentBtn" class="prioBtn">Urgent
+        <img id="prioUrgentIcon" class="prioBtnIcons" src="./img/prioUrgent.svg">
+        <img id="prioUrgentIconActiv" class="prioBtnIcons d-none"
+            src="./img/PrioUrgentWhite.svg">
+    </div>
+    <div onclick="prioSelectedToggle('prioMediumBtn', 'prioMediumIcon', 'prioMediumIconActiv', 'prioBtnActivMedium', './img/prioMedium.svg', true)"
+        id="prioMediumBtn" class="prioBtn">Medium
+        <img id="prioMediumIcon" class="prioBtnIcons" src="./img/prioMedium.svg">
+        <img id="prioMediumIconActiv" class="prioBtnIcons d-none"
+            src="./img/PrioMediumWhite.svg">
+    </div>
+    <div onclick="prioSelectedToggle('prioLowBtn', 'prioLowIcon', 'prioLowIconActiv', 'prioBtnActivLow', './img/prioLow.svg', true)"
+        id="prioLowBtn" class="prioBtn">Low
+        <img id="prioLowIcon" class="prioBtnIcons" src="./img/prioLow.svg">
+        <img id="prioLowIconActiv" class="prioBtnIcons d-none"
+            src="./img/PrioLowWhite.svg">
+    </div>
+    `;
+}
+
+
+function returnAssignToBox1() {
+    return/*html*/`
+        <input class="click" id="assignedToInputCover"
+            onclick="toggleVisibilityAddTask('assignedToInputContainer', 'assignedToContactsInputContainer')"
+            type="text" readonly value="Select contacts to assign">
+        <img onclick="toggleVisibilityAddTask('assignedToInputContainer', 'assignedToContactsInputContainer')"
+            class="inputAbsolut" src="img/arrow_drop_downaa.svg">
+        <div id="selectedContactsContainer">
+        </div>
+        `;
+}
+
+
+function returnAssignToBox2() {
+    return/*html*/`
+    <input class="click" id="assignedToInput" type="text" placeholder="An:">
+    <img class="inputAbsolut"
+    onclick="toggleVisibilityAddTask('assignedToContactsInputContainer', 'assignedToInputContainer')"
+    src="img/arrow_drop_up.svg">
+    <div class="selectContactsPositionContainer">
+        <div class="ContactsRenderContainer show-scrollbar"
+            id="contactsRenderContainer">
+        </div>
+        <div onclick="toggleVisibilityAddTask('', 'contactPopupByAddTask')" class="addNewContactBtn blueBtn">
+            <span>Add new contact</span>
+            <img class="addNewContactBtnIcon" src="img/addTaskperson_add.svg">
+        </div>
+    </div>
+    `;
+}
+//---------------------------------------------------------------------------------//

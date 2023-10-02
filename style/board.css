@@ -501,13 +501,13 @@ h3 {
 }
 
 @media(max-width:850px) {
-   
+
     .search-board-container {
         flex-direction: column;
         align-items: self-start;
         /* max-width: calc(100vw); */
         max-width: 100vw;
-       
+
         margin-top: 100px;
         height: 120px;
     }
