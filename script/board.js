@@ -169,7 +169,7 @@ function generateTaskHTML(element) {
             <div>
                 <div class="task-category"> ${element['category']}</div>
                 <div class="task-title">${element['title']}</div>
-                <div class="task-description"> ${element['description']}</div>
+                <div class="task-description show-scrollbar"> ${element['description']}</div>
             </div>
             <div class="task-users-prio">
                 <div class="task-users">
@@ -270,7 +270,7 @@ function renderTaskdetailHTML(i) {
                     <div class="task-detail-title">
                         <h1>${tasks[i]['title']}</h1>
                     </div>
-                    <div class="task-description">
+                    <div class="task-description show-scrollbar">
                         ${tasks[i]['description']}
                     </div>
                     <div class="task-detail-flex">
