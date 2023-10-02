@@ -37,13 +37,22 @@ function openHeaderMenu() {
 
 /**
  * This function is used to mark the active .html page
- * 
+ *
  */
 function markCategory() {
     const currentPage = window.location.href.split('/').pop() || 'index.html';
     const links = document.querySelectorAll(`.sidebar-text[href*="${currentPage}"]`);
 
     links.forEach(link => {
-        link.querySelector('.sidebar-text-sub').classList.add('htmlActive');
+        const categoryElement = link.querySelector('.sidebar-text-sub');
+        categoryElement.classList.add('htmlActive');
+
+        categoryElement.style.color = 'white';
+
+        const categoryImage = link.querySelector('img');
+        if (categoryImage) {
+            const categoryName = categoryElement.textContent.trim().toLowerCase();
+            categoryImage.src = `img/${categoryName}ImageWhite.png`;
+        }
     });
 }

@@ -70,11 +70,6 @@
     z-index: 1;
 }
 
-.logo-container {
-    margin-bottom: 70px;
-}
-
-
 .sidebar-text {
     height: 30px;
     gap: 15px;
@@ -92,6 +87,7 @@
 .sidebar-text-sub img {
     width: 30px;
     height: 30px;
+    object-fit: contain;
 }
 
 .sidebar-text-area {
@@ -111,7 +107,7 @@
 }
 
 .quickLinksSidebar {
-    margin-top: 173px;
+    margin-top: 243px;
 }
 
 .sidebar-bottom {
