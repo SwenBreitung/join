@@ -600,6 +600,17 @@ section {
     display: none;
 }
 
+@media (max-width: 1345px) {
+    .contactsTitle {
+        flex-direction: column;
+        gap: 0 !important;
+    }
+
+    #blueLineIdDesktopViewId {
+        display: none;
+    }
+}
+
 @media (max-width: 700px) {
     .mobileDelete {
         display: none !important;
