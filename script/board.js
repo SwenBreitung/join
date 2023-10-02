@@ -54,6 +54,10 @@ function renderSearchResults() {
     })
 }
 
+/**
+ * This functions clears the searchinput and switchs the x symbol of it back to searchsymbol
+ * 
+ */
 function clearInput() {
     document.getElementById('searchInput').value = '';
     document.getElementById('searchResults').innerHTML = '';
@@ -61,20 +65,35 @@ function clearInput() {
     document.getElementById('searchClose').classList.add('d-none')
     document.getElementById('contentposition').classList.remove('d-none');
 }
-
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
-//listens for focus on textbox
+/** 
+ * This eventlistener is fired when the textbox is focused
+ *  
+*/
 document.getElementById('searchInput').addEventListener("focus", changeDivColor);
-//this is fired when the textbox is focused
+
+
+/**
+ * This function changes the bordercolor of the searchbar
+ * 
+ */
 function changeDivColor() {
     document.getElementById('fake-searchbar').style.borderColor = "#29ABE2";
 }
 
-//listens for blur on textbox
+
+/**
+ * This eventlistener removes the focus of the searchbar
+ * 
+ */
 document.getElementById('searchInput').addEventListener("blur", revertDivColor);
 
-//this is fired when the textbox is no longer focused
+
+/**
+ * This function changes the bordercolor of the searchbar back to default
+ * 
+ */
 function revertDivColor() {
     document.getElementById('fake-searchbar').style.borderColor = "#A8A8A8";
 }
@@ -82,18 +101,20 @@ function revertDivColor() {
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
-
+/**
+ * It prevents the default behavior of the browser (which blocks dragging by default)
+ * 
+ * @param {DragEvent} ev - the drag event object
+ */
 function allowDrop(ev) {
     ev.preventDefault();
 }
 
 
-// want to move the todo with the id which is saved in currentDragElement 
-// and change the status
-
 /**
+ * This function sets the new status of the element when it's dropped and updates the BoardHtml
  * 
- * @param {string} status 
+ * @param {string} status - the status of the selected element
  */
 async function moveTo(status) {
     tasks[currentDraggedElement]['status'] = status;
@@ -102,7 +123,12 @@ async function moveTo(status) {
     removeHighlight(status);
 }
 
-
+/**
+ * This function highlights the area which the selected element is dragged at or over
+ * 
+ * 
+ * @param {string} id - the id of the element to be highlighted
+ */
 function highlight(id) {
     document.getElementById(id).classList.add('drag-area-highlight');
 }
