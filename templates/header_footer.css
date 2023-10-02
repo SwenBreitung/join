@@ -70,6 +70,11 @@
     z-index: 1;
 }
 
+.logo-container {
+    margin-bottom: 70px;
+}
+
+
 .sidebar-text {
     height: 30px;
     gap: 15px;
@@ -106,7 +111,7 @@
 }
 
 .quickLinksSidebar {
-    margin-top: 243px;
+    margin-top: 173px;
 }
 
 .sidebar-bottom {
