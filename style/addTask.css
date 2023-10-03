@@ -808,6 +808,7 @@ ul {
     padding: 0px 25px;
 }
 
+
 @media (max-width: 1080px) {
 
     .addTaskHeadlineContainer {
@@ -969,6 +970,31 @@ ul {
     }
 }
 
+
+@media (max-width: 1000px) {
+    .addTaskHeadlineContainer {
+        top: 0px;
+        left: 219px;
+        max-width: calc(100vw - 219px);
+    }
+
+    .contentAddTask {
+        position: absolute;
+        top: 200px;
+        bottom: 0px;
+        display: flex;
+        flex-direction: column;
+        left: 160px;
+        max-width: calc(100vw - 160px);
+        width: 100%;
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+
+}
+
+
+
 @media (max-width: 1030px) {
     .contentPosition {
         padding-left: 59px;
@@ -1026,7 +1052,7 @@ ul {
 
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
 
     .contentAddTask {
         position: absolute;

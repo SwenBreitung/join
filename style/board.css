@@ -300,8 +300,6 @@ h3 {
     width: 100px;
 }
 
-.task-detail-content-container {}
-
 .task-detail-top {
     display: flex;
     justify-content: space-between;
@@ -518,7 +516,7 @@ h3 {
 
 }
 
-@media(max-width:700px) {
+@media(max-width:768px) {
 
     .content-board {
         position: absolute;
