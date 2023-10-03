@@ -102,6 +102,12 @@ body {
     cursor: pointer;
 }
 
+#searchResults {
+    flex-direction: row;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
 #button-add-task {
     white-space: nowrap;
     background-color: var(--main-color);
@@ -236,6 +242,7 @@ h3 {
     flex-direction: column;
     justify-content: space-between;
     border-radius: 10px;
+    min-height: 200px;
     min-width: 200px;
     max-width: 200px;
     background-color: white;
@@ -278,8 +285,8 @@ h3 {
 
 .task-detail {
     height: fit-content;
-    max-height: 80vh;
-    width: 35vw;
+    max-height: 90vh;
+    width: 37vw;
     background-color: white;
     border-radius: 10px;
     display: flex;

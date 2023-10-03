@@ -295,7 +295,7 @@ function renderTaskdetailHTML(i) {
                 </div>
                 <div class="task-detail-content">
                     <div class="task-detail-title">
-                        <h1>${tasks[i]['title']}</h1>
+                        <h2>${tasks[i]['title']}</h2>
                     </div>
                     <div class="task-description show-scrollbar">
                         ${tasks[i]['description']}
