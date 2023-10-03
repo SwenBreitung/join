@@ -544,20 +544,29 @@ function deselectContact(mainElement, firstSecondary, secondSecondary) {
 }
 
 async function createContactByPopup() {
+    let name = document.getElementById('inputNameId').value
     let newContact = {
-        "name": document.getElementById('inputNameId').value,
-        "nameAbbreviation": '',
+        "name": name,
+        "nameAbbreviation": makeNameAbbreviation(name),
         "email": document.getElementById('inputEmailId').value,
         "phone": document.getElementById('inputPhoneId').value,
         "color": getColor()
     }
     contactsArray.push(newContact);
     await setItem('contactsArray', JSON.stringify(contactsArray));
-    document.getElementById('inputNameId').value = '';
-    document.getElementById('inputEmailId').value = '';
-    document.getElementById('inputPhoneId').value = '';
+    clearContactPopup();
     toggleVisibilityAddTask('contactPopupByAddTask', '');
     renderAllContactsForSearch();
+}
+
+function makeNameAbbreviation(name) {
+    // split first and last name
+    let nameParts = name.split(' ');
+    let firstName = nameParts[0];
+    let lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+    // first letter of first and last name combined
+    let nameAbbreviation = `${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`;
+    return nameAbbreviation;
 }
 
 

@@ -210,15 +210,16 @@
                 <div class="addContactPopupBoxRightFormPosition">
                     <form onsubmit="createContactByPopup();return false">
                         <div class="custom-select">
-                            <input placeholder="Name" type="text">
+                            <input required id="inputNameId" class="fontSize20" placeholder="Name" type="text">
                             <img class="inputAbsolut" src="img/person-white.svg" alt="">
                         </div>
                         <div class="custom-select">
-                            <input placeholder="Email" type="text">
+                            <input required id="inputEmailId" placeholder="Email" class="fontSize20" type="email">
                             <img class="inputAbsolut" src="img/mail.svg" alt="">
                         </div>
                         <div class="custom-select">
-                            <input placeholder="Phone" type="text">
+                            <input required id="inputPhoneId" placeholder="Phone" class="fontSize20"
+                                pattern="^[0-9+\/\s]*$" type="tel">
                             <img class="inputAbsolut" src="img/call.svg" alt="">
                         </div>
                         <div class="addContactPopupBoxRightBtnPosition">
