@@ -27,7 +27,7 @@
     <!-- aria-label="Search" -->
 
     <!-- <div w3-include-html="summery.html"></div>  -->
-    
+
 
     <div w3-include-html="templates/sidebar.html"></div>
     <div w3-include-html="templates/header.html"></div>
@@ -114,22 +114,23 @@
         <div class="addTaskPopupPosition">
             <div class="contentPositionAddTaskPopup show-scrollbarTaskWindow">
                 <div class="addTaskPopupHeadlineContainer">
-                    <h1 class="fw-bold">Add Task</h1>
+                    <spline class="fw-bold fontSize61">Add Task</spline>
                     <img onclick="resetAllAddTaskElements()" class="click" src="img/crossAddTask.svg" alt="">
                 </div>
 
                 <form onsubmit="return false" id="myForm">
                     <div class="taskArea">
 
-                        <div class="boxLeft">
+                        <div class="boxLeft fontSize20">
                             <div id="titelBox" class="marginBottom16">
-                                <span>Title</span>
-                                <input class="click" id="addTitel" required placeholder="Enter a title" type="text" maxlength="80">
+                                <span>Title<spline class="requiredStar">*</spline></span>
+                                <input class="click" id="addTitel" required placeholder="Enter a title" type="text"
+                                    maxlength="80">
                             </div>
 
                             <div class="column">
                                 <span>Description</span>
-                                <textarea class="click" id="addDescription" required placeholder="Enter a Description"
+                                <textarea class="click" id="addDescription" placeholder="Enter a Description"
                                     type="text"></textarea>
                             </div>
 
@@ -144,10 +145,10 @@
                             </div>
 
                         </div>
-                        <div class="boxRight">
+                        <div class="boxRight fontSize20">
                             <div>
                                 <div>
-                                    <span>Due date</span>
+                                    <span>Due date<spline class="requiredStar">*</spline></span>
                                     <div>
                                         <input class="click" required placeholder="dd/mm/yyyy" type="text"
                                             id="datepicker">
@@ -161,7 +162,7 @@
                                 </div>
 
                                 <div id="categorySection" class="column">
-                                    <span>Category</span>
+                                    <span>Category<spline class="requiredStar">*</spline></span>
                                     <div class="custom-select marginBottom16" id="categoryAreaV1">
                                     </div>
 
@@ -207,7 +208,7 @@
                     <img class="addContactPopupBoxRightImg" src="./img/person.svg">
                 </div>
                 <div class="addContactPopupBoxRightFormPosition">
-                    <form onsubmit="return false">
+                    <form onsubmit="createContactByPopup();return false">
                         <div class="custom-select">
                             <input placeholder="Name" type="text">
                             <img class="inputAbsolut" src="img/person-white.svg" alt="">
@@ -221,11 +222,18 @@
                             <img class="inputAbsolut" src="img/call.svg" alt="">
                         </div>
                         <div class="addContactPopupBoxRightBtnPosition">
-                            <button onclick="toggleVisibilityAddTask('contactPopupByAddTask', '')"
-                                class="clearBtn">Cancel<img class="clearImg" src="./img/crossAddTask.svg"
-                                    alt=""></button>
-                            <button class="createBtn blueBtn">Create contact<img class="createImg"
-                                    src="./img/check.svg"></button>
+                            <button type="reset" onclick="clearContactPopup()" class="clearBtn">
+                                <spline class="fontSize20">Cancel</spline>
+                                <svg class="clearSvg" xmlns="http://www.w3.org/2000/svg" width="25" height="24"
+                                    viewBox="0 0 25 24" fill="none">
+                                    <path
+                                        d="M12.2496 11.9998L17.4926 17.2428M7.00659 17.2428L12.2496 11.9998L7.00659 17.2428ZM17.4926 6.75684L12.2486 11.9998L17.4926 6.75684ZM12.2486 11.9998L7.00659 6.75684L12.2486 11.9998Z"
+                                        stroke="#2A3647" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                            <button type="submit" class="createBtn blueBtn fontSize21">Create contact<img
+                                    class="createImg" src="./img/check.svg"></button>
                         </div>
                     </form>
                 </div>
@@ -253,8 +261,16 @@
                         <div class="colorSettingBox" id="colorSettingBox">
                         </div>
                         <div class="addContactPopupBoxRightBtnPosition">
-                            <button onclick="stopCreateCategory()" class="clearBtn">Cancel<img class="clearImg"
-                                    src="./img/crossAddTask.svg" alt=""></button>
+                            <button onclick="stopCreateCategory()" class="clearBtn">
+                                <spline class="fontSize20">Cancel</spline>
+                                <svg class="clearSvg" xmlns="http://www.w3.org/2000/svg" width="25" height="24"
+                                    viewBox="0 0 25 24" fill="none">
+                                    <path
+                                        d="M12.2496 11.9998L17.4926 17.2428M7.00659 17.2428L12.2496 11.9998L7.00659 17.2428ZM17.4926 6.75684L12.2486 11.9998L17.4926 6.75684ZM12.2486 11.9998L7.00659 6.75684L12.2486 11.9998Z"
+                                        stroke="#2A3647" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
                             <button onclick="confirmCreateCategory()" class="createBtn blueBtn">Create category<img
                                     class="createImg" src="./img/check.svg"></button>
                         </div>
