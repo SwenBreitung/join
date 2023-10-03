@@ -7,6 +7,17 @@ async function initBoard() {
     updateBoardHTML();
 }
 
+
+async function loadTasks() {
+    try {
+        tasks = JSON.parse(await getItem('tasks'));
+
+    } catch (e) {
+        console.info('Could not load tasks');
+    }
+}
+
+
 /**
  * This function is used to clear all values of the tasks array
  * 
