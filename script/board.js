@@ -339,27 +339,34 @@ async function editTaskNew(i) {
     document.getElementById('addTaskPop').classList.remove('d-none');
     closeTask();
     let taskToEdit = tasks[i];
-   console.log(taskToEdit)
-   renderAllSelectedContacts();
-    renderCategorys();
-   createCategoryWindow();
-   borderColorCheck();
-
+    console.log(taskToEdit)
+    editTaskWindow();
     document.getElementById("addTitel").value = taskToEdit.title;
     document.getElementById("addDescription").value = taskToEdit.description;
-    document.getElementById("selectedContactsContainer").value = taskToEdit.description;
     document.getElementById("datepicker").value = taskToEdit.dueDate;
-    document.getElementById("categoryInputV1").value = taskToEdit.status;
+    for (let contactNumber = 0; contactNumber < taskToEdit.contactName.length; contactNumber++) {
+        const cName = taskToEdit.contactName[contactNumber];
+        const cColor = taskToEdit.contactColor[contactNumber];
+        const cAbbreviation = taskToEdit.contactAbbreviation[contactNumber];
 
-
-
-    document.getElementById('createTaskButton').classList.add('d-none');
-    document.getElementById('editTaskButton').classList.remove('d-none');
-    
+        contactCollection[contactNumber] = {
+            'nameAbbreviation': cAbbreviation,
+            'color': cColor,
+            'name': cName,
+        }
+    }
+    currentCategorySelected[0].color = taskToEdit.categoryColor;
+    currentCategorySelected[0].name = taskToEdit.category;
+    statusEdit = taskToEdit.status;
+    currentPrioSelected = taskToEdit.priority;
+    subTaskCollection = taskToEdit.subtasksInProgress;
+    subtasksFinish = taskToEdit.subtasksFinish;
+    taskIdForEdit = taskToEdit.id;
+    save();
+    editTaskWindow();
 }
 
- 
-  
+
 
 
 
