@@ -146,21 +146,21 @@ textarea:focus {
     display: flex;
     left: 339px;
     max-width: calc(100vw - 339px);
-    margin-top: 90px;
+    margin-top: 130px;
     z-index: 1.7;
 }
 
 
 .contentAddTask {
     position: absolute;
-    top: 200px;
+    top: 260px;
     bottom: 0px;
     display: flex;
     flex-direction: column;
     left: 243px;
     max-width: calc(100vw - 243px);
     width: 100%;
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 260px);
     overflow-y: auto;
 }
 
@@ -469,6 +469,9 @@ textarea:focus {
     cursor: pointer;
 }
 
+.requiredStar {
+    color: #FF8190;
+}
 
 .prioBtnIcons {
     width: 15px;
@@ -639,16 +642,27 @@ ul {
 
 }
 
-
 .selectBtnArea {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: space-between;
     margin-top: 55px;
     margin-bottom: 30px;
-    width: 100%;
     z-index: 2;
+    align-items: flex-end;
+}
+
+.requiredText {
+    color: black;
+}
+
+.addTaskBottomArea {
+    display: flex;
+}
+
+.addTaskBottomBtnArea {
+    display: flex;
+    gap: 25px;
 }
 
 .createBtn {
