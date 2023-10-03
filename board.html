@@ -33,7 +33,7 @@
 
     <div id="popup-container" class="dialog-bg d-none"></div>
     <div class="content-board show-scrollbarTaskWindow bg-main-color">
-      
+
         <div class="search-board-container">
             <h1>Board</h1>
             <form class="searchbox" role="search">
@@ -42,7 +42,7 @@
                         placeholder="Find Task">
                     <img class="search-vector" src="img/VectorSearchbar.svg">
                     <img class="searchbar-symbol" id="searchLogo" src="img/search.svg">
-                    <img onclick="clearInput()"   src="img/close.svg" class="searchbar-symbol d-none" id="searchClose">
+                    <img onclick="clearInput()" src="img/close.svg" class="searchbar-symbol d-none" id="searchClose">
                 </div>
                 <button onclick="toggleVisibilityAddTask('', 'addTaskPop')" id="button-ad-task" type="button"
                     class="button">Add task<img src="img/plusAddTaskWhite.svg" alt="">
@@ -51,10 +51,10 @@
         </div>
 
 
-<div id="searchResults" class="contentposition"></div>
+        <div id="searchResults" class="contentposition"></div>
         <div id="contentposition" class="contentposition">
 
-            <div  class="board-main-section">
+            <div class="board-main-section">
 
                 <section>
                     <div class="statusheadline">
@@ -114,8 +114,7 @@
             <div class="contentPositionAddTaskPopup show-scrollbarTaskWindow">
                 <div class="addTaskPopupHeadlineContainer">
                     <h1 class="fw-bold">Add Task</h1>
-                    <img onclick="toggleVisibilityAddTask('addTaskPop', '')" class="click" src="img/crossAddTask.svg"
-                        alt="">
+                    <img onclick="resetAllAddTaskElements()" class="click" src="img/crossAddTask.svg" alt="">
                 </div>
 
                 <form onsubmit="return false" id="myForm">
