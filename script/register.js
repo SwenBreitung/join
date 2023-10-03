@@ -56,6 +56,7 @@ async function registUser() {
         window.location = 'index.html';
     }
 }
+
 async function loadUserGroup698() {
     try {
         users = JSON.parse(await getItem('userGroup698'));

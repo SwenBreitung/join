@@ -1049,11 +1049,8 @@ function returnSubTaskCollection(subCollection, i) {
 
 function returnButtonAreaAddTask() {
     return /*html*/ `
-    <button onclick="clearButton()" class="clearBtn fontSize20"><spline class="fontSize20">Clear</spline>
-    <svg class="clearSvg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-    <path d="M12.2496 11.9998L17.4926 17.2428M7.00659 17.2428L12.2496 11.9998L7.00659 17.2428ZM17.4926 6.75684L12.2486 11.9998L17.4926 6.75684ZM12.2486 11.9998L7.00659 6.75684L12.2486 11.9998Z" stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-            </button>
+    <button onclick="clearButton()" class="clearBtn fontSize20">Clear<img class="clearImg"
+            src="./img/crossAddTask.svg" alt=""></button>
     <button id="createTaskButton" onclick="createTask()" class="createBtn blueBtn fontSize21">Create Task<img class="createImg"
             src="./img/check.svg"></button>
     <button id="editTaskButton" onclick="createTask()" class="createBtn blueBtn d-none">Edit Task<img class="createImg"
@@ -1064,9 +1061,7 @@ function returnButtonAreaAddTask() {
 
 function returnButtonAreaEditTask() {
     return /*html*/`
-    <button onclick="cancelButtonEditTask()" class="clearBtn">Cancel<img class="clearImg"
-            src="./img/crossAddTask.svg" alt=""></button>
-    <button onclick="editTaskFinished()" class="createBtn blueBtn">Edit task<img class="createImg"
+    <button onclick="addEditTask()" class="createBtn blueBtn">Edit task<img class="createImg"
             src="./img/check.svg"></button>
     `;
 }
