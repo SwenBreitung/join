@@ -1061,6 +1061,8 @@ ul {
         display: flex;
         flex-direction: column;
         left: 0px;
+        right: 0;
+        padding-left: 12px;
         max-width: unset;
         width: 100%;
         max-height: calc(100vh - 215px);
@@ -1139,7 +1141,6 @@ ul {
     .selectBtnArea {
         position: fixed;
         bottom: 90px;
-        background-color: #F6F7F8;
         padding-top: 0px;
         padding-bottom: 0px;
         margin-top: 0px;
