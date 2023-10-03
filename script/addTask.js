@@ -79,12 +79,18 @@ function loadEditTask(i) {
 
 function editTaskWindow() {
     load();
+    let titelInput = document.getElementById('addTitel');
+    let descriptionInput = document.getElementById('addDescription');
+    let dueDateInput = document.getElementById('datepicker');
     let assignTo1 = document.getElementById('assignedToInputContainer');
     let assignTo2 = document.getElementById('assignedToContactsInputContainer');
     let categoryBox1 = document.getElementById('categoryAreaV1');
     let categoryBox2 = document.getElementById('categoryAreaV2');
     let prioBox = document.getElementById('prioBox');
     let buttonArea = document.getElementById('buttonAreaAddTask');
+    titelInput.value = titleAddTask;
+    descriptionInput.value = descriptionAddTask;
+    dueDateInput.value = dueDateAddTask;
     buttonArea.innerHTML = returnButtonAreaEditTask();
     assignTo1.innerHTML = returnAssignToBox1();
     assignTo2.innerHTML = returnAssignToBox2();
@@ -92,12 +98,8 @@ function editTaskWindow() {
     categoryBox2.innerHTML = returnCategoryBox2();
     prioBox.innerHTML = returnPrioBox();
     borderColorCheck();
-    renderCategorys();
     renderAllSelectedContacts();
     renderAllContactsForSearch();
-    renderSubTaskCollection();
-    createCategoryWindow();
-    initializePrioButtons();
 
 }
 
@@ -107,9 +109,9 @@ function editTaskWindow() {
 
 async function initAddTask() {
     await initializeStorage('allCategorys', allCategorys);
-    await loadTasks();
     await loadAddTaskCurrentId();
     await loadAddTaskAllCategorys();
+    await loadTasks();
     markCategory();
     renderAddTaskContent();
 }
@@ -142,7 +144,6 @@ function renderAddTaskContent() {
     borderColorCheck();
     renderAllSelectedContacts();
     renderAllContactsForSearch();
-    renderSubTaskCollection();
 }
 //---------------------------------------------------------------------------------//
 
@@ -395,8 +396,6 @@ function resetAllAddTaskElements() {
     selectedColorIndex = [];
     currentPrioSelected = "";
     contactCollection = [];
-    taskIdForEdit = '';
-    statusEdit = '';
     clearAddTaskInputs();
     resetInputs();
     save();
@@ -770,41 +769,6 @@ function prioSelectedToggle(btnId, iconId, activeIconId, activeClass, iconSrc, r
 }
 
 
-function initializePrioButtons() {
-    if (!currentPrioSelected) return; // Wenn nichts ausgewählt ist, tue nichts.
-
-    let btnId, iconId, activeIconId, activeClass;
-
-    switch (currentPrioSelected) {
-        case './img/prioUrgent.svg':
-            btnId = 'prioUrgentBtn';
-            iconId = 'prioUrgentIcon';
-            activeIconId = 'prioUrgentIconActiv';
-            activeClass = 'prioBtnActivUrgent';
-            break;
-        case './img/prioMedium.svg':
-            btnId = 'prioMediumBtn';
-            iconId = 'prioMediumIcon';
-            activeIconId = 'prioMediumIconActiv';
-            activeClass = 'prioBtnActivMedium';
-            break;
-        case './img/prioLow.svg':
-            btnId = 'prioLowBtn';
-            iconId = 'prioLowIcon';
-            activeIconId = 'prioLowIconActiv';
-            activeClass = 'prioBtnActivLow';
-            break;
-        default:
-            console.error('Unbekanntes Icon in currentPrioSelected:', currentPrioSelected);
-            return;
-    }
-
-    activateButton(btnId, iconId, activeIconId, activeClass, currentPrioSelected);
-}
-
-// Diese Funktion aufrufen, wenn die Seite geladen ist.
-
-
 /**
  * Resets all priority buttons to their default states.
  */
@@ -1100,7 +1064,9 @@ function returnButtonAreaAddTask() {
 
 function returnButtonAreaEditTask() {
     return /*html*/`
-    <button onclick="addEditTask()" class="createBtn blueBtn">Edit task<img class="createImg"
+    <button onclick="cancelButtonEditTask()" class="clearBtn">Cancel<img class="clearImg"
+            src="./img/crossAddTask.svg" alt=""></button>
+    <button onclick="editTaskFinished()" class="createBtn blueBtn">Edit task<img class="createImg"
             src="./img/check.svg"></button>
     `;
 }
