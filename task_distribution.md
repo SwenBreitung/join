@@ -21,9 +21,11 @@ Spell Correction (Lina)
 David Peterka
 **CSS:**
 David Peterka
+Bernhard Sigl (adding fonts; required text*)
 **HTML:**
 David Peterka
 **Mobile View:**
+Bernhard Sigl (Button Layout bottom)
 David Peterka
 <!-- board -->
 **JS:**
