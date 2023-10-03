@@ -855,8 +855,6 @@ ul {
 
     .selectBtnArea {
         display: flex;
-        justify-content: flex-end;
-        align-items: center;
         width: 100%;
         z-index: 2;
     }
@@ -1046,8 +1044,6 @@ ul {
     .selectBtnArea {
         position: unset;
         display: flex;
-        justify-content: flex-end;
-        align-items: center;
         width: 100%;
         padding-right: 0px;
         margin-top: 40px;
@@ -1128,7 +1124,9 @@ ul {
         display: none;
     }
 
-
+    .clearBtn {
+        display: none;
+    }
 
     .addTaskHeadlineContainer {
         top: 0px;
@@ -1138,9 +1136,6 @@ ul {
         max-width: calc(100vw - 12px);
         margin-top: 80px;
     }
-
-
-
 
     .contentPosition {
         padding-left: 12px;
@@ -1172,9 +1167,8 @@ ul {
         margin-bottom: 0px;
         left: 0;
         padding-right: 18px;
+        padding-left: 18px;
         display: flex;
-        justify-content: flex-end;
-        align-items: center;
         width: 100%;
         z-index: 2;
     }
