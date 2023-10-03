@@ -11,13 +11,6 @@ function signUp() {
 }
 
 
-async function loadUsers() {
-    try {
-        users = JSON.parse(await getItem('users'));
-    } catch (e) {
-        console.error('Loading error:', e);
-    }
-}
 
 async function loadUsers() {
     try {
@@ -27,13 +20,6 @@ async function loadUsers() {
     }
 }
 
-async function loadUsers() {
-    try {
-        users = JSON.parse(await getItem('users'));
-    } catch (e) {
-        console.error('Loading error:', e);
-    }
-}
 
 
 async function register() {
@@ -64,6 +50,14 @@ async function registUser() {
         await setItem('userGroup698', JSON.stringify(user));
         resetForm();
         window.location = 'index.html';
+    }
+}
+
+async function loadUserGroup698() {
+    try {
+        users = JSON.parse(await getItem('userGroup698'));
+    } catch (e) {
+        console.error('Loading error:', e);
     }
 }
 
