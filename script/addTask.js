@@ -1097,7 +1097,7 @@ function returnButtonAreaAddTask() {
 
 function returnButtonAreaEditTask() {
     return /*html*/`
-    <button onclick="editTaskFinished()" class="createBtn blueBtn">Edit task<img class="createImg"
+    <button onclick="addEditTask()" class="createBtn blueBtn">Edit task<img class="createImg"
             src="./img/check.svg"></button>
     `;
 }

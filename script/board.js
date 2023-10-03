@@ -367,6 +367,31 @@ async function editTaskNew(i) {
 }
 
 
+async function addEditTask() {
+    contactNames = contactCollection.map(contact => contact.name);
+    contactColors = contactCollection.map(contact => contact.color);
+    contactNamesAbbreviation = contactCollection.map(contact => contact.nameAbbreviation);
+    let taskEdit = {
+        'id': taskIdForEdit,
+        'status': statusEdit,
+        'category': currentCategorySelected[0].name,
+        'categoryColor': currentCategorySelected[0].color,
+        'title': document.getElementById("addTitel").value,
+        'description': document.getElementById("addDescription").value,
+        'dueDate': document.getElementById("datepicker").value,
+        'priority': currentPrioSelected,
+        'contactName': contactNames,
+        'contactColor': contactColors,
+        'contactAbbreviation': contactNamesAbbreviation,
+        'subtasksInProgress': subTaskCollection,
+        'subtasksFinish': subtasksFinish,
+    }
+    let index = tasks.findIndex(task => task.id === taskIdForEdit);
+
+    tasks[index] = taskEdit;
+    await setItem('tasks', JSON.stringify(tasks));
+    resetAllAddTaskElements();
+}
 
 
 
