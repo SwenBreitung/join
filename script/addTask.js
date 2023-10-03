@@ -19,8 +19,8 @@ let colorCollection = [
 ];
 
 let mainCategorys = [{
-    'name': ['Technical Task', 'User Story', ],
-    'color': ['background: #1FD7C1', 'background: #0038FF', ],
+    'name': ['Technical Task', 'User Story',],
+    'color': ['background: #1FD7C1', 'background: #0038FF',],
 }];
 
 let allCategorys = [{
@@ -111,6 +111,7 @@ async function initAddTask() {
     await initializeStorage('allCategorys', allCategorys);
     await loadAddTaskCurrentId();
     await loadAddTaskAllCategorys();
+    await loadTasks();
     markCategory();
     renderAddTaskContent();
 }
