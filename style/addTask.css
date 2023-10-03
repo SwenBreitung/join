@@ -469,6 +469,9 @@ textarea:focus {
     cursor: pointer;
 }
 
+.requiredStar {
+    color: #FF8190;
+}
 
 .prioBtnIcons {
     width: 15px;
@@ -639,16 +642,27 @@ ul {
 
 }
 
-
 .selectBtnArea {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: space-between;
     margin-top: 55px;
     margin-bottom: 30px;
-    width: 100%;
     z-index: 2;
+    align-items: flex-end;
+}
+
+.requiredText {
+    color: black;
+}
+
+.addTaskBottomArea {
+    display: flex;
+}
+
+.addTaskBottomBtnArea {
+    display: flex;
+    gap: 25px;
 }
 
 .createBtn {
