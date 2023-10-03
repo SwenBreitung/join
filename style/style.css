@@ -121,6 +121,7 @@
     right: 11px;
     top: 59px;
     position: absolute;
+    z-index: 3;
 }
 
 .menu-header-container a {
