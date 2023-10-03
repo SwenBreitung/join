@@ -1048,9 +1048,9 @@ function returnSubTaskCollection(subCollection, i) {
 
 function returnButtonAreaAddTask() {
     return /*html*/ `
-    <button onclick="clearButton()" class="clearBtn">Clear<img class="clearImg"
+    <button onclick="clearButton()" class="clearBtn fontSize20">Clear<img class="clearImg"
             src="./img/crossAddTask.svg" alt=""></button>
-    <button id="createTaskButton" onclick="createTask()" class="createBtn blueBtn">Create Task<img class="createImg"
+    <button id="createTaskButton" onclick="createTask()" class="createBtn blueBtn fontSize21">Create Task<img class="createImg"
             src="./img/check.svg"></button>
     <button id="editTaskButton" onclick="createTask()" class="createBtn blueBtn d-none">Edit Task<img class="createImg"
             src="./img/check.svg"></button>
@@ -1105,19 +1105,19 @@ function returnCategoryBox2() {
 function returnPrioBox() {
     return /*html*/ `
     <div onclick="prioSelectedToggle('prioUrgentBtn', 'prioUrgentIcon', 'prioUrgentIconActiv', 'prioBtnActivUrgent', './img/prioUrgent.svg', true)"
-        id="prioUrgentBtn" class="prioBtn">Urgent
+        id="prioUrgentBtn" class="prioBtn fontSize20">Urgent
         <img id="prioUrgentIcon" class="prioBtnIcons" src="./img/prioUrgent.svg">
         <img id="prioUrgentIconActiv" class="prioBtnIcons d-none"
             src="./img/PrioUrgentWhite.svg">
     </div>
     <div onclick="prioSelectedToggle('prioMediumBtn', 'prioMediumIcon', 'prioMediumIconActiv', 'prioBtnActivMedium', './img/prioMedium.svg', true)"
-        id="prioMediumBtn" class="prioBtn">Medium
+        id="prioMediumBtn" class="prioBtn fontSize20">Medium
         <img id="prioMediumIcon" class="prioBtnIcons" src="./img/prioMedium.svg">
         <img id="prioMediumIconActiv" class="prioBtnIcons d-none"
             src="./img/PrioMediumWhite.svg">
     </div>
     <div onclick="prioSelectedToggle('prioLowBtn', 'prioLowIcon', 'prioLowIconActiv', 'prioBtnActivLow', './img/prioLow.svg', true)"
-        id="prioLowBtn" class="prioBtn">Low
+        id="prioLowBtn" class="prioBtn fontSize20">Low
         <img id="prioLowIcon" class="prioBtnIcons" src="./img/prioLow.svg">
         <img id="prioLowIconActiv" class="prioBtnIcons d-none"
             src="./img/PrioLowWhite.svg">
