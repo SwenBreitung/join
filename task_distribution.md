@@ -13,7 +13,7 @@
 **CSS:**
 
 **HTML:**
-
+Spell Correction (Lina)
 **Mobile View:**
 
 <!-- addTask -->
@@ -27,13 +27,13 @@ David Peterka
 David Peterka
 <!-- board -->
 **JS:**
-
+Lina Wionsek
 **CSS:**
-
+Lina Wionsek
 **HTML:**
-
+Lina Wionsek
 **Mobile View:**
-
+Lina Wionsek
 <!-- contacts -->
 **JS:**
 Bernhard Sigl

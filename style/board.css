@@ -255,6 +255,7 @@ h3 {
     cursor: pointer;
 }
 
+
 .task-category {
     background-color: #0038FF;
     border-radius: 8px;
@@ -380,6 +381,15 @@ h3 {
 .task-detail-bottom {
     display: flex;
     justify-content: flex-end;
+    gap: 8px;
+}
+.delete-edit-buttons{
+    padding: 4px;
+}
+.delete-edit-buttons:hover{
+    cursor: pointer;
+    background-color: #EEE;
+    border-radius: 8px;
 }
 
 

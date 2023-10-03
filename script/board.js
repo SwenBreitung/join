@@ -71,7 +71,7 @@ function clearInput() {
 /** 
  * This eventlistener is fired when the textbox is focused
  *  
-*/
+ */
 document.getElementById('searchInput').addEventListener("focus", changeDivColor);
 
 
@@ -328,8 +328,14 @@ function renderTaskdetailHTML(i) {
                 </div>
             </div>
             <div class="task-detail-bottom">
-                <img onclick="deleteTask(${i})" src="img/subTaskDelete.svg" alt="">
-                <img onclick="editTaskNew(${i})"   src="img/PenAddTask 1=edit.svg" alt="">
+                <div onclick="deleteTask(${i})" class="delete-edit-buttons">
+                    <img  src="img/subTaskDelete.svg" alt="">Delete
+                </div>
+                <img src="img/vector_detail_card.svg" alt="">
+                <div onclick="editTaskNew(${i})" class="delete-edit-buttons">
+                    <img  src="img/PenAddTask 1=edit.svg" alt="">Edit
+                </div>
+               
             </div>
         </div>
     `;
