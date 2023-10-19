@@ -135,6 +135,18 @@
     background-color: var(--sidebarHoverElements);
 }
 
+.p-16px {
+    padding: 16px;
+}
+
+.subtask-list .subtask-listImg {
+    display: none;
+}
+
+.subtask-list:hover .subtask-listImg {
+    display: flex;
+}
+
 @media (max-width: 700px) {
     .content {
         position: absolute;

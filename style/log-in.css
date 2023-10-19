@@ -189,12 +189,13 @@ header {
     }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 413px) {
     .sing-up-mobile {
         display: flex;
         justify-content: space-around;
-        padding-top: 44px;
+        height: 33px !important;
         height: 0;
+        padding-top: 39px !important;
     }
     .checkbox {
         margin: 10px;
@@ -209,6 +210,9 @@ header {
     }
     header img {
         height: 80px;
+    }
+    .police {
+        padding: 0px;
     }
 }
 

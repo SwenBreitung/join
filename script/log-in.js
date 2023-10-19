@@ -4,8 +4,7 @@ let dialog = document.getElementById('dialog');
 function init() {
     startAnimation();
     loadLogIn();
-    loadUsers();
-
+    loadBackendUsers();
 }
 
 
@@ -15,7 +14,7 @@ function loadLogIn() {
 
 
 function startAnimation() {
-    if (!document.referrer) { // Wenn referrer leer ist
+    if (!document.referrer) {
         document.querySelector('.join-logo-contain').classList.add('animated');
         document.querySelector('.join-logo-contain').classList.remove('d-none');
         document.querySelector('.join-logo').classList.add('animated');
@@ -43,6 +42,16 @@ function login() {
     let passwort = document.getElementById('passwort');
     let user = users.find(u => u.email === email.value && u.password === passwort.value);
     if (user) {
+        console.log('User found', user);
+        try {
+            console.log('Trying to set item:', user);
+            localStorage.setItem('user', JSON.stringify(user));
+            console.log('Just set:', JSON.parse(localStorage.getItem('user')));
+            console.log('Item should be set.');
+        } catch (e) {
+            console.error('An error occurred:', e);
+        }
+        userId = user.id;
         window.location.href = "./summery.html";
     } else {
         loadRedBorderInput();

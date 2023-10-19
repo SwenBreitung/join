@@ -1,1082 +1,441 @@
 body {
+    background-color: var(--main-background-color) !important;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 111px !important;
     display: flex;
-    background-color: #F6F7F8 !important;
-    margin: 0;
 }
 
-section {
+.contentAddTask {
+    margin-left: 256px !important;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
-.index2 {
-    z-index: 1.8;
+.grey-line {
+    height: 312px;
+    width: 1px;
+    background-color: black;
 }
 
-.click:hover {
-    cursor: pointer;
-}
-
-.wrap {
-    flex-wrap: wrap;
-}
-
-.gap16 {
-    gap: 16px;
-}
-
-.marginTop16 {
-    margin-top: 16px;
-}
-
-.marginBottom16 {
-    margin-bottom: 16px;
-}
-
-.dFlex {
+.task-area {
     display: flex;
 }
 
-.spaceBtw {
-    justify-content: space-between
+.green-background {
+    background-color: green !important;
 }
 
-.justyCenter {
+.orange-background {
+    background-color: orange !important;
+}
+
+.red-background {
+    background-color: red !important;
+}
+
+#dropdownMenu {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    z-index: 1 !important;
+    margin-left: 4px;
+    display: flex;
+    position: absolute;
+    width: 98%;
+    margin-top: -10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2), -2px 2px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 10px 10px;
+}
+
+#categoryAreaV1 {
+    z-index: 20;
+}
+
+input.with-image {
+    padding-right: 30px;
+    background: url('../img/kalenderJoin.svg') no-repeat right center !important;
+    background-size: 20px 20px !important;
+    background-position: calc(100% - 10px) center !important;
+}
+
+.dropdown-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 5px !important;
+}
+
+.color-box {
+    border-radius: 50%;
+    height: 15px;
+    width: 15px;
+}
+
+#dialog-window {
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#dialog {
+    z-index: 999;
+    position: absolute;
+    top: 20%;
+    left: calc(5% + 200px);
+    right: 5%;
+    bottom: 20%;
+    display: flex;
     justify-content: center;
 }
 
-.d-none {
-    display: none;
+.dialog-left {
+    background-color: blue;
+    height: 100%;
+    width: 38%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.blueBtn:hover {
-    background-color: #091931;
-    cursor: pointer;
-}
-
-#myForm {
+.dialog-right {
+    background-color: var(--border-grey);
+    height: 100%;
     width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
+
+#color-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 80%;
+}
+
+.box-left {
+    padding-right: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.box-right {
+    padding-left: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.prio-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #D1D1D1;
+    box-shadow: 1px 1px 5px 1px #D1D1D1;
+    border-radius: 10px;
+    height: 31px;
+    width: 100px;
+    gap: 10px;
+    background-color: #FFF;
+}
+
+.custom-select {}
 
 input {
     border-radius: 5px;
-    border: 1px solid #D1D1D1;
+    border: none;
     background: #FFF !important;
     width: 100%;
     padding: 10px;
-    margin-top: 5px !important;
     outline: none;
 }
 
-/* Autofill verändert den hintergrund von inputFeldern */
-/* Lösung für Chrome */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: inherit !important;
-}
-
-/* Lösung für Firefox */
-input:-moz-autofill,
-input:-moz-autofill:hover,
-input:-moz-autofill:focus,
-input:-moz-autofill:active {
-    transition: background-color 5000s ease-in-out 0s;
-    color: inherit !important;
-}
-
-
-.custom-select {
-    position: relative;
-    width: 100%;
-}
-
-
-.inputAbsolut {
-    position: absolute;
-    right: 15px;
-    top: 14px;
-    padding: 1px;
-}
-
-
-.inputAbsolut:hover {
-    cursor: pointer;
-    background-color: #EEE;
-    border-radius: 50%;
-}
-
-
-input:focus {
-    border: 1px solid #29ABE2;
-}
-
-
-textarea {
-    border-radius: 5px;
-    border: 1px solid #D1D1D1;
-    background: #FFF;
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px !important;
-    margin-bottom: 16px !important;
-    outline: none;
-}
-
-
-textarea:focus {
-    border: 1px solid #29ABE2;
-}
-
-
-.addTaskHeadlineContainer {
-    position: fixed;
-    height: 100px;
-    width: 100%;
-    background-color: #F6F7F8 !important;
+.input-filds {
+    padding: 5px;
     display: flex;
-    align-items: end;
-    padding-bottom: 5px;
-    top: 0;
-    right: 5px;
-    display: flex;
-    left: 296px;
-    max-width: calc(100vw - 296px);
-    margin-top: 60px;
-    z-index: 1.7;
-}
-
-
-.contentAddTask {
-    position: absolute;
-    top: 160px;
-    bottom: 0px;
-    display: flex;
-    flex-direction: column;
-    left: 200px;
-    max-width: calc(100vw - 200px);
-    width: 100%;
-    max-height: calc(100vh - 160px);
-    overflow-y: auto;
-}
-
-
-.mySelect {
-    appearance: none;
-    background: url('../img/arrow_drop_downaa.svg') no-repeat right center;
-    background-position-x: calc(97%) !important;
-    border-radius: 5px;
-    border: 1px solid #D1D1D1;
     background-color: #FFF;
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px !important;
-    margin-bottom: 16px !important;
-    outline: none;
+    height: 100px;
+    width: 334px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
 }
 
-#datepicker {
-    background-image: url('../img/kalenderJoin.svg') !important;
-    background-repeat: no-repeat !important;
-    background-position-x: calc(96%) !important;
-    background-position-y: center !important;
-}
-
-.pika-single {
-    z-index: 1000;
-}
-
-
-.prioButtonContainer {
+.input-filed {
+    position: relative;
+    padding: 5px;
     display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 19px;
+    background-color: #FFF;
+    height: 32px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
 }
 
+.addNewContactButton {
+    width: 352px;
+    height: 56px !important;
+    padding: 0 !important;
+    gap: 16px;
+    width: 100%;
+    padding-bottom: 20px;
+}
 
+.btnBackground {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    padding-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.cancel-btn {
+    width: 140px;
+    background-color: white !important;
+    color: #000;
+    border: 1px solid#000;
+    height: 56px !important;
+    border-radius: 10px;
+}
+
+.cancel-btn:hover {
+    color: var(--headline);
+    border: 1px solid var(--headline);
+    height: 56px !important;
+    border-radius: 10px;
+}
+
+.add-contact-btn {
+    width: 200px;
+}
+
+.addNewContactButton {
+    width: 352px;
+    height: 56px !important;
+    padding: 0 !important;
+    gap: 16px;
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.createContactButton,
+.addNewContactButton {
+    background: #2A3647 !important;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+.addNewContactButton:hover {
+    background: #29ABE2 !important;
+    box-shadow: -2px 0 6px 0 rgb(0, 0, 0, 0.2);
+}
 
 .contentPosition {
+    flex-grow: 1;
+    display: flex;
+}
+
+.prios-container {
+    display: flex;
+    gap: 16px;
+}
+
+.width100px {
     position: relative;
-    padding-left: 96px;
-    padding-right: 96px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     width: 100%;
 }
 
-.taskArea {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: auto;
-}
-
-.boxLeft {
-    padding-right: 48.2px;
+.subtasks-addet {
+    z-index: 50;
+    margin-top: 59px;
+    position: absolute;
     display: flex;
     flex-direction: column;
-    flex: 1;
-    min-width: 285px;
-    box-sizing: border-box;
-}
-
-
-#selectedContactsContainer {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
     width: 100%;
-    gap: 7px;
-    flex-wrap: wrap;
-    margin-top: 5px;
-}
-
-
-.assignedToContactImg {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    font-size: 13px;
-    border: 1.5px solid white;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    line-height: 120%;
-}
-
-
-.selectContactsPositionContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #FFF;
-    margin-bottom: 16px;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-}
-
-.ContactsRenderContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    max-height: 180px;
-    width: 100%;
-    margin-bottom: 5px;
+    max-height: 200px;
     overflow-y: auto;
 }
 
-/*--------------------SCROLLBAR-Inside----------------------------*/
-.show-scrollbar::-webkit-scrollbar {
-    display: block !important;
-    width: 12px !important;
-}
-
-.show-scrollbar::-webkit-scrollbar-track {
-    background-color: #F6F7F8 !important;
-}
-
-.show-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #2A3647 !important;
-    border-radius: 10px;
-}
-
-.show-scrollbar:hover::-webkit-scrollbar-thumb {
-    background-color: #091931;
-}
-
-.show-scrollbar::-webkit-scrollbar-button:start:decrement,
-.show-scrollbar::-webkit-scrollbar-button:end:increment {
-    display: block;
-    height: 10px;
-    background-color: #fff;
-    background-repeat: no-repeat;
-}
-
-.show-scrollbar::-webkit-scrollbar-button:start:decrement {
-    background-position: center;
-    background-image: url('../img/arrow_drop_up.svg');
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-}
-
-.show-scrollbar::-webkit-scrollbar-button:end:increment {
-    background-position: center;
-    background-image: url('../img/arrow_drop_downaa.svg');
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-
-}
-
-/*--------------------SCROLLBAR-Outside----------------------------*/
-
-
-.show-scrollbarTaskWindow::-webkit-scrollbar {
-    display: block !important;
-    width: 12px !important;
-}
-
-.show-scrollbarTaskWindow::-webkit-scrollbar-track {
-    background-color: #F6F7F8 !important;
-}
-
-.show-scrollbarTaskWindow::-webkit-scrollbar-thumb {
-    background-color: #2A3647 !important;
-    border-radius: 10px;
-}
-
-.show-scrollbarTaskWindow:hover::-webkit-scrollbar-thumb {
-    background-color: #091931;
-}
-
-.show-scrollbarTaskWindow::-webkit-scrollbar-button:start:decrement,
-.show-scrollbarTaskWindow::-webkit-scrollbar-button:end:increment {
-    display: block;
-    height: 10px;
-    background-color: #fff;
-    background-repeat: no-repeat;
-}
-
-.show-scrollbarTaskWindow::-webkit-scrollbar-button:start:decrement {
-    background-position: center;
-    background-image: url('../img/arrow_drop_up.svg');
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-}
-
-.show-scrollbarTaskWindow::-webkit-scrollbar-button:end:increment {
-    background-position: center;
-    background-image: url('../img/arrow_drop_downaa.svg');
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-
-}
-
-.assignedContactsBox {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 98%;
-    padding-left: 10px;
-    padding-right: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    border-bottom: 1px solid #D1D1D1;
-    border-radius: 10px !important;
-}
-
-.contactBoxLeft {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
-}
-
-.assignedContactsBox:hover {
-    cursor: pointer;
-    background: #EEE;
-    border-radius: 10px;
-    border-bottom: 1px solid transparent;
-}
-
-.assignedContactsBoxSelected {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 98%;
-    padding-left: 10px;
-    padding-right: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    color: white;
-    background-color: #2A3647;
-    border-radius: 10px;
-}
-
-
-.assignedContactsBoxSelected:hover {
-    cursor: pointer;
-    background: #091931;
-    border-radius: 10px;
-}
-
-
-.addNewContactBtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    text-align: center;
-    gap: 5px;
-    color: white;
-    background-color: #2A3647;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    width: 90%;
-    border-radius: 10px;
-}
-
-
-.addNewContactBtnIcon {
-    width: 21px;
-}
-
-.boxRight {
-    padding-left: 48px;
-    display: flex;
-    flex-direction: column;
-    border-left: 1px solid var(--border-grey);
-    flex: 1;
-    box-sizing: border-box;
-}
-
-.prioBtn {
-    display: flex;
-    font-size: 17px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 7px;
-    line-height: 120%;
-    padding: 10px 14px;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
-    border-radius: 10px;
-    background-color: #FFFFFF;
-    margin-top: 5px !important;
-    flex: 1;
-}
-
-.prioBtn:hover {
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    cursor: pointer;
-}
-
-
-.prioBtnIcons {
-    width: 15px;
-}
-
-.prioBtnActivUrgent {
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
-    background-color: #FF3D00 !important;
-    color: white;
-}
-
-.prioBtnActivMedium {
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
-    background-color: #FFA800 !important;
-    color: white;
-}
-
-.prioBtnActivLow {
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
-    background-color: #7AE229 !important;
-    color: white;
-}
-
-
-.categoryRenderContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    max-height: 180px;
+.subtask-list {
     width: 100%;
-    gap: 10px;
-    padding-top: 5px;
-    margin-bottom: 5px;
-    overflow-y: auto;
-}
-
-
-.categoryRow {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    list-style-type: none;
+}
+
+.subtask-listImg {
+    display: none;
+}
+
+.dropdown-button {
+    margin-top: 8px !important;
+    margin: 0 1%;
     width: 98%;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #D1D1D1;
-    border-radius: 10px !important;
-
-}
-
-
-.categoryRow:hover {
-    cursor: pointer;
-    background: #EEE;
-    border-radius: 10px;
-    border-bottom: 1px solid transparent;
-
-}
-
-.colorCircle {
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(0, 0, 0);
-    border-radius: 50%;
-}
-
-.colorCircle:hover {
-    cursor: pointer;
-    box-shadow: 2px 4px 4px 2px rgba(0, 0, 0, 0.30);
-}
-
-
-.categoryRowLeft {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-}
-
-.colorSettingBox {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
-    padding: 5px 5px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border: 2px solid #2A3647;
-}
-
-.selectedColor {
-    width: 25px;
-    height: 25px;
-    border: 2px solid #2A3647;
-    box-shadow: 2px 4px 4px 2px rgba(0, 0, 0, 0.30);
-}
-
-.selected {
-    background-color: #2A3647;
+    background: #2A3647 !important;
     color: white;
-    border-radius: 10px !important;
-
-}
-
-.selected:hover {
-    cursor: pointer;
-    background: #091931 !important;
-    border-radius: 10px !important;
-}
-
-.selectedSubTask {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    max-height: 90px;
-}
-
-ul {
-    margin-top: 10px !important;
-    margin-bottom: 0px !important;
-}
-
-
-#editInput {
-    border-radius: 0;
-    padding: 0px;
-    height: 35px;
     border: none;
-    border-bottom: 1px solid #29ABE2 !important;
-
-}
-
-
-.editAbsolutCross {
-    position: absolute;
-    right: 44px;
-    top: 10px;
-    padding: 1px;
-    width: 29px;
-    border-right: 1px solid #eee;
-}
-
-
-.editAbsolutCheck {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    padding: 1px;
-    width: 29px;
-    border-left: 1px solid #eee;
-}
-
-.editAbsolutCross:hover {
-    border-radius: 50%;
-    cursor: pointer;
-    background-color: #EEE;
-}
-
-
-.editAbsolutCheck:hover {
-    border-radius: 50%;
-    cursor: pointer;
-    background-color: #EEE;
-
-}
-
-
-.selectBtnArea {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: 55px;
-    margin-bottom: 30px;
-    width: 100%;
-    z-index: 2;
-}
-
-.createBtn {
-    color: white;
-    background-color: #2A3647;
-    display: flex;
-    font-size: 17px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 5px;
-    padding: 6px 13px;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
     border-radius: 10px;
 }
 
-.clearBtn {
-    background-color: #F6F7F8;
-    display: flex;
-    font-size: 17px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 5px;
-    padding: 6px 13px;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
-    border-radius: 10px;
+.dropdown-button:hover {
+    background-color: var(--headline) !important;
 }
 
+#contacts {}
 
-.clearBtn:hover {
-    color: black;
-    background-color: #eee;
-    cursor: pointer;
-}
-
-.createImg {
-    width: 15px;
-    margin-bottom: -1px;
-}
-
-.clearImg {
-    width: 19px;
-    margin-bottom: -3px;
-}
-
-.popupContainer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 3;
-    background: rgba(0, 0, 0, 0.4);
-}
-
-.addContactPopupBox {
+#contacts-container {
+    overflow: auto;
     position: absolute;
-    display: flex;
-    left: 220px;
-    right: 20px;
-    top: 200px;
-    bottom: 200px;
-    max-width: calc(100vw - 240px);
-    max-height: calc(100vh - 400px);
-    width: 100%;
-    height: 100%;
-}
-
-.addContactPopupBoxLeft {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px 22px;
-    width: 38%;
-    height: 100%;
-    background-color: #2A3647;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-}
-
-.addContactPopupBoxLeftPosition {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    width: 100%;
-    height: 65%;
-}
-
-.logoContactPopup {
-    width: 40px;
-}
-
-.addContactPopupBoxLeftHeadline {
-    font-size: 42px;
-    font-stretch: normal;
-    color: white;
-}
-
-.addContactPopupBoxLeftText {
-    font-size: 20px;
-    color: white;
-}
-
-
-.blueUnderline {
-    width: 60px;
-    height: 3px;
-    margin-top: 3px;
-    background-color: #29ABE2;
-}
-
-.addContactPopupBoxRight {
-    display: flex;
-    width: 62%;
-    height: 100%;
+    height: 200px;
+    overflow-y: auto;
     background-color: #FFF;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+    z-index: 999;
+    width: 100%;
 }
 
-.addContactPopupBoxRightImgPosition {
-    width: 30%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-
-}
-
-.addContactPopupBoxRightImg {
-    width: 80px;
-    background-color: gray;
-    border: 2px solid white;
+.profilbuild {
     border-radius: 50%;
-    padding: 15px 15px;
-}
-
-.addContactPopupBoxRightFormPosition {
-    width: 70%;
+    /* Stellen Sie sicher, dass das Element kreisförmig ist */
+    border: 1px solid black;
+    /* Da die Farbe als 'black' angegeben wurde */
+    color: black;
+    padding: 4px;
+    width: 30px;
+    height: 30px;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-right: 20px;
+    margin: 5px;
 }
 
-.addContactPopupBoxRightBtnPosition {
-    display: flex;
-    margin-top: 20px;
-    gap: 15px;
+.input-filds:focus,
+.focus,
+.input-filed:focus-within {
+    border: 1px solid var(--headline) !important;
+    outline: none !important;
 }
 
-.addCategoryPopupBoxRightImg {
-    width: 115px;
-    height: 100px;
-    background-color: gray;
-    border: 2px solid white;
-    border-radius: 50%;
-    padding: 15px 0px;
-
-}
-
-@media (max-width: 1080px) {
-
-    .addTaskHeadlineContainer {
-        top: 0px;
-        left: 259px;
-        max-width: calc(100vw - 259px);
-    }
-
-
-    .contentPosition {
-        padding-left: 59px;
-        padding-right: 59px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-    }
-
-
-    .selectBtnArea {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        width: 100%;
-        z-index: 2;
-    }
-
-
-    .boxLeft {
-        padding-right: 48.2px;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        min-width: 310px;
-        box-sizing: border-box;
-    }
-
-    .boxRight {
-        padding-left: 48px;
-        display: flex;
-        flex-direction: column;
-        border-left: 1px solid var(--border-grey);
-        flex: 1;
-        box-sizing: border-box;
-    }
-
-}
-
-
-@media (max-width: 1030px) {
-    .contentPosition {
-        padding-left: 59px;
-        padding-right: 59px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-    }
-
-
-    .taskArea {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: unset;
-        width: 100%;
-        height: auto;
-        max-height: none;
-    }
-
-
-
-    .selectBtnArea {
-        position: unset;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        width: 100%;
-        padding-right: 0px;
-        margin-top: 40px;
-        margin-bottom: 30px;
-    }
-
-
-    .boxLeft {
-        padding-right: 0px;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        min-width: 280px;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .boxRight {
-        padding-left: 0px;
-        display: flex;
-        flex-direction: column;
-        border-left: none;
-        flex: 1;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-}
-
-@media (max-width: 700px) {
-
+@media (max-width: 1000px) {
     .contentAddTask {
-        position: absolute;
-        top: 145px;
-        bottom: 150px;
-        display: flex;
-        flex-direction: column;
-        left: 0px;
-        max-width: unset;
-        width: 100%;
-        max-height: calc(100vh - 195px);
-        overflow-y: auto;
+        margin-left: 220px !important;
     }
-
-
-    ::-webkit-scrollbar {
-        display: none;
+    .prio-btn {
+        width: 85px;
     }
-
-    .show-scrollbarTaskWindow::-webkit-scrollbar {
-        display: none;
+    .input-filds {
+        width: 300px;
     }
-
-    .show-scrollbarTaskWindow::-webkit-scrollbar-track {
-        display: none;
+    .prios-container {
+        gap: 10px;
     }
-
-    .show-scrollbarTaskWindow::-webkit-scrollbar-thumb {
-        display: none;
+    .prio-btn {
+        width: 85px;
+        gap: 2px;
     }
-
-    .show-scrollbarTaskWindow:hover::-webkit-scrollbar-thumb {
-        display: none;
-    }
-
-    .show-scrollbarTaskWindow::-webkit-scrollbar-button:start:decrement,
-    .show-scrollbarTaskWindow::-webkit-scrollbar-button:end:increment {
-        display: none;
-    }
-
-    .show-scrollbarTaskWindow::-webkit-scrollbar-button:start:decrement {
-        display: none;
-    }
-
-    .show-scrollbarTaskWindow::-webkit-scrollbar-button:end:increment {
-        display: none;
-    }
-
-
-
-    .addTaskHeadlineContainer {
-        top: 0px;
-        left: 12px;
-        height: 87px;
-        padding-bottom: 10px;
-        max-width: calc(100vw - 12px);
-    }
-
-
-
-
-    .contentPosition {
-        padding-left: 12px;
-        padding-right: 12px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-    }
-
-
-    .taskArea {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: unset;
-        width: 100%;
-        height: auto;
-        max-height: none;
-    }
-
-
-    .selectBtnArea {
-        position: fixed;
-        bottom: 90px;
-        background-color: #F6F7F8;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        left: 0;
-        padding-right: 18px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        width: 100%;
-        z-index: 2;
-    }
-
-
-    .selectedSubTask {
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto;
-        max-height: 90px;
-    }
-
-
-    .boxLeft {
-        padding-right: 0px;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        min-width: 0px;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .boxRight {
-        padding-left: 0px;
-        display: flex;
-        flex-direction: column;
-        border-left: none;
-        flex: 1;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
 }
 
-@media (max-width: 400px) {
+@media(max-width:750px) {
+    .box-right {
+        padding-right: 5px;
+    }
+    .input-filds {
+        width: 225px;
+    }
+    .prio-btn {
+        width: 75px;
+        gap: 2px;
+    }
+    .prioBtnIcons {
+        height: 8px;
+    }
+    .prio-btn {
+        width: 75px;
+        gap: 2px;
+    }
+    .prios-container {
+        gap: 6px;
+    }
+}
 
-    .prioButtonContainer {
+@media(max-width:700px) {
+    .contentAddTask {
+        margin-left: 0px !important;
+        padding: 0 10px;
+        margin-bottom: 80px;
+    }
+    body {
+        padding-top: 64px !important;
+    }
+    .addTaskHeadlineContainer {
+        width: 100%;
+    }
+    .task-area {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        width: 100%;
-        gap: 16px;
-
-    }
-
-
-    .prioBtn {
-        display: flex;
-        font-size: 16px;
-        justify-content: center;
         align-items: center;
-        text-align: center;
-        gap: 7px;
-        line-height: 120%;
-        padding: 10px 14px;
-        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
-        border-radius: 10px;
-        background-color: #FFFFFF;
-        margin-top: 5px !important;
-        width: 100%;
+        flex-grow: 1;
     }
+    .grey-line {
+        display: none;
+    }
+    .p-16px {
+        padding: 0;
+    }
+    .input-filds {
+        width: 500px;
+    }
+    .prio-btn {
+        width: 144px;
+        height: 57px;
+        gap: 46px;
+    }
+    .box-right {
+        padding-left: 0px;
+    }
+    .box-left {
+        padding-right: 0px;
+    }
+    .prios-container {
+        gap: 34px;
+    }
+    .addNewContactButton {
+        width: 198px;
+    }
+    .btnBackground {
+        justify-content: flex-end;
+    }
+    span {
+        margin: 16px 0px !important;
+    }
+}
 
+@media(max-width:500px) {
+    .input-filds {
+        width: 300px;
+    }
+    .prio-btn {
+        width: 92px;
+        height: 41px;
+        gap: 8px;
+    }
+    .prios-container {
+        gap: 16px;
+    }
 }

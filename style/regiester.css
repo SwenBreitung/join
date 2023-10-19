@@ -133,6 +133,25 @@ h1 {
     align-items: center;
 }
 
+.police {
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 17px;
+    gap: 16px;
+}
+
+.police a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.police :hover a {
+    color: var(--headline);
+    font-weight: bold;
+}
+
 @media(max-width: 375px) {
     body {
         height: 100vh;

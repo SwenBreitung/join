@@ -1,119 +1,5 @@
-let userss = {
-    "user0": {
-        "name": "Swen Breitung",
-        "email": "1234",
-        "password": "1234",
-        "color": null,
-        "cards": {
-            "toDo": {
-                "ToDo0": {
-                    "category": "Technical Task",
-                    "title": "sad",
-                    "text": "sadsad",
-                    "time": "sadd",
-                    "date": "October.13.23",
-                    "priority": "medium",
-                },
-                "ToDo1": {
-                    "category": "Technical Task",
-                    "title": "sad",
-                    "text": "sadsad",
-                    "time": "sadd",
-                    "date": "October.11.23",
-                    "priority": "medium",
-                },
-                "ToDo2": {
-                    "category": "Technical Task",
-                    "title": "sad",
-                    "text": "sadsad",
-                    "time": "sadd",
-                    "date": "October.13.23",
-                    "priority": "medium",
-                },
-                "ToDo3": {
-                    "category": "Technical Task",
-                    "title": "sad",
-                    "text": "sadsad",
-                    "time": "sadd",
-                    "date": "October.13.23",
-                    "priority": "urgent",
-                }
-            },
-            "inProgress": {
-                "inProgress0": {
-                    "category": "Technical Task",
-                    "title": "sad",
-                    "text": "sadsad",
-                    "time": "sadd",
-                    "date": "October.13.23",
-                    "priority": "medium",
-                },
-                "inProgress1": {
-                    "category": "Technical Task",
-                    "title": "sad",
-                    "text": "sadsad",
-                    "time": "sadd",
-                    "date": "October.13.23",
-                    "priority": "medium",
-                },
-                "inProgress2": {
-                    "category": "Technical Task",
-                    "title": "sad",
-                    "text": "sadsad",
-                    "time": "sadd",
-                    "date": "October.13.23",
-                    "priority": "urgent",
-                },
-            },
-            "awaitFeedback": {
-                "awaitFeedback0": {
-                    "category": "Technical Task",
-                    "title": "sad",
-                    "text": "sadsad",
-                    "time": "sadd",
-                    "date": "October.13.23",
-                    "priority": "medium",
-                },
-                "awaitFeedback1": {
-                    "category": "Technical Task",
-                    "title": "sad",
-                    "text": "sadsad",
-                    "time": "sadd",
-                    "date": "October.13.23",
-                    "priority": "medium",
-                },
-            },
-            "done": {
-                "done0": {
-                    "category": "Technical Task",
-                    "title": "sad",
-                    "text": "sadsad",
-                    "time": "sadd",
-                    "date": "October.13.23",
-                    "priority": "urgent",
-                },
-                "done1": {
-                    "category": "Technical Task",
-                    "title": "sad",
-                    "text": "sadsad",
-                    "time": "sadd",
-                    "date": "October.13.23",
-                    "priority": "urgent",
-                },
-            },
-        },
-        "contacts": {
-            "contact0": [{
-                "name": "sadsad",
-                "email": "adsj@asd",
-                "phone": "021513",
-            }]
-        }
-    },
-}
-
-
 function init() {
+    loadUserDataFromLocalStorage();
     includeHTML();
     loadTimeOfDay();
     loadText();
@@ -135,6 +21,7 @@ function loadText() {
     loadNumersAwaitFeedback();
     loadNumersDone();
     loadNumbersBoard();
+    loadNumbersUrgent();
 }
 
 function highlightCurrentPageInHeader() {
@@ -146,70 +33,62 @@ function highlightCurrentPageInHeader() {
 //---Search User name----------------------------
 function loadUserName() {
     userName = document.getElementById('name')
-    userName.innerText = userss['user0']['name'];
+    userName.innerText = userData['name'];
 }
 
 
-//----------------------search function cards------------------------------
+//----------------------search function task------------------------------
 function loadNumbersBoard() {
-    let toDos = searchNumbers(userss['user0']['cards']['toDo']);
-    let inProgress = searchNumbers(userss['user0']['cards']['inProgress']);
-    let awaitFeedback = searchNumbers(userss['user0']['cards']['awaitFeedback']);
-    let done = searchNumbers(userss['user0']['cards']['done']);
     let board = document.getElementById('board');
-    board.innerText = (toDos + inProgress + awaitFeedback + done);
+    board.innerText = (userData['tasks'].length);
 }
 
 
 function loadNumersToDo() {
     let toDos = document.getElementById('to-dos');
-    toDos.innerText = searchNumbers(userss['user0']['cards']['toDo']);
+    toDos.innerText = countTasksByStatus(userData['tasks'], 'toDo', 'status');
 }
 
 
 function loadNumersInProgress() {
     let inProgress = document.getElementById('in-progress');
-    inProgress.innerText = searchNumbers(userss['user0']['cards']['inProgress']);
+    inProgress.innerText = countTasksByStatus(userData['tasks'], 'inProgress', 'status');
 }
 
 
 function loadNumersAwaitFeedback() {
     let awaitFeedback = document.getElementById('await-feedback');
-    awaitFeedback.innerText = searchNumbers(userss['user0']['cards']['awaitFeedback']);
+    awaitFeedback.innerText = countTasksByStatus(userData['tasks'], 'awaitFeedback', 'status');
 }
 
 
 function loadNumersDone() {
     let done = document.getElementById('done');
-    done.innerText = searchNumbers(userss['user0']['cards']['done']);
+    done.innerText = countTasksByStatus(userData['tasks'], 'done', 'status');
 }
 
 
-function searchNumbers(collection) {
-    let collectionAsJson = collection;
-    let currentNumber = 0;
+function loadNumbersUrgent() {
+    let urgentNumber = document.getElementById('urgent')
+    urgentNumber.innerHTML = countTasksByStatus(userData['tasks'], 'urgent', 'priority');
+}
 
-    if (Array.isArray(collectionAsJson)) {
-        for (let i = 0; i < collectionAsJson.length; i++) {
-            currentNumber++;
-        }
+function countTasksByStatus(collection, status, attribute) {
+
+    if (Array.isArray(collection) && collection.length > 0) {
+        return collection.filter(element => element[attribute] === status).length;
     } else {
-        for (let i = 0; i < Object.keys(collectionAsJson).length; i++) {
-            currentNumber++;
-        }
+        return 0;
     }
-    return currentNumber;
 }
 
 
 function searchFirstUrgantDate() {
-    let urgentNumber = document.getElementById('urgent')
     let urgentDate = document.getElementById('date')
-    urgentNumber.innerHTML = countUrgentTasks(userss['user0']['cards']);
-    urgentDate.innerHTML = findLatestDate(userss['user0']['cards']);
+    urgentDate.innerHTML = findLatestDate(userData['tasks']);
 }
 
-//======================== search function cards END==============================
+//======================== search function task END==============================
 
 
 
@@ -236,56 +115,32 @@ function getTimeOfDay() {
 
 //===================load Time of Day END============================
 
-function countUrgentTasks(obj) {
-    let urgentCount = 0;
-    for (let category in obj) {
-        for (let task in obj[category]) {
-            if (obj[category][task].priority === "urgent") {
-                urgentCount++;
+
+
+function findLatestDate(collection) {
+    let earliestDate = "2024-10-02"; // Setzen Sie ein "hohes" Anfangsdatum.
+    let earliestDateItem;
+
+    if (!Array.isArray(collection) || collection.length === 0) {
+        return '-';
+    }
+
+    collection.forEach(item => {
+        if (item && item['date']) { // Überprüfen, ob 'date' existiert
+            let currentDate = item['date'];
+            if (compareDates(currentDate, earliestDate) < 0) {
+                earliestDate = currentDate;
+                earliestDateItem = currentDate;
             }
         }
-    }
-    return urgentCount;
+    });
+
+    return earliestDate; // Oder einfach `return earliestDate;`, je nach Bedarf.
 }
 
-function findLatestDate(obj) {
-    let latestDate = "00.00.00";
-    let latestDateItem;
-
-    for (let category in obj) {
-        for (let task in obj[category]) {
-            let currentDate = obj[category][task].date;
-            if (compareDates(currentDate, latestDate) > 0) {
-                latestDate = currentDate;
-                latestDateItem = obj[category][task]['date'];
-            }
-        }
-    }
-    return latestDateItem;
-}
-
-
-// Diese Funktion vergleicht zwei Daten im Format "TT.MM.JJ"
 function compareDates(date1, date2) {
-    const [day1, month1, year1] = date1.split('.').map(Number);
-    const [day2, month2, year2] = date2.split('.').map(Number);
-    if (year1 !== year2) return year1 - year2;
-    if (month1 !== month2) return month1 - month2;
-    return day1 - day2;
-}
-
-
-/**
- * Compares two dates in the format "dd.mm.yyyy" and returns their difference.
- *
- * @param {string} date1 - The first date in "dd.mm.yyyy" format.
- * @param {string} date2 - The second date in "dd.mm.yyyy" format.
- * @returns {number} A positive number if date1 is greater than date2, negative if date2 is greater than date1, and 0 if they are equal.
- */
-function compareDates(date1, date2) {
-    const [day1, month1, year1] = date1.split('.').map(Number);
-    const [day2, month2, year2] = date2.split('.').map(Number);
-
+    const [year1, month1, day1] = date1.split('-').map(Number);
+    const [year2, month2, day2] = date2.split('-').map(Number);
     if (year1 !== year2) return year1 - year2;
     if (month1 !== month2) return month1 - month2;
     return day1 - day2;

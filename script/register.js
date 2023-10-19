@@ -2,18 +2,23 @@ let registerBtn = document.getElementById('registerBtn');
 let checkbox = document.getElementById("myCheckbox");
 
 async function init() {
-    loadUsers();
+    loadBackendUsers();
 }
 
 
-function signUp() {
-    dialog.innerHTML = loadTemplateSignUp();
+// function signUp() {
+//     dialog.innerHTML = loadTemplateSignUp();
+// }
+
+
+async function loadBackendUsers() {
+    loadBackendData('users')
+
 }
 
-
-async function loadUsers() {
+async function loadBackendData(key) {
     try {
-        users = JSON.parse(await getItem('users'));
+        users = JSON.parse(await getItem(key));
     } catch (e) {
         console.error('Loading error:', e);
     }
@@ -21,20 +26,34 @@ async function loadUsers() {
 
 
 async function register() {
-    if (checkbox.checked) {
-        registerBtn.disabled = true;
+    if (!checkbox.checked) return;
 
-        users.push({
-            name: userName.value,
-            email: email.value,
-            password: password.value,
-        });
-        await setItem('users', JSON.stringify(users));
-        resetForm();
-        window.location = 'index.html';
-    }
+    registerBtn.disabled = true;
+
+    const newUser = createUser();
+    await saveUser(newUser);
+
+    resetForm();
+    window.location = 'index.html';
 }
 
+function createUser() {
+    let user = {
+        id: users.length.toString(),
+        name: userName.value,
+        email: email.value,
+        password: password.value,
+        color: generateBackgroundColor(),
+        tasks: [],
+        contacts: []
+    };
+    users.push(user);
+    return user;
+}
+
+async function saveUser(user) {
+    await setItem('users', JSON.stringify(users));
+}
 
 function resetForm() {
     email.value = '';

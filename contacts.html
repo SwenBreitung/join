@@ -8,207 +8,93 @@
     <!-- sidebar and header -->
     <link rel="stylesheet" href="templates/header_footer.css">
     <link rel="stylesheet" href="style/style.css">
-    <script defer src="script/script.js"></script>
-    <script defer src="templates/templates.js"></script>
-    <!-- contacts -->
     <link rel="stylesheet" href="style/contacts.css">
+
+    <!-- contacts -->
+
     <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="style/addTask.css"> -->
     <link rel="stylesheet" href="style/fonts.css">
-    <link rel="stylesheet" href="style/summery.css">
-    <!-- token -->
+    <!-- <link rel="stylesheet" href="style/summery.css"> -->
+
+    <script defer src="img/svg.js"></script>
+    <script defer src="templates/templates.js"></script>
+    <script defer src="script/script.js"></script>
     <script defer src="script/storge.js"></script>
     <script defer src="script/contacts.js"></script>
 
 </head>
 
 
-<body onload="includeHTML(), initContacts()" onresize="mobileView()">
+<body onload=" initContacts()">
+
     <div w3-include-html="templates/sidebar.html"></div>
     <div w3-include-html="templates/header.html"></div>
-    <div w3-include-html="summery.html"></div>
-    <div class="contentContact">
-
-        <div class="d-flex contactPage">
-            <section class="contacts-container">
-                <div class="btnBackground horicontalAndVertical" id="btnBackgroundId">
-                    <button type="button" class="addNewContactButton horicontalAndVertical fontSize21"
-                        onclick="addContact()">
-                        Add new Contact
-                        <img src="./img/person_add.svg">
-                    </button>
-                </div>
-                <div class="scrollingContainer">
-                    <div id="contactsId">
-                    </div>
-                    <div class="marginBottom32px"></div>
-                </div>
-                <div class="marginBottom32px"></div>
-            </section>
-
-            <section class="addContactBackground horicontalAndVertical d-none" id="addContactId" onclick="closePopup()">
-                <div class="addContactPopup d-flex" onclick="doNotClose(event)" id="swipeContactPopupId">
-                    <div class="leftSideAddContactPopup horicontal">
-                        <img src="./img/join.logo-white.svg" id="joinLogoAddContactId">
-                        <div class="addContactLeftText">
-                            <spline class="fontSize61"><b id="textChangeToEditContactId">Add contact</b></spline>
-                            <spline class="fontSize27 textUnderAddContactTitle">Tasks are better with a team!</spline>
-                            <div class="blueLine">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rightSidePopup d-flex">
-                        <div class="profilePictureArea vertical">
-                            <img class="circle" src="./img/Group 9.svg">
-                            <img class="personInCircle" src="./img/person.svg">
-                        </div>
-                        <form class="contactInfo column" onsubmit="createContact(); return false;"
-                            id="editContactFormId">
-                            <div class="inputName">
-                                <input type="text" placeholder="Name" id="inputNameId" class="fontSize20" required>
-                                <div>
-                                    <img src="./img/person-white.svg">
-                                </div>
-                            </div>
-                            <div class="inputEmail">
-                                <input type="email" placeholder="Email" id="inputEmailId" class="fontSize20" required>
-                                <img src="./img/mail.svg">
-                            </div>
-                            <div class="inputPhone">
-                                <input type="tel" placeholder="Phone" id="inputPhoneId" class="fontSize20"
-                                    pattern="^[0-9+\/\s]*$" required>
-                                <img src=" ./img/call.svg">
-                            </div>
-                            <div class="d-flex textHorizontal addContactButtonContainer">
-                                <a href="#" class="cancelBtn d-flex" onclick="closePopup()" id="cancelBtnMobileId">
-                                    <spline class="fontSize20" id="editCancelButtonId">Cancel</spline>
-
-                                    <svg class="colorOnHover" xmlns="http://www.w3.org/2000/svg" width="24" height="25"
-                                        viewBox="0 0 24 25" fill="none">
-                                        <path
-                                            d="M12.001 12.5001L17.244 17.7431M6.758 17.7431L12.001 12.5001L6.758 17.7431ZM17.244 7.25708L12 12.5001L17.244 7.25708ZM12 12.5001L6.758 7.25708L12 12.5001Z"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                </a>
-                                <button class="createContactButton horicontalAndVertical">
-                                    <spline class="fontSize21">
-                                        <b id="textChangeToSaveId">Create contact</b>
-                                    </spline>
-                                    <img src="./img/check.svg">
-                                </button>
-                            </div>
-                            <div class="closePopupCross pointer horicontalAndVertical" onclick="closePopup()">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none">
-                                    <mask id="mask0_88894_4110" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0"
-                                        y="0" width="24" height="24">
-                                        <rect width="24" height="24" fill="#D9D9D9" />
-                                    </mask>
-                                    <g mask="url(#mask0_88894_4110)">
-                                        <path
-                                            d="M12 13.4L7.10005 18.3C6.91672 18.4834 6.68338 18.575 6.40005 18.575C6.11672 18.575 5.88338 18.4834 5.70005 18.3C5.51672 18.1167 5.42505 17.8834 5.42505 17.6C5.42505 17.3167 5.51672 17.0834 5.70005 16.9L10.6 12L5.70005 7.10005C5.51672 6.91672 5.42505 6.68338 5.42505 6.40005C5.42505 6.11672 5.51672 5.88338 5.70005 5.70005C5.88338 5.51672 6.11672 5.42505 6.40005 5.42505C6.68338 5.42505 6.91672 5.51672 7.10005 5.70005L12 10.6L16.9 5.70005C17.0834 5.51672 17.3167 5.42505 17.6 5.42505C17.8834 5.42505 18.1167 5.51672 18.3 5.70005C18.4834 5.88338 18.575 6.11672 18.575 6.40005C18.575 6.68338 18.4834 6.91672 18.3 7.10005L13.4 12L18.3 16.9C18.4834 17.0834 18.575 17.3167 18.575 17.6C18.575 17.8834 18.4834 18.1167 18.3 18.3C18.1167 18.4834 17.8834 18.575 17.6 18.575C17.3167 18.575 17.0834 18.4834 16.9 18.3L12 13.4Z"
-                                            fill="#2A3647" />
-                                    </g>
-                                </svg>
-                            </div>
-                        </form>
-
-
-
-                    </div>
-                </div>
-            </section>
-
-            <section id="mobileVisibilityId">
-                <div class=" contactsTitle horicontal" id="contactsTitleId">
-                    <div class="fontSize61"><b>Contacts</b></div>
-                    <svg class="mobileDelete" xmlns="http://www.w3.org/2000/svg" width="3" height="59"
-                        viewBox="0 0 3 59" fill="none" style="min-width: 3px; min-height: 59px;">
-                        <path d="M2 2V61" stroke="#29ABE2" stroke-width="3" stroke-linecap="round" />
-                    </svg>
-                    </svg>
-                    <div class="fontSize27 nowrap">Better with a Team</div>
-                    <div id="blueLineId" class="d-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="90" height="3" viewBox="0 0 90 3" fill="none"
-                            style="min-width: 90px; min-height: 3px; height: 3px">
-                            <path d="M92 2L2 2" stroke="#29ABE2" stroke-width="3" stroke-linecap="round" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="addNewContactButton horicontalAndVertical fontSize21" id="changesSavedId">
-                    Changes
-                    saved</div>
-
-                <div class="contactInfoBig column d-none" id="contactInfoBigId">
-                    <!-- Big Picture / Name / Edit and Delete -->
-                    <div class="profilePicAndNameBig horicontal">
-                        <div id="profilePictureBigId">
-
-                        </div>
-                        <div>
-                            <div id="nameId" class="fontSize47">
-
-                            </div>
-                            <div class="d-flex gap16 horicontal fontSize16" id="deleteEditId">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Middle Text -->
-                    <spline class="contactInfoTextBlock horicontal fontSize20">
-                        Contact Information
-                    </spline>
-                    <!-- Rest -->
-                    <spline class="emailText fontSize16">
-                        <b>Email</b>
-                    </spline>
-                    <div id="emailId" class="fontSize16">
-
-                    </div>
-                    <spline class="phoneText fontSize16">
-                        <b>Phone</b>
-                    </spline>
-                    <div id="phoneId" class="fontSize16">
-                    </div>
-                </div>
-            </section>
-            <!-- mobile -->
-            <section>
-                <div class="mobileAddContact horicontalAndVertical pointer" onclick="addContact()"
-                    id="mobileAddContactId">
+    <div class="content-contact">
+        <section class="contacts-section">
+            <div class="btnBackground horicontalAndVertical">
+                <button type="button" class="addNewContactButton horicontalAndVertical fontSize21 " id="add-new-contacts">
+                    Add new Contact
                     <img src="./img/person_add.svg">
-                </div>
-            </section>
+                </button>
+            </div>
+            <div class="  contacts-container">
 
-            <section>
-                <div class="mobileEditDeleteBox vertical column d-none" id="mobileEditDeleteBoxId">
-                    <div id="editMobileButtonId">
-                    </div>
-                    <div class="mobileDelete gap8 d-flex padding8 pointer colorOnHover" onclick="deleteContact()">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-                            <mask id="mask0_89141_3997" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
-                                width="25" height="24">
-                                <rect x="0.5" width="24" height="24" fill="#D9D9D9" />
-                            </mask>
-                            <g mask="url(#mask0_89141_3997)">
-                                <path
-                                    d="M7.5 21C6.95 21 6.47917 20.8042 6.0875 20.4125C5.69583 20.0208 5.5 19.55 5.5 19V6C5.21667 6 4.97917 5.90417 4.7875 5.7125C4.59583 5.52083 4.5 5.28333 4.5 5C4.5 4.71667 4.59583 4.47917 4.7875 4.2875C4.97917 4.09583 5.21667 4 5.5 4H9.5C9.5 3.71667 9.59583 3.47917 9.7875 3.2875C9.97917 3.09583 10.2167 3 10.5 3H14.5C14.7833 3 15.0208 3.09583 15.2125 3.2875C15.4042 3.47917 15.5 3.71667 15.5 4H19.5C19.7833 4 20.0208 4.09583 20.2125 4.2875C20.4042 4.47917 20.5 4.71667 20.5 5C20.5 5.28333 20.4042 5.52083 20.2125 5.7125C20.0208 5.90417 19.7833 6 19.5 6V19C19.5 19.55 19.3042 20.0208 18.9125 20.4125C18.5208 20.8042 18.05 21 17.5 21H7.5ZM7.5 6V19H17.5V6H7.5ZM9.5 16C9.5 16.2833 9.59583 16.5208 9.7875 16.7125C9.97917 16.9042 10.2167 17 10.5 17C10.7833 17 11.0208 16.9042 11.2125 16.7125C11.4042 16.5208 11.5 16.2833 11.5 16V9C11.5 8.71667 11.4042 8.47917 11.2125 8.2875C11.0208 8.09583 10.7833 8 10.5 8C10.2167 8 9.97917 8.09583 9.7875 8.2875C9.59583 8.47917 9.5 8.71667 9.5 9V16ZM13.5 16C13.5 16.2833 13.5958 16.5208 13.7875 16.7125C13.9792 16.9042 14.2167 17 14.5 17C14.7833 17 15.0208 16.9042 15.2125 16.7125C15.4042 16.5208 15.5 16.2833 15.5 16V9C15.5 8.71667 15.4042 8.47917 15.2125 8.2875C15.0208 8.09583 14.7833 8 14.5 8C14.2167 8 13.9792 8.09583 13.7875 8.2875C13.5958 8.47917 13.5 8.71667 13.5 9V16Z"
-                                    fill="#2A3647" />
-                            </g>
-                        </svg>
-                        <spline class="fontSize16">
-                            Delete
-                        </spline>
-                    </div>
+                <div id="contactsId">
                 </div>
-                <div class="pointer d-none" id="mobileBackArrowId" onclick="closePopupMobile()">
-                    <img src="./img/arror-left.svg">
-                </div>
-            </section>
-        </div>
+            </div>
+        </section>
+
+
+
+        <section>
+
+            <div class="contacts-title">
+                <h1>Contakts</h1>
+                <div class="contacts-line"></div>
+                <div>Better with a Team</div>
+            </div>
+
+
+            <!-- __________Hier wird später alle kontaktdaten eingefügt _____________-->
+            <!-- Big Picture / Name / Edit and Delete -->
+            <div class="contact-info" id="contactInfo">
+
+            </div>
+        </section>
     </div>
 
+    <div id="add-contact" class="d-none">
+        <div class="header-contact-addet ">
+            <img src="img/join.logo-white.svg" alt="logo">
+            <div class="d-flex flex-column">
+                <h1>Add Contacts</h1>
+                <div>Better with a Team</div>
+                <div class="contacts-line-vertikal"></div>
+            </div>
+        </div>
+
+        <div class=" contact-add-input-picture d-flex ">
+            <div class="profile-picture-list p-40">profielbild</div>
+            <div class="flex-column d-flex contact-add-inputarea">
+                <div class="p-70"></div>
+                <input type="text" placeholder="Name" id="contact-add-name">
+                <input type="text" placeholder="EMail" id="contact-add-email">
+                <input type="text" placeholder="Phone" id="contact-add-phone">
+                <div class="p-40"></div>
+                <div class="btnBackground">
+                    <button class=" cancel-btn">Cancel</button>
+                    <div style="padding: 15px;"></div>
+                    <button class="addNewContactButton add-contact-btn">Add Contact</button>
+                </div>
+            </div>
+            <div class="close-btn" id="close-btn">X</div>
+        </div>
+
+    </div>
 </body>
 
 </html>
