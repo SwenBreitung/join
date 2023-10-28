@@ -4,7 +4,7 @@ isBoard = false;
 isContacts = false;
 isPolice = false;
 isNotice = false;
-openMenu = false;
+
 
 async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');

@@ -13,7 +13,6 @@ async function init() {
 
 async function loadBackendUsers() {
     loadBackendData('users')
-
 }
 
 async function loadBackendData(key) {
@@ -59,12 +58,4 @@ function resetForm() {
     email.value = '';
     password.value = '';
     registerBtn.disabled = false;
-}
-
-
-async function resetAllBackendUser() {
-    await loadUsers();
-    users.splice(0, users.length);
-    console.log(users);
-    await setItem('users', JSON.stringify(users));
 }

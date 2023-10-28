@@ -99,7 +99,19 @@ function loadContactData(contact, nameAbbreviation, i) {
     `
 }
 
+async function resetAllBackendUser() {
+    await loadUsers();
+    users.splice(0, users.length);
+    console.log(users);
+    await setItem('users', JSON.stringify(users));
+}
 
+async function resetAllBackendTasks() {
+    await loadTasksFromBackend();
+    tasks.splice(0, tasks.length);
+    console.log(tasks);
+    await setItem('tasks', JSON.stringify(tasks));
+}
 // async function loadTasks() {
 //     try {
 //         tasks = JSON.parse(await getItem('tasks'));

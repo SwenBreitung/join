@@ -4,7 +4,6 @@ body {
     width: 100vw;
 }
 
-
 .text-line-through {
     text-decoration: line-through;
 }
@@ -76,11 +75,9 @@ body {
     padding-top: 10px !important;
     padding-bottom: 10px !important;
     padding-right: 0 !important;
-    margin-bottom: 5px;
+    margin: 5px;
     width: 200px !important;
 }
-
-
 
 .search-vector {
     height: 32px;
@@ -129,36 +126,38 @@ body {
     width: 24px;
 }
 
+
 /* --------------------------------------- */
+
 .content-board {
-    position: absolute;
-    top: 125px;
-    bottom: 0;
     display: flex;
     flex-direction: column;
     left: 200px;
-    max-width: calc(100vw - 200px);
     margin-top: 56px;
     width: 100%;
     max-height: calc(100vh - 125px);
     overflow-y: auto;
+    margin-left: 200px;
 }
 
-
 .contentposition {
-    padding-left: 96px;
-    padding-right: 96px;
+    /* max-padding-left: 96px;
+    max-padding-right: 96px; */
+    /* padding-left: 10%;
+    padding-right: 10%; */
+    padding: 0px 50px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    position: relative;
+    height: 100%;
 }
 
 .board-main-section {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    height: 100%;
     /* display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-auto-flow: row;
@@ -179,14 +178,22 @@ body {
     width: 20px;
 }
 
+section {
+    height: 100%;
+    padding: 0 5px;
+}
+
 h3 {
     font-size: 18px !important;
     margin: 0 !important;
 }
 
+
 /* #main-container {
     width: 100%;
 } */
+
+
 /* --------------------------------------- */
 
 
@@ -206,10 +213,9 @@ h3 {
     width: 250px;
 }
 
-
 .drag-area {
-    height: 500px;
-    width: 200px;
+    height: 100%;
+    max-width: 200px;
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
@@ -230,6 +236,17 @@ h3 {
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.25);
     border: 1px solid #D1D1D1;
     padding: 10px;
+}
+
+.dont-taks {
+    align-items: center;
+    justify-content: center;
+    border: 2px dotted rgba(0, 0, 0, 0.16);
+    background-color: #D1D1D1;
+    border-radius: 10px;
+    min-width: 100%;
+    min-height: 66px;
+    display: flex;
 }
 
 .task:hover {
@@ -261,7 +278,6 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
 }
 
 .task-detail {
@@ -365,7 +381,6 @@ h3 {
     justify-content: flex-end;
 }
 
-
 .profile-picture {
     height: 32px;
     width: 32px;
@@ -373,7 +388,6 @@ h3 {
     border-radius: 100%;
     color: white;
     margin-right: -10px;
-
 }
 
 .horicontal-and-vertical {
@@ -382,6 +396,7 @@ h3 {
     align-items: center !important;
     justify-content: center !important;
 }
+
 
 /*AddTask popup container*/
 
@@ -432,12 +447,11 @@ h3 {
 }
 
 
-@media(max-width:1360px) {
+/* @media(max-width:1360px) {
     .contentposition {
         padding-left: 50px;
         padding-right: 50px;
     }
-
     .search-board-container {
         padding-left: 50px;
         padding-right: 50px;
@@ -450,27 +464,22 @@ h3 {
     .statusheadline {
         width: 200px;
     }
-
     .contentposition {
         padding-left: 30px;
         padding-right: 30px;
     }
-
     .search-board-container {
         padding-left: 30px;
         padding-right: 30px;
     }
-
     .board-main-section {
         flex-direction: column;
     }
-
     .drag-area {
         height: 300px;
         width: 100%;
         flex-direction: row;
     }
-
     .task {
         width: 200px;
     }
@@ -480,39 +489,39 @@ h3 {
     .task-detail {
         width: 50vw;
     }
-}
+} */
 
 @media(max-width:1000px) {
     .searchbox {
         gap: 8px;
     }
-
     #fake-searchbar input {
         width: 100px;
     }
 }
 
 @media(max-width:700px) {
+    h3 {
+        font-size: 15px !important;
+    }
+}
 
+@media(max-width:700px) {
     .content-board {
-        position: absolute;
-        top: 125px;
-        bottom: 85px;
         display: flex;
         flex-direction: column;
-        left: 0;
         max-width: calc(100vw);
         margin-top: 56px;
         width: 100%;
         max-height: calc(100vh - 210px);
         overflow-y: auto;
+        max-height: calc(100vh - 125px);
+        overflow-y: auto;
+        margin-left: 0;
     }
-
-
     .task-detail {
         width: 80vw;
     }
-
     .search-board-container {
         flex-direction: column;
         align-items: self-start;
@@ -520,7 +529,6 @@ h3 {
         max-width: 100vw;
         left: 0;
     }
-
     #fake-searchbar input {
         width: 100px;
     }

@@ -17,6 +17,7 @@ let users = [{
     "password": "",
     "color": "",
 }];
+
 let contacts = [
     // { "id": "0", "name": "Alice Johnson", "email": "alice.johnson@example.com", "phone": "+1234567890", "color": "#006400" },
     // { "id": "1", "name": "Bob Marley", "email": "bob.marley@example.com", "phone": "+1234567891", "color": "" },
@@ -40,28 +41,50 @@ let contacts = [
     // { "id": "19", "name": "Tina Turner", "email": "tina.turner@example.com", "phone": "+1234567809", "color": "#006400" }
 ]
 
-let tasks = [
-    // {
-    //     "id": "0",
-    //     "category": "Work",
-    //     "title": "Design new logo",
-    //     "text": "Design a new logo for our upcoming product",
-    //     "time": "15:00",
-    //     "date": "2023-09-30",
-    //     "priority": "urgent",
-    //     "status": "toDo"
-    // },
-    // {
-    //     "id": "1",
-    //     "category": "Personal",
-    //     "title": "Buy groceries",
-    //     "text": "Milk, bread, eggs, and some fruits",
-    //     "time": "17:30",
-    //     "date": "2023-09-30",
-    //     "priority": "normal",
-    //     "status": "inProgress"
-    // }
-]
+let tasks = [{
+        "id": "0",
+        "category": "Work",
+        "title": "Design new logo",
+        "text": "Design a new logo for our upcoming product",
+        "time": "15:00",
+        "date": "2023-09-30",
+        "priority": "urgent",
+        "status": "toDo",
+        "contacts": [
+            { "name": "Alice", "color": "#FF5733" },
+            { "name": "Bob", "color": "#33FF57" }
+        ]
+    },
+    {
+        "id": "1",
+        "category": "Personal",
+        "title": "Buy groceries",
+        "text": "Milk, bread, eggs, and some fruits",
+        "time": "17:30",
+        "date": "2023-09-30",
+        "priority": "normal",
+        "status": "in-progress",
+        "contacts": [
+            { "name": "Charlie", "color": "#5733FF" },
+            { "name": "Dave", "color": "#FFFF33" }
+        ]
+    },
+    {
+        "id": "2",
+        "category": "Study",
+        "title": "Finish homework",
+        "text": "Complete math assignment and prepare for history quiz",
+        "time": "20:00",
+        "date": "2023-09-30",
+        "priority": "low",
+        "status": "in-progress",
+        "contacts": [
+            { "name": "Eve", "color": "#FF33FF" },
+            { "name": "Frank", "color": "#33FFFF" }
+        ]
+    }
+];
+
 
 async function loadContactsFromBackend() {
     await loadBackendData('contacts')
@@ -85,6 +108,8 @@ async function loadBackendData(key) {
 }
 
 async function setItem(key, value) {
+    console.log("Key:", key);
+    console.log("Value:", value);
     const payload = { key, value, token: STORAGE_TOKEN };
     return fetch(STORAGE_URL, { method: 'POST', body: JSON.stringify(payload) })
         .then(res => res.json());

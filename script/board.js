@@ -4,7 +4,7 @@ let currentDraggedElement;
 async function init() {
     await loadTasksFromBackend();
     includeHTML();
-    updateBoardHTML();
+    loadTasks();
 }
 
 async function clearArray() {
@@ -14,24 +14,30 @@ async function clearArray() {
     await setItem('currentId', JSON.stringify(currentId));
 }
 
+function loadTasks() {
+    updateBoardHTML('toDo');
+    updateBoardHTML('in-progress');
+    updateBoardHTML('awaiting-feedback');
+    updateBoardHTML('done');
+}
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
 
 //listens for focus on textbox
-// document.getElementById('searchInput').addEventListener("focus", changeDivColor);
+document.getElementById('searchInput').addEventListener("focus", changeDivColor);
 //this is fired when the textbox is focused
-// function changeDivColor() {
-//     document.getElementById('fake-searchbar').style.borderColor = "#29ABE2";
-// }
+function changeDivColor() {
+    document.getElementById('fake-searchbar').style.borderColor = "#29ABE2";
+}
 
 //listens for blur on textbox
-// document.getElementById('searchInput').addEventListener("blur", revertDivColor);
+document.getElementById('searchInput').addEventListener("blur", revertDivColor);
 
 //this is fired when the textbox is no longer focused
-// function revertDivColor() {
-//     document.getElementById('fake-searchbar').style.borderColor = "#A8A8A8";
-// }
+function revertDivColor() {
+    document.getElementById('fake-searchbar').style.borderColor = "#A8A8A8";
+}
 
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -47,7 +53,10 @@ function allowDrop(ev) {
 async function moveTo(status) {
     tasks[currentDraggedElement]['status'] = status;
     await setItem('tasks', JSON.stringify(tasks));
-    updateBoardHTML();
+    loadTasks();
+    // updateBoardHTML();
+    // loadTasks();
+    // loadPrioImg(element['priority'], element['id'])
     removeHighlight(status);
 }
 
@@ -65,52 +74,63 @@ function removeHighlight(id) {
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
 
-function updateBoardHTML() {
+async function updateBoardHTML(statusName) {
 
-    let todo = tasks.filter(t => t['status'] == 'toDo');
-    document.getElementById('toDo').innerHTML = '';
-    for (let index = 0; index < todo.length; index++) {
-        const element = todo[index];
-        document.getElementById('toDo').innerHTML += generateTaskHTML(element);
-
+    let task = tasks.filter(t => t['status'] == statusName);
+    if (task.length > 0) {
+        document.getElementById(statusName).innerHTML = '';
+        for (let index = 0; index < task.length; index++) {
+            // document.getElementById(statusName).classList.remove('dont-taks');
+            const element = task[index];
+            document.getElementById(statusName).innerHTML += await generateTaskHTML(element, element['id']);
+            await loadPrioImg(element['priority'], element['id'])
+            await loadContacts(element, element['id']);
+        }
+    } else {
+        // document.getElementById(statusName).classList.add('dont-taks');
+        document.getElementById(statusName).innerHTML = `<div class="dont-taks">No Task ${statusName}</div>`;
     }
 
-    let inProgress = tasks.filter(t => t['status'] == 'in-progress');
-    document.getElementById('in-progress').innerHTML = '';
-    for (let index = 0; index < inProgress.length; index++) {
-        const element = inProgress[index];
-        document.getElementById('in-progress').innerHTML += generateTaskHTML(element);
+}
 
-    }
 
-    let awaitingFeedback = tasks.filter(t => t['status'] == 'awaiting-feedback');
-    document.getElementById('awaiting-feedback').innerHTML = '';
-    for (let index = 0; index < awaitingFeedback.length; index++) {
-        const element = awaitingFeedback[index];
-        document.getElementById('awaiting-feedback').innerHTML += generateTaskHTML(element);
-    }
+async function loadPrioImg(prio, i) {
+    if (prio == 'urgent') {
+        document.getElementById(`prio-img${i}`).innerHTML = /*html*/ `
+        <img src="img/prioUrgent.svg" alt="">
+        `
 
-    let done = tasks.filter(t => t['status'] == 'done');
-    document.getElementById('done').innerHTML = '';
-    for (let index = 0; index < done.length; index++) {
-        const element = done[index];
-        document.getElementById('done').innerHTML += generateTaskHTML(element);
+    } else if (prio == 'medium') {
+        document.getElementById(`prio-img${i}`).innerHTML = /*html*/ `
+            <img src="img/prioMedium.svg" alt="">
+            `
+    } else if (prio == 'low') {
+        document.getElementById(`prio-img${i}`).innerHTML = /*html*/ `
+        <img src="./img/prioLow.svg" alt="">
+     `
     }
 }
 
 
-function generateTaskHTML(element) {
-    console.log(element);
-    let i = element['id']
-        // let users = element['contactAbbreviation']
+async function loadContacts(element, i) {
+
+    let contactsImg = document.getElementById(`task-users${i}`);
+    let contacts = element['contacts']
         // let colors = element['contactColor']
-    let assignedUser = '';
-    // for (let j = 0; j < users.length; j++) {
-    //     let user = users[j];
-    //     let color = colors[j]
-    //     assignedUser += /*html*/ ` 
-    //    <div class="profile-picture horicontal-and-vertical" style="background-color:${color} ">${user}</div>`;
-    // }
+    console.log(`task-users${i}`);
+    // contactsImg.innerHTML = '';
+    for (let j = 0; j < contacts.length; j++) {
+        let user = contacts[j].name;
+        let color = contacts[j].color;
+        contactsImg.innerHTML += /*html*/ ` 
+    <div class="profile-picture horicontal-and-vertical" style="background-color:${color} ">${user}</div>`;
+    }
+}
+
+
+async function generateTaskHTML(element, i) {
+    console.log(element);
+
 
     return /*html*/ `
         <div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask(${i})" class="task">
@@ -119,16 +139,18 @@ function generateTaskHTML(element) {
                 <div class="task-title">${element['title']}</div>
                 <div class="task-description"> ${element['text']}</div>
             </div>
-            <div class="task-users-prio">
-                <div class="task-users">
+            
+            
+            <div >
+                <div class="d-flex align-items-center">
+                <div id="prio-img${i}"></div>
+                  <div class="task-users-prio" id="task-users${i}"></div>
                   
-                </div>
-               
-            </div>
+                </div> 
         </div>
     `;
 }
-/* <img src="${element['priority']}">  */
+
 
 function startDragging(id) {
     console.log("Dragging element with ID:", id);
@@ -168,12 +190,12 @@ function renderTaskdetailHTML(i) {
                     </div>
                     <div class="task-detail-flex">
                         <div class="task-detail-font-color">Due date:</div>
-                        <div> ${tasks[i]['dueDate']}</div>
+                        <div> ${tasks[i]['date']}</div>
                     </div>
                     <div class="task-detail-flex">
                         <div class="task-detail-font-color">Priority:</div>
-                        <div>
-                            <img src="${tasks[i]['priority']}">
+                        <div >
+                        <div> ${tasks[i]['priority']}</div>
                         </div>
                     </div>
                     <div>
@@ -186,10 +208,7 @@ function renderTaskdetailHTML(i) {
                     </div>
                     <div class="task-detail-subtasks">
                         
-                        <!-- ${subtaskHeadline}
-                        ${inProgress}
-                        ${finished} -->
-
+                
                     </div>
                 </div>
             </div>
@@ -200,61 +219,9 @@ function renderTaskdetailHTML(i) {
         </div>
     `;
 
-    for (let j = 0; j < users.length; j++) {
-        let user = users[j];
-        let userName = userNames[j]
-        let color = colors[j]
-        assignedUser += /*html*/ ` 
-        <div class="user-details">
-            <div class="profile-picture horicontal-and-vertical" style="background-color:${color}">
-                ${user}
-            </div>
-            <div class="user-name">
-                ${userName}
-            </div>   
-        </div>
-        `;
-    }
-
-    let inProgress = '';
-    let subtasksProgress = tasks[i]['subtasksInProgress'];
-    let subtaskHeadline = '';
-
-
-    for (let k = 0; k < subtasksProgress.length; k++) {
-        let subtaskProgress = subtasksProgress[k];
-        subtaskHeadline = /*html*/ `
-        <div class="task-detail-font-color margin-bottom10">
-            Subtasks
-        </div>`
-
-        inProgress += /*html*/ ` 
-        <div class="task-detail-flex margin-bottom10">
-            <img onclick="switchSubtaskStatusToFinished(${i}, ${k})" class="task-box" src="img/addTaskBox.svg" alt="">
-            ${subtaskProgress}
-        </div>
-        `;
-    }
-
-    let finished = '';
-    let subtasksDone = tasks[i]['subtasksFinish']
-
-    for (let l = 0; l < subtasksDone.length; l++) {
-        let subtaskDone = subtasksDone[l];
-
-        // let subtaskHeadline ='';
-        subtaskHeadline = /*html*/ `
-        <div class="task-detail-font-color margin-bottom10 text-decoration-none">
-            Subtasks
-        </div>`
-
-        finished += /*html*/ ` 
-       <div class="task-detail-flex margin-bottom10 text-line-through">
-           <img onclick="switchSubtaskStatusToUndone(${i},${l})" class="task-box" src="img/done.svg" alt="">
-           ${subtaskDone}
-       </div>`
-    }
-
+    // <!-- ${subtaskHeadline}
+    // ${inProgress}
+    // ${finished} -->
 
 }
 
@@ -286,22 +253,3 @@ async function deleteTask(i) {
     closeTask();
     window.location.reload();
 }
-
-
-
-
-// Textfeld aus dem JSON-Objekt extrahieren
-// let text = data.text.trim();
-
-// Leerzeichen finden und den ersten Buchstaben sowie den Buchstaben danach extrahieren
-//     let index = text.indexOf(' ');
-//     if (index !== -1 && index < text.length - 1) {
-//         let firstLetter = text.charAt(0).toUpperCase();
-//         let letterAfterSpace = text.charAt(index + 1).toUpperCase();
-
-//         console.log(firstLetter + letterAfterSpace);
-//         return (firstLetter, letterAfterSpace)
-//     } else {
-//         console.log('Kein Leerzeichen gefunden oder kein Buchstabe danach.');
-//     }
-// }

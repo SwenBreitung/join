@@ -3,8 +3,6 @@
  * 
  */
 let contactsArray = [];
-// let nameAbbreviationArray = [];
-
 let colorIndex = 0;
 let nextColorIndex = 0;
 
@@ -100,7 +98,6 @@ function loadcontactsInfoTamplate(contact, id, initials) {
                 <div class="profile-picture" style="background-color: ${contact.color}">
                 <spline class="fontSize12"><b>${initials}</b></spline>        
                 </div> 
-
         <div>
             <span class="contact-name">${contact['name']}</span>  
 
