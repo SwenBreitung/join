@@ -31,6 +31,10 @@ function resetPasswort() {
     dialog.innerHTML = loadTemplateResetPasswort();
 }
 
+function loadRegister() {
+    document.getElementById('content-login').add.classList('d-none');
+    document.getElementById('content-register').remove.classList('d-none');
+}
 
 function closeDialog() {
     loadLogIn();
