@@ -57,6 +57,7 @@ function login() {
         }
         userId = user.id;
         window.location.href = "./summery.html";
+
     } else {
         loadRedBorderInput();
         loadWarningTextTamplate();

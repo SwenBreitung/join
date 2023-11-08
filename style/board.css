@@ -446,6 +446,10 @@ h3 {
     background-color: white;
 }
 
+.mirror-filter {
+    filter: grayscale(100%);
+}
+
 
 /* @media(max-width:1360px) {
     .contentposition {
