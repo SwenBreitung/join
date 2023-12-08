@@ -33,11 +33,12 @@
 
     <div w3-include-html="templates/sidebar.html"></div>
     <div w3-include-html="templates/header.html"></div>
+    <div w3-include-html="templates/header-menu.html" id="menu-header-container" class="menu-header-container d-none"></div>
     <div class="content-contact">
         <section class="contacts-section">
             <div class="btnBackground horicontalAndVertical">
                 <button type="button" class="addNewContactButton horicontalAndVertical fontSize21 " id="add-new-contacts">
-                    Add new Contact
+                   <span>Add new Contact</span> 
                     <img src="./img/person_add.svg">
                 </button>
             </div>
@@ -48,51 +49,26 @@
             </div>
         </section>
 
-
-
-        <section>
-
-            <div class="contacts-title">
-                <h1>Contakts</h1>
-                <div class="contacts-line"></div>
-                <div>Better with a Team</div>
+        <section class="contacts-info-panel">
+            <div class="d-flex justify-content-around align-items-center">
+                <div class="contacts-title ">
+                    <h1>Contakts</h1>
+                    <div class="subtitle-row">
+                        <div class=" contacts-line "></div>
+                        <div>Better with a Team</div>
+                    </div>
+                </div>
+                <div>
+                    <img class="info-panel-arrow" src="img/arror-left.svg " alt=" " onclick="closeContactInfos() ">
+                </div>
             </div>
-
-
             <!-- __________Hier wird später alle kontaktdaten eingefügt _____________-->
             <!-- Big Picture / Name / Edit and Delete -->
-            <div class="contact-info" id="contactInfo">
-
-            </div>
+            <div class="contact-info " id="contactInfo"></div>
         </section>
     </div>
 
-    <div id="add-contact" class="d-none">
-        <div class="header-contact-addet ">
-            <img src="img/join.logo-white.svg" alt="logo">
-            <div class="d-flex flex-column">
-                <h1>Add Contacts</h1>
-                <div>Better with a Team</div>
-                <div class="contacts-line-vertikal"></div>
-            </div>
-        </div>
-
-        <div class=" contact-add-input-picture d-flex ">
-            <div class="profile-picture-list p-40">profielbild</div>
-            <div class="flex-column d-flex contact-add-inputarea">
-                <div class="p-70"></div>
-                <input type="text" placeholder="Name" id="contact-add-name">
-                <input type="text" placeholder="EMail" id="contact-add-email">
-                <input type="text" placeholder="Phone" id="contact-add-phone">
-                <div class="p-40"></div>
-                <div class="btnBackground">
-                    <button class=" cancel-btn">Cancel</button>
-                    <div style="padding: 15px;"></div>
-                    <button class="addNewContactButton add-contact-btn">Add Contact</button>
-                </div>
-            </div>
-            <div class="close-btn" id="close-btn">X</div>
-        </div>
+    <div id="add-contact" class="d-none ">
 
     </div>
 </body>

@@ -117,6 +117,7 @@
 }
 
 .menu-header-container {
+    z-index: 999;
     width: 127px;
     right: 11px;
     top: 59px;
@@ -147,6 +148,27 @@
     display: flex;
 }
 
+::-webkit-scrollbar {
+    /* display: none; */
+    /* color: #0038FF; */
+}
+
+ ::-webkit-scrollbar {
+    width: 10px;
+    /* Breite des Scrollbalkens */
+}
+
+ ::-webkit-scrollbar-thumb {
+    background-color: var(--main-color);
+    border-radius: 5px;
+    /* Farbe des Scrollbalken-Griffs */
+}
+
+ ::-webkit-scrollbar-track {
+    background: var(--text-color);
+    /* Hintergrundfarbe des Scrollbalken-Tracks */
+}
+
 @media (max-width: 700px) {
     .content {
         position: absolute;
@@ -163,8 +185,5 @@
         overflow-y: auto;
         -ms-overflow-style: none;
         scrollbar-width: none;
-    }
-     ::-webkit-scrollbar {
-        display: none;
     }
 }

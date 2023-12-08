@@ -27,19 +27,12 @@
         <div w3-include-html="templates/header.html"></div>
     </header>
 
-    <div id="menu-header-container" class="menu-header-container d-none">
-        <div class="menu-header">
-            <a href="./legalNozice.html">Legal Notiz</a>
-            <a href="./privacy-police.html">Privacy Police</a>
-            <a href="./index.html">Log Out</a>
-        </div>
-    </div>
-
+    <div w3-include-html="templates/header-menu.html" id="menu-header-container" class="menu-header-container d-none"></div>
 
     <div class="content">
         <div class="width-100P column">
             <div class="width-100P main-container">
-                <div class="justifyContent padding-left10">
+                <div class="width-100P justifyContent padding-left10">
                     <div id="header-summary">
                         <h1>Summary</h1>
                         <div class="headline">
@@ -50,7 +43,7 @@
 
 
                     <div class="d-flex gap-32 width-100P p-90px">
-                        <div>
+                        <div class="width-100P">
                             <div class="d-flex  gap-32">
 
                                 <!-- <div class="d-flex data-panel w-50 "> -->
@@ -58,12 +51,11 @@
                                     <div id="chop-container" class="img-chop"></div>
 
                                     <div>
-                                        <div id="to-dos" class="fw-bold d-flex align-items-center justify-content-center ">1</div>
+                                        <div id="to-dos" class="fw-bold d-flex align-items-center justify-content-center ">0</div>
                                         <div>Todo</div>
                                     </div>
                                 </a>
                                 <!-- </div> -->
-
 
                                 <a href="board.html" id="" class="d-flex data-panel w-50 ">
                                     <div id="penContainer" class="img-pen"></div>
@@ -71,7 +63,6 @@
                                         <div id="done" class="fw-bold d-flex align-items-center justify-content-center ">1</div>
                                         <div>Done</div>
                                     </div>
-
                                 </a>
                             </div>
 
@@ -85,7 +76,7 @@
                                 <div class="h-75 line-grey"></div>
                                 <div class="deadline-container">
                                     <div id="date"> - </div>
-                                    <div class="upcoming-deadline"> Upcoming Deadline </div>
+                                    <div class="upcoming-deadline">Upcoming Deadline </div>
                                 </div>
 
                             </a>
@@ -112,7 +103,7 @@
                                 <a href="board.html" class="task-cards dialog" id="load-feedback-task">
                                     <div id="await-feedback" class="fw-bold d-flex align-items-center justify-content-center">5</div>
                                     <span>Awaiting</span>
-                                    <span> Feedback</span>
+                                    <span>Feedback</span>
 
                                 </a>
                             </div>

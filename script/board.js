@@ -2,22 +2,28 @@ let currentDraggedElement;
 
 
 async function init() {
-    await loadTasksFromBackend();
-    includeHTML();
-    loadTasks();
+    await loadAllDataFromBackend();
+    await loadUserDataFromLocalStorage();
+    await includeHTML();
+    await loadTasks();
+    await initializeDraggable();
+    renderContacts();
+    await loadHeadImg()
+    highlightCurrentPageInHeader('board-sidebar');
 }
 
 async function clearArray() {
     tasks.splice(0, tasks.length);
     currentId = ""
+    updateBoardHTML
     await setItem('tasks', JSON.stringify(tasks));
     await setItem('currentId', JSON.stringify(currentId));
 }
 
-function loadTasks() {
+async function loadTasks() {
     updateBoardHTML('toDo');
-    updateBoardHTML('in-progress');
-    updateBoardHTML('awaiting-feedback');
+    updateBoardHTML('inProgress');
+    updateBoardHTML('awaitingFeedback');
     updateBoardHTML('done');
 }
 
@@ -40,35 +46,6 @@ function revertDivColor() {
 }
 
 
-/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
-
-
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-
-// want to move the todo with the id which is saved in currentDragElement 
-// and change the status
-async function moveTo(status) {
-    tasks[currentDraggedElement]['status'] = status;
-    await setItem('tasks', JSON.stringify(tasks));
-    loadTasks();
-    // updateBoardHTML();
-    // loadTasks();
-    // loadPrioImg(element['priority'], element['id'])
-    removeHighlight(status);
-}
-
-
-function highlight(id) {
-    document.getElementById(id).classList.add('drag-area-highlight');
-}
-
-
-function removeHighlight(id) {
-    document.getElementById(id).classList.remove('drag-area-highlight');
-}
 
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -83,8 +60,9 @@ async function updateBoardHTML(statusName) {
             // document.getElementById(statusName).classList.remove('dont-taks');
             const element = task[index];
             document.getElementById(statusName).innerHTML += await generateTaskHTML(element, element['id']);
+            await loadLittleProgressbar(element['id'])
             await loadPrioImg(element['priority'], element['id'])
-            await loadContacts(element, element['id']);
+            await loadContacts(element, element['id'], `task-users${element['id']}`);
         }
     } else {
         // document.getElementById(statusName).classList.add('dont-taks');
@@ -112,9 +90,9 @@ async function loadPrioImg(prio, i) {
 }
 
 
-async function loadContacts(element, i) {
+async function loadContacts(element, i, id) {
 
-    let contactsImg = document.getElementById(`task-users${i}`);
+    let contactsImg = document.getElementById(id);
     let contacts = element['contacts']
         // let colors = element['contactColor']
     console.log(`task-users${i}`);
@@ -130,33 +108,42 @@ async function loadContacts(element, i) {
 
 async function generateTaskHTML(element, i) {
     console.log(element);
-
+    // draggable="true" ondragstart="startDragging(${element['id']})"
 
     return /*html*/ `
-        <div draggable="true" ondragstart="startDragging(${element['id']})" onclick="openTask(${i})" class="task">
+        <div  onclick="openTask(${i})" id="${i}" class="task draggable">
             <div>
                 <div class="task-category"> ${element['category']}</div>
                 <div class="task-title">${element['title']}</div>
                 <div class="task-description"> ${element['text']}</div>
             </div>
-            
-            
-            <div >
+            <!-- <div id="progressBarContainer" style="width: 100%; background-color: #ddd;">
+                <div id="progressBar${i}" class="progress-bar" style="width: 0%; height: 20px; "></div>
+                <div id="progressStatus${i}"></div>
+            </div > -->
+            <div id="task-detail-subtasks" >  
+                        <div class="d-flex">
+                            <div id="progressBarContainer" style="width: 100%; background-color: #ddd;    border-radius: 10px;">
+                                <div id="progressBar${i}" class="progress-bar"></div>     
+                            </div>
+                            <div id="progressStatus${i}" class="d-flex"></div>
+                       </div>
+                    </div> 
+
                 <div class="d-flex align-items-center">
                 <div id="prio-img${i}"></div>
                   <div class="task-users-prio" id="task-users${i}"></div>
-                  
                 </div> 
         </div>
     `;
 }
 
 
-function startDragging(id) {
-    console.log("Dragging element with ID:", id);
-    let index = tasks.findIndex(task => task.id == id);
-    currentDraggedElement = index;
-}
+// function startDragging(id) {
+//     console.log("Dragging element with ID:", id);
+//     let index = tasks.findIndex(task => task.id == id);
+//     currentDraggedElement = index;
+// }
 
 
 async function openTask(i) {
@@ -165,7 +152,7 @@ async function openTask(i) {
 }
 
 
-function renderTaskdetailHTML(i) {
+async function renderTaskdetailHTML(i) {
     console.log('tasks in open Task', tasks[i])
     let userNames = tasks[i]['contactName'];
     let users = tasks[i]['contactAbbreviation'];
@@ -199,47 +186,121 @@ function renderTaskdetailHTML(i) {
                         </div>
                     </div>
                     <div>
-                        <div class="margin-bottom10 task-detail-font-color">Assigned To:</div>
-                        <div class="task-detail-users">
-                            
+                        <div  class="margin-bottom10 task-detail-font-color ">
+                            <span>Assigned To:</span>
+                            <div id="AssignedTo" class="d-flex"></div>
+                        </div>
+                        <div class="task-detail-users">     
                         <!-- ${assignedUser} -->
-
                         </div>
                     </div>
-                    <div class="task-detail-subtasks">
-                        
-                
+                    <div>
+                        <span>Subtasks</span>
+                        <div id="subtask-checking">
+                        </div>
                     </div>
-                </div>
+                    <div id="task-detail-subtasks">  
+                        <div class="d-flex">
+                            <div id="progressBarContainer" style="width: 100%; background-color: #ddd;">
+                                <div id="progressBar" class="progress-bar"></div>     
+                            </div>
+                            <div id="progressStatus" class="d-flex"></div>
+                       </div>
+                    </div> 
+                </div>         
             </div>
             <div class="task-detail-bottom">
                 <img onclick="deleteTask(${i})" src="img/subTaskDelete.svg" alt="">
                 <img src="img/PenAddTask 1=edit.svg" alt="">
             </div>
         </div>
+        
     `;
 
-    // <!-- ${subtaskHeadline}
-    // ${inProgress}
-    // ${finished} -->
 
+    await renderSubtasks(i)
+    await loadContacts(tasks[i], i, "AssignedTo");
 }
 
 
-async function switchSubtaskStatusToFinished(i, k) {
-    let splicedSubtask = tasks[i]['subtasksInProgress'].splice(k, 1)
-    tasks[i]['subtasksFinish'].push(splicedSubtask)
-    await setItem('tasks', JSON.stringify(tasks));
-    renderTaskdetailHTML(i);
+async function renderSubtasks(i) {
+    for (let j = 0; j < tasks[i]['subtasks'].length; j++) {
+        const taskDetailSubtasks = document.getElementById('task-detail-subtasks');
+        const element = tasks[i]['subtasks'][j];
+        console.log(element);
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'meineCheckbox';
+        checkbox.id = 'checkbox-' + j; // eindeutige ID für jede Checkbox
+        checkbox.classList.add('meineCheckbox');
+        if (element.status) {
+            checkbox.checked = true;
+        }
+        label.appendChild(checkbox);
+
+        const div = document.createElement('div');
+        div.textContent = element.name;
+        label.appendChild(div);
+        taskDetailSubtasks.appendChild(label);
+
+    }
+    loadprogressbar();
 }
 
+function loadprogressbar() {
+    const checkboxes = document.querySelectorAll('.meineCheckbox');
+    const totalCheckboxes = checkboxes.length;
+    const checkedCount = document.querySelectorAll('.meineCheckbox:checked').length;
+    const progressBar = document.getElementById('progressBar');
+    const progressPercentage = (checkedCount / totalCheckboxes) * 100;
+    progressBar.style.width = progressPercentage + '%';
+    let progressStatus = document.getElementById('progressStatus');
+    // const checkboxes = document.querySelectorAll('.meineCheckbox');
+    // const progressBar = document.getElementById('progressBar');
+    // const totalCheckboxes = checkboxes.length;
+    progressStatus.innerHTML = /*html*/ `
+    <div>${totalCheckboxes}</div>
+    <div>/</div>
+    <div>${checkedCount}</div>
+`
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const checkedCount = document.querySelectorAll('.meineCheckbox:checked').length;
+            const progressPercentage = (checkedCount / totalCheckboxes) * 100;
+            progressBar.style.width = progressPercentage + '%';
+            progressStatus.innerHTML = /*html*/ `
+            <div>${totalCheckboxes}</div>
+            <div>/</div>
+            <div>${checkedCount}</div>
+        `
+        });
+    });
 
-async function switchSubtaskStatusToUndone(i, l) {
-    let splicedSubtask = tasks[i]['subtasksFinish'].splice(l, 1)
-    tasks[i]['subtasksInProgress'].push(splicedSubtask)
-    await setItem('tasks', JSON.stringify(tasks));
-    renderTaskdetailHTML(i);
 }
+
+async function loadLittleProgressbar(i) {
+    let progressStatus = document.getElementById(`progressStatus${i}`);
+    let totalCheckboxes = tasks[i]['subtasks'].length;
+    let counter = 0;
+
+    tasks[i]['subtasks'].forEach(subtask => {
+        if (subtask.status === true) {
+            counter++;
+        }
+    });
+
+    const progressPercentage = (counter / totalCheckboxes) * 100;
+    const progressBar = document.getElementById(`progressBar${i}`); // Stellen Sie sicher, dass Sie das richtige Element ansteuern
+    progressBar.style.width = progressPercentage + '%';
+    progressBar.style.height = '100%';
+    progressStatus.innerHTML = /*html*/ `
+    <div>${counter}</div>
+    <div>/</div>
+    <div>${totalCheckboxes}</div>
+`
+}
+
 
 
 function closeTask() {
@@ -252,4 +313,58 @@ async function deleteTask(i) {
     await setItem('tasks', JSON.stringify(tasks));
     closeTask();
     window.location.reload();
+}
+
+
+function loadAddTaskProgress() {
+    addTasksStatus = 'inProgress';
+    addTask()
+}
+
+function loadAddTaskdone() {
+    addTasksStatus = 'done';
+    addTask()
+}
+
+function loadAddTaskToDo() {
+    addTasksStatus = 'toDo';
+    addTask()
+}
+
+function loadAddTaskAwaitFeedback() {
+    addTasksStatus = 'awaitingFeedback';
+    addTask()
+}
+
+function addTask() {
+    document.getElementById('add-task').classList.remove('d-none');
+    document.getElementById('add-task-arrow').classList.remove('d-none')
+}
+
+function closeAddTask() {
+    if (!event.target.closest('#dialog')) {
+        document.getElementById('add-task').classList.add('d-none');
+    }
+}
+
+
+//--- searchbar----
+
+async function boardSearch() {
+    let searchInput = document.getElementById('searchInput').value.toLowerCase();
+    // clearPokemonContainer();
+    for (let i = 0; i < tasks.length; i++) {
+        let statusName = tasks[i].status;
+        let text = tasks[i].text;
+        let title = tasks[i].title;
+        document.getElementById(statusName).innerHTML = '';
+        if (text.toLowerCase().includes(searchInput) || title.toLowerCase().includes(searchInput)) {
+            const element = tasks[i];
+            document.getElementById(statusName).innerHTML += await generateTaskHTML(element, element['id']);
+            await loadLittleProgressbar(element['id'])
+            await loadPrioImg(element['priority'], element['id'])
+            await loadContacts(element, element['id'], `task-users${element['id']}`);
+
+        }
+    }
 }

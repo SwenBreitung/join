@@ -1,6 +1,7 @@
 const STORAGE_TOKEN = 'WPFKLL9AMIDPXQR1EISWWODPTCHU7V6AK4EGRIVD';
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
 
+let newContact = {};
 
 const colorArray = [
     "#006400", "#00008B", "#8B0000", "#800080", "#808080",
@@ -11,11 +12,11 @@ const colorArray = [
 
 
 let users = [{
-    "id": "",
-    "name": "",
-    "email": "",
-    "password": "",
-    "color": "",
+    "id": "1",
+    "name": "Gast Benutzer",
+    "email": "gast@example.com",
+    "password": "gast123", // Hinweis: Passwörter sollten in der Praxis verschlüsselt gespeichert werden
+    "color": "#00008B", // Dunkelblau
 }];
 
 let contacts = [
@@ -53,6 +54,10 @@ let tasks = [{
         "contacts": [
             { "name": "Alice", "color": "#FF5733" },
             { "name": "Bob", "color": "#33FF57" }
+        ],
+        "subtasks": [
+            { "name": "Alice", "status": true },
+            { "name": "Alice", "status": false }
         ]
     },
     {
@@ -63,10 +68,14 @@ let tasks = [{
         "time": "17:30",
         "date": "2023-09-30",
         "priority": "normal",
-        "status": "in-progress",
+        "status": "inProgress",
         "contacts": [
             { "name": "Charlie", "color": "#5733FF" },
             { "name": "Dave", "color": "#FFFF33" }
+        ],
+        "subtasks": [
+            { "name": "Alice", "status": true },
+            { "name": "Alice", "status": false }
         ]
     },
     {
@@ -77,10 +86,14 @@ let tasks = [{
         "time": "20:00",
         "date": "2023-09-30",
         "priority": "low",
-        "status": "in-progress",
+        "status": "inProgress",
         "contacts": [
             { "name": "Eve", "color": "#FF33FF" },
             { "name": "Frank", "color": "#33FFFF" }
+        ],
+        "subtasks": [
+            { "name": "Alice", "status": true },
+            { "name": "Alice", "status": false }
         ]
     }
 ];
@@ -99,6 +112,7 @@ async function loadBackendData(key) {
         arryData = JSON.parse(await getItem(key));
         if (key === 'tasks') {
             tasks = arryData;
+            resetId(tasks);
         } else if (key === 'contacts') {
             contacts = arryData;
         }
@@ -107,6 +121,12 @@ async function loadBackendData(key) {
     }
 }
 
+function resetId(tasks) {
+    for (let index = 0; index < tasks.length; index++) {
+        const task = tasks[index];
+        task.id = index;
+    }
+}
 async function setItem(key, value) {
     console.log("Key:", key);
     console.log("Value:", value);
@@ -151,11 +171,25 @@ async function uploadBackendDatas(key, dataToUpload) {
     }
 }
 
+function loadUserDataFromLocalStorage() {
+    userData = localStorage.getItem('userData');
+    if (userData) {
+        userData = JSON.parse(userData);
+    } else {
+        return null; // oder einen anderen Standardwert, je nachdem, was für Ihre Anwendung sinnvoll ist
+    }
+}
+async function loadBackendUsers() {
+    loadBackendData('users')
+}
 
-localStorage.setItem('user', JSON.stringify({
-    "id": "0",
-    "name": "John Doe",
-    "email": "johndoe@example.com",
-    "password": "password123",
-    "color": "#FF6347",
-}));
+function saveUserDataToBakcend() {
+    uploadBackendDatas('users', users)
+}
+// localStorage.setItem('user', JSON.stringify({
+//     "id": "0",
+//     "name": "John Doe",
+//     "email": "johndoe@example.com",
+//     "password": "password123",
+//     "color": "#FF6347",
+// }));

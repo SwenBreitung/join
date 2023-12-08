@@ -4,20 +4,17 @@ let prioLow = false;
 let subtaskArry = [];
 let selectedColor;
 let contaktsTask = [];
+let addTasksStatus = 'toDo';
+
 
 async function loadInit() {
     await includeHTML();
     await loadAllDataFromBackend();
+    await loadUserDataFromLocalStorage();
     renderContacts();
-}
-
-
-function savetasksDataToBakcend() {
-    uploadBackendDatas('tasks', tasks)
-}
-
-function saveContactsDataToBakcend() {
-    uploadBackendDatas('contacts', contacts)
+    initializeDatePicker();
+    await loadHeadImg()
+    highlightCurrentPageInHeader('add-task-sidebar');
 }
 
 
@@ -37,14 +34,16 @@ function priButtonActivated(id, newImgSrc, priorityNumber) {
     }
 }
 
+
 function resetButtonColors() {
     let buttons = document.querySelectorAll('.button');
     buttons.forEach(button => {
-        button.classList.remove('red-background');
-        button.classList.remove('orange-background');
-        button.classList.remove('green-background');
+        button.style.backgroundColor = '';
+        button.style.backgroundColor = '';
+        button.style.backgroundColor = '';
     });
 }
+
 
 function isPriorityActive(priorityNumber) {
     switch (priorityNumber) {
@@ -94,11 +93,11 @@ function resetBollians() {
 function changeColor(priorityNumber) {
     resetButtonColors();
     if (priorityNumber === 1) {
-        document.getElementById('prioUrgentBtn').classList.add('red-background');
+        document.getElementById('prioUrgentBtn').style.backgroundColor = 'red';
     } else if (priorityNumber === 2) {
-        document.getElementById('prioMediumBtn').classList.add('orange-background');
+        document.getElementById('prioMediumBtn').style.backgroundColor = 'orange';
     } else if (priorityNumber === 3) {
-        document.getElementById('prioLowBtn').classList.add('green-background');
+        document.getElementById('prioLowBtn').style.backgroundColor = 'green';
     }
 }
 
@@ -111,9 +110,9 @@ function addMainPrioImg() {
 
 
 function removeBackgroundColor() {
-    document.getElementById('prioUrgentBtn').classList.remove('red-background');
-    document.getElementById('prioMediumBtn').classList.remove('orange-background');
-    document.getElementById('prioLowBtn').classList.remove('green-background');
+    document.getElementById('prioUrgentBtn').style.backgroundColor = '';
+    document.getElementById('prioMediumBtn').style.backgroundColor = '';
+    document.getElementById('prioLowBtn').style.backgroundColor = '';
 }
 
 
@@ -124,7 +123,7 @@ function changeImage(id, newImgSrc) {
 
 //---------------------------------------------------
 
-document.addEventListener('DOMContentLoaded', function() {
+document.body.addEventListener('click', function(event) {
     document.getElementById('dropdownTrigger').addEventListener('click', toggleDropdown);
     document.querySelectorAll('#dropdownMenu span').forEach(option => {
         option.addEventListener('click', function() {
@@ -133,17 +132,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
 function toggleDropdown() {
     const dropdownMenu = document.getElementById('dropdownMenu');
     dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
 }
 
-document.getElementById('dropdownMenu').addEventListener('click', function(event) {
-    // Prüfen, ob das angeklickte Element ein `span` ist
-    if (event.target.tagName === 'SPAN') {
+
+document.body.addEventListener('click', function(event) {
+    // Prüfen, ob das angeklickte Element oder ein übergeordnetes Element das 'dropdownMenu' ist
+    let dropdownMenu = event.target.closest('#dropdownMenu');
+    if (dropdownMenu && event.target.tagName === 'SPAN') {
         selectOption(event.target);
     }
 });
+
 
 function selectOption(optionElement) {
     document.getElementById('categoryInputV1').value = optionElement.textContent;
@@ -176,7 +179,6 @@ function deleteSubtaskContainer() {
 
     subtaskArry.splice(index, 1);
 
-
     let newsubTask = document.getElementById('subtasks-addet'); // Ersetzen Sie 'your-container-id' durch die tatsächliche ID Ihres Containers
     newsubTask.innerHTML = ''; // Leeren Sie den Container
 
@@ -184,6 +186,7 @@ function deleteSubtaskContainer() {
         newsubTask.innerHTML += loadSubTaskTemplate(subtask, idx);
     });
 }
+
 
 function loadSubTaskTemplate(subtask, i) {
     return /*html*/ `  
@@ -200,27 +203,41 @@ function loadSubTaskTemplate(subtask, i) {
     `;
 }
 
-document.body.addEventListener('click', function(event) {
-    // Check, ob das geklickte Element (oder ein Elternteil) die ID "edit-subtask" hat
+
+document.body.addEventListener('click', handleEditSubtaskClick);
+
+function handleEditSubtaskClick(event) {
+    // Überprüfen, ob das geklickte Element (oder ein Elternteil) die ID "edit-subtask" hat
     let targetElement = event.target.closest('#edit-subtask');
 
     if (targetElement) {
         let targetId = targetElement.getAttribute('data-target');
         let targetDiv = document.getElementById(targetId); // Hier holen Sie das tatsächliche DOM-Element
-        targetDiv.setAttribute('contenteditable', 'true');
-        targetDiv.focus(); // Fokus auf das Element setzen
+
+        if (targetDiv) {
+            targetDiv.setAttribute('contenteditable', 'true');
+            targetDiv.focus(); // Fokus auf das Element setzen
+        }
     }
-});
+}
+// function handleEditSubtaskClick(targetElementId) {
+//     let targetDiv = document.getElementById(targetElementId); // ID des zu bearbeitenden Elements
+//     if (targetDiv) {
+//         targetDiv.setAttribute('contenteditable', 'true');
+//         targetDiv.focus(); // Fokus auf das Element setzen
+//     }
+// }
 
 
-document.addEventListener('DOMContentLoaded', function() {
+function initializeDatePicker() {
     var dateInput = document.getElementById('datepicker');
+    if (!dateInput) return; // Sicherstellen, dass das Element existiert
 
     var picker = new Pikaday({
         field: dateInput,
         position: 'top right',
         format: 'DD/MM/YYYY',
-        minDate: new Date(), // Das stellt sicher, dass kein Datum vor dem heutigen Datum ausgewählt werden kann.
+        minDate: new Date(),
         onSelect: function(date) {
             const formattedDate = [
                 date.getDate().toString().padStart(2, '0'),
@@ -243,22 +260,50 @@ document.addEventListener('DOMContentLoaded', function() {
             picker.show();
         }
     });
-});
+}
 
 
-document.getElementById('addItemButton').addEventListener('click', function() {
+
+// Prüfen, ob das angeklickte Element der addItemButton ist
+// if (event.target.id === 'addItemButton') {
+//     document.getElementById('dialog-window').classList.remove('d-none');
+//     createColorDivs();
+// }
+function openDialogAndCreateColors() {
     document.getElementById('dialog-window').classList.remove('d-none');
     createColorDivs();
-});
-document.getElementById('dialog-window').addEventListener('click', function() {
+}
+
+
+function closeDialogWindow() {
     document.getElementById('dialog-window').classList.add('d-none');
-});
-document.getElementById('close-dialog').addEventListener('click', function() {
-    document.getElementById('dialog-window').classList.add('d-none');
-});
-document.getElementById('dialog').addEventListener('click', function(event) {
-    event.stopPropagation(); // Verhindert das Hochbubbeln des Events
-});
+    toggleDropdown()
+}
+// document.getElementById('dialog').addEventListener('click', function(event) {
+//     event.stopPropagation();
+// });
+// document.getElementById('dialog-window').addEventListener('click', function() {
+//     document.getElementById('dialog-window').classList.add('d-none');
+// });
+
+
+
+// document.getElementById('close-dialog').addEventListener('click', function() {
+//     document.getElementById('dialog-window').classList.add('d-none');
+//     toggleDropdown();
+// });
+
+function closeDialogAndToggleDropdown() {
+    if (!event.target.closest('#dialog')) {
+        document.getElementById('dialog-window').classList.add('d-none');
+        toggleDropdown();
+    }
+}
+
+
+// document.getElementById('dialog').addEventListener('click', function(event) {
+//     event.stopPropagation(); // Verhindert das Hochbubbeln des Events
+// });
 
 
 function colorSelectionHandler(event) {
@@ -268,6 +313,7 @@ function colorSelectionHandler(event) {
     event.target.style.border = '1px solid black';
 }
 
+
 function resetBorders() {
     for (let i = 0; i < 20; i++) {
         const colorDiv = document.getElementById(`color-${i}`);
@@ -276,6 +322,7 @@ function resetBorders() {
         }
     }
 }
+
 
 function createColorDivs() {
     const container = document.getElementById('color-container'); // Angenommen, es gibt ein Element mit der ID 'color-container'
@@ -292,7 +339,26 @@ function createColorDivs() {
 };
 
 
-document.getElementById('save-subtask-btn').addEventListener('click', function() {
+// document.getElementById('save-subtask-btn').addEventListener('click', function() {
+//     const subtaskText = document.getElementById('subtask-input').value;
+//     if (subtaskText.trim() === '' || !selectedColor) {
+//         alert('Please provide valid subtask text and select a color');
+//         return;
+//     }
+//     const itemsContainer = document.getElementById('itemsContainer');
+
+//     const newItemHTML = `
+//         <div class="dropdown-item">
+//             <span class="dropdown-text" data-color="${selectedColor}">${subtaskText}</span>
+//             <div class="color-box" style="background-color:${selectedColor};"></div>
+//         </div>
+//     `;
+//     itemsContainer.innerHTML += newItemHTML;
+//     document.getElementById('subtask-input').value = '';
+//     document.getElementById('dialog-window').classList.add('d-none');
+// });
+
+function saveSubtask() {
     const subtaskText = document.getElementById('subtask-input').value;
     if (subtaskText.trim() === '' || !selectedColor) {
         alert('Please provide valid subtask text and select a color');
@@ -309,8 +375,7 @@ document.getElementById('save-subtask-btn').addEventListener('click', function()
     itemsContainer.innerHTML += newItemHTML;
     document.getElementById('subtask-input').value = '';
     document.getElementById('dialog-window').classList.add('d-none');
-});
-
+}
 
 function renderContacts() {
     const contactsElement = document.getElementById('contactsId');
@@ -324,6 +389,7 @@ function renderContacts() {
     }
 }
 
+
 function openCloseContactsMenu() {
     const contactsContainer = document.getElementById('contacts-container');
     const contactsOnclicMenu = document.getElementById('assignedToInputContainer');
@@ -336,6 +402,7 @@ function openCloseContactsMenu() {
     }
 }
 
+
 function loadContactAddTasksTamplate(initalien, i, contactColor) {
     let contact = document.getElementById('add-contacts-add-tasks')
     contact.innerHTML += /*html*/ `
@@ -344,28 +411,32 @@ function loadContactAddTasksTamplate(initalien, i, contactColor) {
 }
 
 
-document.body.addEventListener('click', function(event) {
+document.body.addEventListener('click', handleCheckboxClickOnBody);
+
+function handleCheckboxClickOnBody(event) {
     let targetCheckbox = event.target.closest('input[type="checkbox"]');
 
-    if (targetCheckbox && (targetCheckbox.id.startsWith('contactCheckbox_'))) {
+    if (targetCheckbox && targetCheckbox.id.startsWith('contactCheckbox_')) {
         if (targetCheckbox.checked) {
-            console.log(targetCheckbox.checked)
+            console.log(targetCheckbox.checked);
             const parentDiv = targetCheckbox.closest('.d-flex[data-index]');
             const i = parentDiv.getAttribute('data-index'); // Aus der ID das i extrahieren
-            console.log(i)
-            const initalien = extractInitials(contacts[i].name); // Einen geeigneten Wert einfügen
+            console.log(i);
+            const initials = extractInitials(contacts[i].name); // Einen geeigneten Wert einfügen
             const contactColor = contacts[i].color; // Einen geeigneten Wert einfügen
 
-            loadContactAddTasksTamplate(initalien, i, contactColor);
+            loadContactAddTasksTamplate(initials, i, contactColor);
         } else {
-            console.log(targetCheckbox.checked)
+            console.log(targetCheckbox.checked);
             const dataIndex = targetCheckbox.id.replace('contactCheckbox_', '');
-            console.log(dataIndex)
+            console.log(dataIndex);
             const elementToRemove = document.querySelector(`.profilbuild[data-index="${dataIndex}"]`);
             if (elementToRemove) elementToRemove.remove();
         }
     }
-});
+}
+
+
 
 function loadContactHTML(initalien, contactName, contactColor, i) {
     return /*html*/ `
@@ -382,6 +453,7 @@ function loadContactHTML(initalien, contactName, contactColor, i) {
 `
 }
 
+
 function addNewContact() {
     let dialog = document.getElementById('dialog');
     dialog.remove('d-none');
@@ -390,7 +462,7 @@ function addNewContact() {
 function handleAddTaskButtonClick() {
     saveTask();
     savetasksDataToBakcend();
-    // window.location.href = 'board.html'; 
+    // window.location.href = 'board.html';
 }
 
 
@@ -400,7 +472,9 @@ function saveTask() {
         return element ? element.value || "" : "";
     };
     let prio = prioUrgent ? "Urgent" : (prioMedium ? "Medium" : (prioLow ? "Low" : ""));
-    let [title, description, date, category, subTask] = ['addTitel', 'addDescription', 'datepicker', 'categoryInputV1', 'subTaskSelectInput'].map(getValue);
+    let [title, description, date, category] = ['addTitel', 'addDescription', 'datepicker', 'categoryInputV1'].map(getValue);
+    let subtaskArry = getAllSubtaskTexts();
+    let contaktsArry = loadContactsArry();
     let newTask = {
         "id": tasks.length + 1,
         "category": category,
@@ -410,17 +484,55 @@ function saveTask() {
         "time": "",
         "date": date,
         "priority": prio,
-        "subTasks": subtaskArry,
-        "contacts": contaktsTask
+        "subtasks": subtaskArry,
+        "contacts": contaktsArry,
+        "status": addTasksStatus
     };
     tasks.push(newTask);
     console.log(tasks);
     resetAllInputs();
 };
 
+
+function loadContactsArry() {
+    let contact = document.querySelectorAll('.subtask-container');
+    let contacts = [];
+
+    contact.forEach(contact => {
+        contacts.push(contact.innerText);
+    });
+    return contacts;
+}
+
+
+function getAllSubtaskTexts() {
+    let subtasks = document.querySelectorAll('.subtask-container');
+    let subtaskTexts = [];
+
+    subtasks.forEach(subtask => {
+        subtaskTexts.push([subtask.innerText, false]);
+    });
+    return subtaskTexts;
+}
+
+
 function resetAllInputs() {
     ['addTitel', 'addDescription', 'datepicker', 'categoryInputV1', 'subTaskSelectInput'].forEach(id => {
         document.getElementById(id).value = "";
     });
     document.getElementById('categoryInputV1').value = `Select task category`;
+    document.getElementById('add-contacts-add-tasks').innerHTML = "";
+
+    document.getElementById('subtasks-addet').innerHTML = "";
+    resetBollians();
+    resetButtonColors();
+    resetAllCheckboxes();
+}
+
+
+function resetAllCheckboxes() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
 }

@@ -11,9 +11,7 @@ async function init() {
 // }
 
 
-async function loadBackendUsers() {
-    loadBackendData('users')
-}
+
 
 async function loadBackendData(key) {
     try {

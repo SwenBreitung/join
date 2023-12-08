@@ -1,11 +1,12 @@
-function init() {
-    loadUserDataFromLocalStorage();
-    includeHTML();
+async function init() {
+    await loadUserDataFromLocalStorage();
+    await includeHTML();
     loadTimeOfDay();
-    loadText();
+    // loadText();
     searchFirstUrgantDate();
     loadSvgs();
-    // highlightCurrentPageInHeader();
+    await loadHeadImg();
+    highlightCurrentPageInHeader('summary-sidebar');
 }
 
 function loadSvgs() {
@@ -24,10 +25,7 @@ function loadText() {
     loadNumbersUrgent();
 }
 
-function highlightCurrentPageInHeader() {
-    let colorSummery = document.getElementById('summary');
-    colorSummery.classList.add('blue-background');
-}
+
 
 //----------------------search function------------------------------
 //---Search User name----------------------------
@@ -40,43 +38,46 @@ function loadUserName() {
 //----------------------search function task------------------------------
 function loadNumbersBoard() {
     let board = document.getElementById('board');
-    board.innerText = (userData['tasks'].length);
+    board.innerText = tasks.length;
 }
 
 
 function loadNumersToDo() {
     let toDos = document.getElementById('to-dos');
-    toDos.innerText = countTasksByStatus(userData['tasks'], 'toDo', 'status');
+    toDos.innerText = countTasksByStatus(tasks, 'toDo', 'status');
 }
 
 
 function loadNumersInProgress() {
     let inProgress = document.getElementById('in-progress');
-    inProgress.innerText = countTasksByStatus(userData['tasks'], 'inProgress', 'status');
+    inProgress.innerText = countTasksByStatus(tasks, 'in-progress', 'status');
 }
 
 
 function loadNumersAwaitFeedback() {
     let awaitFeedback = document.getElementById('await-feedback');
-    awaitFeedback.innerText = countTasksByStatus(userData['tasks'], 'awaitFeedback', 'status');
+    awaitFeedback.innerText = countTasksByStatus(tasks, 'awaitFeedback', 'status');
 }
 
 
 function loadNumersDone() {
     let done = document.getElementById('done');
-    done.innerText = countTasksByStatus(userData['tasks'], 'done', 'status');
+    done.innerText = countTasksByStatus(tasks, 'done', 'status');
 }
 
 
 function loadNumbersUrgent() {
     let urgentNumber = document.getElementById('urgent')
-    urgentNumber.innerHTML = countTasksByStatus(userData['tasks'], 'urgent', 'priority');
+    urgentNumber.innerHTML = countTasksByStatus(tasks, 'urgent', 'priority');
 }
 
 function countTasksByStatus(collection, status, attribute) {
 
     if (Array.isArray(collection) && collection.length > 0) {
+        // console.log(status)
+        // console.log(attribute)
         return collection.filter(element => element[attribute] === status).length;
+
     } else {
         return 0;
     }
@@ -85,7 +86,7 @@ function countTasksByStatus(collection, status, attribute) {
 
 function searchFirstUrgantDate() {
     let urgentDate = document.getElementById('date')
-    urgentDate.innerHTML = findLatestDate(userData['tasks']);
+    urgentDate.innerHTML = findLatestDate(tasks);
 }
 
 //======================== search function task END==============================
@@ -178,10 +179,10 @@ function loadSvgPen() {
     const penSVGContainer = document.getElementById('penContainer');
 
     /** @type {string} The SVG content to be loaded */
-    const penSVGContent = loadPenSvg();
+
 
     if (penSVGContainer) {
-        penSVGContainer.innerHTML = penSVGContent;
+        penSVGContainer.innerHTML = loadPenSvg();
     }
 }
 //====================load SVGs END============================

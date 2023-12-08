@@ -1,24 +1,32 @@
 // let tasks = [];
+//  import { Draggable } from '@shopify/draggable';
 let userData = [];
 let userId;
 let moduloColor = 0;
+openMenu = false;
 
+function loadHeadImg() {
+    let img = document.getElementById('header-user-img');
+    initials = extractInitials(userData['name'])
+    img.innerHTML = initials;
+    img.style.backgroundColor = userData.color;
+}
+
+function openHeaderMenu() {
+    openMenu = !openMenu; // Das Umschalten des Wertes von openMenu
+
+    let headerMenu = document.getElementById('menu-header-container');
+    openMenu ? headerMenu.classList.remove('d-none') : headerMenu.classList.add('d-none');
+}
 
 function generateBackgroundColor() {
-    let i = moduloColor % colorArray.length
+    let i = Math.floor(Math.random() * colorArray.length);
     moduloColor++;
     return colorArray[i];
 }
 
 
-function loadUserDataFromLocalStorage() {
-    userData = localStorage.getItem('user');
-    if (userData) {
-        userData = JSON.parse(userData);
-    } else {
-        return null; // oder einen anderen Standardwert, je nachdem, was für Ihre Anwendung sinnvoll ist
-    }
-}
+
 
 function closeDialog() {
     document.getElementById('dialog-full').classList.add('d-none');
@@ -100,7 +108,7 @@ function loadContactData(contact, nameAbbreviation, i) {
 }
 
 async function resetAllBackendUser() {
-    await loadUsers();
+    await loadBackendUsers();
     users.splice(0, users.length);
     console.log(users);
     await setItem('users', JSON.stringify(users));
@@ -112,6 +120,16 @@ async function resetAllBackendTasks() {
     console.log(tasks);
     await setItem('tasks', JSON.stringify(tasks));
 }
+
+function savetasksDataToBakcend() {
+    uploadBackendDatas('tasks', tasks)
+}
+
+
+function saveContactsDataToBakcend() {
+    uploadBackendDatas('contacts', contacts)
+}
+
 // async function loadTasks() {
 //     try {
 //         tasks = JSON.parse(await getItem('tasks'));

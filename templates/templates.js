@@ -24,6 +24,7 @@ function loadHeaderSidebar(boolian) {
     resetBoolians();
     includeHTML();
     switchColorSidebar(boolian);
+
 }
 
 function resetBoolians() {
@@ -47,4 +48,9 @@ function openHeaderMenu() {
 
     let headerMenu = document.getElementById('menu-header-container');
     openMenu ? headerMenu.classList.remove('d-none') : headerMenu.classList.add('d-none');
+}
+
+function highlightCurrentPageInHeader(id) {
+    let colorSummery = document.getElementById(id);
+    colorSummery.classList.add('blue-background');
 }

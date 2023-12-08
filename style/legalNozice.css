@@ -1,0 +1,41 @@
+body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: calc(100vh - 56px);
+}
+
+.impressum-container {
+    height: 100%;
+    margin-left: 200px !important;
+    margin-top: 56px !important;
+    overflow: hidden;
+    background: #fff;
+    padding: 20px;
+}
+
+.impressum-container h1,
+.impressum-container h2,
+.impressum-container h3 {
+    color: #00008B;
+    /* Dunkelblau */
+}
+
+a {
+    color: #00008B;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width:700px) {
+    .impressum-container {
+        height: 100%;
+        margin-left: 0 !important;
+        margin-top: 56px !important;
+        padding-bottom: 50px !important;
+        /* overflow: hidden; */
+        background: #fff;
+        padding: 20px;
+    }
+}

@@ -6,13 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AddTask</title>
 
+
+    <script defer src="templates/templates.js"></script>
     <script defer src="./script/storge.js"></script>
     <script defer src="./script/script.js"></script>
     <!-- <script defer src="./script/contacts.js"></script> -->
-    <script defer src="templates/templates.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
-    <script defer src="./script/addTask.js"></script>
 
+    <script defer src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+
+    <script defer src="./script/addTask.js"></script>
+    <!-- <script defer src="./script/addTaskMenu.js"></script> -->
     <link rel="stylesheet" href="style/fonts.css">
     <link rel="shortcut icon" href="img/Logo for Favicon construction.svg" type="image/x-icon">
     <link rel="stylesheet" href="style/style.css">
@@ -27,140 +30,15 @@
 <body onload="loadInit()">
     <div w3-include-html="templates/sidebar.html"></div>
     <div w3-include-html="templates/header.html"></div>
+    <div w3-include-html="templates/header-menu.html" id="menu-header-container" class="menu-header-container d-none"></div>
+    <div w3-include-html="add-tasks-menu.html" class="main-section"></div>
 
-
-    <div class="contentAddTask show-scrollbarTaskWindow">
-        <div class="addTaskHeadlineContainer">
-            <h1 class="fw-bold">Add Task</h1>
-        </div>
-
-
-        <div id="addTaskPage" class="contentPosition">
-
-            <form onsubmit="handleAddTaskButtonClick();return false" class="task-area">
-                <div class="box-left">
-                    <div class="column">
-                        <div class="column"></div>
-                        <div id="titel-input" class="column">
-                            <span class="font-weight-normal">Titel</span>
-                            <input class="input-filed " id="addTitel" required placeholder="Enter a title" type="text">
-                        </div>
-
-                        <div class="p-16px"></div>
-
-                        <div class="column">
-                            <span class="font-weight-normal">Description</span>
-                            <textarea class="input-filds" id="addDescription" required placeholder="Enter a Description" type="text"></textarea>
-                        </div>
-
-                        <div class="p-16px"></div>
-
-                        <div>
-                            <span>Assigned to</span>
-                            <div id="assignTo" class="position-relative">
-                                <div onclick="openCloseContactsMenu()" class="d-flex input-filed input-filds justify-content-between" id="assignedToInputContainer">
-                                    <div>Select Contact to assing</div>
-                                    <img class="inputAbsolut h-100" src="img/arrow_drop_downaa.svg">
-                                </div>
-                                <div class="d-none" id="contacts-container">
-                                    <div id="contactsId">
-                                        <!-- Kontakte werden hier eingefügt -->
-                                    </div>
-                                    <button id="add-new-contact" onclick="addNewContact()">New Contact</button>
-                                </div>
-                                <div id="add-contacts-add-tasks" class="d-flex"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grey-line"></div>
-                <div class="box-right">
-                    <div>
-                        <div>
-                            <span>Due date</span>
-                            <div>
-                                <input class="input-filed with-image" required placeholder="dd/mm/yyyy" type="text" id="datepicker">
-                            </div>
-                        </div>
-                        <div class="p-16px"></div>
-                        <div class="column marginTop16">
-                            <span>Prio</span>
-                            <div id="prios-container" class="prios-container ">
-                                <div id="prioUrgentBtn" onclick="priButtonActivated('prioUrgentIcon','./img/prioUrgentWhite.svg',1)" class="prio-btn button">
-                                    <div>Urgent</div>
-                                    <img id="prioUrgentIcon" class="prioBtnIcons " src="./img/prioUrgent.svg ">
-                                </div>
-
-                                <div id="prioMediumBtn" class="prio-btn button" onclick="priButtonActivated('prioMediumIcon','./img/PrioMediumWhite.svg',2)">
-                                    <div>Medium</div>
-                                    <img id="prioMediumIcon" class="prioBtnIcons" src="./img/prioMedium.svg ">
-                                </div>
-
-                                <div id="prioLowBtn" class="prio-btn button" onclick="priButtonActivated('prioLowIcon','./img/PrioLowWhite.svg',3)">
-                                    <div>Low</div>
-                                    <img id="prioLowIcon" class="prioBtnIcons" src="./img/prioLow.svg ">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-16px"></div>
-                        <div id="categorySection" class="column">
-                            <div class="width100px">
-                                <span>Category</span>
-                                <div class="input-filed" id="categoryAreaV1">
-                                    <input class="click" id="categoryInputV1" type="text" readonly value="Select task category">
-                                    <img id="dropdownTrigger" class="inputAbsolut h-100" src="img/arrow_drop_downaa.svg">
-
-                                </div>
-
-                                <div id="dropdownMenu" style="display:none;">
-                                    <div id="itemsContainer">
-                                        <div class="dropdown-item">
-                                            <span class="dropdown-text">Technical Task</span>
-                                            <div class="color-box" style="background-color: red;"></div>
-                                        </div>
-                                        <div class="dropdown-item">
-                                            <span class="dropdown-text">User Story</span>
-                                            <div class="color-box" style="background-color: green;"></div>
-                                        </div>
-                                    </div>
-                                    <button id="addItemButton" type="button" class="dropdown-button">Add Item</button>
-                                </div>
-
-
-
-                            </div>
-                        </div>
-
-                        <div class="p-16px"></div>
-                        <div class="column width100px">
-                            <span>Subtasks</span>
-                            <div class="input-filed">
-                                <input class="click " placeholder="Add new subtask " id="subTaskSelectInput">
-                                <img class="inputAbsolut" onclick="addSubTask()" src="img/plusAddTask.svg ">
-                            </div>
-                            <ul class="subtasks-addet" id="subtasks-addet">
-                            </ul>
-
-
-                        </div>
-                    </div>
-                    <div></div>
-                    <div class="btnBackground">
-                        <button type="button" class="cancel-btn" onclick="resetAllInputs()">Cancel</button>
-                        <div style="padding: 15px;"></div>
-                        <button class="addNewContactButton add-contact-btn" id="add-task-btn">Add Task</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
+    <div w3-include-html="add-tasks-dialog.html" class=""></div>
     <section id="contactPopupByAddTask " class="popupContainer d-none ">
         <div class="addContactPopupBox ">
             <div class="addContactPopupBoxLeft ">
                 <div class="addContactPopupBoxLeftPosition ">
-                    <img class="logoContactPopup " src="./img/join.logo-white.svg ">
+                    <img class="logoContactPopup" src="./img/join.logo-white.svg ">
                     <spline class="addContactPopupBoxLeftHeadline "><b>Add contact</b>
                     </spline>
                     <spline class="addContactPopupBoxLeftText ">Tasks are better with a team!</spline>
@@ -196,7 +74,8 @@
             </div>
         </div>
     </section>
-    <section id="createCategoryPopupByAddTask " class="popupContainer d-none ">
+
+    <!-- <section id="createCategoryPopupByAddTask " class="popupContainer d-none ">
         <div class="addContactPopupBox ">
             <div class="addContactPopupBoxLeft ">
                 <div class="addContactPopupBoxLeftPosition ">
@@ -225,27 +104,10 @@
                     </div>
                 </div>
             </div>
-    </section>
+    </section> -->
     </div>
 
-    <div id="dialog-window" class="d-none">
-        <div id="dialog">
-            <div class="dialog-left">
-                <span>New Subcatigory</span>
-                <img src="img/join.logo-white.svg" alt="">
-            </div>
-            <div class="dialog-right">
-                <input id="subtask-input" style="width:80%" type="text">
-                <div id="color-container">
 
-                </div>
-                <div class="d-flex" style="height: 10%; width: 40%; ">
-                    <button id="close-dialog" class="dropdown-button ">Back</button>
-                    <button id="save-subtask-btn" class="dropdown-button ">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </body>
 

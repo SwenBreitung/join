@@ -31,10 +31,10 @@ function resetPasswort() {
     dialog.innerHTML = loadTemplateResetPasswort();
 }
 
-function loadRegister() {
-    document.getElementById('content-login').add.classList('d-none');
-    document.getElementById('content-register').remove.classList('d-none');
-}
+// function loadRegister() {
+//     document.getElementById('content-login').add.classList('d-none');
+//     document.getElementById('content-register').remove.classList('d-none');
+// }
 
 function closeDialog() {
     loadLogIn();
@@ -48,20 +48,28 @@ function login() {
     if (user) {
         console.log('User found', user);
         try {
+            localStorage.removeItem('userData');
             console.log('Trying to set item:', user);
-            localStorage.setItem('user', JSON.stringify(user));
-            console.log('Just set:', JSON.parse(localStorage.getItem('user')));
+            localStorage.setItem('userData', JSON.stringify(user));
+            console.log('Just set:', JSON.parse(localStorage.getItem('userData')));
             console.log('Item should be set.');
         } catch (e) {
             console.error('An error occurred:', e);
         }
         userId = user.id;
-        window.location.href = "./summery.html";
+        // window.location.href = "./summery.html";
 
     } else {
         loadRedBorderInput();
         loadWarningTextTamplate();
     }
+}
+
+function guastLogin() {
+    let userData = users[0];
+    localStorage.removeItem('userData');
+    localStorage.setItem('userData', JSON.stringify(userData));
+    window.location.href = "./summery.html";
 }
 
 function loadRedBorderInput() {
@@ -130,7 +138,7 @@ function loadTempleteLogIn() {
                 </div>
                 <div class="buttons">
                     <button onclick="login()" type="button" class="btn btn-dark button button-log-in">Log in</button>
-                    <button type="button" class="btn btn-dark button-guest-login">Guest Log in</button>
+                    <button onclick="guastLogin()" type="button" class="btn btn-dark button-guest-login">Guest Log in</button>
                 </div>
             </div>
     `
