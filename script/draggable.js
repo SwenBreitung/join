@@ -48,7 +48,7 @@ async function initializeDraggable() {
         filter: '.dont-taks',
         clone: true,
         animation: 10000,
-        dragClass: 'my-custom-ghost',
+        // dragClass: 'my-custom-ghost',
         onStart: async function(evt) {
             // Diese Funktion wird aufgerufen, nachdem der Drag-and-Drop-Vorgang gestartet wurde
 
@@ -146,12 +146,12 @@ var customDragGhostList = new Sortable(document.getElementById('custom-drag-ghos
     animation: 150
 });
 
-// var customDragGhostList = new Sortable(
-//     document.getElementById("custom-drag-ghost-list"), {
-//         // Just for appearance
-//         animation: 150
-//     }
-// );
+var customDragGhostList = new Sortable(
+    document.getElementById("custom-drag-ghost-list"), {
+        // Just for appearance
+        animation: 150
+    }
+);
 
 
 // function checkForClass() {

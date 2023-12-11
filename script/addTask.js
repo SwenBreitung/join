@@ -5,7 +5,7 @@ let subtaskArry = [];
 let selectedColor;
 let contaktsTask = [];
 let addTasksStatus = 'toDo';
-
+let saveAddTaskTorgle = false;
 
 async function loadInit() {
     await includeHTML();
@@ -59,11 +59,11 @@ function isPriorityActive(priorityNumber) {
 }
 
 
-function activatePriority(id, newImgSrc, priorityNumber) {
+function activatePriority(id, priorityNumber) {
     addMainPrioImg();
     resetBollians();
     activatePriorityBoolean(priorityNumber);
-    changeImage(id, newImgSrc);
+    changeImage(id, priorityNumber);
     changeColor(priorityNumber);
 }
 
@@ -116,9 +116,22 @@ function removeBackgroundColor() {
 }
 
 
-function changeImage(id, newImgSrc) {
+function changeImage(id, priorityNumber) {
+    let img;
+
+
+    if (priorityNumber = 1) {
+        img = 'img/prioUngrentWhite2.svg';
+    }
+    if (priorityNumber = 2) {
+        img = './img/PrioMediumWhite.svg';
+    }
+    if (priorityNumber = 3) {
+        img = './img/PrioLowWhite.svg';
+    }
+
     let imageElement = document.getElementById(id);
-    imageElement.src = newImgSrc;
+    imageElement.src = img;
 }
 
 //---------------------------------------------------
@@ -158,7 +171,11 @@ function selectOption(optionElement) {
 function addSubTask() {
     let taskContent = document.getElementById('subTaskSelectInput').value.trim();
     if (taskContent) {
-        subtaskArry.push(taskContent);
+        let subtaskObj = {
+            name: taskContent,
+            status: false
+        };
+        subtaskArry.push(subtaskObj);
         document.getElementById('subtasks-addet').innerHTML = "";
         loadSubTask();
         document.getElementById('subTaskSelectInput').value = '';
@@ -169,7 +186,7 @@ function addSubTask() {
 function loadSubTask() {
     let newsubTask = document.getElementById('subtasks-addet');
     subtaskArry.forEach(function(subtask, index) {
-        newsubTask.innerHTML += loadSubTaskTemplate(subtask, index);
+        newsubTask.innerHTML += loadSubTaskTemplate(subtask.name, index);
     });
 }
 
@@ -183,7 +200,7 @@ function deleteSubtaskContainer() {
     newsubTask.innerHTML = ''; // Leeren Sie den Container
 
     subtaskArry.forEach(function(subtask, idx) {
-        newsubTask.innerHTML += loadSubTaskTemplate(subtask, idx);
+        newsubTask.innerHTML += loadSubTaskTemplate(subtask.name, idx);
     });
 }
 
@@ -220,13 +237,6 @@ function handleEditSubtaskClick(event) {
         }
     }
 }
-// function handleEditSubtaskClick(targetElementId) {
-//     let targetDiv = document.getElementById(targetElementId); // ID des zu bearbeitenden Elements
-//     if (targetDiv) {
-//         targetDiv.setAttribute('contenteditable', 'true');
-//         targetDiv.focus(); // Fokus auf das Element setzen
-//     }
-// }
 
 
 function initializeDatePicker() {
@@ -263,12 +273,6 @@ function initializeDatePicker() {
 }
 
 
-
-// Prüfen, ob das angeklickte Element der addItemButton ist
-// if (event.target.id === 'addItemButton') {
-//     document.getElementById('dialog-window').classList.remove('d-none');
-//     createColorDivs();
-// }
 function openDialogAndCreateColors() {
     document.getElementById('dialog-window').classList.remove('d-none');
     createColorDivs();
@@ -279,19 +283,7 @@ function closeDialogWindow() {
     document.getElementById('dialog-window').classList.add('d-none');
     toggleDropdown()
 }
-// document.getElementById('dialog').addEventListener('click', function(event) {
-//     event.stopPropagation();
-// });
-// document.getElementById('dialog-window').addEventListener('click', function() {
-//     document.getElementById('dialog-window').classList.add('d-none');
-// });
 
-
-
-// document.getElementById('close-dialog').addEventListener('click', function() {
-//     document.getElementById('dialog-window').classList.add('d-none');
-//     toggleDropdown();
-// });
 
 function closeDialogAndToggleDropdown() {
     if (!event.target.closest('#dialog')) {
@@ -299,11 +291,6 @@ function closeDialogAndToggleDropdown() {
         toggleDropdown();
     }
 }
-
-
-// document.getElementById('dialog').addEventListener('click', function(event) {
-//     event.stopPropagation(); // Verhindert das Hochbubbeln des Events
-// });
 
 
 function colorSelectionHandler(event) {
@@ -339,25 +326,6 @@ function createColorDivs() {
 };
 
 
-// document.getElementById('save-subtask-btn').addEventListener('click', function() {
-//     const subtaskText = document.getElementById('subtask-input').value;
-//     if (subtaskText.trim() === '' || !selectedColor) {
-//         alert('Please provide valid subtask text and select a color');
-//         return;
-//     }
-//     const itemsContainer = document.getElementById('itemsContainer');
-
-//     const newItemHTML = `
-//         <div class="dropdown-item">
-//             <span class="dropdown-text" data-color="${selectedColor}">${subtaskText}</span>
-//             <div class="color-box" style="background-color:${selectedColor};"></div>
-//         </div>
-//     `;
-//     itemsContainer.innerHTML += newItemHTML;
-//     document.getElementById('subtask-input').value = '';
-//     document.getElementById('dialog-window').classList.add('d-none');
-// });
-
 function saveSubtask() {
     const subtaskText = document.getElementById('subtask-input').value;
     if (subtaskText.trim() === '' || !selectedColor) {
@@ -376,6 +344,7 @@ function saveSubtask() {
     document.getElementById('subtask-input').value = '';
     document.getElementById('dialog-window').classList.add('d-none');
 }
+
 
 function renderContacts() {
     const contactsElement = document.getElementById('contactsId');
@@ -422,16 +391,28 @@ function handleCheckboxClickOnBody(event) {
             const parentDiv = targetCheckbox.closest('.d-flex[data-index]');
             const i = parentDiv.getAttribute('data-index'); // Aus der ID das i extrahieren
             console.log(i);
-            const initials = extractInitials(contacts[i].name); // Einen geeigneten Wert einfügen
+            // const initials = extractInitials(contacts[i].name); // Einen geeigneten Wert einfügen
             const contactColor = contacts[i].color; // Einen geeigneten Wert einfügen
 
+            contaktsTask.push({
+                name: contacts[i].name,
+
+                color: contactColor
+            });
             loadContactAddTasksTamplate(initials, i, contactColor);
         } else {
+
             console.log(targetCheckbox.checked);
             const dataIndex = targetCheckbox.id.replace('contactCheckbox_', '');
             console.log(dataIndex);
+
             const elementToRemove = document.querySelector(`.profilbuild[data-index="${dataIndex}"]`);
             if (elementToRemove) elementToRemove.remove();
+
+            const indexInArray = contaktsTask.findIndex(item => item.index === dataIndex);
+            if (indexInArray !== -1) {
+                contaktsTask.splice(indexInArray, 1);
+            }
         }
     }
 }
@@ -460,13 +441,19 @@ function addNewContact() {
 }
 
 function handleAddTaskButtonClick() {
-    saveTask();
-    savetasksDataToBakcend();
-    // window.location.href = 'board.html';
+
+    if (!saveAddTaskTorgle) {
+        saveNewTask();
+        savetasksDataToBakcend();
+        window.location.href = 'board.html';
+    } else {
+        saveOldTask();
+        savetasksDataToBakcend();
+    }
+
 }
 
-
-function saveTask() {
+function saveDataTask() {
     const getValue = id => {
         const element = document.getElementById(id);
         return element ? element.value || "" : "";
@@ -474,7 +461,7 @@ function saveTask() {
     let prio = prioUrgent ? "Urgent" : (prioMedium ? "Medium" : (prioLow ? "Low" : ""));
     let [title, description, date, category] = ['addTitel', 'addDescription', 'datepicker', 'categoryInputV1'].map(getValue);
     let subtaskArry = getAllSubtaskTexts();
-    let contaktsArry = loadContactsArry();
+    let contaktsArry = contaktsTask;
     let newTask = {
         "id": tasks.length + 1,
         "category": category,
@@ -488,14 +475,27 @@ function saveTask() {
         "contacts": contaktsArry,
         "status": addTasksStatus
     };
-    tasks.push(newTask);
-    console.log(tasks);
+    return newTask
+}
+
+function saveOldTask() {
+    let task = saveDataTask();
+    tasks[editArryIndex] = task
+    resetAllInputs();
+}
+
+
+function saveNewTask() {
+    let task = saveDataTask();
+    tasks.push(task);
+
+
     resetAllInputs();
 };
 
 
 function loadContactsArry() {
-    let contact = document.querySelectorAll('.subtask-container');
+    let contact = document.querySelectorAll('.add-contacts-add-tasks');
     let contacts = [];
 
     contact.forEach(contact => {
@@ -510,7 +510,7 @@ function getAllSubtaskTexts() {
     let subtaskTexts = [];
 
     subtasks.forEach(subtask => {
-        subtaskTexts.push([subtask.innerText, false]);
+        subtaskTexts.push({ name: subtask.innerText.trim(), status: false });
     });
     return subtaskTexts;
 }
@@ -527,6 +527,7 @@ function resetAllInputs() {
     resetBollians();
     resetButtonColors();
     resetAllCheckboxes();
+    addMainPrioImg()
 }
 
 

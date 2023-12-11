@@ -1,6 +1,6 @@
 let currentDraggedElement;
-
-
+let editArryIndex;
+let currentIndex
 async function init() {
     await loadAllDataFromBackend();
     await loadUserDataFromLocalStorage();
@@ -98,7 +98,7 @@ async function loadContacts(element, i, id) {
     console.log(`task-users${i}`);
     // contactsImg.innerHTML = '';
     for (let j = 0; j < contacts.length; j++) {
-        let user = contacts[j].name;
+        let user = extractInitials(contacts[j].name);
         let color = contacts[j].color;
         contactsImg.innerHTML += /*html*/ ` 
     <div class="profile-picture horicontal-and-vertical" style="background-color:${color} ">${user}</div>`;
@@ -108,8 +108,6 @@ async function loadContacts(element, i, id) {
 
 async function generateTaskHTML(element, i) {
     console.log(element);
-    // draggable="true" ondragstart="startDragging(${element['id']})"
-
     return /*html*/ `
         <div  onclick="openTask(${i})" id="${i}" class="task draggable">
             <div>
@@ -139,16 +137,11 @@ async function generateTaskHTML(element, i) {
 }
 
 
-// function startDragging(id) {
-//     console.log("Dragging element with ID:", id);
-//     let index = tasks.findIndex(task => task.id == id);
-//     currentDraggedElement = index;
-// }
-
-
 async function openTask(i) {
+
     let index = tasks.findIndex(task => task.id == i);
-    renderTaskdetailHTML(index)
+    currentIndex = index;
+    await renderTaskdetailHTML(index);
 }
 
 
@@ -158,7 +151,6 @@ async function renderTaskdetailHTML(i) {
     let users = tasks[i]['contactAbbreviation'];
     let colors = tasks[i]['contactColor'];
     let assignedUser = '';
-
 
     document.getElementById('popup-container').classList.remove('d-none');
     document.getElementById('popup-container').innerHTML = /*html*/ `
@@ -185,13 +177,14 @@ async function renderTaskdetailHTML(i) {
                         <div> ${tasks[i]['priority']}</div>
                         </div>
                     </div>
-                    <div>
-                        <div  class="margin-bottom10 task-detail-font-color ">
+                    <div class="width-100P">
+                        <div  class="margin-bottom10 task-detail-font-color width-100P">
                             <span>Assigned To:</span>
-                            <div id="AssignedTo" class="d-flex"></div>
+                            <div id="AssignedTo" class="width-100P"></div>
                         </div>
-                        <div class="task-detail-users">     
-                        <!-- ${assignedUser} -->
+
+                        <div class="task-detail-users">       
+                        <!-- ${assignedUser} -->    
                         </div>
                     </div>
                     <div>
@@ -201,7 +194,7 @@ async function renderTaskdetailHTML(i) {
                     </div>
                     <div id="task-detail-subtasks">  
                         <div class="d-flex">
-                            <div id="progressBarContainer" style="width: 100%; background-color: #ddd;">
+                            <div id="progressBarContainer" style="width: 100%; background-color: #ddd; border-radius: 10px;";>
                                 <div id="progressBar" class="progress-bar"></div>     
                             </div>
                             <div id="progressStatus" class="d-flex"></div>
@@ -209,71 +202,101 @@ async function renderTaskdetailHTML(i) {
                     </div> 
                 </div>         
             </div>
-            <div class="task-detail-bottom">
-                <img onclick="deleteTask(${i})" src="img/subTaskDelete.svg" alt="">
-                <img src="img/PenAddTask 1=edit.svg" alt="">
+            <div class="task-detail-bottom ">
+                <div onclick="deleteTask(${i})" class="d-flex cursor-pointer">
+                     <img  src="img/subTaskDelete.svg" alt="">
+                    <span>Delete</span>
+                </div>
+
+            <div onclick="editTask(${i})" class="d-flex cursor-pointer"> 
+                 <img  src="img/PenAddTask 1=edit.svg" alt="">
+                <span>Edit</span>      
+            </div>     
             </div>
-        </div>
-        
+        </div>   
     `;
 
 
     await renderSubtasks(i)
-    await loadContacts(tasks[i], i, "AssignedTo");
+    await loadContactsInfoTamplate(tasks[i], i, "AssignedTo")
+}
+async function loadContactsInfoTamplate(element, i, id) {
+
+    let contactsImg = document.getElementById(id);
+    let contacts = element['contacts']
+    console.log(`task-users${i}`);
+    for (let j = 0; j < contacts.length; j++) {
+        let userInitals = extractInitials(contacts[j].name);
+        let user = contacts[j].name;
+        let color = contacts[j].color;
+        contactsImg.innerHTML += /*html*/ ` 
+        <div class="contact-container">
+            <div class="profile-picture horicontal-and-vertical" style="background-color:${color} ">${userInitals}</div>
+            <div>${user}</div>
+        </div>
+    `;
+    }
 }
 
 
 async function renderSubtasks(i) {
+    const taskDetailSubtasks = document.getElementById('task-detail-subtasks');
+    let subtasksHTML = '';
+
     for (let j = 0; j < tasks[i]['subtasks'].length; j++) {
-        const taskDetailSubtasks = document.getElementById('task-detail-subtasks');
         const element = tasks[i]['subtasks'][j];
-        console.log(element);
-        const label = document.createElement('label');
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.name = 'meineCheckbox';
-        checkbox.id = 'checkbox-' + j; // eindeutige ID für jede Checkbox
-        checkbox.classList.add('meineCheckbox');
-        if (element.status) {
-            checkbox.checked = true;
-        }
-        label.appendChild(checkbox);
+        const checkedAttribute = element.status ? 'checked' : '';
 
-        const div = document.createElement('div');
-        div.textContent = element.name;
-        label.appendChild(div);
-        taskDetailSubtasks.appendChild(label);
+        subtasksHTML += /*html*/ `
 
+            <label style="display: flex;width: 50px;gap: 10px;">
+                <input type="checkbox" name="meineCheckbox" id="checkbox-${j}" class="meineCheckbox" ${checkedAttribute}>
+                <div>${element.name}</div>
+            </label>
+        `;
     }
+
+    taskDetailSubtasks.innerHTML += subtasksHTML;
     loadprogressbar();
 }
+
 
 function loadprogressbar() {
     const checkboxes = document.querySelectorAll('.meineCheckbox');
     const totalCheckboxes = checkboxes.length;
     const checkedCount = document.querySelectorAll('.meineCheckbox:checked').length;
-    const progressBar = document.getElementById('progressBar');
+    const progressBarContainer = document.getElementById('progressBarContainer');
     const progressPercentage = (checkedCount / totalCheckboxes) * 100;
-    progressBar.style.width = progressPercentage + '%';
-    let progressStatus = document.getElementById('progressStatus');
-    // const checkboxes = document.querySelectorAll('.meineCheckbox');
-    // const progressBar = document.getElementById('progressBar');
-    // const totalCheckboxes = checkboxes.length;
-    progressStatus.innerHTML = /*html*/ `
+    progressBarContainer.innerHTML = `      
+                <div id="progressBar" class="progress-bar" style="width:${progressPercentage}%;"></div>      
+        `;
+
+    progressStatus.innerHTML += /*html*/ `
     <div>${totalCheckboxes}</div>
     <div>/</div>
     <div>${checkedCount}</div>
 `
     checkboxes.forEach(checkbox => {
+        let progressBar = document.getElementById('progressBar');
+        let progressStatusTask = document.getElementById(`progressStatus${currentIndex}`);
+        const progressBarTask = document.getElementById(`progressBar${currentIndex}`);
+
         checkbox.addEventListener('change', function() {
             const checkedCount = document.querySelectorAll('.meineCheckbox:checked').length;
             const progressPercentage = (checkedCount / totalCheckboxes) * 100;
             progressBar.style.width = progressPercentage + '%';
+            progressBarTask.style.width = progressPercentage + '%';
+
             progressStatus.innerHTML = /*html*/ `
-            <div>${totalCheckboxes}</div>
-            <div>/</div>
-            <div>${checkedCount}</div>
-        `
+                <div>${checkedCount}</div>
+                <div>/</div>
+                <div>${totalCheckboxes}</div>
+            `
+            progressStatusTask.innerHTML = /*html*/ `
+              <div>${checkedCount}</div>
+              <div>/</div>
+              <div>${totalCheckboxes}</div>
+          `
         });
     });
 
@@ -315,25 +338,91 @@ async function deleteTask(i) {
     window.location.reload();
 }
 
+async function editTask(i) {
+    document.getElementById('popup-container').classList.add('d-none');
+    editArryIndex = i
+    saveAddTaskTorgle = true;
+
+    let contacts = tasks[i].contacts;
+    let priority = tasks[i].priority;
+    let subtasks = tasks[i].subtasks;
+
+    const elementsData = {
+        'addDescription': tasks[i].text,
+        'categorySection': tasks[i].category,
+        'datepicker': tasks[i].date,
+        'addTitel': tasks[i].title,
+
+    };
+
+
+    for (const [elementId, value] of Object.entries(elementsData)) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.value = value;
+        }
+    }
+
+    document.getElementById('add-task-arrow').classList.remove('d-none')
+
+    if (priority == "urgent") {
+        priButtonActivated('prioUrgentIcon', 1)
+    } else if (priority == "medium") {
+        priButtonActivated('prioMediumIcon', 2)
+    } else if (priority == "low") {
+        priButtonActivated('prioLowIcon', 3)
+    }
+
+    let subtasksElement = document.getElementById('subtasks-addet');
+    document.getElementById('subtasks-addet').textContent = "";
+    subtaskArry = subtasks
+    loadSubTask();
+
+    let editContainer = document.getElementById('add-task')
+
+    editContainer.classList.remove('d-none')
+    let heading = document.getElementById('header-add-task')
+
+    heading.innerHTML = /*html*/ `Edit Add Task`
+
+}
+
+function closeEditDialog() {
+    let editContainer = document.getElementById('edit-container')
+    saveAddTaskTorgle = false;
+    editContainer.classList.add('d-none')
+}
 
 function loadAddTaskProgress() {
     addTasksStatus = 'inProgress';
+    laodAddTasksTorgel()
     addTask()
 }
 
 function loadAddTaskdone() {
     addTasksStatus = 'done';
+    laodAddTasksTorgel()
     addTask()
 }
 
 function loadAddTaskToDo() {
     addTasksStatus = 'toDo';
+    laodAddTasksTorgel()
     addTask()
 }
 
 function loadAddTaskAwaitFeedback() {
     addTasksStatus = 'awaitingFeedback';
+    laodAddTasksTorgel()
     addTask()
+}
+
+function laodAddTasksTorgel() {
+    saveAddTaskTorgle = false;
+    let heading = document.getElementById('header-add-task')
+    heading.innerHTML = /*html*/ `
+   Add Task
+    `
 }
 
 function addTask() {
@@ -352,18 +441,29 @@ function closeAddTask() {
 
 async function boardSearch() {
     let searchInput = document.getElementById('searchInput').value.toLowerCase();
-    // clearPokemonContainer();
-    for (let i = 0; i < tasks.length; i++) {
-        let statusName = tasks[i].status;
-        let text = tasks[i].text;
-        let title = tasks[i].title;
-        document.getElementById(statusName).innerHTML = '';
-        if (text.toLowerCase().includes(searchInput) || title.toLowerCase().includes(searchInput)) {
-            const element = tasks[i];
-            document.getElementById(statusName).innerHTML += await generateTaskHTML(element, element['id']);
-            await loadLittleProgressbar(element['id'])
-            await loadPrioImg(element['priority'], element['id'])
-            await loadContacts(element, element['id'], `task-users${element['id']}`);
+    let statusToFind = ['awaitingFeedback', "inProgress", "done", "toDo"];
+
+    for (let y = 0; y < statusToFind.length; y++) {
+        let statusTasks = tasks.filter(task => task.status === statusToFind[y]);
+        document.getElementById(statusToFind[y]).innerHTML = '';
+        let statusContainer = document.getElementById(statusToFind[y]);
+        if (statusTasks == 0) {
+            statusContainer.innerHTML = `<div class="dont-taks">No Task ${statusToFind[y]}</div>`;
+        }
+        for (let i = 0; i < statusTasks.length; i++) {
+            let task = statusTasks[i];
+            let text = task.text.toLowerCase();
+            let title = task.title.toLowerCase();
+
+
+            if (text.includes(searchInput) || title.includes(searchInput)) {
+                document.getElementById(task.status).innerHTML += await generateTaskHTML(task, task['id']);
+                await loadLittleProgressbar(task['id']);
+                await loadPrioImg(task['priority'], task['id']);
+                await loadContacts(task, task['id'], `task-users${task['id']}`);
+            } else {
+                statusContainer.innerHTML = `<div class="dont-taks">No Task ${statusToFind[y]}</div>`;
+            }
 
         }
     }

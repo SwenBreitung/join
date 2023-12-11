@@ -57,7 +57,7 @@ function login() {
             console.error('An error occurred:', e);
         }
         userId = user.id;
-        // window.location.href = "./summery.html";
+        window.location.href = "./summery.html";
 
     } else {
         loadRedBorderInput();

@@ -1,9 +1,14 @@
 <section class="contentAddTask show-scrollbarTaskWindow">
     <div class="d-flex align-items-center justify-content-between">
         <div class="addTaskHeadlineContainer">
-            <h1 class="fw-bold">Add Task</h1>
+            <h1 id="header-add-task" class="fw-bold">Add Task</h1>
         </div>
-        <div class="d-none" id="add-task-arrow" onclick="closeAddTask()"><img src="img/arror-left.svg " alt=""></div>
+
+        <div class="d-none" id="add-task-arrow" onclick="closeAddTask()">
+            <img class="close-arrow cursor-pointer" src="img/arror-left.svg " alt="">
+            <div class="close-x cursor-pointer">X</div>
+        </div>
+
     </div>
 
 
@@ -58,17 +63,17 @@
                     <div class="column marginTop16">
                         <span>Prio</span>
                         <div id="prios-container" class="prios-container ">
-                            <div id="prioUrgentBtn" onclick="priButtonActivated('prioUrgentIcon','img/prioUngrentWhite2.svg',1)" class="prio-btn button">
+                            <div id="prioUrgentBtn" onclick="priButtonActivated('prioUrgentIcon',1)" class="prio-btn button">
                                 <div>Urgent</div>
                                 <img id="prioUrgentIcon" class="prioBtnIcons " src="./img/prioUrgent.svg">
                             </div>
 
-                            <div id="prioMediumBtn" class="prio-btn button" onclick="priButtonActivated('prioMediumIcon','./img/PrioMediumWhite.svg',2)">
+                            <div id="prioMediumBtn" class="prio-btn button" onclick="priButtonActivated('prioMediumIcon',2)">
                                 <div>Medium</div>
                                 <img id="prioMediumIcon" class="prioBtnIcons" src="./img/prioMedium.svg">
                             </div>
 
-                            <div id="prioLowBtn" class="prio-btn button" onclick="priButtonActivated('prioLowIcon','./img/PrioLowWhite.svg',3)">
+                            <div id="prioLowBtn" class="prio-btn button" onclick="priButtonActivated('prioLowIcon',3)">
                                 <div>Low</div>
                                 <img id="prioLowIcon" class="prioBtnIcons" src="./img/prioLow.svg">
                             </div>

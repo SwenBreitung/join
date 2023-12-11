@@ -14,8 +14,9 @@ body {
 
 .progress-bar {
     border-radius: 10px;
+    height: 100% !important;
     width: 0%;
-    height: 20px;
+    /* height: 20px; */
     background-color: var(--main-color) !important;
 }
 
@@ -493,34 +494,17 @@ h3 {
     background-color: white;
 }
 
-.mirror-filter {
-    filter: grayscale(100%);
+.close-x {
+    display: block;
+    padding: 15px;
+    font-weight: bold;
 }
 
-
-/* #custom-drag-ghost-list li {
-    background-color: #d0bcd5;
-    border: 1px solid #a499b3;
-} */
-
-
-/* Custom ghost in this list */
-
-
-/* #custom-drag-ghost-list .sortable-drag {
-    background-color: black;
-    transform: rotate(200deg) !important;
-    /* transform-origin: 50% 50%; */
-
-
-/* } */
-
-
-/* .my-custom-ghost {
-    background-color: black;
-    transform: rotate(200deg) !important;
-     transform-origin: 50% 50%; 
-} */
+.close-arrow {
+    display: none;
+    padding: 15px;
+    font-weight: bold;
+}
 
 
 /* Custom drag ghost list */
@@ -538,11 +522,11 @@ h3 {
     transform: rotate(300deg);
 }
 
-
-/* .sortable-drag {
-    background-color: black;
-    transform: rotate(200deg) !important;
-} */
+.contact-container {
+    display: flex;
+    width: 100%;
+    gap: 24px;
+}
 
 @media(max-width:1000px) {
     .board-main-section {
@@ -564,6 +548,12 @@ h3 {
 }
 
 @media(max-width:700px) {
+    .close-x {
+        display: none;
+    }
+    .close-arrow {
+        display: flex;
+    }
     .task-detail-content {
         display: flex;
         flex-direction: column;
