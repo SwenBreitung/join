@@ -24,9 +24,11 @@
 
 /* ? */
 
+
+/* 
 .headImgLeft {
     display: none;
-}
+} */
 
 .headBoxRight {
     display: flex;
@@ -108,37 +110,6 @@
 
 
 /*------------------------------------------------*/
-
-
-/*???*/
-
-.police {
-    display: flex;
-    justify-content: center;
-}
-
-
-/*???*/
-
-
-/*???*/
-
-.header-title {
-    display: flex;
-    display: flex;
-    align-items: center;
-}
-
-
-/*???*/
-
-#header-summary {
-    margin-top: 57px;
-    display: flex;
-    align-items: center;
-    margin-bottom: 57px;
-    justify-content: space-evenly;
-}
 
 .blue-background {
     background-color: var(--active-sildebar-page)
@@ -236,40 +207,5 @@
     }
     .police {
         display: none;
-    }
-    /* header {
-        display: none;
-    } */
-    /* ? */
-    #header-summary {
-        margin-bottom: 0px;
-        flex-direction: column;
-        flex-wrap: wrap;
-        align-content: space-between;
-        align-items: flex-start;
-        margin-left: 9px;
-        margin-top: 0;
-    }
-    /* ? */
-    /* ? */
-    .header-mobile-containe {
-        flex: 1;
-        flex-direction: column-reverse;
-        justify-content: flex-end;
-        height: 0px;
-        padding-top: 10px;
-    }
-    /* ? */
-    .header-mobile {
-        display: flex;
-        background-color: var(--main-color);
-        width: 100%;
-    }
-    .sidebar-mobile {
-        display: flex;
-    }
-    .sidebar-mobile {
-        display: flex;
-        width: 100%;
     }
 }

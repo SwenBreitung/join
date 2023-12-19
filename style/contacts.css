@@ -9,6 +9,7 @@ body {
     width: calc(100vw);
     display: flex;
     font-family: 'Inter' !important;
+    overflow: hidden;
 }
 
 .contacts-container {
@@ -18,10 +19,9 @@ body {
 .content-contact {
     margin-left: 200px;
     margin-top: 56px;
-    padding: 16px 0;
+    padding: 16px 0 0 0;
     width: 100%;
     display: flex;
-    /* height: 100%; */
 }
 
 .info-panel-arrow {
@@ -85,16 +85,6 @@ body {
 }
 
 #contactsId {
-    /* overflow: scroll;
-     display: inline-block;
-     height: 100%; */
-    /* overflow-y: scroll; */
-    /* Vertikaler Scrollbalken */
-    /* overflow-x: hidden; */
-    /* Verhindert horizontalen Scrollbalken */
-    /* display: block; */
-    /* max-height: [IhreHöhe]px;  */
-    /* Ersetzen Sie [IhreHöhe] durch einen festen Wert oder einen Wert in vh */
     height: 100%;
 }
 
@@ -123,6 +113,22 @@ body {
 .contact-info {
     margin-left: 30px;
     margin-top: 20px;
+    transition: transform 0.5s ease-in-out;
+    transform: translateX(100%);
+}
+
+.contact-info.active {
+    transform: translateX(0);
+}
+
+.contact-info.slide-in {
+    transform: translateX(0);
+    transition: transform 0.5s ease-in-out;
+}
+
+.contact-info.slide-out {
+    transform: translateX(100%);
+    transition: transform 0.5s ease-in-out;
 }
 
 .contact-information {
@@ -176,16 +182,21 @@ span {
     cursor: pointer;
     border-radius: 10px;
     display: flex;
+    align-items: center;
+}
+
+.contactsInfo:hover {
+    background-color: var(--border-grey);
 }
 
 .contacts-section {
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 26px;
+    padding-right: 8px;
     overflow-y: scroll;
     overflow-x: hidden;
     display: block;
     height: 100%;
-    width: 180px !important;
+    width: 170px !important;
 }
 
 .contacts-section:hover {
@@ -257,12 +268,6 @@ input:focus {
     outline: 1px solid #29ABE2 !important;
 }
 
-
-/* textarea:focus,
-input:focus {
-    outline: 1px solid #29ABE2;
-}*/
-
 .btn-contact-add {
     width: 100%;
     margin-top: 80px;
@@ -327,6 +332,22 @@ input:focus {
     align-items: center;
 }
 
+.defaultStyle {
+    background-color: var(--main-color);
+}
+
+.highlightedProfilePicture {
+    border: 1px solid var(--text-white);
+}
+
+.customTextColor {
+    color: var(--text-white);
+}
+
+.partingLine {
+    padding: 3px;
+}
+
 @media (max-width:800px) {
     .contact-name {
         font-size: 38px;
@@ -353,7 +374,6 @@ input:focus {
     }
     .content-contact {
         margin-left: 0;
-        margin-bottom: 60px;
         height: auto;
         padding: 0;
     }
@@ -373,7 +393,7 @@ input:focus {
         left: 0;
         z-index: 998;
         background-color: white;
-        bottom: 58px;
+        bottom: 0;
     }
     .contacts-line {
         height: 4px;
@@ -388,10 +408,6 @@ input:focus {
     .subtitle-row {
         display: flex;
         flex-direction: column-reverse;
-        /* align-content: flex-start; */
-        /* flex-wrap: wrap; */
-        /* width: 100%; */
-        /* justify-content: space-evenly; */
         align-items: flex-start;
     }
     .contact-add-input-picture {
@@ -409,7 +425,6 @@ input:focus {
         border: 2px solid #000;
         border-radius: 50%;
         padding: 30px;
-        /* font-size: 20px; */
         width: 20px;
         height: 20px;
         text-align: center;

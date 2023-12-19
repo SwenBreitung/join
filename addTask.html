@@ -6,16 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AddTask</title>
 
-
+    <script defer src="script/addTasksMenu.js"></script>
+    <script defer src="script/addTaskDialog.js"></script>
     <script defer src="templates/templates.js"></script>
     <script defer src="./script/storge.js"></script>
     <script defer src="./script/script.js"></script>
-    <!-- <script defer src="./script/contacts.js"></script> -->
-
+    <script defer src="script/addTaskTemplate.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
-
     <script defer src="./script/addTask.js"></script>
-    <!-- <script defer src="./script/addTaskMenu.js"></script> -->
+
     <link rel="stylesheet" href="style/fonts.css">
     <link rel="shortcut icon" href="img/Logo for Favicon construction.svg" type="image/x-icon">
     <link rel="stylesheet" href="style/style.css">
@@ -32,8 +31,8 @@
     <div w3-include-html="templates/header.html"></div>
     <div w3-include-html="templates/header-menu.html" id="menu-header-container" class="menu-header-container d-none"></div>
     <div w3-include-html="add-tasks-menu.html" class="main-section"></div>
-
     <div w3-include-html="add-tasks-dialog.html" class=""></div>
+
     <section id="contactPopupByAddTask " class="popupContainer d-none ">
         <div class="addContactPopupBox ">
             <div class="addContactPopupBoxLeft ">
@@ -74,41 +73,6 @@
             </div>
         </div>
     </section>
-
-    <!-- <section id="createCategoryPopupByAddTask " class="popupContainer d-none ">
-        <div class="addContactPopupBox ">
-            <div class="addContactPopupBoxLeft ">
-                <div class="addContactPopupBoxLeftPosition ">
-                    <img class="logoContactPopup " src="./img/join.logo-white.svg ">
-                    <spline class="addContactPopupBoxLeftHeadline "><b>Add new category</b>
-                    </spline>
-                    <spline class="addContactPopupBoxLeftText ">Tasks are better with a category!</spline>
-                    <div class="blueUnderline "></div>
-                </div>
-            </div>
-            <div class="addContactPopupBoxRight ">
-                <div class="addContactPopupBoxRightImgPosition ">
-                    <img class="addCategoryPopupBoxRightImg " src="./img/addTaskCategory.svg ">
-                </div>
-                <div class="addContactPopupBoxRightFormPosition ">
-                    <div class="custom-select ">
-                        <input id="createCategoryInput " placeholder="New category name... " type="text ">
-                        <div class="colorSettingBox " id="colorSettingBox ">
-                        </div>
-                        <div class="addContactPopupBoxRightBtnPosition ">
-                            <button onclick="stopCreateCategory() " class="clearBtn ">Cancel<img class="clearImg "
-                                        src="./img/crossAddTask.svg " alt=" "></button>
-                            <button onclick="confirmCreateCategory() " class="createBtn blueBtn ">Create category<img
-                                        class="createImg " src="./img/check.svg "></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </section> -->
-    </div>
-
-
-
 </body>
 
 </html>

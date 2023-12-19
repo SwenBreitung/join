@@ -1,417 +1,277 @@
-let prioUrgent = false;
-let prioMedium = false;
-let prioLow = false;
-let subtaskArry = [];
+let subtasks = [];
 let selectedColor;
-let contaktsTask = [];
+let contactsTask = [];
 let addTasksStatus = 'toDo';
 let saveAddTaskTorgle = false;
+let currentPriority = 'medium';
+const actionMappings = {
+    '#assignTo': handleContactDropdownTriggerClick,
+    '#contacts-container span': handleDropdownOptionClick,
+    // 'input[type="checkbox"][id^="contactCheckbox_"]': handleCheckboxClick,
+    '#categoryAreaV1': handleDropdownTriggerClick
+};
 
+
+/**
+ * Initializes the application by loading various components and data.
+ * Performs a series of asynchronous operations to load necessary data and UI components.
+ * 
+ * @async
+ */
 async function loadInit() {
     await includeHTML();
     await loadAllDataFromBackend();
     await loadUserDataFromLocalStorage();
-    renderContacts();
+    renderContacts(contacts);
     initializeDatePicker();
     await loadHeadImg()
     highlightCurrentPageInHeader('add-task-sidebar');
+    activatePriority('prioMediumIcon', 2)
 }
 
 
-async function loadAllDataFromBackend() {
-    await loadTasksFromBackend();
-    await loadContactsFromBackend();
+document.body.addEventListener('click', handleGeneralClick);
+document.body.addEventListener('click', handleEditSubtaskClick);
+
+
+/**
+ * Saves the modifications made to an existing task.
+ * This function captures the current state of the task, updates it in the global tasks array, and then resets all input fields.
+ *
+ */
+function saveOldTask() {
+    let task = saveDataTask(tasks[currentIndex].id, tasks[currentIndex].status);
+    tasks[currentIndex] = task;
+    resetAllInputs();
 }
 
 
-function priButtonActivated(id, newImgSrc, priorityNumber) {
-    if (!isPriorityActive(priorityNumber)) {
-        activatePriority(id, newImgSrc, priorityNumber);
-    } else {
-        resetBollians();
-        resetButtonColors();
-        addMainPrioImg();
+/**
+ * Creates and saves a new task.
+ * This function captures the current state of a new task, adds it to the global tasks array, and then clears all input fields.
+ *
+ */
+function saveNewTask() {
+    let task = saveDataTask(tasks.length + 1, addTasksStatus);
+    tasks.push(task);
+    resetAllInputs();
+};
+
+
+/**
+ * Handles general click events within the document.
+ * This function determines the appropriate action based on the clicked element.
+ * It checks if the clicked element or its ancestor matches a specific selector,
+ * and then executes the corresponding action if a match is found.
+ * It also manages the closing of dropdown menus if clicked outside of their elements.
+ *
+ * @param {Event} event - The click event triggered by the user.
+ */
+function handleGeneralClick(event) {
+    for (const selector in actionMappings) {
+        if (event.target.matches('#dropdownMenu span')) {
+            handleDropdownOptionClick(event.target);
+        }
+        if (event.target.matches(selector) || event.target.closest(selector)) {
+            const clickedOnDataElement = event.target.closest('[data-index]');
+            if (clickedOnDataElement) {
+                return;
+            }
+            actionMappings[selector](event);
+            return;
+        }
     }
+    closeDropdownIfClickedOutside(event);
+    closeDropdownIfClickedOutsideContacts(event);
 }
 
 
-function resetButtonColors() {
-    let buttons = document.querySelectorAll('.button');
-    buttons.forEach(button => {
-        button.style.backgroundColor = '';
-        button.style.backgroundColor = '';
-        button.style.backgroundColor = '';
-    });
+/**
+ * Handles the click event on a dropdown option.
+ * This function delegates the action to `selectOption`, which processes the selection of the option.
+ *
+ * @param {Element} optionElement - The DOM element of the clicked dropdown option.
+ */
+function handleDropdownOptionClick(optionElement) {
+    selectOption(optionElement);
 }
 
 
-function isPriorityActive(priorityNumber) {
-    switch (priorityNumber) {
-        case 1:
-            return prioLow;
-        case 2:
-            return prioMedium;
-        case 3:
-            return prioUrgent;
-        default:
-            return false;
-    }
+/**
+ * Handles the click event for the contact dropdown trigger.
+ * This function is responsible for toggling the visibility of the contact dropdown menu.
+ * It calls the `toggleContactDropdown` function which handles the actual show/hide logic.
+ */
+function handleContactDropdownTriggerClick() {
+    toggleContactDropdown();
 }
 
 
-function activatePriority(id, priorityNumber) {
-    addMainPrioImg();
-    resetBollians();
-    activatePriorityBoolean(priorityNumber);
-    changeImage(id, priorityNumber);
-    changeColor(priorityNumber);
-}
-
-
-function activatePriorityBoolean(priorityNumber) {
-    switch (priorityNumber) {
-        case 1:
-            prioLow = true;
-            break;
-        case 2:
-            prioMedium = true;
-            break;
-        case 3:
-            prioUrgent = true;
-            break;
-    }
-}
-
-
-function resetBollians() {
-    prioUrgent = false;
-    prioMedium = false;
-    prioLow = false;
-}
-
-
-function changeColor(priorityNumber) {
-    resetButtonColors();
-    if (priorityNumber === 1) {
-        document.getElementById('prioUrgentBtn').style.backgroundColor = 'red';
-    } else if (priorityNumber === 2) {
-        document.getElementById('prioMediumBtn').style.backgroundColor = 'orange';
-    } else if (priorityNumber === 3) {
-        document.getElementById('prioLowBtn').style.backgroundColor = 'green';
-    }
-}
-
-
-function addMainPrioImg() {
-    document.getElementById('prioLowIcon').src = './img/prioLow.svg';
-    document.getElementById('prioMediumIcon').src = './img/prioMedium.svg';
-    document.getElementById('prioUrgentIcon').src = './img/prioUrgent.svg';
-}
-
-
-function removeBackgroundColor() {
-    document.getElementById('prioUrgentBtn').style.backgroundColor = '';
-    document.getElementById('prioMediumBtn').style.backgroundColor = '';
-    document.getElementById('prioLowBtn').style.backgroundColor = '';
-}
-
-
-function changeImage(id, priorityNumber) {
-    let img;
-
-
-    if (priorityNumber = 1) {
-        img = 'img/prioUngrentWhite2.svg';
-    }
-    if (priorityNumber = 2) {
-        img = './img/PrioMediumWhite.svg';
-    }
-    if (priorityNumber = 3) {
-        img = './img/PrioLowWhite.svg';
-    }
-
-    let imageElement = document.getElementById(id);
-    imageElement.src = img;
-}
-
-//---------------------------------------------------
-
-document.body.addEventListener('click', function(event) {
-    document.getElementById('dropdownTrigger').addEventListener('click', toggleDropdown);
-    document.querySelectorAll('#dropdownMenu span').forEach(option => {
-        option.addEventListener('click', function() {
-            selectOption(this);
-        });
-    });
-});
-
-
+/**
+ * Toggles the visibility of the dropdown menu.
+ * This function retrieves the dropdown menu element and switches its display style
+ * between 'flex' and 'none', effectively showing or hiding the dropdown menu.
+ */
 function toggleDropdown() {
     const dropdownMenu = document.getElementById('dropdownMenu');
     dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
 }
 
 
-document.body.addEventListener('click', function(event) {
-    // Prüfen, ob das angeklickte Element oder ein übergeordnetes Element das 'dropdownMenu' ist
-    let dropdownMenu = event.target.closest('#dropdownMenu');
-    if (dropdownMenu && event.target.tagName === 'SPAN') {
-        selectOption(event.target);
-    }
-});
+/**
+ * Toggles the visibility of the contact dropdown menu.
+ * This function accesses the contact dropdown menu element and alternates its display style
+ * between 'flex' and 'none'. This change makes the dropdown menu visible or hidden.
+ */
+function toggleContactDropdown() {
+    const dropdownMenu = document.getElementById('contacts-container');
+    dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
+}
 
 
-function selectOption(optionElement) {
+/**
+ * Handles the click event on a dropdown option for contact selection.
+ * This function captures the event object and passes it to the `selectContactOption` function
+ * which handles the specific logic for selecting a contact based on the clicked option.
+ *
+ * @param {Event} event - The click event object associated with the selection of a dropdown option.
+ */
+function handleDropdownOptionClick(event) {
+    const optionElement = event;
+    selectContactOption(optionElement);
+}
+
+
+/**
+ * Selects a contact option from the dropdown menu and updates the input field value.
+ * This function sets the value of a specified input field to the text content of the 
+ * selected option element. It also hides the dropdown menu after the selection.
+ *
+ * @param {Element} optionElement - The DOM element of the selected option from the dropdown menu.
+ */
+function selectContactOption(optionElement) {
+    const dropdownMenu = document.getElementById('contacts-container');
     document.getElementById('categoryInputV1').value = optionElement.textContent;
-    document.getElementById('dropdownMenu').style.display = 'none';
-}
-//--------------------------------------------------
-
-
-function addSubTask() {
-    let taskContent = document.getElementById('subTaskSelectInput').value.trim();
-    if (taskContent) {
-        let subtaskObj = {
-            name: taskContent,
-            status: false
-        };
-        subtaskArry.push(subtaskObj);
-        document.getElementById('subtasks-addet').innerHTML = "";
-        loadSubTask();
-        document.getElementById('subTaskSelectInput').value = '';
-    }
+    dropdownMenu.style.display = 'none';
 }
 
 
-function loadSubTask() {
-    let newsubTask = document.getElementById('subtasks-addet');
-    subtaskArry.forEach(function(subtask, index) {
-        newsubTask.innerHTML += loadSubTaskTemplate(subtask.name, index);
-    });
-}
 
-function deleteSubtaskContainer() {
-    let target = event.target.getAttribute('data-target');
-    let index = parseInt(target.replace('subtask-container', ''));
+function handleCheckboxClick(event) {
 
-    subtaskArry.splice(index, 1);
-
-    let newsubTask = document.getElementById('subtasks-addet'); // Ersetzen Sie 'your-container-id' durch die tatsächliche ID Ihres Containers
-    newsubTask.innerHTML = ''; // Leeren Sie den Container
-
-    subtaskArry.forEach(function(subtask, idx) {
-        newsubTask.innerHTML += loadSubTaskTemplate(subtask.name, idx);
-    });
 }
 
 
-function loadSubTaskTemplate(subtask, i) {
-    return /*html*/ `  
-    <li style="width: 100%;" id="subtask-container${i}">
-        <div class="subtask-list">
-            <div id="subTask${i}"  class="subtask-container">${subtask} </div>
-                <div class="subtask-listImg" >
-                   <img src="img/PenAddTask 1=edit.svg" alt="" data-target="subTask${i}" id="edit-subtask">
-                   <img src="img/subTaskDelete.svg" alt="" data-target="subtask-container${i}" id="delete-subtask" onclick="deleteSubtaskContainer(event)">
-                </div>
-            </div>
-         </div>
-    </li>
-    `;
-}
 
-
-document.body.addEventListener('click', handleEditSubtaskClick);
-
-function handleEditSubtaskClick(event) {
-    // Überprüfen, ob das geklickte Element (oder ein Elternteil) die ID "edit-subtask" hat
-    let targetElement = event.target.closest('#edit-subtask');
-
-    if (targetElement) {
-        let targetId = targetElement.getAttribute('data-target');
-        let targetDiv = document.getElementById(targetId); // Hier holen Sie das tatsächliche DOM-Element
-
-        if (targetDiv) {
-            targetDiv.setAttribute('contenteditable', 'true');
-            targetDiv.focus(); // Fokus auf das Element setzen
-        }
-    }
-}
-
-
-function initializeDatePicker() {
-    var dateInput = document.getElementById('datepicker');
-    if (!dateInput) return; // Sicherstellen, dass das Element existiert
-
-    var picker = new Pikaday({
-        field: dateInput,
-        position: 'top right',
-        format: 'DD/MM/YYYY',
-        minDate: new Date(),
-        onSelect: function(date) {
-            const formattedDate = [
-                date.getDate().toString().padStart(2, '0'),
-                (date.getMonth() + 1).toString().padStart(2, '0'),
-                date.getFullYear()
-            ].join('/');
-            dateInput.value = formattedDate;
-        }
-    });
-
-    dateInput.addEventListener('focus', function() {
-        if (!this.value) {
-            const today = new Date();
-            const formattedDate = [
-                today.getDate().toString().padStart(2, '0'),
-                (today.getMonth() + 1).toString().padStart(2, '0'),
-                today.getFullYear()
-            ].join('/');
-            this.value = formattedDate;
-            picker.show();
-        }
-    });
-}
-
-
-function openDialogAndCreateColors() {
-    document.getElementById('dialog-window').classList.remove('d-none');
-    createColorDivs();
-}
-
-
-function closeDialogWindow() {
-    document.getElementById('dialog-window').classList.add('d-none');
-    toggleDropdown()
-}
-
-
-function closeDialogAndToggleDropdown() {
-    if (!event.target.closest('#dialog')) {
-        document.getElementById('dialog-window').classList.add('d-none');
+function closeDropdownIfClickedOutside(event) {
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    if (dropdownMenu && dropdownMenu.style.display === 'flex' && !event.target.closest('#dropdownMenu') && !event.target.closest('#itemsContainer')) {
         toggleDropdown();
     }
 }
 
+function closeDropdownIfClickedOutsideContacts(event) {
+    const contactsMenu = document.getElementById('contacts-container');
+    const clickedOnDataIndex = event.target.closest('[data-index]');
 
-function colorSelectionHandler(event) {
-    selectedColor = event.target.style.backgroundColor;
-    console.log(`Color selected: ${selectedColor}`);
-    resetBorders();
-    event.target.style.border = '1px solid black';
-}
-
-
-function resetBorders() {
-    for (let i = 0; i < 20; i++) {
-        const colorDiv = document.getElementById(`color-${i}`);
-        if (colorDiv) {
-            colorDiv.style.border = '';
-        }
+    if (contactsMenu && contactsMenu.style.display === 'flex' &&
+        !event.target.closest('#contacts-container') && !clickedOnDataIndex) {
+        toggleContactDropdown();
     }
 }
 
 
-function createColorDivs() {
-    const container = document.getElementById('color-container'); // Angenommen, es gibt ein Element mit der ID 'color-container'
-    container.innerHTML = ""
-    colorArray.forEach((color, index) => {
-        const div = document.createElement('div');
-        div.style.backgroundColor = color;
-        div.className = "color-box";
-        div.id = `color-${index}`;
-
-        div.addEventListener('click', colorSelectionHandler);
-        container.appendChild(div);
-    })
-};
-
-
-function saveSubtask() {
-    const subtaskText = document.getElementById('subtask-input').value;
-    if (subtaskText.trim() === '' || !selectedColor) {
-        alert('Please provide valid subtask text and select a color');
-        return;
-    }
-    const itemsContainer = document.getElementById('itemsContainer');
-
-    const newItemHTML = `
-        <div class="dropdown-item">
-            <span class="dropdown-text" data-color="${selectedColor}">${subtaskText}</span>
-            <div class="color-box" style="background-color:${selectedColor};"></div>
-        </div>
-    `;
-    itemsContainer.innerHTML += newItemHTML;
-    document.getElementById('subtask-input').value = '';
-    document.getElementById('dialog-window').classList.add('d-none');
+/**
+ * Resets the state of all checkbox inputs to unchecked.
+ * This function selects all input elements of type checkbox on the page and sets their 'checked' property to false.
+ *
+ */
+function resetAllCheckboxes() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
 }
 
-
-function renderContacts() {
-    const contactsElement = document.getElementById('contactsId');
-
-    for (let i = 0; i < contacts.length; i++) {
-        let contact = contacts[i];
-        let initalien = extractInitials(contact.name)
-        let contactName = contact.name;
-        let contactColor = contact.color;
-        contactsElement.innerHTML += loadContactHTML(initalien, contactName, contactColor, i)
-    }
-}
-
-
-function openCloseContactsMenu() {
-    const contactsContainer = document.getElementById('contacts-container');
-    const contactsOnclicMenu = document.getElementById('assignedToInputContainer');
-    if (contactsContainer.classList.contains('d-none')) {
-        contactsContainer.classList.remove('d-none');
-        contactsOnclicMenu.classList.add('focus');
-    } else {
-        contactsContainer.classList.add('d-none');
-        contactsOnclicMenu.classList.remove('focus');
-    }
-}
-
-
-function loadContactAddTasksTamplate(initalien, i, contactColor) {
-    let contact = document.getElementById('add-contacts-add-tasks')
-    contact.innerHTML += /*html*/ `
-      <div class="profilbuild" data-index="${i}" style="background-color: ${contactColor}">${initalien}</div>
-`
-}
+//Event Handling
 
 
 document.body.addEventListener('click', handleCheckboxClickOnBody);
 
+
+/**
+ * Handles click events on checkboxes within the body of the page, specifically for 'contactCheckbox_' IDs.
+ * This function manages the state of checkboxes related to contacts. When a checkbox is checked, it adds the contact 
+ * to the contactsTask array and loads a template for the added task. If unchecked, it removes the contact from the display 
+ * and the contactsTask array.
+ *
+ * @param {Event} event - The click event object from the event listener.
+ */
 function handleCheckboxClickOnBody(event) {
     let targetCheckbox = event.target.closest('input[type="checkbox"]');
 
-    if (targetCheckbox && targetCheckbox.id.startsWith('contactCheckbox_')) {
-        if (targetCheckbox.checked) {
-            console.log(targetCheckbox.checked);
-            const parentDiv = targetCheckbox.closest('.d-flex[data-index]');
-            const i = parentDiv.getAttribute('data-index'); // Aus der ID das i extrahieren
-            console.log(i);
-            // const initials = extractInitials(contacts[i].name); // Einen geeigneten Wert einfügen
-            const contactColor = contacts[i].color; // Einen geeigneten Wert einfügen
+    if (!targetCheckbox || !targetCheckbox.id.startsWith('contactCheckbox_')) {
+        return;
+    }
 
-            contaktsTask.push({
-                name: contacts[i].name,
+    if (targetCheckbox.checked) {
+        addContact(targetCheckbox);
+    } else {
+        removeContact(targetCheckbox);
+    }
+}
 
-                color: contactColor
-            });
-            loadContactAddTasksTamplate(initials, i, contactColor);
-        } else {
+function addContact(checkbox) {
+    const parentDiv = checkbox.closest('.d-flex[data-index]');
+    const index = parentDiv.getAttribute('data-index');
+    const contactColor = contacts[index].color;
+    let initials = extractInitials(contacts[index].name)
+    contactsTask.push({
+        name: contacts[index].name,
+        color: contactColor,
+    });
+    loadContactAddTasksTamplate(initials, index, contactColor);
+}
 
-            console.log(targetCheckbox.checked);
-            const dataIndex = targetCheckbox.id.replace('contactCheckbox_', '');
-            console.log(dataIndex);
+function removeContact(checkbox) {
+    const dataIndex = checkbox.id.replace('contactCheckbox_', '');
+    const contactIndex = parseInt(dataIndex, 10);
+    const clickedContact = contacts[contactIndex];
+    for (let i = 0; i < contactsTask.length; i++) {
+        if (contactsTask[i].name === clickedContact.name) {
+            contactsTask.splice(i, 1);
+            break;
+        }
+    }
+    const elementToRemove = document.querySelector(`.profilbuild[data-index="${dataIndex}"]`);
+    if (elementToRemove) elementToRemove.remove();
+}
 
-            const elementToRemove = document.querySelector(`.profilbuild[data-index="${dataIndex}"]`);
-            if (elementToRemove) elementToRemove.remove();
 
-            const indexInArray = contaktsTask.findIndex(item => item.index === dataIndex);
-            if (indexInArray !== -1) {
-                contaktsTask.splice(indexInArray, 1);
+
+
+/**
+ * Handles click events for editing subtasks identified by the 'edit-subtask' ID.
+ * This function enables content editing on the target subtask element when clicked. It sets the element to
+ * 'contenteditable', adds focus styling, and focuses the element for immediate editing.
+ *
+ * @param {Event} event - The click event object from the event listener.
+ */
+function handleEditSubtaskClick(event) {
+    let targetElement = event.target.closest('#edit-subtask');
+    if (targetElement) {
+        let targetId = targetElement.getAttribute('data-target');
+        let targetDiv = document.getElementById(targetId);
+        if (targetDiv) {
+            // Prüfen, ob das Element bereits bearbeitet wird
+            if (targetDiv.isContentEditable) {
+
+                targetDiv.setAttribute('contenteditable', 'false');
+                targetDiv.classList.remove('focus');
+            } else {
+                targetDiv.setAttribute('contenteditable', 'true');
+                targetDiv.classList.add('focus');
+                targetDiv.focus();
             }
         }
     }
@@ -419,81 +279,12 @@ function handleCheckboxClickOnBody(event) {
 
 
 
-function loadContactHTML(initalien, contactName, contactColor, i) {
-    return /*html*/ `
-    <div class="d-flex align-items-center justify-content-between" data-index="${i}">
-        <div class="d-flex" >
-            <div class="profilbuild" style="background-color: ${contactColor}">${initalien}</div>
-            <div class="d-flex align-items-center justify-content-between">${contactName}</div>
-        </div>
-        <div class="d-flex align-items-center justify-content-between">
-            <input type="checkbox" id="contactCheckbox_${i}" name="contactCheckbox_${contactName}" />
-            <label for="contactCheckbox_${i}"></label>
-        </div>
-    </div>
-`
-}
-
-
-function addNewContact() {
-    let dialog = document.getElementById('dialog');
-    dialog.remove('d-none');
-}
-
-function handleAddTaskButtonClick() {
-
-    if (!saveAddTaskTorgle) {
-        saveNewTask();
-        savetasksDataToBakcend();
-        window.location.href = 'board.html';
-    } else {
-        saveOldTask();
-        savetasksDataToBakcend();
-    }
-
-}
-
-function saveDataTask() {
-    const getValue = id => {
-        const element = document.getElementById(id);
-        return element ? element.value || "" : "";
-    };
-    let prio = prioUrgent ? "Urgent" : (prioMedium ? "Medium" : (prioLow ? "Low" : ""));
-    let [title, description, date, category] = ['addTitel', 'addDescription', 'datepicker', 'categoryInputV1'].map(getValue);
-    let subtaskArry = getAllSubtaskTexts();
-    let contaktsArry = contaktsTask;
-    let newTask = {
-        "id": tasks.length + 1,
-        "category": category,
-        "colorCategory": "",
-        "title": title,
-        "text": description,
-        "time": "",
-        "date": date,
-        "priority": prio,
-        "subtasks": subtaskArry,
-        "contacts": contaktsArry,
-        "status": addTasksStatus
-    };
-    return newTask
-}
-
-function saveOldTask() {
-    let task = saveDataTask();
-    tasks[editArryIndex] = task
-    resetAllInputs();
-}
-
-
-function saveNewTask() {
-    let task = saveDataTask();
-    tasks.push(task);
-
-
-    resetAllInputs();
-};
-
-
+/**
+ * Collects the inner text of all elements with the class '.add-contacts-add-tasks' and stores it in an array.
+ * This function queries all elements that are involved in adding contacts to tasks and compiles their text content into an array.
+ *
+ * @returns {string[]} An array containing the text content of each '.add-contacts-add-tasks' element.
+ */
 function loadContactsArry() {
     let contact = document.querySelectorAll('.add-contacts-add-tasks');
     let contacts = [];
@@ -502,38 +293,4 @@ function loadContactsArry() {
         contacts.push(contact.innerText);
     });
     return contacts;
-}
-
-
-function getAllSubtaskTexts() {
-    let subtasks = document.querySelectorAll('.subtask-container');
-    let subtaskTexts = [];
-
-    subtasks.forEach(subtask => {
-        subtaskTexts.push({ name: subtask.innerText.trim(), status: false });
-    });
-    return subtaskTexts;
-}
-
-
-function resetAllInputs() {
-    ['addTitel', 'addDescription', 'datepicker', 'categoryInputV1', 'subTaskSelectInput'].forEach(id => {
-        document.getElementById(id).value = "";
-    });
-    document.getElementById('categoryInputV1').value = `Select task category`;
-    document.getElementById('add-contacts-add-tasks').innerHTML = "";
-
-    document.getElementById('subtasks-addet').innerHTML = "";
-    resetBollians();
-    resetButtonColors();
-    resetAllCheckboxes();
-    addMainPrioImg()
-}
-
-
-function resetAllCheckboxes() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach(checkbox => {
-        checkbox.checked = false;
-    });
 }
