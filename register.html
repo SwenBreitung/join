@@ -18,6 +18,7 @@
 </head>
 
 <body onload="init()">
+
     <div>
         <header>
             <div class="logo-container">
@@ -40,7 +41,7 @@
                     </div>
 
                     <div class="input-fields">
-                        <form onsubmit="register(); return false;" action="">
+                        <form method="POST" onsubmit="register();  return false;" action="">
 
                             <div class="input-field">
                                 <input required type="text" placeholder="Name" id="userName">
@@ -54,6 +55,7 @@
                                 <input required type="passwort" placeholder="Passwort" id="password">
                                 <img src="./img/lock.svg" alt="Bild lock" class="input-suffix">
                             </div>
+                            <input type="password" id="password2" placeholder="Passwort bestätigen" required>
                             <div class="checkbox">
                                 <input type="checkbox" name="myCheckbox" id="myCheckbox" value="yes" required>
                                 <label for="myCheckbox">I accept the</label>
@@ -79,5 +81,8 @@
         </div>
     </div>
 </body>
+
+
+
 
 </html>

@@ -1,6 +1,6 @@
-const STORAGE_TOKEN = 'WPFKLL9AMIDPXQR1EISWWODPTCHU7V6AK4EGRIVD';
-const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
-
+// const STORAGE_TOKEN = 'WPFKLL9AMIDPXQR1EISWWODPTCHU7V6AK4EGRIVD';
+// const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
+const STORAGE_URL = 'http://127.0.0.1:8000/'
 let newContact = {};
 
 const colorArray = [
@@ -53,8 +53,8 @@ let tasks = [{
         "priority": "urgent",
         "status": "awaitingFeedback", // Status aktualisiert zu "awaitingFeedback"
         "contacts": [
-            { "name": "Alice", "color": "#FF5733" },
-            { "name": "Bob", "color": "#33FF57" }
+            { "name": "Rebecca Lee", "color": "#FF5733" },
+            { "name": "Sarah Brown", "color": "#33FF57" }
         ],
         "subtasks": [
             { "name": "Sketch design", "status": true },
@@ -69,10 +69,10 @@ let tasks = [{
         "time": "17:30",
         "date": "2023-09-30",
         "priority": "medium",
-        "status": "done", // Status beibehalten als "done"
+        "status": "done",
         "contacts": [
-            { "name": "Charlie", "color": "#5733FF" },
-            { "name": "Dave", "color": "#FFFF33" }
+            { "name": "Brian Garcia", "color": "#5733FF" },
+            { "name": "Jessica Davis", "color": "#FFFF33" }
         ],
         "subtasks": [
             { "name": "Buy milk", "status": true },
@@ -87,10 +87,10 @@ let tasks = [{
         "time": "20:00",
         "date": "2023-09-30",
         "priority": "low",
-        "status": "inProgress", // Status aktualisiert zu "inProgress"
+        "status": "inProgress",
         "contacts": [
-            { "name": "Eve", "color": "#FF33FF" },
-            { "name": "Frank", "color": "#33FFFF" }
+            { "name": "Linda Williams", "color": "#FF33FF" },
+            { "name": "Emily Smith", "color": "#33FFFF" }
         ],
         "subtasks": [
             { "name": "Math assignment", "status": true },
@@ -106,7 +106,7 @@ let tasks = [{
  */
 async function loadAllDataFromBackend() {
     await loadTasksFromBackend();
-    await loadContactsFromBackend();
+    // await loadContactsFromBackend();
 }
 
 
@@ -135,7 +135,8 @@ async function loadTasksFromBackend() {
  */
 async function loadBackendData(key) {
     try {
-        arryData = JSON.parse(await getItem(key));
+        arryData = await getItem(key);
+        console.log(arryData)
         if (key === 'tasks') {
             tasks = arryData;
             resetId(tasks);
@@ -159,7 +160,6 @@ function resetId(tasks) {
     for (let index = 0; index < tasks.length; index++) {
         const task = tasks[index];
         task.id = index;
-        console.log(task.id)
     }
 }
 
@@ -171,12 +171,45 @@ function resetId(tasks) {
  * @param {string} value - The value to set for the item.
  * @returns {Promise} A promise that resolves when the item is successfully set in storage.
  */
+// async function setItem(key, value) {
+//     // stringify
+//     const payload = { key, value, token: STORAGE_TOKEN };
+//     return fetch(STORAGE_URL + key + `/`, { method: 'PATCH', body: JSON(payload) })
+//         .then(res => res.json());
+// }
 async function setItem(key, value) {
-    const payload = { key, value, token: STORAGE_TOKEN };
-    return fetch(STORAGE_URL, { method: 'POST', body: JSON.stringify(payload) })
-        .then(res => res.json());
-}
+    // stringify   
+    const url = `${STORAGE_URL}/${key}/`;
+    console.log(url);
 
+    // Bereiten Sie den Payload vor. Ich gehe davon aus, dass value bereits das ist, was Sie senden möchten.
+    // Wenn value ein Objekt ist, das Sie direkt senden möchten, ist das in Ordnung. Andernfalls müssen Sie möglicherweise value anders strukturieren.
+    const payload = JSON.stringify(value); // Nehmen wir an, value ist das, was Sie senden möchten.
+    console.log("Sending data:", JSON.stringify(value));
+    console.log(tasks, 'tasks');
+    fetch('http://127.0.0.1:8000/tasks/refresh-tasks/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(value)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => console.log('Success:', data))
+        .catch(error => console.error('Error:', error));
+
+
+    // Nehmen wir an, Sie möchten die Antwort als JSON.
+    // let todos = await resp.json();
+    // console.log(todos);
+    // Verwenden Sie 'POST' zum Senden von Daten
+
+}
 
 /**
  * Retrieves an item with the specified key from storage via a GET request.
@@ -184,16 +217,23 @@ async function setItem(key, value) {
  * @param {string} key - The key of the item to retrieve.
  * @returns {Promise} A promise that resolves with the retrieved item's value or rejects with an error.
  */
+// &token=${STORAGE_TOKEN}
 async function getItem(key) {
-    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-    return fetch(url).then(res => res.json()).then(res => {
-        if (res.data) {
-            return res.data.value;
-        }
-        throw `Could not find data with key "${key}".`;
-    }).catch(error => {
-        console.error("Error in fetching data:", error);
-    });
+    const url = `${STORAGE_URL}/${key}/`;
+    console.log(url)
+    let resp = await fetch(url)
+    console.log(resp)
+    todos = await resp.json();
+    console.log(todos, 'todos')
+    return todos
+        // return fetch(url).then(res => res.json()).then(res => {
+        //     if (res.data) {
+        //         return res.data.value;
+        //     }
+        //     throw `Could not find data with key "${key}".`;
+        // }).catch(error => {
+        //     console.error("Error in fetching data:", error);
+        // });
 }
 
 
@@ -209,7 +249,8 @@ async function uploadBackendDatas(key, dataToUpload) {
         if (!dataToUpload) {
             throw new Error('No data to upload');
         }
-        const dataString = JSON.stringify(dataToUpload);
+        let dataString = dataToUpload
+            // const dataString = JSON.stringify(dataToUpload);
         const response = await setItem(key, dataString);
         if (response.error) {
             throw new Error(`Server error: ${response.error}`);

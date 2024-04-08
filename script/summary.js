@@ -176,7 +176,7 @@ function getTimeOfDay() {
     if (currentHour >= 0 && currentHour < 6) {
         return '<span class="time-of-day">Schöne </span><span class="time-of-day">Nacht</span>';
     } else if (currentHour >= 6 && currentHour < 12) {
-        return '<span class="time-of-day">Guten </span> <span class="time-of-day"> Morgen</span>';
+        return '<span class="time-of-day">Guten&nbsp; </span> <span class="time-of-day"> Morgen</span>';
 
     } else if (currentHour >= 12 && currentHour < 18) {
         return '<span class="time-of-day">Guten</span> <span class="time-of-day">Nachmittag</span>';

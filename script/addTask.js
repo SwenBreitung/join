@@ -7,7 +7,6 @@ let currentPriority = 'medium';
 const actionMappings = {
     '#assignTo': handleContactDropdownTriggerClick,
     '#contacts-container span': handleDropdownOptionClick,
-    // 'input[type="checkbox"][id^="contactCheckbox_"]': handleCheckboxClick,
     '#categoryAreaV1': handleDropdownTriggerClick
 };
 
@@ -32,6 +31,7 @@ async function loadInit() {
 
 document.body.addEventListener('click', handleGeneralClick);
 document.body.addEventListener('click', handleEditSubtaskClick);
+document.body.addEventListener('click', handleCheckboxClickOnBody);
 
 
 /**
@@ -156,13 +156,15 @@ function selectContactOption(optionElement) {
 }
 
 
-
-function handleCheckboxClick(event) {
-
-}
-
-
-
+/**
+ * Closes the dropdown menu if a click event occurs outside of it.
+ * This function checks if the dropdown menu is currently visible and, if so,
+ * determines whether the click event target is outside of the dropdown menu
+ * and a specific container (identified by '#itemsContainer'). If the click is outside,
+ * the dropdown menu is toggled to close.
+ *
+ * @param {Event} event - The click event object used to determine the click location.
+ */
 function closeDropdownIfClickedOutside(event) {
     const dropdownMenu = document.getElementById('dropdownMenu');
     if (dropdownMenu && dropdownMenu.style.display === 'flex' && !event.target.closest('#dropdownMenu') && !event.target.closest('#itemsContainer')) {
@@ -170,10 +172,18 @@ function closeDropdownIfClickedOutside(event) {
     }
 }
 
+
+/**
+ * Closes the contacts dropdown menu if a click event occurs outside of it.
+ * This function checks if the contacts dropdown menu is currently visible. If visible, it determines 
+ * whether the click event target is outside of the contacts dropdown menu and not on an element with 
+ * a 'data-index' attribute. If these conditions are met, the contacts dropdown menu is toggled to close.
+ *
+ * @param {Event} event - The click event object used to determine the click location.
+ */
 function closeDropdownIfClickedOutsideContacts(event) {
     const contactsMenu = document.getElementById('contacts-container');
     const clickedOnDataIndex = event.target.closest('[data-index]');
-
     if (contactsMenu && contactsMenu.style.display === 'flex' &&
         !event.target.closest('#contacts-container') && !clickedOnDataIndex) {
         toggleContactDropdown();
@@ -193,11 +203,6 @@ function resetAllCheckboxes() {
     });
 }
 
-//Event Handling
-
-
-document.body.addEventListener('click', handleCheckboxClickOnBody);
-
 
 /**
  * Handles click events on checkboxes within the body of the page, specifically for 'contactCheckbox_' IDs.
@@ -213,7 +218,6 @@ function handleCheckboxClickOnBody(event) {
     if (!targetCheckbox || !targetCheckbox.id.startsWith('contactCheckbox_')) {
         return;
     }
-
     if (targetCheckbox.checked) {
         addContact(targetCheckbox);
     } else {
@@ -248,8 +252,6 @@ function removeContact(checkbox) {
 }
 
 
-
-
 /**
  * Handles click events for editing subtasks identified by the 'edit-subtask' ID.
  * This function enables content editing on the target subtask element when clicked. It sets the element to
@@ -262,21 +264,19 @@ function handleEditSubtaskClick(event) {
     if (targetElement) {
         let targetId = targetElement.getAttribute('data-target');
         let targetDiv = document.getElementById(targetId);
-        if (targetDiv) {
-            // Prüfen, ob das Element bereits bearbeitet wird
-            if (targetDiv.isContentEditable) {
-
-                targetDiv.setAttribute('contenteditable', 'false');
-                targetDiv.classList.remove('focus');
-            } else {
-                targetDiv.setAttribute('contenteditable', 'true');
-                targetDiv.classList.add('focus');
-                targetDiv.focus();
-            }
+        if (!targetDiv) {
+            return;
+        }
+        if (targetDiv.isContentEditable) {
+            targetDiv.setAttribute('contenteditable', 'false');
+            targetDiv.classList.remove('focus');
+        } else {
+            targetDiv.setAttribute('contenteditable', 'true');
+            targetDiv.classList.add('focus');
+            targetDiv.focus();
         }
     }
 }
-
 
 
 /**
@@ -293,4 +293,113 @@ function loadContactsArry() {
         contacts.push(contact.innerText);
     });
     return contacts;
+}
+
+
+//board----------------------------------------------
+
+
+/**
+ * Prepares the addition of a new task by setting the task's status and triggering functions related to task addition.
+ * @param {string} status - The status to be assigned to the new task.
+ */
+function loadAddTask(status) {
+    addTasksStatus = status;
+    laodAddTasksTorgel();
+    addTask();
+}
+
+
+/**
+ * Displays the elements related to adding a new task in the user interface. 
+ * It removes the 'd-none' class from these elements, which is commonly used to hide elements via CSS.
+ */
+function addTask() {
+    document.getElementById('add-task').classList.remove('d-none');
+    document.getElementById('add-task-arrow').classList.remove('d-none')
+}
+
+
+/**
+ * Opens the task detail popup and prepares it for editing the task with
+ * the specified index. It fills the form fields with the task's data,
+ * sets the focus to the description field, disables the save button,
+ * resets the priority select, activates the task's priority,
+ * resets the subtasks container, loads the existing subtasks,
+ * and updates the header to "Edit Add Task".
+ *
+ * @param {number} i The index of the task to be edited.
+ */
+async function editTask(i) {
+    closeWindow('popup-container')
+    saveAddTaskTorgle = true;
+    subtasks = tasks[i].subtasks;
+    task = tasks[i];
+    const elementsData = {
+        'addDescription': task.description,
+        'categoryInputV1': task.category,
+        'datepicker': task.date,
+        'addTitel': task.title,
+    };
+    fillFormFields(elementsData);
+    openDialog('add-task')
+    openDialog('add-task-arrow')
+    resetPriority()
+    activatePriorityForTask(tasks[i].priority)
+    resetContainer('subtasks-addet');
+    loadSubtaskEdit();
+    checkContactsForTaskObjects(tasks[i].contacts);
+    document.getElementById('cancel-btn').classList.add('d-none');
+    document.getElementById('header-add-task').innerHTML = /*html*/ `Edit Task`
+    document.getElementById('add-task-btn').innerHTML = /*html*/ `Save Task`
+}
+
+
+/**
+ * Fills the form fields with the provided data object.
+ *
+ * @param {Object} elementsData The data object containing element IDs and their corresponding values.
+ */
+function fillFormFields(elementsData) {
+    for (const [elementId, value] of Object.entries(elementsData)) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.value = value;
+        }
+    }
+}
+
+
+/**
+ * Activates the specified priority icon and its corresponding level in the
+ * task detail popup based on the task's priority.
+ *
+ * @param {string} priority The priority of the task to be activated.
+ */
+function activatePriorityForTask(priority) {
+    const priorityMappings = {
+        "urgent": { icon: 'prioUrgentIcon', level: 1 },
+        "medium": { icon: 'prioMediumIcon', level: 2 },
+        "low": { icon: 'prioLowIcon', level: 3 }
+    };
+    const prioritySetting = priorityMappings[priority];
+    if (prioritySetting) {
+        activatePriority(prioritySetting.icon, prioritySetting.level);
+    }
+}
+
+
+/**
+ * Loads and displays the subtasks in the HTML.
+ * This function iterates over the 'subtasks' array and constructs HTML for each subtask by calling
+ * 'loadSubTaskTemplate'. It appends the resulting HTML string for each subtask to 'newsubTaskHTML'. 
+ * Once all subtasks are processed, it sets the inner HTML of the element with the ID 'subtasks-addet'
+ * to the accumulated HTML string, effectively rendering the subtasks on the page.
+ */
+function loadSubtaskEdit() {
+    let newsubTaskHTML = '';
+    subtasks.forEach(function(subtask, index) {
+        newsubTaskHTML += loadSubTaskTemplate(subtask.name, index, subtask.status);
+    });
+    document.getElementById('subtasks-addet').innerHTML = newsubTaskHTML;
 }

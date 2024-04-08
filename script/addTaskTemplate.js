@@ -53,8 +53,8 @@ function loadSubTaskTemplate(subtask, i, checkedAttribute) {
         <div class="subtask-list">
                  <div id="subTask${i}"  class="subtask-container">${subtask} </div>    
                 <div class="subtask-listImg" >
-                   <img src="img/PenAddTask 1=edit.svg" alt="" data-target="subTask${i}" id="edit-subtask">
-                   <img src="img/subTaskDelete.svg" alt="" data-target="subtask-container${i}" id="delete-subtask" onclick="deleteSubtaskContainer(event)">
+                   <img class="cursor-pointer" src="img/PenAddTask 1=edit.svg" alt="" data-target="subTask${i}" id="edit-subtask">
+                   <img class="cursor-pointer" src="img/subTaskDelete.svg" alt="" data-target="subtask-container${i}" id="delete-subtask" onclick="deleteSubtaskContainer(event)">
                 </div>
             </div>
          </div>

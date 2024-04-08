@@ -5,9 +5,9 @@ let dialog = document.getElementById('dialog');
  * and loading backend user data. This function is typically called when the application or a particular page is loaded.
  */
 function init() {
-    startAnimation();
+    // startAnimation();
     loadLogIn();
-    loadBackendUsers();
+    // loadBackendUsers();
 }
 
 
@@ -25,11 +25,9 @@ function loadLogIn() {
  * It adds an 'animated' class to enable animations and removes 'd-none' to make elements visible.
  */
 function startAnimation() {
-    if (!document.referrer) {
-        document.querySelector('.join-logo-contain').classList.add('animated');
-        document.querySelector('.join-logo-contain').classList.remove('d-none');
-        document.querySelector('.join-logo').classList.add('animated');
-    }
+    document.querySelector('.join-logo-contain').classList.add('animated');
+    document.querySelector('.join-logo-contain').classList.remove('d-none');
+    document.querySelector('.join-logo').classList.add('animated');
 };
 
 
@@ -66,22 +64,55 @@ function closeDialog() {
  * If no match is found, it triggers visual feedback for incorrect credentials.
  */
 function login() {
-    let email = document.getElementById('email');
-    let passwort = document.getElementById('passwort');
-    let user = users.find(u => u.email === email.value && u.password === passwort.value);
-    if (user) {
-        try {
-            localStorage.removeItem('userData');
-            localStorage.setItem('userData', JSON.stringify(user));
-        } catch (e) {
-            console.error('An error occurred:', e);
-        }
-        userId = user.id;
-        window.location.href = "./summery.html";
-    } else {
-        loadRedBorderInput();
-        loadWarningTextTamplate();
-    }
+    event.preventDefault()
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+    console.log(email, password, 'email', 'passwort')
+    fetch('http://127.0.0.1:8000/login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email, password: password }),
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Login failed');
+
+            }
+
+        })
+        .then(data => {
+            localStorage.setItem('token', data.token); // Speichern des Tokens im LocalStorage
+            window.location.href = "/summery.html";
+            console.log('korrekt')
+        })
+        .catch(error => {
+            console.error('Login error:', error);
+            alert('Falsches Passwort oder ungültige Anmeldeinformationen.'); // Fehlermeldung für den Benutzer
+            // Fügen Sie hier optional weitere Maßnahmen hinzu, z. B. das Zurücksetzen der Eingabefelder
+            return false; // Formular nicht senden
+            // Implementieren Sie hier eine Fehlerbehandlung, z. B. eine Meldung für den Benutzer
+        });
+
+    // let email = document.getElementById('email');
+    // let passwort = document.getElementById('passwort');
+    // let user = users.find(u => u.email === email.value && u.password === passwort.value);
+    // if (user) {
+    //     try {
+    //         localStorage.removeItem('userData');
+    //         localStorage.setItem('userData', JSON.stringify(user));
+    //     } catch (e) {
+    //         console.error('An error occurred:', e);
+    //     }
+    //     userId = user.id;
+    //     window.location.href = "./summery.html";
+    // } else {
+    //     loadRedBorderInput();
+    //     loadWarningTextTamplate();
+    // }
 }
 
 
@@ -90,7 +121,7 @@ function login() {
  * This function automatically logs in the first user from the users array as a guest and redirects to the summary page.
  */
 function guastLogin() {
-    let userData = users[0];
+    // let userData = users[0];
     localStorage.removeItem('userData');
     localStorage.setItem('userData', JSON.stringify(userData));
     window.location.href = "./summery.html";
@@ -141,7 +172,45 @@ function loadTemplateResetPasswort() {
 
 function loadTempleteLogIn() {
     return /*html*/ `
-         <div>
+
+<div>
+    <div class="h1">
+        <h1>Log in</h1>
+        <div class="underline"></div>
+    </div>
+   
+    <form method="POST" onsubmit="login();" action=""  id="login-form">
+        <div class="input-fields">
+            <div id="input-email" class="input-field">
+                <input id="email" type="email" name="email" placeholder="Email" required>
+                <img src="./img/letter.svg" alt="Bild hinten" class="input-suffix">
+            </div>
+            <div class="warning-field">
+                <span id="warning-text-email" class="d-none">
+                    Bitte gebe die passende E-Mailadresse ein.
+                </span>
+            </div>
+            <div id="input-passwort" class="input-field">
+                <input id="password" type="password" name="password" placeholder="Passwort" required>
+                <img src="./img/lock.svg" alt="Bild hinten" class="input-suffix">
+            </div>
+            <div class="warning-field">
+                <span id="warning-text-passwort" class="d-none">
+                    Bitte gebe das passende Passwort ein.
+                </span>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button type="submit" class="btn btn-dark button button-log-in">Log in</button>
+            <button type="button" onclick="guastLogin()" class="btn btn-dark button-guest-login">Guest Log in</button>
+        </div>
+    </form>
+</div>
+
+
+
+         <!-- <div>
                 <div class="h1">
                     <h1>Log in</h1>
                     <div class="underline"></div>
@@ -167,15 +236,10 @@ function loadTempleteLogIn() {
                     </div>
                 </div>
 
-                <div class="checkbox">
-                    <input type="checkbox" name="myCheckbox" id="myCheckbox">
-                    <label for="myCheckbox">Remember me</label>
-                    <a onclick="resetPasswort()" class="checkbox-register" href="javascript:void(0);">Forget my Password</a>
-                </div>
                 <div class="buttons">
                     <button onclick="login()" type="button" class="btn btn-dark button button-log-in">Log in</button>
                     <button onclick="guastLogin()" type="button" class="btn btn-dark button-guest-login">Guest Log in</button>
                 </div>
-            </div>
+            </div> -->
     `
 }

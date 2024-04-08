@@ -1,12 +1,15 @@
 let currentDraggedElement;
 let currentIndex;
 let task;
+
+
 /**
  * Initializes the application by loading data from the backend,
  * local storage, HTML templates, tasks, and setting up event listeners.
  */
 async function init() {
     await loadAllDataFromBackend();
+    console.log(task)
     await loadUserDataFromLocalStorage();
     await includeHTML();
     await loadTasks();
@@ -17,6 +20,11 @@ async function init() {
     initializeDatePicker();
     initializeSearch();
 }
+
+
+document.addEventListener('DOMContentLoaded', initializeSearch);
+document.getElementById('searchInput').addEventListener("focus", changeDivColor);
+document.getElementById('searchInput').addEventListener("blur", revertDivColor);
 
 
 /**
@@ -56,7 +64,7 @@ async function renderTaskdetailHTML(i) {
     popupContainer.innerHTML = renderTaskTemplate(task, i)
     await Promise.all([
         renderSubtasks(i, 'task-detail-subtasks'),
-        generateAllPictureTaskdetail(task, i, "AssignedTo", true)
+        generateAllPictureTaskdetail(task, "AssignedTo", true)
     ]);
 }
 
@@ -70,78 +78,11 @@ async function renderTaskdetailHTML(i) {
  */
 async function deleteTask(i) {
     tasks.splice(i, 1);
-    await setItem('tasks', JSON.stringify(tasks));
+    await setItem('tasks', tasks);
+    // await setItem('tasks', JSON.stringify(tasks));
     closeWindow('popup-container');
     resetId(tasks)
     loadTasks();
-}
-
-
-/**
- * Opens the task detail popup and prepares it for editing the task with
- * the specified index. It fills the form fields with the task's data,
- * sets the focus to the description field, disables the save button,
- * resets the priority select, activates the task's priority,
- * resets the subtasks container, loads the existing subtasks,
- * and updates the header to "Edit Add Task".
- *
- * @param {number} i The index of the task to be edited.
- */
-async function editTask(i) {
-    closeWindow('popup-container')
-    saveAddTaskTorgle = true;
-    subtasks = tasks[i].subtasks;
-    task = tasks[i];
-    const elementsData = {
-        'addDescription': task.description,
-        'categoryInputV1': task.category,
-        'datepicker': task.date,
-        'addTitel': task.title,
-    };
-    fillFormFields(elementsData);
-    openDialog('add-task')
-    openDialog('add-task-arrow')
-    resetPriority()
-    activatePriorityForTask(tasks[i].priority)
-    resetContainer('subtasks-addet');
-    // loadContactsEdit(tasks[i].contacts);
-    loadSubtaskEdit();
-    checkContactsForTaskObjects(tasks[i].contacts);
-    document.getElementById('cancel-btn').classList.add('d-none');
-    document.getElementById('header-add-task').innerHTML = /*html*/ `Edit Task`
-    document.getElementById('add-task-btn').innerHTML = /*html*/ `Save Task`
-}
-
-
-function loadContactsEdit(contacts) {
-
-}
-
-function loadSubtaskEdit() {
-    let newsubTaskHTML = '';
-    subtasks.forEach(function(subtask, index) {
-        newsubTaskHTML += loadSubTaskTemplate(subtask.name, index, subtask.status);
-    });
-    document.getElementById('subtasks-addet').innerHTML = newsubTaskHTML;
-
-}
-/**
- * Activates the specified priority icon and its corresponding level in the
- * task detail popup based on the task's priority.
- *
- * @param {string} priority The priority of the task to be activated.
- */
-function activatePriorityForTask(priority) {
-    const priorityMappings = {
-        "urgent": { icon: 'prioUrgentIcon', level: 1 },
-        "medium": { icon: 'prioMediumIcon', level: 2 },
-        "low": { icon: 'prioLowIcon', level: 3 }
-    };
-
-    const prioritySetting = priorityMappings[priority];
-    if (prioritySetting) {
-        activatePriority(prioritySetting.icon, prioritySetting.level);
-    }
 }
 
 
@@ -160,21 +101,6 @@ function changeDivColor() {
  */
 function revertDivColor() {
     document.getElementById('fake-searchbar').style.borderColor = "#A8A8A8";
-}
-
-
-/**
- * Fills the form fields with the provided data object.
- *
- * @param {Object} elementsData The data object containing element IDs and their corresponding values.
- */
-function fillFormFields(elementsData) {
-    for (const [elementId, value] of Object.entries(elementsData)) {
-        const element = document.getElementById(elementId);
-        if (element) {
-            element.value = value;
-        }
-    }
 }
 
 
@@ -207,7 +133,6 @@ async function loadPrioImg(prio, i) {
 async function loadContacts(element, i, id, includeFullName = false) {
     const contactsImg = document.getElementById(id);
     const contacts = element['contacts'];
-
     let contactsHTML;
     if (contacts.length > 4) {
         contactsHTML = contacts.slice(0, 4).map(contact => {
@@ -224,7 +149,18 @@ async function loadContacts(element, i, id, includeFullName = false) {
     contactsImg.innerHTML = contactsHTML;
 }
 
-function generateAllPictureTaskdetail(element, i, id, includeFullName = false) {
+
+/**
+ * Generates and displays profile pictures (or details) for all contacts associated with a task.
+ * This function takes a task element and generates HTML for the contacts associated with it.
+ * It uses the `generateAllProfile` function to create the HTML based on the contacts array
+ * within the task element. The generated HTML is then inserted into the specified DOM element.
+ *
+ * @param {Object} element - The task element containing contacts information.
+ * @param {string} id - The ID of the DOM element where the contacts HTML will be displayed.
+ * @param {boolean} [includeFullName=false] - Flag to determine if full names should be included in the display.
+ */
+function generateAllPictureTaskdetail(element, id, includeFullName = false) {
     const contactsImg = document.getElementById(id);
     const contacts = element['contacts'];
     let contactsHTML;
@@ -232,12 +168,34 @@ function generateAllPictureTaskdetail(element, i, id, includeFullName = false) {
     contactsImg.innerHTML = contactsHTML;
 }
 
+
+/**
+ * Generates a string of HTML representing the profiles of given contacts.
+ * This function maps over an array of contacts, generating HTML for each contact's profile
+ * using the `generatePofilePicture` function. It then concatenates these HTML strings into a single string.
+ * The inclusion of the full name in the profile can be toggled with the 'includeFullName' parameter.
+ *
+ * @param {Object[]} contacts - An array of contact objects for which profiles need to be generated.
+ * @param {boolean} includeFullName - Determines whether the full name should be included in each profile.
+ * @returns {string} A string of concatenated HTML representing the profiles of the contacts.
+ */
 function generateAllProfile(contacts, includeFullName) {
     return contacts.map(contact => {
         return generatePofilePicture(contact, includeFullName);
     }).join('');
 }
 
+
+/**
+ * Generates HTML for a contact's profile picture and optionally their full name.
+ * This function creates HTML for a contact's profile, displaying their initials on a colored background.
+ * If 'includeFullName' is true, the contact's full name is also included in the HTML.
+ * The initials and the background color are extracted from the contact object.
+ *
+ * @param {Object} contact - The contact object containing the name and color information.
+ * @param {boolean} includeFullName - Flag to determine if the contact's full name should be included in the HTML.
+ * @returns {string} HTML string representing the contact's profile picture and optionally their full name.
+ */
 function generatePofilePicture(contact, includeFullName) {
     const userInitials = extractInitials(contact.name);
     const color = contact.color;
@@ -248,6 +206,7 @@ function generatePofilePicture(contact, includeFullName) {
     return `<div class="contact-container">${contactHTML}</div>`;
 }
 
+
 /**
  * Renders subtasks for a specific task in an HTML element.
  * @param {number} i - The index of the task in the 'tasks' array. It identifies which task's subtasks are to be rendered.
@@ -255,11 +214,9 @@ function generatePofilePicture(contact, includeFullName) {
 async function renderSubtasks(i, containerID) {
     const taskDetailSubtasks = document.getElementById(containerID);
     let subtasksHTML = '';
-
     for (let j = 0; j < tasks[i]['subtasks'].length; j++) {
         const element = tasks[i]['subtasks'][j];
         const checkedAttribute = element.status ? 'checked' : '';
-
         subtasksHTML += /*html*/ `
             <label style="display: flex;width: 100%;gap: 10px;">
                 <input type="checkbox" name="meineCheckbox" id="checkbox-${j}" class="meineCheckbox" ${checkedAttribute}>
@@ -267,12 +224,21 @@ async function renderSubtasks(i, containerID) {
             </label>
         `;
     }
-
     taskDetailSubtasks.innerHTML += subtasksHTML;
     addCheckboxListeners(i);
     updateProgressBar();
 }
 
+
+/**
+ * Adds change event listeners to all checkboxes with a specific class.
+ * This function iterates over all elements with the class 'meineCheckbox' and attaches an event listener to each.
+ * The event listener responds to changes in the checkbox state. When a checkbox state changes, it extracts the 
+ * subtask ID from the checkbox's ID, checks if the checkbox is checked, and then calls functions to update the subtask status 
+ * and progress bars based on this new state.
+ *
+ * @param {number} i - The index or identifier related to the specific task to which these checkboxes belong.
+ */
 function addCheckboxListeners(i) {
     const checkboxes = document.querySelectorAll('.meineCheckbox');
     checkboxes.forEach(checkbox => {
@@ -287,12 +253,23 @@ function addCheckboxListeners(i) {
     });
 }
 
+
+/**
+ * Updates the status of a specific subtask within a task.
+ * This function locates a task by its ID in a global 'tasks' array. If the task and the specified subtask are found,
+ * it updates the 'status' property of the subtask based on the 'isChecked' parameter.
+ *
+ * @param {number} taskId - The unique identifier for the task.
+ * @param {number} subtaskId - The index of the subtask within the task's 'subtasks' array.
+ * @param {boolean} isChecked - The new status to be set for the subtask (true or false).
+ */
 function updateSubtaskStatus(taskId, subtaskId, isChecked) {
     const task = tasks.find(task => task.id === taskId);
     if (task && task.subtasks && task.subtasks[subtaskId]) {
         task.subtasks[subtaskId].status = isChecked;
     }
 }
+
 
 /**
  * Updates the progress bar. If a specific task ID is provided, it updates the progress bar for that task.
@@ -321,7 +298,6 @@ async function updateSpecificTaskProgressBar(taskId) {
     const progressPercentage = (checkedCount / totalCheckboxes) * 100;
     const progressBar = document.getElementById(`progressBar${taskId}`);
     if (totalCheckboxes == 0) {
-
         return;
     }
     if (progressBar && progressStatus) {
@@ -366,11 +342,10 @@ function updateGeneralProgressBar() {
 async function updateBoardHTML(statusName) {
     let tasksWithStatus = tasks.filter(t => t['status'] === statusName);
     const container = document.getElementById(statusName);
-    container.innerHTML = ''; // Zuerst das Container-Element leeren
+    container.innerHTML = '';
 
     for (let element of tasksWithStatus) {
-        container.innerHTML += await generateTaskHTML(element, element['id']); // HTML direkt ins DOM einfügen
-
+        container.innerHTML += await generateTaskHTML(element, element['id']);
         await Promise.all([
             updateProgressBar(element['id']),
             loadPrioImg(element['priority'], element['id']),
@@ -384,42 +359,17 @@ async function updateBoardHTML(statusName) {
 
 
 /**
- * Prepares the addition of a new task by setting the task's status and triggering functions related to task addition.
- * @param {string} status - The status to be assigned to the new task.
- */
-function loadAddTask(status) {
-    addTasksStatus = status;
-    laodAddTasksTorgel();
-    addTask();
-}
-
-
-/**
  * Toggles the user interface elements for adding a new task. It sets a flag to false and updates the heading
  * of the task addition section. The function name suggests it's intended to 'load' and 'toggle' the add task UI.
  */
 function laodAddTasksTorgel() {
     saveAddTaskTorgle = false;
     let heading = document.getElementById('header-add-task')
-    heading.innerHTML = /*html*/ `
-   Add Task
-    `
+    heading.innerHTML = /*html*/ `Add Task`
 }
-
-
-/**
- * Displays the elements related to adding a new task in the user interface. 
- * It removes the 'd-none' class from these elements, which is commonly used to hide elements via CSS.
- */
-function addTask() {
-    document.getElementById('add-task').classList.remove('d-none');
-    document.getElementById('add-task-arrow').classList.remove('d-none')
-}
-
 
 
 //--- searchbar----
-
 /**
  * Filters and displays tasks based on a search input across different task statuses.
  * It searches through tasks' descriptions and titles, updating each status container with relevant tasks.
@@ -444,47 +394,19 @@ async function boardSearch() {
     });
 }
 
+
+/**
+ * Updates the status of a specific subtask within a task.
+ * This function locates a task by its ID in a global 'tasks' array. If the task and the specified subtask are found,
+ * it updates the 'status' property of the subtask based on the 'isChecked' parameter.
+ *
+ * @param {number} taskId - The unique identifier for the task.
+ * @param {number} subtaskId - The index of the subtask within the task's 'subtasks' array.
+ * @param {boolean} isChecked - The new status to be set for the subtask (true or false).
+ */
 function initializeSearch() {
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
         searchInput.addEventListener('input', boardSearch);
     }
 }
-
-
-async function checkContactsForTaskObjects(taskObjects) {
-    await renderContacts(contacts);
-    resetAllCheckboxes()
-    contactsTask = [];
-    document.getElementById('add-contacts-add-tasks').innerHTML = "";
-    let taskContactsNames = [];
-    taskObjects.forEach(contact => {
-        taskContactsNames.push(contact.name);
-    });
-
-    taskContactsNames.forEach(contactName => {
-        contacts.forEach(contact => {
-            if (contact.name === contactName) {
-                let checkbox = document.querySelector(`#contactCheckbox_${contact.id}`);
-
-                if (checkbox) {
-                    checkbox.click();
-                } else {
-                    // Hier könnten Sie Fehlermeldungen ausgeben oder weitere Maßnahmen ergreifen
-                    console.error(`Checkbox mit der ID contactCheckbox_${contact.id} nicht gefunden.`);
-                }
-
-            }
-        });
-    });
-}
-
-
-document.addEventListener('DOMContentLoaded', initializeSearch);
-
-
-//listens for focus on textbox
-document.getElementById('searchInput').addEventListener("focus", changeDivColor);
-
-//listens for blur on textbox
-document.getElementById('searchInput').addEventListener("blur", revertDivColor);

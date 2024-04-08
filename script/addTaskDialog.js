@@ -108,7 +108,7 @@ function resetPriority() {
 
  */
 function getPriorityImage(priorityNumber) {
-    const imgMap = { 1: './img/prioUrgentWhite.svg', 2: './img/PrioMediumWhite.svg', 3: './img/PrioLowWhite.svg' };
+    const imgMap = { 1: './img/PrioUrgentWhite.svg', 2: './img/PrioMediumWhite.svg', 3: './img/PrioLowWhite.svg' };
     return imgMap[priorityNumber];
 }
 

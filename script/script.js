@@ -67,7 +67,6 @@ function extractInitials(text) {
     } else if (text.length === 1) {
         return text.charAt(0).toUpperCase();
     } else {
-        console.log('Empty text provided.');
         return '';
     }
 }

@@ -2,6 +2,10 @@ let contactsArray = [];
 let colorIndex = 0;
 let nextColorIndex = 0;
 
+
+
+
+
 /**
  * This function is to load functions at start
  * 
@@ -214,8 +218,14 @@ function closeContactInfos() {
     document.querySelector('.contacts-info-panel').style.display = 'none';
     let userContactInfos = document.getElementById('contactInfo');
     userContactInfos.innerHTML = "";
+    window.addEventListener('resize', checkScreenSizeAndCloseContactInfos);
 }
 
+function checkScreenSizeAndCloseContactInfos() {
+    if (window.innerWidth < 700) {
+        closeContactInfos();
+    }
+}
 
 function loadcontactsInfoTamplate(contact, id, initials) {
     return /* html */ `
@@ -253,7 +263,7 @@ function loadcontactsInfoTamplate(contact, id, initials) {
             </div>
             <div class="d-flex flex-column">
                 <span><b>Phone</b></span>
-                <span>${contact['phone']}</span>
+                <span>${contact['phone_number']}</span>
             </div>
         </div>
     </div>

@@ -18,12 +18,23 @@ function addSubTask() {
     }
 }
 
+
+/**
+ * Generates an object representing a subtask with a name and status.
+ * This function creates and returns a new object with two properties: `name` and `status`.
+ * The `name` property is set to the provided name, and the `status` property is set to the provided boolean value.
+ *
+ * @param {string} name - The name of the subtask.
+ * @param {boolean} boolian - The boolean status of the subtask, indicating completion or a similar state.
+ * @returns {{name: string, status: boolean}} The subtask object with name and status properties.
+ */
 function generateSubtaskObj(name, boolian) {
     return {
         name: name,
         status: boolian
     };
 }
+
 
 /**
  * Deletes a subtask based on the clicked element's data-target attribute.
@@ -94,15 +105,25 @@ function saveDataTask(taskID, status) {
     let priority = getPriorityLabel(currentPriority);
     let contacts = contactsTask;
     let newTask = {
-        id: taskID,
-        category,
-        title,
-        description,
-        time: "",
-        date,
-        priority,
-        subtasks,
-        contacts,
+        // id: taskID,
+        // category,
+        // title,
+        // description,
+        // time: "",
+        // date,
+        // priority,
+        // subtasks,
+        contacts: contactsTask,
+        // status: status,
+        // created_at: 1
+
+
+        category: category,
+        title: title,
+        description: description,
+        time: "", // Stelle sicher, dass das Format HH:MM ist, oder entferne, wenn nicht verwendet
+        date: date, // Stelle sicher, dass das Format YYYY-MM-DD ist
+        priority: priority,
         status: status
     };
     return newTask;
@@ -121,17 +142,25 @@ async function handleAddTaskButtonClick() {
     if (!saveAddTaskTorgle && validateForm()) {
         saveNewTask();
         await savetasksDataToBakcend();
-        window.location.href = 'board.html';
+        // window.location.href = 'board.html';
     } else if (saveAddTaskTorgle && validateForm()) {
         saveOldTask();
         savetasksDataToBakcend();
         await loadTasks();
         closeWindow('add-task')
     }
-
 }
 
 
+/**
+ * Validates the form by checking the value of the 'categoryInput' field.
+ * This function examines the value of the 'categoryInput' field and determines if it is either
+ * a default placeholder ('Select task category') or an empty string (after trimming white spaces).
+ * If either condition is met, it highlights the 'categoryAreaV1' element with a red border to indicate
+ * a validation error and returns false. If the validation passes, it returns true.
+ *
+ * @returns {boolean} Returns true if the validation passes, or false if it fails.
+ */
 function validateForm() {
     const categoryInput = document.getElementById('categoryInputV1');
     if (categoryInput.value === 'Select task category' || categoryInput.value.trim() === '') {
@@ -205,53 +234,13 @@ function handleDropdownTriggerClick() {
 
 
 /**
- * Handles the click event on a dropdown menu option.
- * This function is called when a dropdown menu option is clicked. It delegates the task of handling the selection to the `selectOption` function.
- *
- * @param {Element} optionElement - The DOM element of the clicked dropdown option.
- */
-// function handleDropdownOptionClick(optionElement) {
-//     selectOption(optionElement);
-// }
-
-
-/**
- * Closes the dropdown menu if a click occurs outside of it.
- * This function checks if the dropdown menu is currently displayed and if the click event target is not within the dropdown menu.
- * If both conditions are met, it calls `toggleDropdown` to close the menu.
- *
- * @param {Event} event - The click event object from the event listener.
- */
-// function closeDropdownIfClickedOutside(event) {
-//     const dropdownMenu = document.getElementById('dropdownMenu');
-//     if (dropdownMenu.style.display === 'flex' && !event.target.closest('#dropdownMenu')) {
-//         toggleDropdown();
-//     }
-// }
-
-
-/**
- * Sets the selected option's text to the value of a specified input field and closes the dropdown menu.
- * This function updates the value of the 'categoryInputV1' input field to the text content of the clicked option 
- * and then hides the dropdown menu.
- *
- * @param {Element} optionElement - The DOM element of the selected dropdown option.
- * - 'categoryInputV1': The ID of the input field where the selected option's text is displayed.
- */
-// function selectOption(optionElement) {
-//     document.getElementById('categoryInputV1').value = optionElement.textContent;
-//     dropdownMenu.style.display = 'none';
-// }
-
-
-/**
  * Initializes a Pikaday date picker for the specified input element.
  *
  * @param {Element} dateInput The input element where the date picker should be displayed.
  */
 function initializeDatePicker() {
     var dateInput = document.getElementById('datepicker');
-    if (!dateInput) return; // Sicherstellen, dass das Element existiert
+    if (!dateInput) return;
 
     var picker = new Pikaday({
         field: dateInput,
@@ -344,4 +333,37 @@ async function renderContacts(contacts) {
         let contactColor = contact.color;
         contactsElement.innerHTML += loadContactHTML(initalien, contactName, contactColor, i)
     }
+}
+
+
+/**
+ * Checks and updates the contact checkboxes based on the provided task objects.
+ * This function first renders the contacts using `renderContacts`, and then resets all checkboxes to their default state.
+ * It then iterates over the given task objects to find and activate (click) the checkboxes corresponding to the contacts
+ * involved in these tasks. It assumes that each task object contains contact names, and these names are used
+ * to identify the correct checkboxes to activate.
+ *
+ * @async
+ * @param {Object[]} taskObjects - An array of task objects, each containing information about contacts.
+ */
+async function checkContactsForTaskObjects(taskObjects) {
+    await renderContacts(contacts);
+    resetAllCheckboxes()
+    contactsTask = [];
+    document.getElementById('add-contacts-add-tasks').innerHTML = "";
+    let taskContactsNames = [];
+    taskObjects.forEach(contact => {
+        taskContactsNames.push(contact.name);
+    });
+    taskContactsNames.forEach(contactName => {
+        contacts.forEach(contact => {
+            if (contact.name === contactName) {
+                let checkbox = document.querySelector(`#contactCheckbox_${contact.id}`);
+
+                if (checkbox) {
+                    checkbox.click();
+                }
+            }
+        });
+    });
 }

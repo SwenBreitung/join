@@ -6,7 +6,19 @@ let checkbox = document.getElementById("myCheckbox");
  * This function is typically called when the application or a particular page is loaded.
  */
 async function init() {
-    loadBackendUsers();
+    // loadBackendUsers();
+    // fetch(`${STORAGE_URL}api/get-token/`, {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             // Füge erforderliche Authentifizierungsköpfe hinzu, falls nötig
+    //         }
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log('Token:', data.token);
+    //     })
+    //     .catch(error => console.error('Fehler beim Abrufen des Tokens:', error));
 }
 
 
@@ -36,11 +48,68 @@ async function loadBackendData(key) {
  */
 async function register() {
     if (!checkbox.checked) return;
-    registerBtn.disabled = true;
-    const newUser = createUser();
-    await saveUser(newUser);
-    resetForm();
-    window.location = 'index.html';
+    event.preventDefault();
+    const csrftoken = getCookie('csrftoken'); // Das CSRF-Token aus dem Cookie holen
+    const data = {
+        username: document.getElementById('userName').value,
+        password: document.getElementById('password').value,
+        password2: document.getElementById('password').value,
+        email: document.getElementById('email').value,
+    };
+
+    fetch('http://127.0.0.1:8000/register/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken, // Das Token im Request-Header mitsenden
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    const formData = {
+        username: document.getElementById('userName').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+        password2: document.getElementById('password2').value,
+    };
+
+    // fetch('/api/register/', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(formData)
+    //     })
+    //     .then(response => {
+    //         if (response.ok) {
+    //             return response.json();
+    //         }
+    //         throw new Error('Etwas ist schief gelaufen bei der Registrierung!');
+    //     })
+    //     .then(data => {
+    //         console.log('Erfolgreich registriert:', data);
+    //         // Weiterleitung oder weitere Aktionen nach erfolgreicher Registrierung
+    //     })
+    //     .catch(error => {
+    //         console.error('Registrierungsfehler:', error);
+    //     });
+
+    // registerBtn.disabled = true;
+    // const newUser = createUser();
+    // await saveUser(newUser);
+    // resetForm();
+    // window.location = 'index.html';
 }
 
 
@@ -82,3 +151,38 @@ function resetForm() {
     password.value = '';
     registerBtn.disabled = false;
 }
+
+
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+// fetch('/register/', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'X-CSRFToken': csrftoken,
+//         },
+//         body: JSON.stringify({ yourData: 'yourValue' })
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log('Success:', data);
+//     })
+//     .catch((error) => {
+//         console.error('Error:', error);
+//     });
