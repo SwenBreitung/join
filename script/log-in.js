@@ -63,57 +63,91 @@ function closeDialog() {
  * If a match is found, it stores the user data in local storage and redirects to the summary page.
  * If no match is found, it triggers visual feedback for incorrect credentials.
  */
+
 function login() {
-    event.preventDefault()
-    let email = document.getElementById('email').value;
+    event.preventDefault();
+
+    let username = document.getElementById('username').value;
     let password = document.getElementById('password').value;
-    console.log(email, password, 'email', 'passwort')
+    console.log(username, password, 'username', 'passwort');
+
     fetch('http://127.0.0.1:8000/login/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email: email, password: password }),
+            body: JSON.stringify({ username: username, password: password }),
         })
         .then(response => {
             if (response.ok) {
                 return response.json();
             } else {
                 throw new Error('Login failed');
-
             }
-
         })
         .then(data => {
             localStorage.setItem('token', data.token); // Speichern des Tokens im LocalStorage
             window.location.href = "/summery.html";
-            console.log('korrekt')
+            console.log('korrekt');
         })
         .catch(error => {
             console.error('Login error:', error);
-            alert('Falsches Passwort oder ungültige Anmeldeinformationen.'); // Fehlermeldung für den Benutzer
-            // Fügen Sie hier optional weitere Maßnahmen hinzu, z. B. das Zurücksetzen der Eingabefelder
+            alert('Falscher Benutzername oder ungültige Anmeldeinformationen.'); // Fehlermeldung für den Benutzer
             return false; // Formular nicht senden
             // Implementieren Sie hier eine Fehlerbehandlung, z. B. eine Meldung für den Benutzer
         });
-
-    // let email = document.getElementById('email');
-    // let passwort = document.getElementById('passwort');
-    // let user = users.find(u => u.email === email.value && u.password === passwort.value);
-    // if (user) {
-    //     try {
-    //         localStorage.removeItem('userData');
-    //         localStorage.setItem('userData', JSON.stringify(user));
-    //     } catch (e) {
-    //         console.error('An error occurred:', e);
-    //     }
-    //     userId = user.id;
-    //     window.location.href = "./summery.html";
-    // } else {
-    //     loadRedBorderInput();
-    //     loadWarningTextTamplate();
-    // }
 }
+// function login() {
+//     event.preventDefault()
+//     let email = document.getElementById('email').value;
+//     let password = document.getElementById('password').value;
+//     console.log(email, password, 'email', 'passwort')
+//     fetch('http://127.0.0.1:8000/login/', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ email: email, password: password }),
+//         })
+//         .then(response => {
+//             if (response.ok) {
+//                 return response.json();
+//             } else {
+//                 throw new Error('Login failed');
+
+//             }
+
+//         })
+//         .then(data => {
+//             localStorage.setItem('token', data.token); // Speichern des Tokens im LocalStorage
+//             window.location.href = "/summery.html";
+//             console.log('korrekt')
+//         })
+//         .catch(error => {
+//             console.error('Login error:', error);
+//             alert('Falsches Passwort oder ungültige Anmeldeinformationen.'); // Fehlermeldung für den Benutzer
+//             // Fügen Sie hier optional weitere Maßnahmen hinzu, z. B. das Zurücksetzen der Eingabefelder
+//             return false; // Formular nicht senden
+//             // Implementieren Sie hier eine Fehlerbehandlung, z. B. eine Meldung für den Benutzer
+//         });
+
+// let email = document.getElementById('email');
+// let passwort = document.getElementById('passwort');
+// let user = users.find(u => u.email === email.value && u.password === passwort.value);
+// if (user) {
+//     try {
+//         localStorage.removeItem('userData');
+//         localStorage.setItem('userData', JSON.stringify(user));
+//     } catch (e) {
+//         console.error('An error occurred:', e);
+//     }
+//     userId = user.id;
+//     window.location.href = "./summery.html";
+// } else {
+//     loadRedBorderInput();
+//     loadWarningTextTamplate();
+// }
+// }
 
 
 /**
@@ -182,7 +216,7 @@ function loadTempleteLogIn() {
     <form method="POST" onsubmit="login();" action=""  id="login-form">
         <div class="input-fields">
             <div id="input-email" class="input-field">
-                <input id="email" type="email" name="email" placeholder="Email" required>
+                <input id="username" type="name" name="name" placeholder="username" required>
                 <img src="./img/letter.svg" alt="Bild hinten" class="input-suffix">
             </div>
             <div class="warning-field">
